@@ -1,0 +1,608 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://Assets/Menu/Background/StarsNear.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Menu/Background/StarsFar.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Menu/Background/StarsMid.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Menu/Objects/Debris/FireComet.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Menu/Objects/Debris/Meteor.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Menu/Icons/exit.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Menu/Icons/right.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Menu/Icons/wrench.png" type="Texture" id=8]
+[ext_resource path="res://Ressources/Theme.tres" type="Theme" id=9]
+[ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Menu/Objects/Rockets/flame1.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Menu/Objects/Rockets/flame2.png" type="Texture" id=12]
+[ext_resource path="res://Scenes/MainMenu/Rocket.gd" type="Script" id=13]
+[ext_resource path="res://Assets/Menu/Objects/Rockets/flame3.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Menu/Objects/Rockets/flame4.png" type="Texture" id=15]
+[ext_resource path="res://Scenes/MainMenu/Menu.gd" type="Script" id=16]
+[ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=17]
+[ext_resource path="res://Assets/Menu/Objects/Satellites/satellite1.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Menu/Objects/Fighters/fighter1.png" type="Texture" id=19]
+[ext_resource path="res://Assets/Menu/Objects/Satellites/satellite2.png" type="Texture" id=20]
+[ext_resource path="res://Scenes/MainMenu/MenuObject.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Assets/Menu/Icons/gamepad2.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Menu/Icons/gamepad4.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Menu/Icons/gamepad1.png" type="Texture" id=24]
+[ext_resource path="res://Assets/Menu/Icons/gamepad3.png" type="Texture" id=25]
+[ext_resource path="res://Assets/Menu/Icons/exitLeft.png" type="Texture" id=26]
+[ext_resource path="res://Assets/Menu/Icons/buttonStart.png" type="Texture" id=27]
+[ext_resource path="res://Assets/Menu/Icons/question.png" type="Texture" id=28]
+[ext_resource path="res://Assets/Menu/Icons/information.png" type="Texture" id=29]
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "flying",
+"speed": 8.0
+} ]
+
+[sub_resource type="Animation" id=5]
+resource_name = "flying"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -1.0, 0.0, 1.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 5 ), Vector2( 0, -6 ), Vector2( 0, -3 ), Vector2( 0, 0 ) ]
+}
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2( 960, 540 )
+current = true
+script = ExtResource( 17 )
+rocket_window = NodePath("../Foreground/Elements/Rocket/WindowCenter")
+
+[node name="RelativeOrigin" type="Position2D" parent="Camera"]
+position = Vector2( -960, -540 )
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="Black" type="ColorRect" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stars" type="ParallaxBackground" parent="."]
+layer = -1
+
+[node name="Far" type="ParallaxLayer" parent="Stars"]
+motion_scale = Vector2( 0.2, 0.2 )
+motion_mirroring = Vector2( 1920, 1080 )
+
+[node name="StarsFar" type="Sprite" parent="Stars/Far"]
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Middle" type="ParallaxLayer" parent="Stars"]
+motion_scale = Vector2( 0.4, 0.4 )
+motion_mirroring = Vector2( 1920, 1080 )
+
+[node name="StarsMid" type="Sprite" parent="Stars/Middle"]
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Near" type="ParallaxLayer" parent="Stars"]
+motion_scale = Vector2( 0.6, 0.6 )
+motion_mirroring = Vector2( 1920, 1080 )
+
+[node name="StarsNear" type="Sprite" parent="Stars/Near"]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Midground" type="Node" parent="."]
+
+[node name="MidgroundFar" type="CanvasLayer" parent="Midground"]
+layer = 0
+follow_viewport_enable = true
+follow_viewport_scale = 0.7
+
+[node name="Comet" parent="Midground/MidgroundFar" instance=ExtResource( 21 )]
+position = Vector2( 1792, -328 )
+rotation = -0.253073
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+rot_off_sprite_left = true
+
+[node name="VisibilityNotifier2D" parent="Midground/MidgroundFar/Comet" index="0"]
+position = Vector2( 186.341, 36.8387 )
+scale = Vector2( 206.428, 56.7853 )
+
+[node name="Meteor" parent="Midground/MidgroundFar" instance=ExtResource( 21 )]
+position = Vector2( 416, -280 )
+rotation = 0.261799
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+rotation_speed = 20
+
+[node name="VisibilityNotifier2D" parent="Midground/MidgroundFar/Meteor" index="0"]
+position = Vector2( -22.0534, 121.41 )
+scale = Vector2( 135.391, 108.046 )
+
+[node name="MidgroundMid" type="CanvasLayer" parent="Midground"]
+layer = 0
+follow_viewport_enable = true
+follow_viewport_scale = 0.9
+
+[node name="Fighter" parent="Midground/MidgroundMid" instance=ExtResource( 21 )]
+position = Vector2( 816, -776 )
+rotation = -0.122173
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 19 )
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+
+[node name="MidgroundNear" type="CanvasLayer" parent="Midground"]
+layer = 0
+follow_viewport_enable = true
+
+[node name="Satellite" parent="Midground/MidgroundNear" instance=ExtResource( 21 )]
+position = Vector2( 2000, 900 )
+rotation = 1.88496
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 18 )
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+speed = 20
+rotation_speed = -2
+
+[node name="MidgroundStill" type="CanvasLayer" parent="Midground"]
+
+[node name="Satellite" parent="Midground/MidgroundStill" instance=ExtResource( 21 )]
+position = Vector2( 300, 1200 )
+rotation = -2.93215
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 20 )
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+speed = 40
+
+[node name="Foreground" type="CanvasLayer" parent="."]
+
+[node name="Menu" type="Control" parent="Foreground"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main" type="Control" parent="Foreground/Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="VBoxContainer" parent="Foreground/Menu/Main"]
+anchor_bottom = 1.0
+margin_top = 200.0
+margin_right = 384.0
+margin_bottom = -200.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Foreground/Menu/Main/Buttons"]
+margin_right = 384.0
+margin_bottom = 224.0
+size_flags_vertical = 3
+
+[node name="BtnSettings" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer"]
+margin_left = 142.0
+margin_top = 62.0
+margin_right = 242.0
+margin_bottom = 162.0
+size_flags_horizontal = 3
+theme = ExtResource( 9 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 8 )
+texture_hover = ExtResource( 8 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings"]
+self_modulate = Color( 0.203922, 0.596078, 0.858824, 1 )
+show_behind_parent = true
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 105.0
+margin_bottom = 105.0
+texture = ExtResource( 8 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer2" type="CenterContainer" parent="Foreground/Menu/Main/Buttons"]
+margin_top = 228.0
+margin_right = 384.0
+margin_bottom = 452.0
+size_flags_vertical = 3
+
+[node name="BtnPlay" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer2"]
+margin_left = 142.0
+margin_top = 62.0
+margin_right = 242.0
+margin_bottom = 162.0
+size_flags_horizontal = 3
+theme = ExtResource( 9 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 7 )
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay"]
+self_modulate = Color( 0.203922, 0.596078, 0.858824, 1 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 5.0
+margin_bottom = 5.0
+texture = ExtResource( 7 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer3" type="CenterContainer" parent="Foreground/Menu/Main/Buttons"]
+margin_top = 456.0
+margin_right = 384.0
+margin_bottom = 680.0
+size_flags_vertical = 3
+
+[node name="BtnExit" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer3"]
+margin_left = 142.0
+margin_top = 62.0
+margin_right = 242.0
+margin_bottom = 162.0
+size_flags_horizontal = 3
+theme = ExtResource( 9 )
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 6 )
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit"]
+self_modulate = Color( 0.203922, 0.596078, 0.858824, 1 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 5.0
+margin_bottom = 5.0
+texture = ExtResource( 6 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnHelp" type="TextureButton" parent="Foreground/Menu/Main"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -50.0
+margin_bottom = 100.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture_normal = ExtResource( 28 )
+texture_pressed = ExtResource( 28 )
+texture_hover = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnInfo" type="TextureButton" parent="Foreground/Menu/Main"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -50.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture_normal = ExtResource( 29 )
+texture_pressed = ExtResource( 29 )
+texture_hover = ExtResource( 29 )
+
+[node name="Play" type="Control" parent="Foreground/Menu"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" type="VBoxContainer" parent="Foreground/Menu/Play"]
+anchor_bottom = 1.0
+margin_top = 200.0
+margin_right = 384.0
+margin_bottom = -200.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Foreground/Menu/Play/BackButton"]
+margin_right = 384.0
+margin_bottom = 224.0
+size_flags_vertical = 3
+
+[node name="BtnBack" type="TextureButton" parent="Foreground/Menu/Play/BackButton/CenterContainer"]
+margin_left = 142.0
+margin_top = 62.0
+margin_right = 242.0
+margin_bottom = 162.0
+size_flags_horizontal = 3
+theme = ExtResource( 9 )
+texture_normal = ExtResource( 26 )
+texture_pressed = ExtResource( 26 )
+texture_hover = ExtResource( 26 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack"]
+self_modulate = Color( 0.203922, 0.596078, 0.858824, 1 )
+show_behind_parent = true
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 105.0
+margin_bottom = 105.0
+texture = ExtResource( 26 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer2" type="CenterContainer" parent="Foreground/Menu/Play/BackButton"]
+margin_top = 228.0
+margin_right = 384.0
+margin_bottom = 452.0
+size_flags_vertical = 3
+
+[node name="CenterContainer3" type="CenterContainer" parent="Foreground/Menu/Play/BackButton"]
+margin_top = 456.0
+margin_right = 384.0
+margin_bottom = 680.0
+size_flags_vertical = 3
+
+[node name="PlayMenu" type="VBoxContainer" parent="Foreground/Menu/Play"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -202.0
+margin_top = -202.0
+margin_right = 202.0
+margin_bottom = 202.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerSelect" type="GridContainer" parent="Foreground/Menu/Play/PlayMenu"]
+margin_right = 404.0
+margin_bottom = 404.0
+columns = 2
+
+[node name="Player1" type="Control" parent="Foreground/Menu/Play/PlayMenu/PlayerSelect"]
+margin_right = 200.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 200, 200 )
+
+[node name="TextureRect" type="TextureRect" parent="Foreground/Menu/Play/PlayMenu/PlayerSelect/Player1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -50.0
+margin_right = 50.0
+margin_bottom = 50.0
+texture = ExtResource( 24 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player2" type="Control" parent="Foreground/Menu/Play/PlayMenu/PlayerSelect"]
+margin_left = 204.0
+margin_right = 404.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 200, 200 )
+
+[node name="TextureRect2" type="TextureRect" parent="Foreground/Menu/Play/PlayMenu/PlayerSelect/Player2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -50.0
+margin_right = 50.0
+margin_bottom = 50.0
+texture = ExtResource( 22 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player3" type="Control" parent="Foreground/Menu/Play/PlayMenu/PlayerSelect"]
+margin_top = 204.0
+margin_right = 200.0
+margin_bottom = 404.0
+rect_min_size = Vector2( 200, 200 )
+
+[node name="TextureRect3" type="TextureRect" parent="Foreground/Menu/Play/PlayMenu/PlayerSelect/Player3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -50.0
+margin_right = 50.0
+margin_bottom = 50.0
+texture = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player4" type="Control" parent="Foreground/Menu/Play/PlayMenu/PlayerSelect"]
+margin_left = 204.0
+margin_top = 204.0
+margin_right = 404.0
+margin_bottom = 404.0
+rect_min_size = Vector2( 200, 200 )
+
+[node name="TextureRect4" type="TextureRect" parent="Foreground/Menu/Play/PlayMenu/PlayerSelect/Player4"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -50.0
+margin_right = 50.0
+margin_bottom = 50.0
+texture = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="CenterContainer" parent="Foreground/Menu/Play/PlayMenu"]
+margin_top = 408.0
+margin_right = 404.0
+margin_bottom = 508.0
+
+[node name="BtnStart" type="TextureButton" parent="Foreground/Menu/Play/PlayMenu/Control"]
+margin_left = 152.0
+margin_right = 252.0
+margin_bottom = 100.0
+texture_normal = ExtResource( 27 )
+texture_pressed = ExtResource( 27 )
+texture_hover = ExtResource( 27 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settings" type="Control" parent="Foreground/Menu"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BackButton" type="VBoxContainer" parent="Foreground/Menu/Settings"]
+anchor_bottom = 1.0
+margin_top = 200.0
+margin_right = 384.0
+margin_bottom = -200.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Foreground/Menu/Settings/BackButton"]
+margin_right = 384.0
+margin_bottom = 224.0
+size_flags_vertical = 3
+
+[node name="BtnBack" type="TextureButton" parent="Foreground/Menu/Settings/BackButton/CenterContainer"]
+margin_left = 142.0
+margin_top = 62.0
+margin_right = 242.0
+margin_bottom = 162.0
+size_flags_horizontal = 3
+theme = ExtResource( 9 )
+texture_normal = ExtResource( 26 )
+texture_pressed = ExtResource( 26 )
+texture_hover = ExtResource( 26 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack"]
+self_modulate = Color( 0.203922, 0.596078, 0.858824, 1 )
+show_behind_parent = true
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 105.0
+margin_bottom = 105.0
+texture = ExtResource( 26 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer2" type="CenterContainer" parent="Foreground/Menu/Settings/BackButton"]
+margin_top = 228.0
+margin_right = 384.0
+margin_bottom = 452.0
+size_flags_vertical = 3
+
+[node name="CenterContainer3" type="CenterContainer" parent="Foreground/Menu/Settings/BackButton"]
+margin_top = 456.0
+margin_right = 384.0
+margin_bottom = 680.0
+size_flags_vertical = 3
+
+[node name="SettingsMenu" type="VBoxContainer" parent="Foreground/Menu/Settings"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Elements" type="Node2D" parent="Foreground"]
+position = Vector2( 1600, 540 )
+
+[node name="Rocket" type="Node2D" parent="Foreground/Elements"]
+script = ExtResource( 13 )
+
+[node name="Flame" type="AnimatedSprite" parent="Foreground/Elements/Rocket"]
+position = Vector2( 0, 340 )
+scale = Vector2( 2.5, 2.5 )
+frames = SubResource( 4 )
+animation = "flying"
+
+[node name="Rocket" type="Sprite" parent="Foreground/Elements/Rocket"]
+texture = ExtResource( 10 )
+
+[node name="WindowCenter" type="Position2D" parent="Foreground/Elements/Rocket"]
+position = Vector2( 0, 30 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
+anims/flying = SubResource( 5 )
+[connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
+
+[editable path="Midground/MidgroundFar/Comet"]
+
+[editable path="Midground/MidgroundFar/Meteor"]
