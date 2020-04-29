@@ -32,9 +32,24 @@ animations = [ {
 "name": "runningDown",
 "speed": 6.0
 }, {
+"frames": [ ExtResource( 9 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "runningUp",
+"speed": 4.0
+}, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "idleRight",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "runningRight",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "idleUp",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ) ],
@@ -42,40 +57,26 @@ animations = [ {
 "name": "idleLeft",
 "speed": 3.0
 }, {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "idleUp",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
 "name": "idleDown",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 9 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "runningUp",
-"speed": 4.0
-}, {
-"frames": [ ExtResource( 6 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "runningRight",
-"speed": 6.0
 } ]
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 12 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-position = Vector2( -32, -32 )
+position = Vector2( -32, -56 )
 occluder = SubResource( 1 )
 
 [node name="EnvironmentCollider" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 16 )
+position = Vector2( 0, -8 )
 rotation = 1.5708
 shape = SubResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -24 )
 scale = Vector2( 0.062, 0.062 )
 frames = SubResource( 3 )
 animation = "runningRight"

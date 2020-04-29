@@ -4,16 +4,14 @@ export var player_count = 1
 
 onready var pos1 = $Position1
 onready var pos2 = $Position2
-onready var crates = $Crates
+onready var crates = $Container/Crates
 onready var spawns = $PlayerSpawns.get_children()
+onready var container = $Container
+onready var player_container = $Container
 
 # get those by code
 var map_size_x = 19
 var map_size_y = 15
-
-var bomb = preload("res://Scenes/Game/Bomb/Bomb.tscn")
-var explosion = preload("res://Scenes/Game/Bomb/Explosion/Explosion.tscn")
-var baguette = preload("res://Scenes/Game/Baguette/Baguette.tscn")
 
 var cellsize
 
@@ -21,10 +19,10 @@ func _ready():
 	cellsize = crates.cell_size
 	
 	var cam = $Camera
-	cam.limit_left = pos1.transform.origin.x
-	cam.limit_top = pos1.transform.origin.y
-	cam.limit_right = pos2.transform.origin.x
-	cam.limit_bottom = pos2.transform.origin.y
+	#cam.limit_left = pos1.transform.origin.x
+	#cam.limit_top = pos1.transform.origin.y
+	#cam.limit_right = pos2.transform.origin.x
+	#cam.limit_bottom = pos2.transform.origin.y
 	
 	init_players()
 
@@ -34,13 +32,13 @@ func init_players():
 		var t = crates.world_to_map(p)
 		var pos = crates.map_to_world(t) + Vector2(32, 32)
 		var player = Preloader.player.instance()
-		$Players.add_child(player)
+		player_container.add_child(player)
 		player.global_transform.origin = pos
 
 func shoot_projectile(player, p):
 	var pos = crates.world_to_map(p)
 	pos = crates.map_to_world(pos) + (cellsize/2)
-	var b = baguette.instance()
+	var b = Preloader.baguette.instance()
 	b.init(self, player, player.facing)
 	get_tree().root.add_child(b)
 	# so that the bullet always flies in the center of the tiles
@@ -68,8 +66,8 @@ func place_bomb(player, p):
 	# convert it back to a world position to get the center of it
 	var pos = crates.map_to_world(coord) + (cellsize/2)
 	
-	var b = bomb.instance()
-	$Stuff.add_child(b)
+	var b = Preloader.bomb.instance()
+	container.add_child(b)
 	b.init(self, player)
 	b.global_transform.origin = pos
 
@@ -115,8 +113,8 @@ func _destroy_line(coord_start, dir, r):
 	return r
 
 func create_explosion(p, dirs):
-	var e = explosion.instance()
-	$Stuff.add_child(e)
+	var e = Preloader.explosion.instance()
+	container.add_child(e)
 	e.init(p, dirs)
 
 func destroy_crate(tile):

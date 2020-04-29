@@ -1,0 +1,126 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Game/Game.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Game/Tiles/crate_blue.png" type="Texture" id=2]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftSide" type="Control" parent="GUI"]
+anchor_bottom = 1.0
+margin_right = 320.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/LeftSide"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="GUI/LeftSide/VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 64 )
+
+[node name="ColorRect2" type="ColorRect" parent="GUI/LeftSide/VBoxContainer"]
+margin_top = 164.0
+margin_right = 320.0
+margin_bottom = 228.0
+rect_min_size = Vector2( 0, 64 )
+
+[node name="ColorRect3" type="ColorRect" parent="GUI/LeftSide/VBoxContainer"]
+margin_top = 328.0
+margin_right = 320.0
+margin_bottom = 392.0
+rect_min_size = Vector2( 0, 64 )
+
+[node name="ColorRect4" type="ColorRect" parent="GUI/LeftSide/VBoxContainer"]
+margin_top = 492.0
+margin_right = 320.0
+margin_bottom = 556.0
+rect_min_size = Vector2( 0, 64 )
+
+[node name="ColorRect5" type="ColorRect" parent="GUI/LeftSide/VBoxContainer"]
+margin_top = 656.0
+margin_right = 320.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 0, 64 )
+
+[node name="RightSide" type="Control" parent="GUI"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -320.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="GUI/RightSide"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="GUI/RightSide/VBoxContainer2"]
+margin_right = 320.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 64 )
+
+[node name="ColorRect2" type="ColorRect" parent="GUI/RightSide/VBoxContainer2"]
+margin_top = 164.0
+margin_right = 320.0
+margin_bottom = 228.0
+rect_min_size = Vector2( 0, 64 )
+
+[node name="ColorRect3" type="ColorRect" parent="GUI/RightSide/VBoxContainer2"]
+margin_top = 328.0
+margin_right = 320.0
+margin_bottom = 392.0
+rect_min_size = Vector2( 0, 64 )
+
+[node name="ColorRect4" type="ColorRect" parent="GUI/RightSide/VBoxContainer2"]
+margin_top = 492.0
+margin_right = 320.0
+margin_bottom = 556.0
+rect_min_size = Vector2( 0, 64 )
+
+[node name="ColorRect5" type="ColorRect" parent="GUI/RightSide/VBoxContainer2"]
+margin_top = 656.0
+margin_right = 320.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 0, 64 )
+
+[node name="GameCenter" type="Node2D" parent="."]
+position = Vector2( 960, 540 )
+
+[node name="GameOffset" type="Node2D" parent="GameCenter"]
+position = Vector2( 0, 16 )
+
+[node name="Game" parent="GameCenter/GameOffset" instance=ExtResource( 1 )]
+position = Vector2( -640, -400 )
