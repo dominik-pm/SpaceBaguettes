@@ -27,3 +27,7 @@ func _on_BtnBack_pressed():
 	play_menu.hide()
 	sett_menu.hide()
 	main_menu.show()
+
+func _on_BtnStart_pressed():
+	# animation here --
+	get_tree().change_scene("res://Scenes/Game/Game.tscn")

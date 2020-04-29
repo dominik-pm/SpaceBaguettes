@@ -1,9 +1,9 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Assets/Menu/Background/StarsNear.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Menu/Background/StarsFar.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Menu/Background/StarsMid.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Menu/Objects/Debris/FireComet.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Menu/Objects/Debris/Comet/Komet 03@4x.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Menu/Objects/Debris/Meteor.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Menu/Icons/exit.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Menu/Icons/right.png" type="Texture" id=7]
@@ -11,10 +11,10 @@
 [ext_resource path="res://Ressources/Theme.tres" type="Theme" id=9]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/flame1.png" type="Texture" id=11]
-[ext_resource path="res://Assets/Menu/Objects/Rockets/flame2.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Menu/Objects/Debris/Comet/Komet 04@4x.png" type="Texture" id=12]
 [ext_resource path="res://Scenes/MainMenu/Rocket.gd" type="Script" id=13]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/flame3.png" type="Texture" id=14]
-[ext_resource path="res://Assets/Menu/Objects/Rockets/flame4.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Menu/Objects/Debris/Comet/Komet 01@4x.png" type="Texture" id=15]
 [ext_resource path="res://Scenes/MainMenu/Menu.gd" type="Script" id=16]
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=17]
 [ext_resource path="res://Assets/Menu/Objects/Satellites/satellite1.png" type="Texture" id=18]
@@ -29,17 +29,33 @@
 [ext_resource path="res://Assets/Menu/Icons/buttonStart.png" type="Texture" id=27]
 [ext_resource path="res://Assets/Menu/Icons/question.png" type="Texture" id=28]
 [ext_resource path="res://Assets/Menu/Icons/information.png" type="Texture" id=29]
+[ext_resource path="res://Assets/Menu/Objects/Debris/Comet/Komet 02@4x.png" type="Texture" id=30]
+[ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenu.gd" type="Script" id=31]
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 15 ) ],
+"frames": [ ExtResource( 15 ), ExtResource( 30 ), ExtResource( 4 ), ExtResource( 12 ) ],
 "loop": true,
-"name": "flying",
+"name": "default",
 "speed": 8.0
 } ]
 
-[sub_resource type="Animation" id=5]
-resource_name = "flying"
+[sub_resource type="GDScript" id=2]
+script/source = "extends AnimatedSprite
+
+func _ready():
+	play(\"default\")
+"
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 11 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "flying",
+"speed": 10.0
+} ]
+
+[sub_resource type="Animation" id=4]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
@@ -123,16 +139,19 @@ follow_viewport_enable = true
 follow_viewport_scale = 0.7
 
 [node name="Comet" parent="Midground/MidgroundFar" instance=ExtResource( 21 )]
-position = Vector2( 1792, -328 )
+position = Vector2( 1824, -432 )
 rotation = -0.253073
 scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
 rot_off_sprite_left = true
 
-[node name="VisibilityNotifier2D" parent="Midground/MidgroundFar/Comet" index="0"]
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="Midground/MidgroundFar/Comet"]
 position = Vector2( 186.341, 36.8387 )
 scale = Vector2( 206.428, 56.7853 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundFar/Comet"]
+frames = SubResource( 1 )
+script = SubResource( 2 )
 
 [node name="Meteor" parent="Midground/MidgroundFar" instance=ExtResource( 21 )]
 position = Vector2( 416, -280 )
@@ -401,6 +420,7 @@ margin_left = -202.0
 margin_top = -202.0
 margin_right = 202.0
 margin_bottom = 202.0
+script = ExtResource( 31 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -584,23 +604,24 @@ position = Vector2( 1600, 540 )
 script = ExtResource( 13 )
 
 [node name="Flame" type="AnimatedSprite" parent="Foreground/Elements/Rocket"]
-position = Vector2( 0, 340 )
+position = Vector2( 0, 316 )
 scale = Vector2( 2.5, 2.5 )
-frames = SubResource( 4 )
+frames = SubResource( 3 )
 animation = "flying"
 
 [node name="Rocket" type="Sprite" parent="Foreground/Elements/Rocket"]
 texture = ExtResource( 10 )
 
 [node name="WindowCenter" type="Position2D" parent="Foreground/Elements/Rocket"]
-position = Vector2( 0, 30 )
+position = Vector2( 0, -30 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
-anims/flying = SubResource( 5 )
+anims/flying = SubResource( 4 )
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Play/PlayMenu/Control/BtnStart" to="Foreground/Menu" method="_on_BtnStart_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 
 [editable path="Midground/MidgroundFar/Comet"]
