@@ -18,16 +18,10 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://Scenes/Game/Player/Player.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "Projectile",
-"language": "GDScript",
-"path": "res://Scenes/Game/Temp/Effects/Bullet/Bullet.gd"
 } ]
 _global_script_class_icons={
 "Baguette": "",
-"Player": "",
-"Projectile": ""
+"Player": ""
 }
 
 [application]
@@ -39,6 +33,7 @@ boot_splash/bg_color=Color( 0.333333, 0.333333, 0.333333, 1 )
 [autoload]
 
 Preloader="*res://Globals/Preloader.gd"
+Global="*res://Globals/Global.gd"
 
 [display]
 
@@ -81,6 +76,11 @@ window/stretch/aspect="keep"
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Environment"
+2d_physics/layer_2="PlayerHitbox"
 
 [rendering]
 
