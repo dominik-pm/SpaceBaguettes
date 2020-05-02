@@ -1,7 +1,5 @@
 extends Node2D
 
-export var player_count = 1
-
 onready var pos1 = $Position1
 onready var pos2 = $Position2
 onready var crates = $Container/Crates
@@ -27,7 +25,7 @@ func _ready():
 	init_players()
 
 func init_players():
-	for i in player_count:
+	for i in Global.player_count:
 		var p = spawns[i].global_transform.origin
 		var t = crates.world_to_map(p)
 		var pos = crates.map_to_world(t) + Vector2(32, 32)
@@ -112,9 +110,18 @@ func create_explosion(p, dirs):
 	e.init(p, dirs, Global.bomb_explosion_duration)
 
 func destroy_crate(tile):
+	var pos = crates.map_to_world(tile) + (cellsize/2)
+	
 	# remove the tile in the tilemap
 	crates.set_cellv(tile, -1)
 	
 	# create destroy effect
+	var e = Preloader.effect_pop.instance()
+	container.add_child(e)
+	e.global_transform.origin = pos
 	
 	# spawn item
+	var i = Preloader.item.instance()
+	container.add_child(i)
+	i.global_transform.origin = pos
+	i.init(Items.TESTBUFF)

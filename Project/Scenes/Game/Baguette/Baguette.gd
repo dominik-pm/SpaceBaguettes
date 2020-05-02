@@ -36,10 +36,10 @@ func _physics_process(delta):
 		if collider.is_in_group("Baguette"):
 			collider.destroy()
 			destroy()
-		elif collider.is_in_group("PlayerHitbox"):
-			collider.get_hit()
+		elif collider is PlayerHitbox:
+			collider.player.get_hit()
 			destroy()
-		elif collider.is_in_group("Bomb"):
+		elif collider is Bomb:
 			collider.explode()
 			destroy()
 		else:

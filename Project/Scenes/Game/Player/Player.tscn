@@ -12,6 +12,7 @@
 [ext_resource path="res://Assets/Game/Player/Back_idle.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Game/Player/Front_run01.png" type="Texture" id=11]
 [ext_resource path="res://Scenes/Game/Player/Player.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/Game/Player/HitBox.gd" type="Script" id=13]
 
 [sub_resource type="OccluderPolygon2D" id=1]
 polygon = PoolVector2Array( 9.73698, 26.8535, 15.4751, 13.424, 30.6138, 6.22087, 47.3396, 8.54051, 47.9501, 15.3774, 54.1765, 25.7547, 49.0489, 37.1088, 50.0256, 52.98, 13.1554, 53.3463, 13.5217, 42.7248, 16.5738, 37.1088 )
@@ -20,18 +21,11 @@ polygon = PoolVector2Array( 9.73698, 26.8535, 15.4751, 13.424, 30.6138, 6.22087,
 radius = 12.0996
 height = 21.1479
 
-[sub_resource type="GDScript" id=5]
-script/source = "extends KinematicBody2D
-
-func get_hit():
-	get_parent().get_hit()
-"
-
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 27.4018
 height = 5.42953
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 8 ) ],
 "loop": true,
@@ -43,19 +37,9 @@ animations = [ {
 "name": "idleLeft",
 "speed": 3.0
 }, {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "idleDown",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "idleUp",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idleRight",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 11 ), ExtResource( 2 ) ],
@@ -63,15 +47,25 @@ animations = [ {
 "name": "runningDown",
 "speed": 6.0
 }, {
-"frames": [ ExtResource( 6 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "runningRight",
-"speed": 6.0
-}, {
 "frames": [ ExtResource( 9 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "runningUp",
 "speed": 4.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "idleRight",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "idleDown",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "runningRight",
+"speed": 6.0
 } ]
 
 [node name="Player" type="KinematicBody2D"]
@@ -91,7 +85,7 @@ shape = SubResource( 2 )
 ]]
 collision_layer = 2
 collision_mask = 2
-script = SubResource( 5 )
+script = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2( 0, -24 )
@@ -100,7 +94,7 @@ shape = SubResource( 4 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -24 )
 scale = Vector2( 0.062, 0.062 )
-frames = SubResource( 3 )
+frames = SubResource( 5 )
 animation = "runningRight"
 
 [node name="ShootingDelay" type="Timer" parent="."]

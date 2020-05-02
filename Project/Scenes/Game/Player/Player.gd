@@ -2,7 +2,6 @@ extends KinematicBody2D
 
 class_name Player
 
-export var is_player_2 = false
 export var SPEED = 150
 export var ACCEL = 0.8
 
@@ -32,9 +31,10 @@ func _ready():
 	shooting_delay_timer.wait_time = Global.player_shoot_delay
 	invincible_timer.wait_time = Global.player_invincible_time
 
-func init(pos, pid, f):
+func init(pos, p, f):
 	global_transform.origin = pos
-	pid = str(pid)
+	pid = str(p)
+	print(pid)
 	# set right sprite color --
 	facing = f
 
@@ -94,6 +94,13 @@ func shoot(pos, player_pos):
 func bomb_exploded():
 	bombs_active -= 1
 	can_place_bomb = true
+
+func get_item(item):
+	match item:
+		Items.TESTBUFF:
+			print(pid+": got test buff")
+		_:
+			print(pid+": "+str(item)+" is not implemented!")
 
 func get_hit():
 	if not invincible:

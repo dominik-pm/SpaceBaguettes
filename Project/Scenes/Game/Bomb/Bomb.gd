@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name Bomb
+
 var explosion_size
 
 var can_collide = false
@@ -31,10 +33,11 @@ func _physics_process(delta):
 				#apply_impulse(player.facing, push_force) # would prob be better (but doesnt work with kinematic body)
 
 func _on_ExplodingTimer_timeout():
-	$ExplodingTimer.stop()
 	explode()
 
 func explode():
+	$ExplodingTimer.stop()
+	
 	# tell the player
 	player.bomb_exploded()
 	
