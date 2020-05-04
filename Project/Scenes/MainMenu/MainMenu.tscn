@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Assets/Menu/Background/StarsNear.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Menu/Background/StarsFar.png" type="Texture" id=2]
@@ -22,10 +22,15 @@
 [ext_resource path="res://Assets/Menu/Objects/Satellites/satellite2.png" type="Texture" id=20]
 [ext_resource path="res://Scenes/MainMenu/MenuObject.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenu.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Assets/Menu/Icons/larger.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Menu/Icons/smaller.png" type="Texture" id=24]
+[ext_resource path="res://Scenes/MainMenu/SettingsMenu/AudioSettings.gd" type="Script" id=25]
 [ext_resource path="res://Assets/Menu/Icons/exitLeft.png" type="Texture" id=26]
+[ext_resource path="res://Scenes/MainMenu/SettingsMenu/GraphicsSettings.gd" type="Script" id=27]
 [ext_resource path="res://Assets/Menu/Icons/question.png" type="Texture" id=28]
 [ext_resource path="res://Assets/Menu/Icons/information.png" type="Texture" id=29]
 [ext_resource path="res://Assets/Menu/Objects/Debris/Comet/Komet 02@4x.png" type="Texture" id=30]
+[ext_resource path="res://Assets/Sounds/UI/Success.wav" type="AudioStream" id=31]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -42,7 +47,7 @@ func _ready():
 	play(\"default\")
 "
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "FadeOut"
 step = 0.01
 tracks/0/type = "value"
@@ -70,7 +75,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [ ExtResource( 11 ), ExtResource( 14 ) ],
 "loop": true,
@@ -78,7 +83,7 @@ animations = [ {
 "speed": 10.0
 } ]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
@@ -372,6 +377,7 @@ texture_pressed = ExtResource( 29 )
 texture_hover = ExtResource( 29 )
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -439,6 +445,9 @@ size_flags_vertical = 3
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BackButton" type="VBoxContainer" parent="Foreground/Menu/Settings"]
 anchor_bottom = 1.0
@@ -495,18 +504,157 @@ margin_right = 384.0
 margin_bottom = 680.0
 size_flags_vertical = 3
 
-[node name="SettingsMenu" type="VBoxContainer" parent="Foreground/Menu/Settings"]
+[node name="SettingsMenu" type="PanelContainer" parent="Foreground/Menu/Settings"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
+margin_left = -300.0
+margin_top = -200.0
+margin_right = 300.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 600, 400 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 593.0
+margin_bottom = 393.0
+custom_constants/separation = 50
+
+[node name="Graphics" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer"]
+margin_right = 586.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+script = ExtResource( 27 )
+
+[node name="Graphics" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics"]
+margin_right = 586.0
+margin_bottom = 14.0
+text = "Graphics"
+
+[node name="ToggleFullscreen" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics"]
+margin_top = 18.0
+margin_right = 586.0
+margin_bottom = 32.0
+
+[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
+margin_right = 291.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Fullscreen"
+
+[node name="ToggleOn" type="TextureButton" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
+margin_left = 295.0
+margin_right = 586.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+texture_normal = ExtResource( 23 )
+texture_pressed = ExtResource( 23 )
+texture_hover = ExtResource( 23 )
+expand = true
+stretch_mode = 5
+
+[node name="ToggleOff" type="TextureButton" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
+visible = false
+margin_left = 260.0
+margin_right = 386.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+texture_normal = ExtResource( 24 )
+texture_pressed = ExtResource( 24 )
+texture_hover = ExtResource( 24 )
+expand = true
+stretch_mode = 5
+
+[node name="Audio" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer"]
+margin_top = 82.0
+margin_right = 586.0
+margin_bottom = 156.0
+size_flags_horizontal = 3
+script = ExtResource( 25 )
+
+[node name="Audio" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
+margin_right = 586.0
+margin_bottom = 14.0
+text = "Audio"
+
+[node name="Master" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
+margin_top = 18.0
+margin_right = 586.0
+margin_bottom = 34.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
+margin_top = 1.0
+margin_right = 288.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "Master"
+
+[node name="MasterSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
+margin_left = 298.0
+margin_right = 586.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+value = 50.0
+
+[node name="MasterSample" type="AudioStreamPlayer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
+stream = ExtResource( 31 )
+
+[node name="Sound" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
+margin_top = 38.0
+margin_right = 586.0
+margin_bottom = 54.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
+margin_top = 1.0
+margin_right = 288.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "Sound"
+
+[node name="SoundSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
+margin_left = 298.0
+margin_right = 586.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+value = 50.0
+
+[node name="SoundSample" type="AudioStreamPlayer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
+stream = ExtResource( 31 )
+bus = "Sound"
+
+[node name="Music" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
+margin_top = 58.0
+margin_right = 586.0
+margin_bottom = 74.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
+margin_top = 1.0
+margin_right = 288.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
+margin_left = 298.0
+margin_right = 586.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+value = 50.0
+
+[node name="MusicSample" type="AudioStreamPlayer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
+stream = ExtResource( 31 )
+bus = "Music"
 
 [node name="Fade" type="AnimationPlayer" parent="Foreground/Menu"]
-anims/FadeOut = SubResource( 5 )
+anims/FadeOut = SubResource( 3 )
 
 [node name="Black" type="ColorRect" parent="Foreground/Menu/Fade"]
 visible = false
@@ -527,7 +675,7 @@ script = ExtResource( 13 )
 [node name="Flame" type="AnimatedSprite" parent="Foreground/Elements/Rocket"]
 position = Vector2( 0, 316 )
 scale = Vector2( 2.5, 2.5 )
-frames = SubResource( 3 )
+frames = SubResource( 4 )
 animation = "flying"
 
 [node name="Rocket" type="Sprite" parent="Foreground/Elements/Rocket"]
@@ -537,12 +685,15 @@ texture = ExtResource( 10 )
 position = Vector2( 0, -30 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
-anims/flying = SubResource( 4 )
+anims/flying = SubResource( 5 )
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
+[connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master/MasterSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_MasterSlider_value_changed"]
+[connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound/SoundSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_SoundSlider_value_changed"]
+[connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music/MusicSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_MusicSlider_value_changed"]
 [connection signal="animation_finished" from="Foreground/Menu/Fade" to="Foreground/Menu" method="_on_Fade_animation_finished"]
 
 [editable path="Midground/MidgroundFar/Comet"]

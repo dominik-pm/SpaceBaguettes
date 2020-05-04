@@ -37,8 +37,9 @@ var settings = {
 		"fullscreen": false
 	},
 	"audio": {
-		"sound_volume": 0.5,
-		"music_volume": 0.5
+		"master_volume": 50.0,
+		"sound_volume": 50.0,
+		"music_volume": 50.0
 	}
 }
 

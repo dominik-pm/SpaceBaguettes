@@ -48,12 +48,18 @@ config/name="Space Baguettes"
 run/main_scene="res://Scenes/MainMenu/MainMenu.tscn"
 boot_splash/bg_color=Color( 0.333333, 0.333333, 0.333333, 1 )
 
+[audio]
+
+default_bus_layout="res://Ressources/default_bus_layout.tres"
+
 [autoload]
 
 Preloader="*res://Globals/Preloader.gd"
 Global="*res://Globals/Global.gd"
 Items="*res://Globals/Items.gd"
 Settings="*res://Globals/Settings.gd"
+SFX="*res://Globals/SFX.gd"
+Application="*res://Globals/Application.gd"
 
 [display]
 
