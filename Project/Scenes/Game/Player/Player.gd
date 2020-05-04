@@ -105,6 +105,7 @@ func get_item(item):
 func get_hit():
 	if not invincible:
 		print(pid + ": I just got hit!")
+		$Damage.play() #Plays Damage-Sound
 		
 		invincible = true
 		invincible_timer.start()
@@ -114,6 +115,7 @@ func get_hit():
 			_die()
 
 func _die():
+	$Death.play() #Plays Death-Sound
 	print(pid + ": im ded")
 
 func _on_ShootingDelay_timeout():
