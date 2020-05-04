@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Assets/Game/Baguette/Baguette Birdview.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Game/Baguette/Baguette.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Assets/Particles/whitePuff19.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Particles/Triangle.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Particles/trace_05.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sounds/Game/Shoot.wav" type="AudioStream" id=8]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.77512
@@ -199,3 +200,6 @@ texture = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/rattle = SubResource( 18 )
+
+[node name="Shoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )

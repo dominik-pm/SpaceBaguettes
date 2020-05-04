@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Game/Items/Item.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Game/Items/error.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Sounds/Game/PickUpItem.wav" type="AudioStream" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
@@ -39,5 +40,8 @@ region_rect = Rect2( 8, 8, 56, 56 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/fade = SubResource( 2 )
+
+[node name="PickUp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
 [connection signal="body_entered" from="PickupArea" to="." method="_on_PickupArea_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
