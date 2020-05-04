@@ -25,6 +25,7 @@ func _on_BtnExit_pressed():
 # <-- MAIN MENU BUTTONS --
 
 func _on_BtnBack_pressed():
+	Settings.save_settings()
 	play_menu.hide()
 	sett_menu.hide()
 	main_menu.show()

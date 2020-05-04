@@ -109,6 +109,9 @@ func create_explosion(p, dirs):
 	container.add_child(e)
 	e.init(p, dirs, Global.bomb_explosion_duration)
 
+func add_node(node):
+	container.add_child(node)
+
 func destroy_crate(tile):
 	var pos = crates.map_to_world(tile) + (cellsize/2)
 	

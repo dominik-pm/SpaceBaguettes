@@ -5,6 +5,7 @@ class_name Player
 export var SPEED = 150
 export var ACCEL = 0.8
 
+onready var anim_player = $AnimationPlayer
 onready var anim = $AnimatedSprite
 onready var hitbox = $HitBox
 onready var shooting_delay_timer = $ShootingDelay
@@ -81,7 +82,7 @@ func _input(event):
 func shoot(pos, player_pos):
 	var b = Preloader.baguette.instance()
 	b.init(game, self, facing)
-	get_tree().root.add_child(b)
+	game.add_node(b)
 	
 	b.add_collision_exception_with(hitbox)
 	
@@ -106,8 +107,11 @@ func get_hit():
 	if not invincible:
 		print(pid + ": I just got hit!")
 		
+		$HitBox/CollisionShape2D.disabled = true
+		
 		invincible = true
 		invincible_timer.start()
+		anim_player.play("invincible")
 		
 		health -= 1
 		if health <= 0:
@@ -120,6 +124,7 @@ func _on_ShootingDelay_timeout():
 	can_shoot = true
 
 func _on_HitInvincibleDuration_timeout():
+	anim_player.play("default")
 	invincible = false
 
 func _set_anim(d):

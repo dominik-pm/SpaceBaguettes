@@ -42,6 +42,9 @@ func _physics_process(delta):
 		elif collider is Bomb:
 			collider.explode()
 			destroy()
+		elif collider is Player:
+			# dont do anything, bc this is the environment collider for the player
+			pass
 		else:
 			# collider is a wall
 			game.bullet_hit(collision.position, dir)
