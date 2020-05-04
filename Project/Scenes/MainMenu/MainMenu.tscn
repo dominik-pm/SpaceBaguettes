@@ -117,6 +117,7 @@ position = Vector2( 960, 540 )
 current = true
 script = ExtResource( 17 )
 rocket_window = NodePath("../Foreground/Elements/Rocket/WindowCenter")
+speed = 40
 
 [node name="RelativeOrigin" type="Position2D" parent="Camera"]
 position = Vector2( -960, -540 )
@@ -166,21 +167,6 @@ layer = 0
 follow_viewport_enable = true
 follow_viewport_scale = 0.7
 
-[node name="Comet" parent="Midground/MidgroundFar" instance=ExtResource( 21 )]
-position = Vector2( 1824, -432 )
-rotation = -0.253073
-scale = Vector2( 0.1, 0.1 )
-relative_origin = NodePath("../../../Camera/RelativeOrigin")
-rot_off_sprite_left = true
-
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="Midground/MidgroundFar/Comet"]
-position = Vector2( 186.341, 36.8387 )
-scale = Vector2( 206.428, 56.7853 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundFar/Comet"]
-frames = SubResource( 1 )
-script = SubResource( 2 )
-
 [node name="Meteor" parent="Midground/MidgroundFar" instance=ExtResource( 21 )]
 position = Vector2( 416, -280 )
 rotation = 0.261799
@@ -190,8 +176,23 @@ relative_origin = NodePath("../../../Camera/RelativeOrigin")
 rotation_speed = 20
 
 [node name="VisibilityNotifier2D" parent="Midground/MidgroundFar/Meteor" index="0"]
-position = Vector2( -22.0534, 121.41 )
-scale = Vector2( 135.391, 108.046 )
+position = Vector2( -0.381403, -0.0731335 )
+scale = Vector2( 16.2754, 15.6116 )
+
+[node name="Comet" parent="Midground/MidgroundFar" instance=ExtResource( 21 )]
+position = Vector2( 1657.74, -875 )
+rotation = -0.253073
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+rot_off_sprite_left = true
+
+[node name="VisibilityNotifier2D" parent="Midground/MidgroundFar/Comet" index="0"]
+position = Vector2( -5.93709, 0.0838823 )
+scale = Vector2( 14.2064, 8.08997 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundFar/Comet"]
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 1 )
+script = SubResource( 2 )
 
 [node name="MidgroundMid" type="CanvasLayer" parent="Midground"]
 layer = 0
@@ -696,6 +697,6 @@ anims/flying = SubResource( 5 )
 [connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music/MusicSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_MusicSlider_value_changed"]
 [connection signal="animation_finished" from="Foreground/Menu/Fade" to="Foreground/Menu" method="_on_Fade_animation_finished"]
 
-[editable path="Midground/MidgroundFar/Comet"]
-
 [editable path="Midground/MidgroundFar/Meteor"]
+
+[editable path="Midground/MidgroundFar/Comet"]

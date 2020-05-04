@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Game/Game.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Game/Tiles/crate_blue.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Menu/Icons/plus.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Game/Items/ExtraLive.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Game/Bomb/bomb.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Game/Player/Front_idle.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Game/Baguette/Baguette.png" type="Texture" id=6]
@@ -12,6 +12,23 @@
 [ext_resource path="res://Assets/Game/Items/StrongerExplosions.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/Game/GUI/PlayerInfo.gd" type="Script" id=11]
 [ext_resource path="res://Scenes/Game/GUI/GameGUI.gd" type="Script" id=12]
+
+[sub_resource type="Animation" id=1]
+resource_name = "die"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.5, 0.5, 0.5, 1 ) ]
+}
 
 [node name="Game" type="Control"]
 anchor_right = 1.0
@@ -36,7 +53,7 @@ script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-player_info_containers = [ NodePath("LeftSide/VBoxContainer/PlayerInfo"), NodePath(""), NodePath(""), NodePath("") ]
+player_container1 = NodePath("LeftSide/VBoxContainer/PlayerInfo")
 
 [node name="LeftSide" type="Control" parent="GUI"]
 margin_right = 300.0
@@ -59,6 +76,14 @@ margin_right = 300.0
 margin_bottom = 146.0
 rect_min_size = Vector2( 300, 0 )
 script = ExtResource( 11 )
+player_icon = NodePath("VBoxContainer/PlayerStatus/PlayerIcon")
+lab_health = NodePath("VBoxContainer/PlayerStatus/VBoxContainer/HealthLabel")
+lab_bombs = NodePath("VBoxContainer/PlayerStatus/VBoxContainer2/BombsLabel")
+lab_baguettes = NodePath("VBoxContainer/PlayerStatus/VBoxContainer3/BaguettesLabel")
+lab_speed = NodePath("VBoxContainer/ItemContainer/SpeedLabel")
+lab_bomb_range = NodePath("VBoxContainer/ItemContainer/RangeLabel")
+lab_explosion_strength = NodePath("VBoxContainer/ItemContainer/ExplosionLabel")
+lab_bomb_move = NodePath("VBoxContainer/ItemContainer/MoveLabel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/LeftSide/VBoxContainer/PlayerInfo"]
 margin_left = 7.0
@@ -224,6 +249,9 @@ text = "3"
 align = 1
 valign = 1
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/LeftSide/VBoxContainer/PlayerInfo"]
+anims/die = SubResource( 1 )
+
 [node name="Main" type="Control" parent="GUI"]
 margin_left = 304.0
 margin_right = 1616.0
@@ -258,13 +286,14 @@ __meta__ = {
 size = Vector2( 1216, 848 )
 transparent_bg = true
 handle_input_locally = false
-msaa = 4
+msaa = 3
 disable_3d = true
 usage = 0
 render_target_update_mode = 3
 
 [node name="Game" parent="GUI/Main/CenterContainer/ViewportContainer2/Viewport" instance=ExtResource( 1 )]
 position = Vector2( 0, 16 )
+gui_path = NodePath("../../../../..")
 
 [node name="RightSide" type="Control" parent="GUI"]
 margin_left = 1620.0

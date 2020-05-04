@@ -59,17 +59,20 @@ func explode():
 	set_physics_process(false)
 
 func _on_PushArea_body_exited(body):
-	print("player exited")
-	remove_collision_exception_with(player)
-	can_collide = true
-	player.on_bomb = false
+	if body is player:
+		print("player exited")
+		remove_collision_exception_with(player)
+		can_collide = true
+		player.on_bomb = false
 
 func _on_PushArea_body_entered(body):
 	if can_collide:
-		print("player entered, pushing")
 		if body.is_in_group("PlayerHitbox"):
-			$Kick.play() #Play Kick Sound if hitted
-			vel = player.facing*push_force
+			var strength = body.player.bomb_moving_strength
+			if strength > 0:
+				print("player entered, pushing")
+				$Kick.play() # play kick sound when hitted
+				vel = player.facing*push_force*strength
 
 func _on_Explosion_animation_finished():
 	# small logic to only queue free, when the animation and the sound is finished

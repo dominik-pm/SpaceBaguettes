@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/error.png-cfc8619968834d879dcea157ec7a7cb9.stex"
+path="res://.import/ExtraLive.png-7822aa17e27106a48f2ed49c07398e35.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Game/Items/error.png"
-dest_files=[ "res://.import/error.png-cfc8619968834d879dcea157ec7a7cb9.stex" ]
+source_file="res://Assets/Game/Items/ExtraLive.png"
+dest_files=[ "res://.import/ExtraLive.png-7822aa17e27106a48f2ed49c07398e35.stex" ]
 
 [params]
 

@@ -25,6 +25,9 @@ func _ready():
 	lab_explosion_strength = get_node(lab_explosion_strength)
 	lab_bomb_move = get_node(lab_bomb_move)
 
+func died():
+	$AnimationPlayer.play("die")
+
 func update_health(h):
 	lab_health.text = str(h)
 func update_bombs(b):
@@ -37,6 +40,6 @@ func update_speed(s):
 func update_bomb_range(b):
 	lab_bomb_range.text = str(b)
 func update_explosion_strength(e):
-	lab_baguettes.text = str(e)
+	lab_explosion_strength.text = str(e)
 func update_bomb_move(b):
 	lab_bomb_move.text = str(b)

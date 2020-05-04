@@ -15,7 +15,7 @@ onready var invincible_timer = $HitInvincibleDuration
 var health = Global.player_maxhealth
 var max_bombs = Global.starting_bombs
 var bombs_active = 0
-var explosion_size = Global.starting_explosion_size
+var explosion_range = Global.starting_explosion_range
 var baguette_count = Global.starting_baguettes
 var can_place_bomb = true
 var can_shoot = true
@@ -24,7 +24,9 @@ var invincible = false
 var pid = "1"
 var vel = Vector2(0,0)
 var game
+var can_remove = false
 var on_bomb = false
+var bomb_moving_strength = 0
 var facing = Vector2(0,0)
 
 func _ready():
@@ -33,12 +35,23 @@ func _ready():
 	shooting_delay_timer.wait_time = Global.player_shoot_delay
 	invincible_timer.wait_time = Global.player_invincible_time
 
+
 func init(pos, p, f):
 	global_transform.origin = pos
 	pid = str(p)
-	print(pid)
 	# set right sprite color --
 	facing = f
+	
+	init_gui()
+
+func init_gui():
+	game.update_info(int(pid), Items.HEALTH, health)
+	game.update_info(int(pid), Items.MOREBOMBS, max_bombs)
+	game.update_info(int(pid), Items.BAGUETTES, baguette_count)
+	game.update_info(int(pid), Items.SPEED, 0) # not implemented
+	game.update_info(int(pid), Items.BOMBRANGE, explosion_range)
+	game.update_info(int(pid), Items.EXPLOSIONSTRENGTH, 0) # not implemented
+	game.update_info(int(pid), Items.BOMBMOVING, bomb_moving_strength)
 
 func _process(delta):
 	var dir = Vector2(0,0)
@@ -70,12 +83,12 @@ func _input(event):
 			bombs_active += 1
 			if bombs_active >= max_bombs:
 				can_place_bomb = false
-			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_size)
+			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range)
 	
 	if event.is_action_pressed(pid+"shoot") and can_shoot and baguette_count > 0:
 		can_shoot = false
 		baguette_count -= 1
-		print(pid+": baguettes left: " + str(baguette_count))
+		game.update_info(int(pid), Items.BAGUETTES, baguette_count)
 		shooting_delay_timer.start()
 		var pos = game.get_shoot_pos(global_transform.origin)
 		shoot(pos, global_transform.origin)
@@ -98,11 +111,33 @@ func bomb_exploded():
 	can_place_bomb = true
 
 func get_item(item):
+	var value = 0
+	
 	match item:
-		Items.TESTBUFF:
-			print(pid+": got test buff")
+		Items.HEALTH:
+			if health < Global.player_maxhealth:
+				health += 1
+			value = health
+		Items.MOREBOMBS:
+			max_bombs += 1
+			value = max_bombs
+		Items.BAGUETTES:
+			baguette_count += 1
+			value = baguette_count
+		Items.SPEED:
+			pass
+		Items.BOMBRANGE:
+			explosion_range += 1
+			value = explosion_range - Global.starting_explosion_range
+		Items.EXPLOSIONSTRENGTH:
+			pass
+		Items.BOMBMOVING:
+			bomb_moving_strength += 1
+			value = bomb_moving_strength
 		_:
 			print(pid+": "+str(item)+" is not implemented!")
+	
+	game.update_info(int(pid), item, value)
 
 func get_hit():
 	if not invincible:
@@ -116,12 +151,17 @@ func get_hit():
 		anim_player.play("invincible", -1, 0.9/Global.player_invincible_time)
 		
 		health -= 1
+		game.update_info(int(pid), Items.HEALTH, health)
 		if health <= 0:
 			_die()
 
 func _die():
-	$Death.play() #Plays Death-Sound
-	print(pid + ": im ded")
+	# play death sound
+	$Death.play()
+	# tell the game
+	game.player_died(int(pid))
+	# death animation
+	$AnimationPlayer.play("die")
 
 func _on_ShootingDelay_timeout():
 	can_shoot = true
@@ -130,6 +170,17 @@ func _on_HitInvincibleDuration_timeout():
 	anim_player.play("default")
 	hitbox_col.set_deferred("disabled", false)
 	invincible = false
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "die":
+		if can_remove:
+			queue_free()
+		can_remove = true
+
+func _on_Death_finished():
+	if can_remove:
+		queue_free()
+	can_remove = true
 
 func _set_anim(d):
 	# d is the moving direction
