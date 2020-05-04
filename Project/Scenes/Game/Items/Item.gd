@@ -5,6 +5,7 @@ class_name Item
 var item
 
 var taken = false
+var can_free = false
 
 func init(i):
 	item = i
@@ -12,9 +13,9 @@ func init(i):
 
 func _on_PickupArea_body_entered(body):
 	if not taken:
-		if body is PlayerHitbox:
+		if body is Player:
 			$PickUp.play() #play pick up sound
-			body.player.get_item(item)
+			body.get_item(item)
 			taken = true
 			fade_out()
 
@@ -22,4 +23,12 @@ func fade_out():
 	$AnimationPlayer.play("fade")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	queue_free()
+	# small logic to only queue free, when the animation and the sound is finished
+	if can_free:
+		queue_free()
+	can_free = true
+
+func _on_PickUp_finished():
+	if can_free:
+		queue_free()
+	can_free = true

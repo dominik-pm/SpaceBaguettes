@@ -8,6 +8,7 @@ export var ACCEL = 0.8
 onready var anim_player = $AnimationPlayer
 onready var anim = $AnimatedSprite
 onready var hitbox = $HitBox
+onready var hitbox_col = $HitBox/CollisionShape2D
 onready var shooting_delay_timer = $ShootingDelay
 onready var invincible_timer = $HitInvincibleDuration
 
@@ -108,11 +109,11 @@ func get_hit():
 		print(pid + ": I just got hit!")
 		$Damage.play() #Plays Damage-Sound
 		
-		$HitBox/CollisionShape2D.disabled = true
+		hitbox_col.set_deferred("disabled", true)
 		
 		invincible = true
 		invincible_timer.start()
-		anim_player.play("invincible")
+		anim_player.play("invincible", -1, 0.9/Global.player_invincible_time)
 		
 		health -= 1
 		if health <= 0:
@@ -127,6 +128,7 @@ func _on_ShootingDelay_timeout():
 
 func _on_HitInvincibleDuration_timeout():
 	anim_player.play("default")
+	hitbox_col.set_deferred("disabled", false)
 	invincible = false
 
 func _set_anim(d):

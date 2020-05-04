@@ -2,9 +2,11 @@ extends KinematicBody2D
 
 class_name Bomb
 
-var explosion_size
+onready var anim = $AnimationPlayer
 
+var explosion_size
 var can_collide = false
+var can_free = false
 
 # -- pushing --
 var vel = Vector2(0,0)
@@ -15,6 +17,7 @@ var game
 var player
 
 func _ready():
+	$ExplodingTimer.wait_time = Global.bomb_explosion_time
 	$ExplodingTimer.start()
 	$Place.play()
 	# start anim for bomb ---
@@ -24,6 +27,7 @@ func init(g, p, s):
 	player = p
 	explosion_size = s
 	add_collision_exception_with(player)
+	anim.play("init", -1, 1.0/Global.bomb_explosion_time)
 
 func _physics_process(delta):
 	if can_collide:
@@ -54,9 +58,6 @@ func explode():
 	$HitBox.disabled = true
 	set_physics_process(false)
 
-func _on_Explosion_animation_finished():
-	queue_free()
-
 func _on_PushArea_body_exited(body):
 	print("player exited")
 	remove_collision_exception_with(player)
@@ -69,3 +70,14 @@ func _on_PushArea_body_entered(body):
 		if body.is_in_group("PlayerHitbox"):
 			$Kick.play() #Play Kick Sound if hitted
 			vel = player.facing*push_force
+
+func _on_Explosion_animation_finished():
+	# small logic to only queue free, when the animation and the sound is finished
+	if can_free:
+		queue_free()
+	can_free = true
+
+func _on_ExplosionSound_finished():
+	if can_free:
+		queue_free()
+	can_free = true

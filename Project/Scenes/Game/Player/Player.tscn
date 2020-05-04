@@ -34,30 +34,30 @@ animations = [ {
 "name": "runningRight",
 "speed": 6.0
 }, {
-"frames": [ ExtResource( 8 ) ],
+"frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "idleLeft",
-"speed": 3.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 8 ) ],
-"loop": true,
-"name": "runningLeft",
-"speed": 6.0
+"name": "idleRight",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 11 ), ExtResource( 2 ) ],
 "loop": true,
 "name": "runningDown",
 "speed": 6.0
 }, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "idleRight",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "idleUp",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "runningLeft",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "idleLeft",
+"speed": 3.0
 }, {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
@@ -87,6 +87,9 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=6]
 resource_name = "invincible"
+length = 0.9
+loop = true
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:modulate")
 tracks/0/interp = 1
@@ -94,10 +97,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.5 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.5 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.5 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.5 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [node name="Player" type="KinematicBody2D"]

@@ -23,6 +23,7 @@ func _ready():
 func init(g, p, d):
 	game = g
 	add_collision_exception_with(p)
+	add_collision_exception_with(p.hitbox)
 	dir = d
 	
 	if dir.x == 0:
