@@ -16,6 +16,7 @@ var player
 
 func _ready():
 	$ExplodingTimer.start()
+	$Place.play()
 	# start anim for bomb ---
 
 func init(g, p, s):
@@ -37,6 +38,7 @@ func _on_ExplodingTimer_timeout():
 
 func explode():
 	$ExplodingTimer.stop()
+	$ExplosionSound.play() #Plays Explosions-Sound if function is called
 	
 	# tell the player
 	player.bomb_exploded()
@@ -65,4 +67,5 @@ func _on_PushArea_body_entered(body):
 	if can_collide:
 		print("player entered, pushing")
 		if body.is_in_group("PlayerHitbox"):
+			$Kick.play() #Play Kick Sound if hitted
 			vel = player.facing*push_force

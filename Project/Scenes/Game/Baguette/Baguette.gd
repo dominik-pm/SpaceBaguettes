@@ -9,6 +9,7 @@ var dir
 
 func _ready():
 	$AnimationPlayer.play("rattle")
+	$Shoot.play() #plays shoot sound
 	
 	look_at(dir)
 	

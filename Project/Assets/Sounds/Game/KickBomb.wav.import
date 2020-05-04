@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Damage2.wav-61a9622b9bf7f241ca6cca96b5a3eada.sample"
+path="res://.import/KickBomb.wav-94a934fb21ba82ba86991914861b1fef.sample"
 
 [deps]
 
-source_file="res://Assets/Sounds/Game/Damage2.wav"
-dest_files=[ "res://.import/Damage2.wav-61a9622b9bf7f241ca6cca96b5a3eada.sample" ]
+source_file="res://Assets/Sounds/Game/KickBomb.wav"
+dest_files=[ "res://.import/KickBomb.wav-94a934fb21ba82ba86991914861b1fef.sample" ]
 
 [params]
 
