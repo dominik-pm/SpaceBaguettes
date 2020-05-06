@@ -60,7 +60,7 @@ func _process(delta):
 	else:
 		apply_movement(axis*ACCEL*delta)
 	motion = move_and_slide(motion)
-	
+	 
 	if axis != Vector2.ZERO:
 		facing = axis
 	
