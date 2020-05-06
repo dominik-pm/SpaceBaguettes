@@ -1,7 +1,5 @@
 extends PanelContainer
 
-var player = 1
-
 export (NodePath) var player_icon
 
 export (NodePath) var lab_health
@@ -14,8 +12,6 @@ export (NodePath) var lab_explosion_strength
 export (NodePath) var lab_bomb_move
 
 func _ready():
-	get_node(player_icon).texture = load(Global.player_icon_paths["player"+str(player)])
-	
 	lab_health = get_node(lab_health)
 	lab_bombs = get_node(lab_bombs)
 	lab_baguettes = get_node(lab_baguettes)
@@ -24,6 +20,9 @@ func _ready():
 	lab_bomb_range = get_node(lab_bomb_range)
 	lab_explosion_strength = get_node(lab_explosion_strength)
 	lab_bomb_move = get_node(lab_bomb_move)
+
+func init(pid):
+	get_node(player_icon).texture = load(Global.player_icon_paths["player"+str(pid)])
 
 func died():
 	$AnimationPlayer.play("die")

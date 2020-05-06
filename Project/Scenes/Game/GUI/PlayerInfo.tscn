@@ -1,0 +1,213 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/Game/Items/FastBoots.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Game/UI/HeartIcon.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Game/Items/StrongerExplosions.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Game/Items/BombMove.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Game/Items/BombRange.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Game/Bomb/bomb.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Game/Player/Front_idle.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Game/Baguette/Baguette.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/Game/GUI/PlayerInfo.gd" type="Script" id=9]
+
+[sub_resource type="Animation" id=1]
+resource_name = "die"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.5, 0.5, 0.5, 1 ) ]
+}
+
+[node name="PlayerInfo" type="PanelContainer"]
+margin_right = 300.0
+margin_bottom = 146.0
+rect_min_size = Vector2( 300, 0 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+player_icon = NodePath("VBoxContainer/PlayerStatus/PlayerIcon")
+lab_health = NodePath("VBoxContainer/PlayerStatus/VBoxContainer/HealthLabel")
+lab_bombs = NodePath("VBoxContainer/PlayerStatus/VBoxContainer2/BombsLabel")
+lab_baguettes = NodePath("VBoxContainer/PlayerStatus/VBoxContainer3/BaguettesLabel")
+lab_speed = NodePath("VBoxContainer/ItemContainer/SpeedLabel")
+lab_bomb_range = NodePath("VBoxContainer/ItemContainer/RangeLabel")
+lab_explosion_strength = NodePath("VBoxContainer/ItemContainer/ExplosionLabel")
+lab_bomb_move = NodePath("VBoxContainer/ItemContainer/MoveLabel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 293.0
+margin_bottom = 139.0
+
+[node name="PlayerStatus" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 286.0
+margin_bottom = 96.0
+custom_constants/separation = 25
+
+[node name="PlayerIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus"]
+margin_right = 96.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
+margin_left = 121.0
+margin_right = 153.0
+margin_bottom = 96.0
+alignment = 1
+
+[node name="HealthIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus/VBoxContainer"]
+modulate = Color( 0.905882, 0.298039, 0.235294, 1 )
+margin_top = 23.0
+margin_right = 32.0
+margin_bottom = 55.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="HealthLabel" type="Label" parent="VBoxContainer/PlayerStatus/VBoxContainer"]
+margin_top = 59.0
+margin_right = 32.0
+margin_bottom = 73.0
+text = "3"
+align = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
+margin_left = 178.0
+margin_right = 210.0
+margin_bottom = 96.0
+alignment = 1
+
+[node name="BombsIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus/VBoxContainer2"]
+margin_top = 23.0
+margin_right = 32.0
+margin_bottom = 55.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 6
+
+[node name="BombsLabel" type="Label" parent="VBoxContainer/PlayerStatus/VBoxContainer2"]
+margin_top = 59.0
+margin_right = 32.0
+margin_bottom = 73.0
+text = "3"
+align = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
+margin_left = 235.0
+margin_right = 267.0
+margin_bottom = 96.0
+alignment = 1
+
+[node name="BaguettesIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus/VBoxContainer3"]
+margin_top = 23.0
+margin_right = 32.0
+margin_bottom = 55.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+
+[node name="BaguettesLabel" type="Label" parent="VBoxContainer/PlayerStatus/VBoxContainer3"]
+margin_top = 59.0
+margin_right = 32.0
+margin_bottom = 73.0
+text = "3"
+align = 1
+
+[node name="ItemContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 100.0
+margin_right = 286.0
+margin_bottom = 132.0
+
+[node name="Speed" type="TextureRect" parent="VBoxContainer/ItemContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="SpeedLabel" type="Label" parent="VBoxContainer/ItemContainer"]
+margin_left = 36.0
+margin_top = 9.0
+margin_right = 44.0
+margin_bottom = 23.0
+text = "3"
+align = 1
+valign = 1
+
+[node name="Range" type="TextureRect" parent="VBoxContainer/ItemContainer"]
+margin_left = 48.0
+margin_right = 80.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
+
+[node name="RangeLabel" type="Label" parent="VBoxContainer/ItemContainer"]
+margin_left = 84.0
+margin_top = 9.0
+margin_right = 92.0
+margin_bottom = 23.0
+text = "3"
+align = 1
+valign = 1
+
+[node name="Explosions" type="TextureRect" parent="VBoxContainer/ItemContainer"]
+margin_left = 96.0
+margin_right = 128.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="ExplosionLabel" type="Label" parent="VBoxContainer/ItemContainer"]
+margin_left = 132.0
+margin_top = 9.0
+margin_right = 140.0
+margin_bottom = 23.0
+text = "3"
+align = 1
+valign = 1
+
+[node name="Move" type="TextureRect" parent="VBoxContainer/ItemContainer"]
+margin_left = 144.0
+margin_right = 176.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="MoveLabel" type="Label" parent="VBoxContainer/ItemContainer"]
+margin_left = 180.0
+margin_top = 9.0
+margin_right = 188.0
+margin_bottom = 23.0
+text = "3"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/die = SubResource( 1 )

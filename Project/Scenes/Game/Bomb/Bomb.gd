@@ -59,7 +59,7 @@ func explode():
 	set_physics_process(false)
 
 func _on_PushArea_body_exited(body):
-	if body is player:
+	if body == player:
 		print("player exited")
 		remove_collision_exception_with(player)
 		can_collide = true

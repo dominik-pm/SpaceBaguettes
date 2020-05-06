@@ -15,7 +15,7 @@ enum {
 
 var icons = {
 	TESTBUFF: ICON_PATH + "error.png",
-	HEALTH: ICON_PATH + "Health.png",
+	HEALTH: ICON_PATH + "ExtraLive.png",
 	MOREBOMBS: ICON_PATH + "MoreBombs.png",
 	BAGUETTES: ICON_PATH + "Baguette.png",
 	SPEED: ICON_PATH + "FastBoots.png",

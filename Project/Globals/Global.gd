@@ -11,7 +11,7 @@ var player_icon_paths = {
 }
 
 # -- GAME SETTINGS --
-var player_count = 1
+var player_count = 2
 
 var player_maxhealth = 3
 var player_shoot_delay = 1

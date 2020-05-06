@@ -35,7 +35,6 @@ func _ready():
 	shooting_delay_timer.wait_time = Global.player_shoot_delay
 	invincible_timer.wait_time = Global.player_invincible_time
 
-
 func init(pos, p, f):
 	global_transform.origin = pos
 	pid = str(p)

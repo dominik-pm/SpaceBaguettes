@@ -1,13 +1,28 @@
 extends HBoxContainer
 
 export (NodePath) var player_container1
+export (NodePath) var player_container2
+export (NodePath) var player_container3
+export (NodePath) var player_container4
 var player_infos = []
 
 func _ready():
 	pass
 
-func update_info(pid : int, item, value):
+func init_player_gui():
 	player_infos.push_back(get_node(player_container1))
+	player_infos.push_back(get_node(player_container2))
+	player_infos.push_back(get_node(player_container3))
+	player_infos.push_back(get_node(player_container4))
+	
+	for i in range(Global.player_count):
+		player_infos[i].init(i+1)
+	for i in range(Global.player_count, 4):
+		player_infos[i].hide()
+
+func update_info(pid : int, item, value):
+	if player_infos == []:
+		init_player_gui()
 	
 	var p = player_infos[pid-1]
 	match item:

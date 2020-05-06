@@ -31,17 +31,20 @@ func _ready():
 	#cam.limit_right = pos2.transform.origin.x
 	#cam.limit_bottom = pos2.transform.origin.y
 	
-	init_players()
-
-func init_players():
 	players_alive = Global.player_count
-	for i in players_alive:
+	init_players(players_alive)
+
+func init_players(cnt):
+	for i in cnt:
 		var p = spawns[i].global_transform.origin
 		var t = crates.world_to_map(p)
 		var pos = crates.map_to_world(t) + Vector2(32, 32)
 		var player = Preloader.player.instance()
 		player_container.add_child(player)
-		player.init(pos, i+1, Vector2((i+1)%2, 0))
+		var dir = Vector2(1, 0)
+		if i%2 != 0:
+			dir = Vector2(-1, 0)
+		player.init(pos, i+1, dir)
 
 # -- player called -->
 func update_info(player : int, item, value):
