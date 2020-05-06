@@ -68,16 +68,17 @@ func _process(delta):
 	
 	var target = motion*SPEED
 	
-	# something with accel here
 	vel = target
-	
-func get_input_axis(): #Returns which direction the player is going to go
+
+# returns which direction the player is going to go
+func get_input_axis():
 	var axis = Vector2.ZERO
 	axis.x = int(Input.is_action_pressed(pid +"move_right")) - int(Input.is_action_pressed(pid+"move_left"))
 	axis.y = int(Input.is_action_pressed(pid+"move_backward")) - int(Input.is_action_pressed(pid+"move_forward"))
 	return axis.normalized()
-	
-func apply_friction(amount): #Reduces the Current Speed
+
+# reduces the Current Speed
+func apply_friction(amount):
 	if motion.length() > amount:
 		motion -= motion.normalized() * amount
 	else:
