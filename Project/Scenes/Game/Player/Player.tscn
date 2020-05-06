@@ -34,9 +34,19 @@ animations = [ {
 "name": "runningRight",
 "speed": 6.0
 }, {
+"frames": [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "runningLeft",
+"speed": 6.0
+}, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
 "name": "idleRight",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "idleDown",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 11 ), ExtResource( 2 ) ],
@@ -44,25 +54,15 @@ animations = [ {
 "name": "runningDown",
 "speed": 6.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 8 ) ],
+"frames": [ ExtResource( 9 ), ExtResource( 7 ) ],
 "loop": true,
-"name": "runningLeft",
-"speed": 6.0
+"name": "runningUp",
+"speed": 4.0
 }, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "idleLeft",
 "speed": 3.0
-}, {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "idleDown",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 9 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "runningUp",
-"speed": 4.0
 }, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
@@ -85,7 +85,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "die"
 length = 0.5
 step = 0.05
@@ -102,8 +102,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "invincible"
+[sub_resource type="Animation" id=7]
 length = 0.9
 loop = true
 step = 0.05
@@ -162,8 +161,8 @@ stream = ExtResource( 15 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/default = SubResource( 5 )
-anims/die = SubResource( 7 )
-anims/invincible = SubResource( 6 )
+anims/die = SubResource( 6 )
+anims/invincible = SubResource( 7 )
 [connection signal="timeout" from="ShootingDelay" to="." method="_on_ShootingDelay_timeout"]
 [connection signal="timeout" from="HitInvincibleDuration" to="." method="_on_HitInvincibleDuration_timeout"]
 [connection signal="finished" from="Death" to="." method="_on_Death_finished"]

@@ -2,8 +2,8 @@ extends KinematicBody2D
 
 class_name Player
 
-export var SPEED = 150
-export var ACCEL = 0.8
+export var SPEED = 200 #MaxSpeed
+export var ACCEL = 2000 #Acceleration
 
 onready var anim_player = $AnimationPlayer
 onready var anim = $AnimatedSprite
@@ -20,6 +20,7 @@ var baguette_count = Global.starting_baguettes
 var can_place_bomb = true
 var can_shoot = true
 var invincible = false
+var motion = Vector2.ZERO #The Direction which the player goes
 
 var pid = "1"
 var vel = Vector2(0,0)
@@ -53,27 +54,38 @@ func init_gui():
 	game.update_info(int(pid), Items.BOMBMOVING, bomb_moving_strength)
 
 func _process(delta):
-	var dir = Vector2(0,0)
-	if Input.is_action_pressed(pid+"move_left"):
-		dir = Vector2(-1, 0)
-	if Input.is_action_pressed(pid+"move_right"):
-		dir = Vector2(1, 0)
-	if Input.is_action_pressed(pid+"move_forward"):
-		dir = Vector2(0, -1)
-	if Input.is_action_pressed(pid+"move_backward"):
-		dir = Vector2(0, 1)
+	var axis = get_input_axis()
+	if axis == Vector2.ZERO:
+		apply_friction(ACCEL*delta)
+	else:
+		apply_movement(axis*ACCEL*delta)
+	motion = move_and_slide(motion)
 	
-	if dir != Vector2(0,0):
-		facing = dir
+	if axis != Vector2.ZERO:
+		facing = axis
 	
-	_set_anim(dir)
+	_set_anim(axis)
 	
-	var target = dir*SPEED
+	var target = motion*SPEED
 	
 	# something with accel here
 	vel = target
 	
-	vel = move_and_slide(vel, Vector2.UP)
+func get_input_axis(): #Returns which direction the player is going to go
+	var axis = Vector2.ZERO
+	axis.x = int(Input.is_action_pressed(pid +"move_right")) - int(Input.is_action_pressed(pid+"move_left"))
+	axis.y = int(Input.is_action_pressed(pid+"move_backward")) - int(Input.is_action_pressed(pid+"move_forward"))
+	return axis.normalized()
+	
+func apply_friction(amount): #Reduces the Current Speed
+	if motion.length() > amount:
+		motion -= motion.normalized() * amount
+	else:
+		motion = Vector2.ZERO
+	
+func apply_movement(accel): #Apply Speed
+	motion += accel
+	motion = motion.clamped(SPEED)
 
 func _input(event):
 	if event.is_action_pressed(pid+"set_bomb") and can_place_bomb:
