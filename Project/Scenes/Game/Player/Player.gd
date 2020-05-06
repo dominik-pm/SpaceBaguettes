@@ -83,8 +83,9 @@ func apply_friction(amount):
 		motion -= motion.normalized() * amount
 	else:
 		motion = Vector2.ZERO
-	
-func apply_movement(accel): #Apply Speed
+
+# apply Speed
+func apply_movement(accel):
 	motion += accel
 	motion = motion.clamped(SPEED)
 
