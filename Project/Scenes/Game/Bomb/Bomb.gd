@@ -33,7 +33,7 @@ func _physics_process(delta):
 	if can_collide:
 		var collision = move_and_collide(vel*delta)
 		if collision:
-			if collision.collider.is_in_group("PlayerHitbox"):
+			if collision.collider is Player:
 				vel = player.facing*push_force
 				#apply_impulse(player.facing, push_force) # would prob be better (but doesnt work with kinematic body)
 
