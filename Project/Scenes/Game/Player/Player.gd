@@ -21,6 +21,7 @@ var can_place_bomb = true
 var can_shoot = true
 var invincible = false
 var motion = Vector2.ZERO # the Direction which the player goes
+var lastMove # last used direction
 
 var speed_buffs = 0 # so viele speed buffs ma schau hod
 var speed_buff = 50 # der buff der pro item zum speed dazua kummt
@@ -76,6 +77,25 @@ func _process(delta):
 # returns which direction the player is going to go
 func get_input_axis():
 	var axis = Vector2.ZERO
+	
+	if Input.is_action_just_pressed(pid + "move_forward"):
+		lastMove = pid+"move_forward"
+	elif Input.is_action_just_pressed(pid + "move_backward"):
+		lastMove = pid+"move_backward"
+	elif Input.is_action_just_pressed(pid + "move_right"):
+		lastMove = pid+"move_right"
+	elif Input.is_action_just_pressed(pid + "move_left"):
+		lastMove = pid+"move_left"
+	
+	if Input.is_action_pressed(pid + "move_forward") and lastMove == pid + "move_forward":
+		axis.y = -1
+	elif Input.is_action_pressed(pid + "move_backward") and lastMove == pid + "move_backward":
+		axis.y = 1
+	elif Input.is_action_pressed(pid + "move_right") and lastMove == pid + "move_right":
+		axis.x = 1
+	elif Input.is_action_pressed(pid + "move_left") and lastMove == pid + "move_left":
+		axis.x = -1
+	
 	if Input.is_action_pressed(pid + "move_forward"):
 		axis.y = -1
 	elif Input.is_action_pressed(pid + "move_backward"):
