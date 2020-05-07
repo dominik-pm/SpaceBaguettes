@@ -2,8 +2,7 @@ extends KinematicBody2D
 
 class_name Player
 
-export var SPEED = 200 # max speed
-export var ACCEL = 4000 # acceleration
+export var SPEED = 200 # Speed of the player
 
 onready var anim_player = $AnimationPlayer
 onready var anim = $PlayerSprite
@@ -23,8 +22,8 @@ var invincible = false
 var motion = Vector2.ZERO # the Direction which the player goes
 var lastMove # last used direction
 
-var speed_buffs = 0 # so viele speed buffs ma schau hod
-var speed_buff = 50 # der buff der pro item zum speed dazua kummt
+var speed_buffs = 0 # the current speed buffs
+var speed_buff = 20 # the speed, which gets added when item pick up
 
 var pid = "1"
 var vel = Vector2(0,0)
@@ -59,10 +58,8 @@ func init_gui():
 
 func _process(delta):
 	var axis = get_input_axis()
-	if axis == Vector2.ZERO:
-		apply_friction(ACCEL*delta)
-	else:
-		apply_movement(axis*ACCEL*delta)
+	apply_friction(SPEED)
+	apply_movement(axis*SPEED)
 	motion = move_and_slide(motion)
 	
 	if axis != Vector2.ZERO:
@@ -149,10 +146,12 @@ func shoot(pos, player_pos):
 	else:# player.facing.y == 0:
 		b.global_transform.origin = Vector2(player_pos.x, pos.y)
 
+# when one of current bombs explode
 func bomb_exploded():
 	bombs_active -= 1
 	can_place_bomb = true
 
+#if item gets picked up
 func get_item(item):
 	var value = 0
 	
@@ -168,7 +167,10 @@ func get_item(item):
 			baguette_count += 1
 			value = baguette_count
 		Items.SPEED:
-			pass
+			if speed_buffs <= Global.player_max_speed_buffs:
+				speed_buffs += 1
+				SPEED += speed_buff
+			value = speed_buffs
 		Items.BOMBRANGE:
 			explosion_range += 1
 			value = explosion_range - Global.starting_explosion_range

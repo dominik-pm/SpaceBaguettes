@@ -16,6 +16,7 @@ var player_count = 2
 var player_maxhealth = 3
 var player_shoot_delay = 1
 var player_invincible_time = 3
+var player_max_speed_buffs = 10
 
 var starting_explosion_range = 3
 var bomb_explosion_time = 3

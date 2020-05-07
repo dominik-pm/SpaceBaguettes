@@ -108,7 +108,7 @@ func _destroy_crate(tile):
 	var i = Preloader.item.instance()
 	container.add_child(i)
 	i.global_transform.origin = pos
-	i.init(Items.MOREBOMBS)
+	i.init(Items.SPEED)
 
 # bomb called
 func explode(p, r):
