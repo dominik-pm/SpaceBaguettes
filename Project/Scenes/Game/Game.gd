@@ -52,9 +52,12 @@ func update_info(player : int, item, value):
 		gui.update_info(player, item, value)
 func player_died(player : int):
 	players_alive -= 1
-	if players_alive <= 0:
+	if players_alive <= 1:
 		game_over = true
 		print("game over")
+		# todo: 
+		# 1 get winning player
+		# 2 
 	if gui != null:
 		gui.remove_player(player)
 func get_shoot_pos(p):

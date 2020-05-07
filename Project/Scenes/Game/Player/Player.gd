@@ -205,6 +205,10 @@ func _die():
 	game.player_died(int(pid))
 	# death animation
 	$AnimationPlayer.play("die")
+	# disable movement/collisions
+	set_process(false)
+	hitbox_col.set_deferred("disabled", true)
+	$EnvironmentCollider.set_deferred("disabled", true)
 
 func _on_ShootingDelay_timeout():
 	can_shoot = true

@@ -42,7 +42,7 @@ func _on_ExplodingTimer_timeout():
 
 func explode():
 	$ExplodingTimer.stop()
-	$ExplosionSound.play() #Plays Explosions-Sound if function is called
+	$ExplosionSound.play()
 	
 	# tell the player
 	player.bomb_exploded()
@@ -60,15 +60,16 @@ func explode():
 
 func _on_PushArea_body_exited(body):
 	if body == player:
-		print("player exited")
 		remove_collision_exception_with(player)
 		can_collide = true
 		player.on_bomb = false
 
 func _on_PushArea_body_entered(body):
 	if can_collide:
-		if body.is_in_group("PlayerHitbox"):
-			var strength = body.player.bomb_moving_strength
+		#if body.is_in_group("PlayerHitbox"):
+		if body is Player:
+			#var strength = body.player.bomb_moving_strength
+			var strength = body.bomb_moving_strength
 			if strength > 0:
 				print("player entered, pushing")
 				$Kick.play() # play kick sound when hitted
