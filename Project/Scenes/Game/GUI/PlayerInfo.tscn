@@ -10,6 +10,8 @@
 [ext_resource path="res://Assets/Game/Baguette/Baguette.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Game/GUI/PlayerInfo.gd" type="Script" id=9]
 
+
+
 [sub_resource type="Animation" id=1]
 resource_name = "die"
 length = 0.25

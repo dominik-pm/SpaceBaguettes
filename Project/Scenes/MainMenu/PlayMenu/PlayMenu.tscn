@@ -12,6 +12,8 @@
 [ext_resource path="res://Assets/Menu/Icons/gamepad4.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Menu/Icons/gamepad3.png" type="Texture" id=11]
 
+
+
 [node name="PlayMenu" type="PanelContainer"]
 anchor_left = 0.5
 anchor_top = 0.5

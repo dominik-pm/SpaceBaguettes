@@ -2,11 +2,11 @@ extends KinematicBody2D
 
 class_name Player
 
-export var SPEED = 200 #MaxSpeed
-export var ACCEL = 4000 #Acceleration
+export var SPEED = 200 # max speed
+export var ACCEL = 4000 # acceleration
 
 onready var anim_player = $AnimationPlayer
-onready var anim = $AnimatedSprite
+onready var anim = $PlayerSprite
 onready var hitbox = $HitBox
 onready var hitbox_col = $HitBox/CollisionShape2D
 onready var shooting_delay_timer = $ShootingDelay
@@ -21,6 +21,9 @@ var can_place_bomb = true
 var can_shoot = true
 var invincible = false
 var motion = Vector2.ZERO # the Direction which the player goes
+
+var speed_buffs = 0 # so viele speed buffs ma schau hod
+var speed_buff = 50 # der buff der pro item zum speed dazua kummt
 
 var pid = "1"
 var vel = Vector2(0,0)
@@ -39,7 +42,7 @@ func _ready():
 func init(pos, p, f):
 	global_transform.origin = pos
 	pid = str(p)
-	# set right sprite color --
+	anim.init(int(pid))
 	facing = f
 	
 	init_gui()
@@ -84,14 +87,14 @@ func get_input_axis():
 
 	return axis.normalized()
 
-# reduces the Current Speed
+# reduces the current speed
 func apply_friction(amount):
 	if motion.length() > amount:
 		motion -= motion.normalized() * amount
 	else:
 		motion = Vector2.ZERO
 
-# apply Speed
+# apply speed
 func apply_movement(accel):
 	motion += accel
 	motion = motion.clamped(SPEED)
