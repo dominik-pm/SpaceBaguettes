@@ -50,11 +50,21 @@
 [ext_resource path="res://Assets/Game/Player/Player3/Back_run02.png" type="Texture" id=48]
 [ext_resource path="res://Assets/Game/Player/Player4/Front_run02.png" type="Texture" id=49]
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 22 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "runningRight",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 25 ) ],
+"loop": true,
+"name": "runningUp",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 4 ), ExtResource( 23 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "runningLeft",
 "speed": 6.0
 }, {
 "frames": [ ExtResource( 21 ) ],
@@ -77,27 +87,27 @@ animations = [ {
 "name": "runningDown",
 "speed": 6.0
 }, {
-"frames": [ ExtResource( 3 ), ExtResource( 25 ) ],
-"loop": true,
-"name": "runningUp",
-"speed": 4.0
-}, {
 "frames": [ ExtResource( 7 ) ],
 "loop": true,
 "name": "idleDown",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 20 ), ExtResource( 4 ), ExtResource( 23 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "runningLeft",
-"speed": 6.0
 } ]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 34 ), ExtResource( 26 ), ExtResource( 33 ), ExtResource( 26 ) ],
 "loop": true,
 "name": "runningRight",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 37 ), ExtResource( 36 ) ],
+"loop": true,
+"name": "runningUp",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 32 ), ExtResource( 30 ), ExtResource( 35 ), ExtResource( 30 ) ],
+"loop": true,
+"name": "runningLeft",
 "speed": 6.0
 }, {
 "frames": [ ExtResource( 31 ) ],
@@ -120,20 +130,10 @@ animations = [ {
 "name": "runningDown",
 "speed": 6.0
 }, {
-"frames": [ ExtResource( 37 ), ExtResource( 36 ) ],
-"loop": true,
-"name": "runningUp",
-"speed": 4.0
-}, {
 "frames": [ ExtResource( 29 ) ],
 "loop": true,
 "name": "idleDown",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 32 ), ExtResource( 30 ), ExtResource( 35 ), ExtResource( 30 ) ],
-"loop": true,
-"name": "runningLeft",
-"speed": 6.0
 } ]
 
 [sub_resource type="SpriteFrames" id=3]
@@ -141,6 +141,16 @@ animations = [ {
 "frames": [ ExtResource( 10 ), ExtResource( 38 ), ExtResource( 9 ), ExtResource( 38 ) ],
 "loop": true,
 "name": "runningRight",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 48 ) ],
+"loop": true,
+"name": "runningUp",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 45 ), ExtResource( 12 ), ExtResource( 43 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "runningLeft",
 "speed": 6.0
 }, {
 "frames": [ ExtResource( 8 ) ],
@@ -163,20 +173,10 @@ animations = [ {
 "name": "runningDown",
 "speed": 6.0
 }, {
-"frames": [ ExtResource( 11 ), ExtResource( 48 ) ],
-"loop": true,
-"name": "runningUp",
-"speed": 4.0
-}, {
 "frames": [ ExtResource( 41 ) ],
 "loop": true,
 "name": "idleDown",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 45 ), ExtResource( 12 ), ExtResource( 43 ), ExtResource( 12 ) ],
-"loop": true,
-"name": "runningLeft",
-"speed": 6.0
 } ]
 
 [sub_resource type="SpriteFrames" id=4]
@@ -184,6 +184,16 @@ animations = [ {
 "frames": [ ExtResource( 39 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 16 ) ],
 "loop": true,
 "name": "runningRight",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 40 ), ExtResource( 47 ) ],
+"loop": true,
+"name": "runningUp",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 19 ), ExtResource( 18 ), ExtResource( 46 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "runningLeft",
 "speed": 6.0
 }, {
 "frames": [ ExtResource( 15 ) ],
@@ -206,20 +216,10 @@ animations = [ {
 "name": "runningDown",
 "speed": 6.0
 }, {
-"frames": [ ExtResource( 40 ), ExtResource( 47 ) ],
-"loop": true,
-"name": "runningUp",
-"speed": 4.0
-}, {
 "frames": [ ExtResource( 24 ) ],
 "loop": true,
 "name": "idleDown",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 19 ), ExtResource( 18 ), ExtResource( 46 ), ExtResource( 18 ) ],
-"loop": true,
-"name": "runningLeft",
-"speed": 6.0
 } ]
 
 [node name="PlayerSprite" type="Node2D"]
@@ -228,13 +228,13 @@ script = ExtResource( 13 )
 [node name="Player1" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -24 )
 scale = Vector2( 0.062, 0.062 )
-frames = SubResource( 2 )
+frames = SubResource( 1 )
 animation = "runningRight"
 
 [node name="Player2" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -24 )
 scale = Vector2( 0.062, 0.062 )
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 animation = "runningRight"
 
 [node name="Player3" type="AnimatedSprite" parent="."]

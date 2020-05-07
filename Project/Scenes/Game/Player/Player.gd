@@ -185,7 +185,7 @@ func get_item(item):
 func get_hit():
 	if not invincible:
 		print(pid + ": I just got hit!")
-		$Damage.play() #Plays Damage-Sound
+		$Damage.play() # plays Damage-Sound
 		
 		hitbox_col.set_deferred("disabled", true)
 		

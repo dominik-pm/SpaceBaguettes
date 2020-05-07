@@ -1,10 +1,10 @@
 [gd_resource type="DynamicFont" load_steps=2 format=2]
 
-[ext_resource path="res://src/theme/fonts/montserrat/Montserrat-Medium.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/Fonts/trench100free.otf" type="DynamicFontData" id=1]
 
 [resource]
-
 size = 20
+outline_size = 1
+use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 1 )
-

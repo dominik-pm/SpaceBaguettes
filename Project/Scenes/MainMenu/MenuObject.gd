@@ -28,7 +28,8 @@ func _process(delta):
 func _on_VisibilityNotifier2D_viewport_exited(viewport):
 	# does not work correctly and also fires when scene is changed :(
 	print(name + " exited")
-	timer.start()
+	if timer.is_inside_tree():
+		timer.start()
 
 func _on_Timer_timeout():
 	transform.origin = relative_origin.global_transform.origin+start_pos_offset
