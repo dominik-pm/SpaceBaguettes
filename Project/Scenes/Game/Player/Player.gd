@@ -221,12 +221,14 @@ func _on_HitInvincibleDuration_timeout():
 	invincible = false
 
 func _on_AnimationPlayer_animation_finished(anim_name):
+	pass
 	if anim_name == "die":
 		if can_remove:
 			queue_free()
 		can_remove = true
 
 func _on_Death_finished():
+	pass
 	if can_remove:
 		queue_free()
 	can_remove = true
