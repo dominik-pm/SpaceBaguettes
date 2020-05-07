@@ -20,7 +20,7 @@ var baguette_count = Global.starting_baguettes
 var can_place_bomb = true
 var can_shoot = true
 var invincible = false
-var motion = Vector2.ZERO #The Direction which the player goes
+var motion = Vector2.ZERO # the Direction which the player goes
 
 var pid = "1"
 var vel = Vector2(0,0)
@@ -60,7 +60,7 @@ func _process(delta):
 	else:
 		apply_movement(axis*ACCEL*delta)
 	motion = move_and_slide(motion)
-	 
+	
 	if axis != Vector2.ZERO:
 		facing = axis
 	
