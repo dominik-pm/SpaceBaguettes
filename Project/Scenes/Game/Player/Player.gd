@@ -13,6 +13,7 @@ onready var invincible_timer = $HitInvincibleDuration
 
 var health = Global.player_maxhealth
 var max_bombs = Global.starting_bombs
+var bomb_moving_strength = 1
 var bombs_active = 0
 var explosion_range = Global.starting_explosion_range
 var baguette_count = Global.starting_baguettes
@@ -30,7 +31,6 @@ var vel = Vector2(0,0)
 var game
 var can_remove = false
 var on_bomb = false
-var bomb_moving_strength = 0
 var facing = Vector2(0,0)
 
 func _ready():
