@@ -5,5 +5,5 @@ func init(index):
 		if i != index:
 			get_child(index).queue_free()
 
-func play():
+func play(value):
 	pass

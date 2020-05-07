@@ -96,7 +96,7 @@ func get_input_axis():
 	elif Input.is_action_pressed(pid + "move_left") and lastMove == pid + "move_left":
 		axis.x = -1
 	
-	if Input.is_action_pressed(pid + "move_forward"):
+	elif Input.is_action_pressed(pid + "move_forward"):
 		axis.y = -1
 	elif Input.is_action_pressed(pid + "move_backward"):
 		axis.y = 1
@@ -226,7 +226,7 @@ func _on_Death_finished():
 	can_remove = true
 
 func _set_anim(d):
-	# d is the moving direction
+	 # d is the moving direction
 	if d == Vector2(-1, 0):
 		anim.play("runningLeft")
 	elif d == Vector2(1, 0):
@@ -237,7 +237,7 @@ func _set_anim(d):
 		anim.play("runningDown")
 	else:
 		# not moving, so check the facing direction
-		if facing == Vector2(-1, 0):
+		if facing == Vector2(-1, 0): 
 			anim.play("idleLeft")
 		if facing == Vector2(1, 0):
 			anim.play("idleRight")
