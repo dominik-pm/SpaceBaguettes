@@ -3,7 +3,7 @@ extends KinematicBody2D
 class_name Player
 
 export var SPEED = 200 #MaxSpeed
-export var ACCEL = 2000 #Acceleration
+export var ACCEL = 4000 #Acceleration
 
 onready var anim_player = $AnimationPlayer
 onready var anim = $AnimatedSprite
@@ -73,8 +73,15 @@ func _process(delta):
 # returns which direction the player is going to go
 func get_input_axis():
 	var axis = Vector2.ZERO
-	axis.x = int(Input.is_action_pressed(pid +"move_right")) - int(Input.is_action_pressed(pid+"move_left"))
-	axis.y = int(Input.is_action_pressed(pid+"move_backward")) - int(Input.is_action_pressed(pid+"move_forward"))
+	if Input.is_action_pressed(pid + "move_forward"):
+		axis.y = -1
+	elif Input.is_action_pressed(pid + "move_backward"):
+		axis.y = 1
+	elif Input.is_action_pressed(pid + "move_right"):
+		axis.x = 1
+	elif Input.is_action_pressed(pid + "move_left"):
+		axis.x = -1
+
 	return axis.normalized()
 
 # reduces the Current Speed
