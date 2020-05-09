@@ -47,6 +47,7 @@ func init_players(cnt):
 		player.init(pos, i+1, dir)
 
 # -- player called -->
+# to update the players items, health,..
 func update_info(player : int, item, value):
 	if gui != null:
 		gui.update_info(player, item, value)
@@ -57,7 +58,7 @@ func player_died(player : int):
 		print("game over")
 		# todo: 
 		# 1 get winning player
-		# 2 
+		# 2 finish game (animation, ...)
 	if gui != null:
 		gui.remove_player(player)
 func get_shoot_pos(p):
@@ -104,11 +105,28 @@ func _destroy_crate(tile):
 	container.add_child(e)
 	e.global_transform.origin = pos
 	
-	# spawn item
+	# with a certain probability, drop an item
+	randomize()
+	if randi()%(100/Global.crate_item_drop_chance) == 0:
+		_spawn_item(pos)
+func _spawn_item(pos):
 	var i = Preloader.item.instance()
 	container.add_child(i)
 	i.global_transform.origin = pos
-	i.init(Items.BOMBMOVING)
+	i.init(_get_random_item())
+func _get_random_item():
+	randomize()
+	
+	# get the item pool
+	var items = []
+	for item in Items.drop_probabilities:
+		for i in range(Items.drop_probabilities[item]):
+			items.push_back(item)
+	print(items)
+	
+	# return a random item from the pool
+	var rand_idx = floor(rand_range(0, items.size()))
+	return items[rand_idx]
 
 # bomb called
 func explode(p, r):
@@ -154,4 +172,4 @@ func _destroy_line(coord_start, dir, r):
 func _create_explosion(p, dirs):
 	var e = Preloader.explosion.instance()
 	container.add_child(e)
-	e.init(p, dirs, Global.bomb_explosion_duration)
+	e.init(p, dirs)

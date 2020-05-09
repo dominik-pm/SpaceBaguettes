@@ -141,6 +141,7 @@ tracks/0/keys = {
 ]]
 collision_mask = 3
 script = ExtResource( 3 )
+speed = 350
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708

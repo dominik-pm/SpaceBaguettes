@@ -12,6 +12,8 @@ func _ready():
 	$Shoot.play() #plays shoot sound
 	
 	look_at(dir)
+	if dir == Vector2(-1, 0):
+		$Sprites/Baguette.flip_v = true # fix orientation
 	
 	# set correct direction for the particles
 	for child in get_children():
@@ -27,9 +29,9 @@ func init(g, p, d):
 	dir = d
 	
 	if dir.x == 0:
-		$"Sprites/Baguette".hide()
+		$Sprites/Baguette.hide()
 	else:
-		$"Sprites/BaguetteTop".hide()
+		$Sprites/BaguetteTop.hide()
 
 func _physics_process(delta):
 	var collision = move_and_collide(dir*speed*delta)
@@ -49,6 +51,13 @@ func _physics_process(delta):
 			pass
 		else:
 			# collider is a wall
+			
+			# create impact effect
+			var i = Preloader.effect_impact.instance()
+			game.add_node(i)
+			i.global_transform.origin = collision.position
+			i.init(dir)
+			
 			game.bullet_hit(collision.position, dir)
 			destroy()
 

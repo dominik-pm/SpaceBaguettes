@@ -2,7 +2,6 @@ extends KinematicBody2D
 
 class_name Player
 
-export var SPEED = 200 # Speed of the player
 
 onready var anim_player = $AnimationPlayer
 onready var anim = $PlayerSprite
@@ -11,27 +10,32 @@ onready var hitbox_col = $HitBox/CollisionShape2D
 onready var shooting_delay_timer = $ShootingDelay
 onready var invincible_timer = $HitInvincibleDuration
 
-var health = Global.player_maxhealth
-var max_bombs = Global.starting_bombs
-var bomb_moving_strength = 1
+# item relevant variables
 var bombs_active = 0
-var explosion_range = Global.starting_explosion_range
-var baguette_count = Global.starting_baguettes
 var can_place_bomb = true
 var can_shoot = true
-var invincible = false
-var motion = Vector2.ZERO # the Direction which the player goes
-var lastMove # last used direction
+var on_bomb = false
 
-var speed_buffs = 0 # the current speed buffs
-var speed_buff = 20 # the speed, which gets added when item pick up
-
-var pid = "1"
+# movement variables
+export var speed = 200
+var motion = Vector2.ZERO # the direction in which the player goes
+var last_move # last used direction
 var vel = Vector2(0,0)
+var facing = Vector2(0,0)
+
+# items
+var health = Global.player_maxhealth
+var max_bombs = Global.starting_bombs
+var baguette_count = Global.starting_baguettes
+var speed_buffs = 0 # the current speed buffs
+var explosion_range = Global.starting_explosion_range
+var bomb_moving_strength = 0 # 0: can not move bombs
+
+# game relevant variables
+var pid = "1"
 var game
 var can_remove = false
-var on_bomb = false
-var facing = Vector2(0,0)
+var invincible = false
 
 func _ready():
 	game = get_parent().get_parent()
@@ -58,8 +62,8 @@ func init_gui():
 
 func _process(delta):
 	var axis = get_input_axis()
-	apply_friction(SPEED)
-	apply_movement(axis*SPEED)
+	apply_friction(speed)
+	apply_movement(axis*speed)
 	motion = move_and_slide(motion)
 	
 	if axis != Vector2.ZERO:
@@ -67,7 +71,7 @@ func _process(delta):
 	
 	_set_anim(axis)
 	
-	var target = motion*SPEED
+	var target = motion*speed
 	
 	vel = target
 
@@ -76,21 +80,21 @@ func get_input_axis():
 	var axis = Vector2.ZERO
 	
 	if Input.is_action_just_pressed(pid + "move_forward"):
-		lastMove = pid+"move_forward"
+		last_move = pid+"move_forward"
 	elif Input.is_action_just_pressed(pid + "move_backward"):
-		lastMove = pid+"move_backward"
+		last_move = pid+"move_backward"
 	elif Input.is_action_just_pressed(pid + "move_right"):
-		lastMove = pid+"move_right"
+		last_move = pid+"move_right"
 	elif Input.is_action_just_pressed(pid + "move_left"):
-		lastMove = pid+"move_left"
+		last_move = pid+"move_left"
 	
-	if Input.is_action_pressed(pid + "move_forward") and lastMove == pid + "move_forward":
+	if Input.is_action_pressed(pid + "move_forward") and last_move == pid + "move_forward":
 		axis.y = -1
-	elif Input.is_action_pressed(pid + "move_backward") and lastMove == pid + "move_backward":
+	elif Input.is_action_pressed(pid + "move_backward") and last_move == pid + "move_backward":
 		axis.y = 1
-	elif Input.is_action_pressed(pid + "move_right") and lastMove == pid + "move_right":
+	elif Input.is_action_pressed(pid + "move_right") and last_move == pid + "move_right":
 		axis.x = 1
-	elif Input.is_action_pressed(pid + "move_left") and lastMove == pid + "move_left":
+	elif Input.is_action_pressed(pid + "move_left") and last_move == pid + "move_left":
 		axis.x = -1
 	
 	elif Input.is_action_pressed(pid + "move_forward"):
@@ -114,7 +118,7 @@ func apply_friction(amount):
 # apply speed
 func apply_movement(accel):
 	motion += accel
-	motion = motion.clamped(SPEED)
+	motion = motion.clamped(speed)
 
 func _input(event):
 	if event.is_action_pressed(pid+"set_bomb") and can_place_bomb:
@@ -169,7 +173,7 @@ func get_item(item):
 		Items.SPEED:
 			if speed_buffs <= Global.player_max_speed_buffs:
 				speed_buffs += 1
-				SPEED += speed_buff
+				speed += Global.speed_buff
 			value = speed_buffs
 		Items.BOMBRANGE:
 			explosion_range += 1

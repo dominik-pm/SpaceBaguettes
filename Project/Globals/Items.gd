@@ -17,9 +17,21 @@ var icons = {
 	TESTBUFF: ICON_PATH + "error.png",
 	HEALTH: ICON_PATH + "ExtraLive.png",
 	MOREBOMBS: ICON_PATH + "MoreBombs.png",
-	BAGUETTES: ICON_PATH + "Baguette.png",
+	BAGUETTES: ICON_PATH + "Baguettes.png",
 	SPEED: ICON_PATH + "FastBoots.png",
 	BOMBRANGE: ICON_PATH + "BombRange.png",
 	EXPLOSIONSTRENGTH: ICON_PATH + "StrongerExplosions.png",
 	BOMBMOVING: ICON_PATH + "BombMove.png"
+}
+
+# items get chosen from a pool where each item is in it [n] times
+var drop_probabilities = {
+	TESTBUFF: 0,
+	HEALTH: 1,
+	MOREBOMBS: 1,
+	BAGUETTES: 1,
+	SPEED: 1,
+	BOMBRANGE: 1,
+	EXPLOSIONSTRENGTH: 1,
+	BOMBMOVING: 1
 }

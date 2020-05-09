@@ -11,16 +11,23 @@ var player_icon_paths = {
 }
 
 # -- GAME SETTINGS --
-var player_count = 2
+# game
+var crate_item_drop_chance = 50
 
+# player
+var player_count = 2 # changed in the menu
 var player_maxhealth = 3
 var player_shoot_delay = 1
 var player_invincible_time = 3
-var player_max_speed_buffs = 10
+var player_max_speed_buffs = 5
 
-var starting_explosion_range = 3
+# items
+var speed_buff = 20
+var starting_bombs = 1
+var starting_explosion_range = 2
+var starting_baguettes = 3
+
+# bombs
 var bomb_explosion_time = 3
 var bomb_explosion_duration = 2
-var starting_bombs = 1
-var starting_baguettes = 10
 # -- --
