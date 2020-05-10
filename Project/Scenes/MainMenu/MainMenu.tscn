@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Assets/Menu/Background/StarsNear.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Menu/Background/StarsFar.png" type="Texture" id=2]
@@ -31,8 +31,9 @@
 [ext_resource path="res://Assets/Menu/Icons/information.png" type="Texture" id=29]
 [ext_resource path="res://Assets/Menu/Objects/Debris/Comet/Komet 02@4x.png" type="Texture" id=30]
 [ext_resource path="res://Assets/Sounds/UI/Success.wav" type="AudioStream" id=31]
+[ext_resource path="res://src/theme/gdquest.theme" type="Theme" id=32]
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=1]
 resource_name = "zoom_in_test"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera:zoom")
@@ -47,7 +48,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ) ]
 }
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 15 ), ExtResource( 30 ), ExtResource( 4 ), ExtResource( 12 ) ],
 "loop": true,
@@ -55,15 +56,14 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "extends AnimatedSprite
 
 func _ready():
 	play(\"default\")
 "
 
-[sub_resource type="Animation" id=3]
-resource_name = "FadeOut"
+[sub_resource type="Animation" id=4]
 step = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("Fade/Black:modulate")
@@ -90,7 +90,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
 "frames": [ ExtResource( 11 ), ExtResource( 14 ) ],
 "loop": true,
@@ -98,7 +98,7 @@ animations = [ {
 "speed": 10.0
 } ]
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
@@ -138,7 +138,7 @@ speed = 40
 position = Vector2( -960, -540 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/zoom_in_test = SubResource( 6 )
+anims/zoom_in_test = SubResource( 1 )
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -100
@@ -209,8 +209,8 @@ scale = Vector2( 14.2064, 8.08997 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundFar/Comet"]
 scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 1 )
-script = SubResource( 2 )
+frames = SubResource( 2 )
+script = SubResource( 3 )
 
 [node name="MidgroundMid" type="CanvasLayer" parent="Midground"]
 layer = 0
@@ -252,6 +252,7 @@ speed = 40
 [node name="Menu" type="Control" parent="Foreground"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 32 )
 script = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -276,14 +277,14 @@ __meta__ = {
 
 [node name="CenterContainer" type="CenterContainer" parent="Foreground/Menu/Main/Buttons"]
 margin_right = 384.0
-margin_bottom = 224.0
+margin_bottom = 221.0
 size_flags_vertical = 3
 
 [node name="BtnSettings" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer"]
 margin_left = 142.0
-margin_top = 62.0
+margin_top = 60.0
 margin_right = 242.0
-margin_bottom = 162.0
+margin_bottom = 160.0
 size_flags_horizontal = 3
 theme = ExtResource( 9 )
 texture_normal = ExtResource( 8 )
@@ -295,7 +296,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings"]
-self_modulate = Color( 0.203922, 0.596078, 0.858824, 1 )
+self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
 show_behind_parent = true
 margin_left = 5.0
 margin_top = 5.0
@@ -308,16 +309,16 @@ __meta__ = {
 }
 
 [node name="CenterContainer2" type="CenterContainer" parent="Foreground/Menu/Main/Buttons"]
-margin_top = 228.0
+margin_top = 229.0
 margin_right = 384.0
-margin_bottom = 452.0
+margin_bottom = 450.0
 size_flags_vertical = 3
 
 [node name="BtnPlay" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer2"]
 margin_left = 142.0
-margin_top = 62.0
+margin_top = 60.0
 margin_right = 242.0
-margin_bottom = 162.0
+margin_bottom = 160.0
 size_flags_horizontal = 3
 theme = ExtResource( 9 )
 texture_normal = ExtResource( 7 )
@@ -326,7 +327,7 @@ texture_hover = ExtResource( 7 )
 stretch_mode = 5
 
 [node name="TextureRect2" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay"]
-self_modulate = Color( 0.203922, 0.596078, 0.858824, 1 )
+self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
 show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -337,20 +338,20 @@ margin_bottom = 5.0
 texture = ExtResource( 7 )
 stretch_mode = 6
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="CenterContainer3" type="CenterContainer" parent="Foreground/Menu/Main/Buttons"]
-margin_top = 456.0
+margin_top = 458.0
 margin_right = 384.0
 margin_bottom = 680.0
 size_flags_vertical = 3
 
 [node name="BtnExit" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer3"]
 margin_left = 142.0
-margin_top = 62.0
+margin_top = 61.0
 margin_right = 242.0
-margin_bottom = 162.0
+margin_bottom = 161.0
 size_flags_horizontal = 3
 theme = ExtResource( 9 )
 texture_normal = ExtResource( 6 )
@@ -359,7 +360,7 @@ texture_hover = ExtResource( 6 )
 stretch_mode = 5
 
 [node name="TextureRect3" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit"]
-self_modulate = Color( 0.203922, 0.596078, 0.858824, 1 )
+self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
 show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -415,14 +416,14 @@ __meta__ = {
 
 [node name="CenterContainer" type="CenterContainer" parent="Foreground/Menu/Play/BackButton"]
 margin_right = 384.0
-margin_bottom = 224.0
+margin_bottom = 221.0
 size_flags_vertical = 3
 
 [node name="BtnBack" type="TextureButton" parent="Foreground/Menu/Play/BackButton/CenterContainer"]
 margin_left = 142.0
-margin_top = 62.0
+margin_top = 60.0
 margin_right = 242.0
-margin_bottom = 162.0
+margin_bottom = 160.0
 size_flags_horizontal = 3
 theme = ExtResource( 9 )
 texture_normal = ExtResource( 26 )
@@ -434,7 +435,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack"]
-self_modulate = Color( 0.203922, 0.596078, 0.858824, 1 )
+self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
 show_behind_parent = true
 margin_left = 5.0
 margin_top = 5.0
@@ -447,13 +448,13 @@ __meta__ = {
 }
 
 [node name="CenterContainer2" type="CenterContainer" parent="Foreground/Menu/Play/BackButton"]
-margin_top = 228.0
+margin_top = 229.0
 margin_right = 384.0
-margin_bottom = 452.0
+margin_bottom = 450.0
 size_flags_vertical = 3
 
 [node name="CenterContainer3" type="CenterContainer" parent="Foreground/Menu/Play/BackButton"]
-margin_top = 456.0
+margin_top = 458.0
 margin_right = 384.0
 margin_bottom = 680.0
 size_flags_vertical = 3
@@ -480,14 +481,14 @@ __meta__ = {
 
 [node name="CenterContainer" type="CenterContainer" parent="Foreground/Menu/Settings/BackButton"]
 margin_right = 384.0
-margin_bottom = 224.0
+margin_bottom = 221.0
 size_flags_vertical = 3
 
 [node name="BtnBack" type="TextureButton" parent="Foreground/Menu/Settings/BackButton/CenterContainer"]
 margin_left = 142.0
-margin_top = 62.0
+margin_top = 60.0
 margin_right = 242.0
-margin_bottom = 162.0
+margin_bottom = 160.0
 size_flags_horizontal = 3
 theme = ExtResource( 9 )
 texture_normal = ExtResource( 26 )
@@ -499,7 +500,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack"]
-self_modulate = Color( 0.203922, 0.596078, 0.858824, 1 )
+self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
 show_behind_parent = true
 margin_left = 5.0
 margin_top = 5.0
@@ -512,13 +513,13 @@ __meta__ = {
 }
 
 [node name="CenterContainer2" type="CenterContainer" parent="Foreground/Menu/Settings/BackButton"]
-margin_top = 228.0
+margin_top = 229.0
 margin_right = 384.0
-margin_bottom = 452.0
+margin_bottom = 450.0
 size_flags_vertical = 3
 
 [node name="CenterContainer3" type="CenterContainer" parent="Foreground/Menu/Settings/BackButton"]
-margin_top = 456.0
+margin_top = 458.0
 margin_right = 384.0
 margin_bottom = 680.0
 size_flags_vertical = 3
@@ -538,38 +539,38 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 593.0
-margin_bottom = 393.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 580.0
+margin_bottom = 380.0
 custom_constants/separation = 50
 
 [node name="Graphics" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer"]
-margin_right = 586.0
-margin_bottom = 32.0
+margin_right = 560.0
+margin_bottom = 72.0
 size_flags_horizontal = 3
 script = ExtResource( 27 )
 
 [node name="Graphics" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics"]
-margin_right = 586.0
-margin_bottom = 14.0
+margin_right = 560.0
+margin_bottom = 32.0
 text = "Graphics"
 
 [node name="ToggleFullscreen" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics"]
-margin_top = 18.0
-margin_right = 586.0
-margin_bottom = 32.0
+margin_top = 40.0
+margin_right = 560.0
+margin_bottom = 72.0
 
 [node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
-margin_right = 291.0
-margin_bottom = 14.0
+margin_right = 276.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 text = "Fullscreen"
 
 [node name="ToggleOn" type="TextureButton" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
-margin_left = 295.0
-margin_right = 586.0
-margin_bottom = 14.0
+margin_left = 284.0
+margin_right = 560.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 texture_normal = ExtResource( 23 )
 texture_pressed = ExtResource( 23 )
@@ -590,33 +591,32 @@ expand = true
 stretch_mode = 5
 
 [node name="Audio" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer"]
-margin_top = 82.0
-margin_right = 586.0
-margin_bottom = 156.0
+margin_top = 122.0
+margin_right = 560.0
+margin_bottom = 274.0
 size_flags_horizontal = 3
 script = ExtResource( 25 )
 
 [node name="Audio" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
-margin_right = 586.0
-margin_bottom = 14.0
+margin_right = 560.0
+margin_bottom = 32.0
 text = "Audio"
 
 [node name="Master" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
-margin_top = 18.0
-margin_right = 586.0
-margin_bottom = 34.0
+margin_top = 40.0
+margin_right = 560.0
+margin_bottom = 72.0
 custom_constants/separation = 10
 
 [node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
-margin_top = 1.0
-margin_right = 288.0
-margin_bottom = 15.0
+margin_right = 275.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 text = "Master"
 
 [node name="MasterSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
-margin_left = 298.0
-margin_right = 586.0
+margin_left = 285.0
+margin_right = 560.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 value = 50.0
@@ -625,21 +625,20 @@ value = 50.0
 stream = ExtResource( 31 )
 
 [node name="Sound" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
-margin_top = 38.0
-margin_right = 586.0
-margin_bottom = 54.0
+margin_top = 80.0
+margin_right = 560.0
+margin_bottom = 112.0
 custom_constants/separation = 10
 
 [node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
-margin_top = 1.0
-margin_right = 288.0
-margin_bottom = 15.0
+margin_right = 275.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 text = "Sound"
 
 [node name="SoundSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
-margin_left = 298.0
-margin_right = 586.0
+margin_left = 285.0
+margin_right = 560.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 value = 50.0
@@ -649,21 +648,20 @@ stream = ExtResource( 31 )
 bus = "Sound"
 
 [node name="Music" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
-margin_top = 58.0
-margin_right = 586.0
-margin_bottom = 74.0
+margin_top = 120.0
+margin_right = 560.0
+margin_bottom = 152.0
 custom_constants/separation = 10
 
 [node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
-margin_top = 1.0
-margin_right = 288.0
-margin_bottom = 15.0
+margin_right = 275.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 text = "Music"
 
 [node name="MusicSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
-margin_left = 298.0
-margin_right = 586.0
+margin_left = 285.0
+margin_right = 560.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 value = 50.0
@@ -673,7 +671,7 @@ stream = ExtResource( 31 )
 bus = "Music"
 
 [node name="Fade" type="AnimationPlayer" parent="Foreground/Menu"]
-anims/FadeOut = SubResource( 3 )
+anims/FadeOut = SubResource( 4 )
 
 [node name="Black" type="ColorRect" parent="Foreground/Menu/Fade"]
 visible = false
@@ -692,19 +690,20 @@ position = Vector2( 1600, 540 )
 script = ExtResource( 13 )
 
 [node name="Flame" type="AnimatedSprite" parent="Foreground/Elements/Rocket"]
-position = Vector2( 0, 316 )
+position = Vector2( 2.27332, 311.943 )
 scale = Vector2( 2.5, 2.5 )
-frames = SubResource( 4 )
+frames = SubResource( 5 )
 animation = "flying"
 
 [node name="Rocket" type="Sprite" parent="Foreground/Elements/Rocket"]
+position = Vector2( 4.0708, 38.3857 )
 texture = ExtResource( 10 )
 
 [node name="WindowCenter" type="Position2D" parent="Foreground/Elements/Rocket"]
 position = Vector2( 0, -30 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
-anims/flying = SubResource( 5 )
+anims/flying = SubResource( 6 )
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]
