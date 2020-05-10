@@ -48,7 +48,7 @@ func explode():
 	player.bomb_exploded()
 	
 	# tell the game
-	game.explode(global_transform.origin, explosion_size)
+	game.explode($Center.global_transform.origin, explosion_size)
 	
 	# Animation
 	$Explosion.play("explode1")

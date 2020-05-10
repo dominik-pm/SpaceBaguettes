@@ -25,14 +25,14 @@ orbit_velocity_random = 0.0
 scale = 0.15
 color_ramp = SubResource( 3 )
 
-[sub_resource type="Gradient" id=6]
+[sub_resource type="Gradient" id=5]
 offsets = PoolRealArray( 0, 0.422222, 1 )
 colors = PoolColorArray( 0.709804, 1, 0.192157, 1, 0, 1, 0.952941, 1, 1, 0.905882, 0.658824, 0 )
 
-[sub_resource type="GradientTexture" id=7]
-gradient = SubResource( 6 )
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
 
-[sub_resource type="ParticlesMaterial" id=8]
+[sub_resource type="ParticlesMaterial" id=7]
 flag_disable_z = true
 direction = Vector3( -1, 0, 0 )
 spread = 15.0
@@ -42,9 +42,9 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 damping = 0.81
 scale = 0.25
-color_ramp = SubResource( 7 )
+color_ramp = SubResource( 6 )
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=8]
 
 [sub_resource type="Animation" id=9]
 resource_name = "fade_out"
@@ -70,22 +70,23 @@ speed = 350
 
 [node name="Particles2D" type="Particles2D" parent="."]
 material = SubResource( 1 )
-amount = 32
+amount = 24
 lifetime = 3.0
 process_material = SubResource( 4 )
 texture = ExtResource( 1 )
 
 [node name="Particles2D2" type="Particles2D" parent="."]
 material = SubResource( 1 )
-position = Vector2( 0, -32 )
+position = Vector2( 0, -16 )
 amount = 32
 lifetime = 3.0
+explosiveness = 0.5
 local_coords = false
-process_material = SubResource( 8 )
+process_material = SubResource( 7 )
 texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 5 )
+shape = SubResource( 8 )
 disabled = true
 
 [node name="FadeOut" type="AnimationPlayer" parent="."]

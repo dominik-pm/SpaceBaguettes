@@ -9,6 +9,7 @@ onready var hitbox = $HitBox
 onready var hitbox_col = $HitBox/CollisionShape2D
 onready var shooting_delay_timer = $ShootingDelay
 onready var invincible_timer = $HitInvincibleDuration
+onready var muzzle = $Muzzle
 
 # item relevant variables
 var bombs_active = 0
@@ -134,7 +135,7 @@ func _input(event):
 		baguette_count -= 1
 		game.update_info(int(pid), Items.BAGUETTES, baguette_count)
 		shooting_delay_timer.start()
-		var pos = game.get_shoot_pos(global_transform.origin)
+		var pos = game.get_shoot_pos(muzzle.global_transform.origin)
 		shoot(pos, global_transform.origin)
 
 func shoot(pos, player_pos):

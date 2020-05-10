@@ -16,11 +16,34 @@ script = ExtResource( 4 )
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
+[node name="GUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1216.0
+margin_top = -16.0
+margin_right = 1510.0
+margin_bottom = 832.0
+rect_min_size = Vector2( 294, 848 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="GUI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.631373, 0.286275, 0.286275, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Camera" type="Camera2D" parent="."]
+position = Vector2( 0, -16 )
 anchor_mode = 0
 current = true
+zoom = Vector2( 0.786, 0.786 )
 
 [node name="Position1" type="Position2D" parent="."]
+position = Vector2( 0, -16 )
 
 [node name="Position2" type="Position2D" parent="."]
 position = Vector2( 1216, 832 )

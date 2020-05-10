@@ -32,7 +32,7 @@ func _on_BtnBack_pressed():
 
 
 func start_game(player_count):
-	$Fade.play("FadeOut")
+	$Fade.play("FadeOut") # maybe call the main menu, to do an animation
 	
 	# set player count
 	var cnt = player_count
@@ -42,6 +42,7 @@ func start_game(player_count):
 		cnt = 4
 	Global.player_count = cnt
 
+# should also be in main menu
 func _on_Fade_animation_finished(anim_name):
 	if anim_name == "FadeOut":
 		get_tree().change_scene("res://Scenes/Game/Game.tscn")
