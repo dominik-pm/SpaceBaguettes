@@ -46,7 +46,9 @@ _global_script_class_icons={
 
 config/name="Space Baguettes"
 run/main_scene="res://Scenes/MainMenu/MainMenu.tscn"
-boot_splash/bg_color=Color( 0.333333, 0.333333, 0.333333, 1 )
+boot_splash/image="res://Assets/Artwork/SplashArt.png"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
+config/icon="res://Assets/Artwork/Icon1.png"
 
 [audio]
 
