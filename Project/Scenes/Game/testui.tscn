@@ -1,13 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Game/Game.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Game/Tiles/crate_blue.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Game/GUI/PlayerInfo.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/theme/gdquest.theme" type="Theme" id=4]
 [ext_resource path="res://Scenes/Game/GUI/GameGUI.gd" type="Script" id=12]
 
 [node name="Game" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -50,22 +52,27 @@ __meta__ = {
 }
 
 [node name="PlayerInfo" parent="GUI/LeftSide/VBoxContainer" instance=ExtResource( 3 )]
+margin_right = 300.0
+margin_bottom = 152.0
 
 [node name="PlayerInfo2" parent="GUI/LeftSide/VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 246.0
-margin_bottom = 392.0
+margin_top = 252.0
+margin_right = 300.0
+margin_bottom = 404.0
 
 [node name="PlayerInfo3" parent="GUI/LeftSide/VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 492.0
-margin_bottom = 638.0
+margin_top = 504.0
+margin_right = 300.0
+margin_bottom = 656.0
 
 [node name="PlayerInfo4" parent="GUI/LeftSide/VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 738.0
-margin_bottom = 884.0
+margin_top = 756.0
+margin_right = 300.0
+margin_bottom = 908.0
 
 [node name="Main" type="Control" parent="GUI"]
-margin_left = 304.0
-margin_right = 1616.0
+margin_left = 308.0
+margin_right = 1612.0
 margin_bottom = 1080.0
 rect_min_size = Vector2( 32, 32 )
 size_flags_horizontal = 3
@@ -81,7 +88,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="GUI/Main/ViewportContainer"]
-size = Vector2( 1312, 1080 )
+size = Vector2( 1304, 1080 )
 transparent_bg = true
 handle_input_locally = false
 msaa = 3
@@ -140,10 +147,3 @@ margin_top = 656.0
 margin_right = 300.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 0, 64 )
-
-[node name="GameCenter" type="Node2D" parent="."]
-visible = false
-position = Vector2( 960, 540 )
-
-[node name="GameOffset" type="Node2D" parent="GameCenter"]
-position = Vector2( 0, 16 )

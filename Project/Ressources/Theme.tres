@@ -14,7 +14,7 @@
 [ext_resource path="res://src/theme/fonts/default_font_bold.tres" type="DynamicFont" id=12]
 [ext_resource path="res://src/theme/fonts/default_font.tres" type="DynamicFont" id=13]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 15.0
 content_margin_right = 6.0
 content_margin_top = 6.0
@@ -30,10 +30,10 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxTexture" id=3]
+[sub_resource type="StyleBoxTexture" id=2]
 region_rect = Rect2( 0, 0, 61, 61 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=3]
 content_margin_left = 6.0
 content_margin_right = 6.0
 content_margin_top = 6.0
@@ -83,12 +83,12 @@ ItemList/constants/icon_margin = 4
 ItemList/constants/line_separation = 2
 ItemList/constants/vseparation = 2
 ItemList/fonts/font = null
-ItemList/styles/bg = SubResource( 2 )
-ItemList/styles/bg_focus = SubResource( 2 )
-ItemList/styles/cursor = SubResource( 3 )
-ItemList/styles/cursor_unfocused = SubResource( 3 )
-ItemList/styles/selected = SubResource( 5 )
-ItemList/styles/selected_focus = SubResource( 5 )
+ItemList/styles/bg = SubResource( 1 )
+ItemList/styles/bg_focus = SubResource( 1 )
+ItemList/styles/cursor = SubResource( 2 )
+ItemList/styles/cursor_unfocused = SubResource( 2 )
+ItemList/styles/selected = SubResource( 3 )
+ItemList/styles/selected_focus = SubResource( 3 )
 LineEdit/colors/clear_button_color = Color( 0.878431, 0.878431, 0.878431, 1 )
 LineEdit/colors/clear_button_color_pressed = Color( 1, 1, 1, 1 )
 LineEdit/colors/cursor_color = Color( 0.941176, 0.941176, 0.941176, 1 )

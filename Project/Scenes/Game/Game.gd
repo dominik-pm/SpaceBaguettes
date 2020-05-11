@@ -1,8 +1,15 @@
 extends Node2D
 
+
+export (NodePath) var pause_menu_path = null
+var pause_menu = null
+export (NodePath) var game_summary_path = null
+var game_summary = null
+
 export (NodePath) var gui_path = null
 var gui = null
 
+onready var cam = $Camera
 onready var pos1 = $Position1
 onready var pos2 = $Position2
 onready var crates = $Container/Crates
@@ -20,12 +27,16 @@ var game_over = false
 var players_alive = 4
 
 func _ready():
-	if gui_path != null:
-		gui = get_node(gui_path)
+	pause_menu = get_node(pause_menu_path)
+	game_summary = get_node(game_summary_path)
+	gui = get_node(gui_path)
+	
+	pause_menu.hide()
+	game_summary.hide()
+	gui.init_player_gui()
 	
 	cellsize = crates.cell_size
 	
-	var cam = $Camera
 	#cam.limit_left = pos1.transform.origin.x
 	#cam.limit_top = pos1.transform.origin.y
 	#cam.limit_right = pos2.transform.origin.x
@@ -33,6 +44,11 @@ func _ready():
 	
 	players_alive = Global.player_count
 	init_players(players_alive)
+
+func _input(event):
+	if event.is_action_pressed("toggle_pause_menu"):
+		pause_menu.visible = !pause_menu.visible
+		get_tree().paused = pause_menu.visible
 
 func init_players(cnt):
 	for i in cnt:
@@ -51,17 +67,23 @@ func init_players(cnt):
 func update_info(player : int, item, value):
 	if gui != null:
 		gui.update_info(player, item, value)
+func player_hit(player : int):
+	gui.player_hit(player)
+	cam._on_camera_shake_requested(0.5)
 func player_died(player : int):
-	players_alive -= 1
-	if players_alive <= 1:
-		game_over = true
-		print("game over")
-		# todo: 
-		# 1 get winning player
-		# 2 finish game (animation, ...)
-	if gui != null:
-		gui.remove_player(player)
-func get_shoot_pos(p):
+	if not game_over:
+		players_alive -= 1
+		cam._on_camera_shake_requested(1.0)
+		if players_alive <= 1:
+			game_over = true
+			game_summary.show_summary()
+			
+			# todo:
+			# 1 get winning player
+			# 2 finish game (animation, ...)
+		if gui != null:
+			gui.remove_player(player)
+func get_tile_pos_center(p):
 	var pos = crates.world_to_map(p)
 	pos = crates.map_to_world(pos) + (cellsize/2)
 	return pos
@@ -173,3 +195,22 @@ func _create_explosion(p, dirs):
 	var e = Preloader.explosion.instance()
 	container.add_child(e)
 	e.init(p, dirs)
+
+
+# Menu Stuff
+
+func _on_BtnResume_pressed():
+	get_tree().paused = false
+	pause_menu.hide()
+
+func _on_BtnMenu_pressed():
+	get_tree().paused = false
+	get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
+
+func _on_BtnQuit_pressed():
+	# maybe an animation here --
+	get_tree().quit()
+
+func _on_BtnPlay_pressed():
+	get_tree().paused = false
+	get_tree().change_scene("res://Scenes/Game/Game.tscn")

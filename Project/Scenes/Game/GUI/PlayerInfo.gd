@@ -24,6 +24,9 @@ func _ready():
 func init(pid):
 	get_node(player_icon).texture = load(Global.player_icon_paths["player"+str(pid)])
 
+func get_damage():
+	$AnimationPlayer.play("get_damage")
+
 func died():
 	$AnimationPlayer.play("die")
 

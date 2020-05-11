@@ -28,6 +28,6 @@ var starting_explosion_range = 2
 var starting_baguettes = 3
 
 # bombs
-var bomb_explosion_time = 3
-var bomb_explosion_duration = 2
+var bomb_explosion_time = 2.5
+var bomb_explosion_duration = 1
 # -- --

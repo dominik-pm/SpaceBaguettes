@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends Control
 
 export (NodePath) var player_container1
 export (NodePath) var player_container2
@@ -19,6 +19,13 @@ func init_player_gui():
 		player_infos[i].init(i+1)
 	for i in range(Global.player_count, 4):
 		player_infos[i].hide()
+
+func player_hit(pid : int):
+	var p = player_infos[pid-1]
+	p.get_damage()
+
+func remove_player(pid : int):
+	player_infos[pid-1].died()
 
 func update_info(pid : int, item, value):
 	if player_infos == []:
@@ -42,6 +49,3 @@ func update_info(pid : int, item, value):
 			p.update_bomb_move(value)
 		_:
 			pass
-
-func remove_player(pid : int):
-	player_infos[pid].died()

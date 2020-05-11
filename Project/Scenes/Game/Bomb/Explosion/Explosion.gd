@@ -9,8 +9,8 @@ func init(pos, dirs):
 	
 	create_hit_tiles()
 	
-	# maybe not need (but it would ever be removed)
-	yield(get_tree().create_timer(Global.bomb_explosion_duration*2), "timeout")
+	# maybe not need (but it would never be removed)
+	yield(get_tree().create_timer(Global.bomb_explosion_duration*5), "timeout")
 	queue_free()
 
 func create_hit_tiles():

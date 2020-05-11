@@ -42,7 +42,7 @@ var settings = {
 		"music_volume": 50.0
 	}
 }
-
+ 
 func _ready():
 	#save_settings()
 	load_settings()

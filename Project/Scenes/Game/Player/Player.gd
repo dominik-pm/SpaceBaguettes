@@ -135,8 +135,8 @@ func _input(event):
 		baguette_count -= 1
 		game.update_info(int(pid), Items.BAGUETTES, baguette_count)
 		shooting_delay_timer.start()
-		var pos = game.get_shoot_pos(muzzle.global_transform.origin)
-		shoot(pos, global_transform.origin)
+		var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
+		shoot(pos, muzzle.global_transform.origin)
 
 func shoot(pos, player_pos):
 	var b = Preloader.baguette.instance()
@@ -191,8 +191,9 @@ func get_item(item):
 
 func get_hit():
 	if not invincible:
-		print(pid + ": I just got hit!")
 		$Damage.play() # plays Damage-Sound
+		
+		game.player_hit(int(pid))
 		
 		hitbox_col.set_deferred("disabled", true)
 		
@@ -212,6 +213,10 @@ func _die():
 	game.player_died(int(pid))
 	# death animation
 	$AnimationPlayer.play("die")
+	# spawn gravestone
+	var g = Preloader.gravestone.instance()
+	game.add_node(g)#get_tree().root.add_node(g)
+	g.global_transform.origin = game.get_tile_pos_center(muzzle.global_transform.origin)
 	# disable movement/collisions
 	set_process(false)
 	hitbox_col.set_deferred("disabled", true)

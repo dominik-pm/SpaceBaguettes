@@ -58,7 +58,7 @@ tracks/0/keys = {
 script = ExtResource( 12 )
 
 [node name="Muzzle" type="Position2D" parent="."]
-position = Vector2( 0, -24 )
+position = Vector2( 0, -8 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2( -32, -56 )
