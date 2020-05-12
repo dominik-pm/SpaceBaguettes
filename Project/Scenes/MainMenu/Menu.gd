@@ -2,7 +2,7 @@ extends Control
 
 var help_menu_open = false
 
-onready var main_menu = $Main
+onready var main_menu = $Main/Buttons
 onready var play_menu = $Play
 onready var sett_menu = $Settings
 onready var help_menu = $HelpMenu

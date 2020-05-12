@@ -69,20 +69,24 @@ func update_info(player : int, item, value):
 		gui.update_info(player, item, value)
 func player_hit(player : int):
 	gui.player_hit(player)
-	cam._on_camera_shake_requested(0.5)
+	cam.request_camera_shake(0.5)
 func player_died(player : int):
 	if not game_over:
 		players_alive -= 1
-		cam._on_camera_shake_requested(1.0)
+		cam.request_camera_shake(1.0)
+		gui.player_died(player) # tell the gui
+		
+		# check only one player is alive -> game over
 		if players_alive <= 1:
 			game_over = true
-			game_summary.show_summary()
 			
-			# todo:
-			# 1 get winning player
-			# 2 finish game (animation, ...)
-		if gui != null:
-			gui.remove_player(player)
+			# show the game summary
+			var winner_id = _get_winner()
+			game_summary.show_summary(winner_id)
+			
+			# animation and sound
+			$GameOver.play()
+			$AnimationPlayer.play("GameOver") # also mutes music
 func get_tile_pos_center(p):
 	var pos = crates.world_to_map(p)
 	pos = crates.map_to_world(pos) + (cellsize/2)
@@ -101,6 +105,15 @@ func place_bomb(player, pos, s):
 func add_node(node):
 	container.add_child(node)
 # <-- player called --
+
+func _get_winner():
+	var winner = null
+	for c in container.get_children():
+		if c is Player:
+			var player = c
+			if player.is_alive:
+				winner = int(player.pid)
+	return winner
 
 # bullet called
 func bullet_hit(pos, dir):

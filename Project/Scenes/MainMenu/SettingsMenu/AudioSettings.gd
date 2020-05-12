@@ -44,8 +44,3 @@ func _on_SoundSlider_value_changed(value):
 func _on_MusicSlider_value_changed(value):
 	Settings.set_setting("audio", "music_volume", value)
 	SFX.set_volume(SFX.audiobus.MUSIC, value)
-	# play sample sound
-	if not music_player.playing and can_play:
-		master_player.playing = false
-		sound_player.playing = false
-		music_player.play()

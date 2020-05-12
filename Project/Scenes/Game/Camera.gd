@@ -26,7 +26,7 @@ func _process(delta):
 func _on_TimerShake_timeout():
 	self.shake = false
 
-func _on_camera_shake_requested(multiplier):
+func request_camera_shake(multiplier):
 	amplitude = shake_amplitude * multiplier
 	self.shake_duration = shake_duration
 	self.shake = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Ressources/floor_tileset.tres" type="TileSet" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Scenes/Game/GUI/PlayerInfo.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Game/GUI/GameGUI.gd" type="Script" id=7]
 [ext_resource path="res://src/theme/gdquest.theme" type="Theme" id=8]
+[ext_resource path="res://Assets/Music/MenuMusicV1.ogg" type="AudioStream" id=9]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -15,11 +16,30 @@ glow_enabled = true
 glow_intensity = 1.0
 glow_strength = 1.05
 
+[sub_resource type="Animation" id=4]
+resource_name = "GameOver"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Music:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -5.0, -80.0 ]
+}
+
 [sub_resource type="GDScript" id=2]
 script/source = "extends Control
 
-func show_summary():
+onready var lab_message = $CenterContainer/VBoxContainer/LabWinnerMessage
+
+func show_summary(pid):
 	show()
+	lab_message.text = \"Player \"+str(pid)+\" Won!\"
 	$AnimationPlayer.play(\"show\")
 "
 
@@ -49,6 +69,18 @@ gui_path = NodePath("GUI")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = -5.0
+autoplay = true
+bus = "Music"
+
+[node name="GameOver" type="AudioStreamPlayer" parent="."]
+bus = "Sound"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/GameOver = SubResource( 4 )
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -100
@@ -163,7 +195,7 @@ text = "Quit"
 
 [node name="GameSummary" type="Control" parent="Foreground"]
 pause_mode = 2
-visible = false
+modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 8 )
@@ -193,7 +225,7 @@ margin_top = 449.0
 margin_right = 1052.0
 margin_bottom = 631.0
 
-[node name="Label" type="Label" parent="Foreground/GameSummary/CenterContainer/VBoxContainer"]
+[node name="LabWinnerMessage" type="Label" parent="Foreground/GameSummary/CenterContainer/VBoxContainer"]
 margin_right = 185.0
 margin_bottom = 32.0
 text = "Player X Won!"

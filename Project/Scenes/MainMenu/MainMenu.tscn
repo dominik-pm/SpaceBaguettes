@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Fonts/Trench_Header.tres" type="DynamicFont" id=2]
@@ -38,6 +38,7 @@
 [ext_resource path="res://Assets/Game/Items/FastBoots.png" type="Texture" id=36]
 [ext_resource path="res://Assets/Game/Items/StrongerExplosions.png" type="Texture" id=37]
 [ext_resource path="res://Assets/Game/Items/MoreBombs.png" type="Texture" id=38]
+[ext_resource path="res://Assets/Music/MenuMusicV1.ogg" type="AudioStream" id=39]
 
 [sub_resource type="Animation" id=1]
 resource_name = "zoom_in_test"
@@ -146,6 +147,18 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../../Music:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -5.0, -80.0 ]
 }
 
 [sub_resource type="SpriteFrames" id=8]
@@ -441,7 +454,6 @@ margin_top = 40.0
 margin_right = 959.0
 margin_bottom = 72.0
 text = "Made by: Lugmayr Gabriel, Pömmer Dominik, Leutgeb Sebastian"
-percent_visible = 0.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -452,17 +464,24 @@ anims/show = SubResource( 6 )
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -960.0
+margin_top = -400.0
+margin_right = 960.0
+margin_bottom = 400.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="BackButton" type="VBoxContainer" parent="Foreground/Menu/Play"]
-anchor_bottom = 1.0
-margin_top = 200.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -340.0
 margin_right = 384.0
-margin_bottom = -200.0
+margin_bottom = 340.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -517,17 +536,24 @@ size_flags_vertical = 3
 
 [node name="Settings" type="Control" parent="Foreground/Menu"]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -960.0
+margin_top = -400.0
+margin_right = 960.0
+margin_bottom = 400.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="BackButton" type="VBoxContainer" parent="Foreground/Menu/Settings"]
-anchor_bottom = 1.0
-margin_top = 200.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -340.0
 margin_right = 384.0
-margin_bottom = -200.0
+margin_bottom = 340.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -975,6 +1001,12 @@ position = Vector2( 0, -30 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
 anims/flying = SubResource( 9 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 39 )
+volume_db = -5.0
+autoplay = true
+bus = "Music"
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]

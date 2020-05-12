@@ -24,7 +24,7 @@ func player_hit(pid : int):
 	var p = player_infos[pid-1]
 	p.get_damage()
 
-func remove_player(pid : int):
+func player_died(pid : int):
 	player_infos[pid-1].died()
 
 func update_info(pid : int, item, value):

@@ -2,7 +2,6 @@ extends KinematicBody2D
 
 class_name Player
 
-
 onready var anim_player = $AnimationPlayer
 onready var anim = $PlayerSprite
 onready var hitbox = $HitBox
@@ -34,6 +33,7 @@ var bomb_moving_strength = 0 # 0: can not move bombs
 
 # game relevant variables
 var pid = "1"
+var is_alive = true
 var game
 var can_remove = false
 var invincible = false
@@ -207,6 +207,7 @@ func get_hit():
 			_die()
 
 func _die():
+	is_alive = false
 	# play death sound
 	$Death.play()
 	# tell the game
