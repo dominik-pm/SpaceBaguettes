@@ -29,6 +29,7 @@ var max_bombs = Global.starting_bombs
 var baguette_count = Global.starting_baguettes
 var speed_buffs = 0 # the current speed buffs
 var explosion_range = Global.starting_explosion_range
+var explosion_strength = Global.starting_explosion_strength
 var bomb_moving_strength = 0 # 0: can not move bombs
 
 # game relevant variables
@@ -56,9 +57,9 @@ func init_gui():
 	game.update_info(int(pid), Items.HEALTH, health)
 	game.update_info(int(pid), Items.MOREBOMBS, max_bombs)
 	game.update_info(int(pid), Items.BAGUETTES, baguette_count)
-	game.update_info(int(pid), Items.SPEED, 0) # not implemented
-	game.update_info(int(pid), Items.BOMBRANGE, explosion_range)
-	game.update_info(int(pid), Items.EXPLOSIONSTRENGTH, 0) # not implemented
+	game.update_info(int(pid), Items.SPEED, 0)
+	game.update_info(int(pid), Items.BOMBRANGE, 0)
+	game.update_info(int(pid), Items.EXPLOSIONSTRENGTH, 0)
 	game.update_info(int(pid), Items.BOMBMOVING, bomb_moving_strength)
 
 func _process(delta):
@@ -128,7 +129,7 @@ func _input(event):
 			bombs_active += 1
 			if bombs_active >= max_bombs:
 				can_place_bomb = false
-			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range)
+			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
 	
 	if event.is_action_pressed(pid+"shoot") and can_shoot and baguette_count > 0:
 		can_shoot = false
@@ -180,7 +181,8 @@ func get_item(item):
 			explosion_range += 1
 			value = explosion_range - Global.starting_explosion_range
 		Items.EXPLOSIONSTRENGTH:
-			pass
+			explosion_strength += 1
+			value = explosion_strength - Global.starting_explosion_strength
 		Items.BOMBMOVING:
 			bomb_moving_strength += 1
 			value = bomb_moving_strength

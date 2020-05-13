@@ -5,6 +5,7 @@ class_name Bomb
 onready var anim = $AnimationPlayer
 
 var explosion_size
+var explosion_strength
 var can_collide = false
 var can_free = false
 
@@ -22,10 +23,11 @@ func _ready():
 	$Place.play()
 	# start anim for bomb ---
 
-func init(g, p, s):
+func init(g, p, e_range, e_strenth):
 	game = g
 	player = p
-	explosion_size = s
+	explosion_size = e_range
+	explosion_strength = e_strenth
 	add_collision_exception_with(player)
 	anim.play("init", -1, 1.0/Global.bomb_explosion_time)
 
@@ -48,7 +50,7 @@ func explode():
 	player.bomb_exploded()
 	
 	# tell the game
-	game.explode($Center.global_transform.origin, explosion_size)
+	game.explode($Center.global_transform.origin, explosion_size, explosion_strength)
 	
 	# Animation
 	$Explosion.play("explode1")

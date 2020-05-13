@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenu.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayerInput.tscn" type="PackedScene" id=2]
@@ -11,8 +11,9 @@
 [ext_resource path="res://Assets/Game/Player/Front_idle.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Menu/Icons/gamepad4.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Menu/Icons/gamepad3.png" type="Texture" id=11]
-
-
+[ext_resource path="res://Assets/Game/Player/Icons/Player2.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Game/Player/Icons/Player3.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Game/Player/Icons/Player4.png" type="Texture" id=14]
 
 [node name="PlayMenu" type="PanelContainer"]
 anchor_left = 0.5
@@ -110,7 +111,7 @@ margin_bottom = 140.0
 rect_min_size = Vector2( 64, 64 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 9 )
+texture = ExtResource( 12 )
 expand = true
 stretch_mode = 5
 __meta__ = {
@@ -163,7 +164,7 @@ margin_bottom = 140.0
 rect_min_size = Vector2( 64, 64 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 9 )
+texture = ExtResource( 13 )
 expand = true
 stretch_mode = 5
 __meta__ = {
@@ -240,7 +241,7 @@ margin_bottom = 140.0
 rect_min_size = Vector2( 64, 64 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 9 )
+texture = ExtResource( 14 )
 expand = true
 stretch_mode = 5
 __meta__ = {

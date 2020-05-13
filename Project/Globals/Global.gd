@@ -24,7 +24,8 @@ var player_max_speed_buffs = 5
 # items
 var speed_buff = 20
 var starting_bombs = 1
-var starting_explosion_range = 2
+var starting_explosion_range = 1
+var starting_explosion_strength = 1
 var starting_baguettes = 3
 
 # bombs

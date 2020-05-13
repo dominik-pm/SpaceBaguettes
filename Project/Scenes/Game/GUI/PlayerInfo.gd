@@ -1,5 +1,7 @@
 extends PanelContainer
 
+onready var player_name = $Control/PlayerName
+
 export (NodePath) var player_icon
 
 export (NodePath) var lab_health

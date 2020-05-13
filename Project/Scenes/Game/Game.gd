@@ -91,7 +91,7 @@ func get_tile_pos_center(p):
 	var pos = crates.world_to_map(p)
 	pos = crates.map_to_world(pos) + (cellsize/2)
 	return pos
-func place_bomb(player, pos, s):
+func place_bomb(player, pos, e_range, e_strenth):
 	# convert the pos into a coordinate of the grid
 	var coord = crates.world_to_map(pos)
 	# convert it back to a world position to get the top center of it
@@ -100,7 +100,7 @@ func place_bomb(player, pos, s):
 	
 	var b = Preloader.bomb.instance()
 	container.add_child(b)
-	b.init(self, player, s)
+	b.init(self, player, e_range, e_strenth)
 	b.global_transform.origin = p
 func add_node(node):
 	container.add_child(node)
@@ -164,16 +164,16 @@ func _get_random_item():
 	return items[rand_idx]
 
 # bomb called
-func explode(p, r):
+func explode(p, r, s):
 	# get the coordinates of the tile the explosion is on
 	var coord = crates.world_to_map(p)
 	
 	# destroy the crates and get how far the explosion got in each direction
 	var directions = [0, 0, 0, 0]
-	directions[0] = _destroy_line(coord, Vector2(0,-1), r)
-	directions[1] = _destroy_line(coord, Vector2(1,0), r)
-	directions[2] = _destroy_line(coord, Vector2(0,1), r)
-	directions[3] = _destroy_line(coord, Vector2(-1,0), r)
+	directions[0] = _destroy_line(coord, Vector2(0,-1), r, s)
+	directions[1] = _destroy_line(coord, Vector2(1,0), r, s)
+	directions[2] = _destroy_line(coord, Vector2(0,1), r, s)
+	directions[3] = _destroy_line(coord, Vector2(-1,0), r, s)
 	
 	# get the position of the center of the tile
 	var pos = crates.map_to_world(coord) + (cellsize/2)
@@ -181,8 +181,9 @@ func explode(p, r):
 	_create_explosion(pos, directions)
 # destroy the first wooden crate found in a line 
 # from the coord_start into the dir with a depth of r
-func _destroy_line(coord_start, dir, r):
+func _destroy_line(coord_start, dir, r, s):
 	var tileset = crates.get_tileset()
+	var cnt = 0
 	
 	for i in range(1, r+1):
 		# calculate the corrdinates of the current block 
@@ -195,9 +196,12 @@ func _destroy_line(coord_start, dir, r):
 			
 			# check if that tile can be destroyed (a wooden crate)
 			if tiletype == "wooden_crate":
+				cnt += 1
 				# remote the crate
 				_destroy_crate(block_coordinates)
-				return i # only remove the first crate
+				# return when there are as many block destroyed as the explosion strength 
+				if cnt >= s:
+					return i # only remove the first crate
 			else:
 				# it is a wall or a metall crate so this is the end of the line
 				return i-1

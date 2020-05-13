@@ -7,7 +7,7 @@
 [ext_resource path="res://Scenes/Game/Camera.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Game/GUI/PlayerInfo.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Game/GUI/GameGUI.gd" type="Script" id=7]
-[ext_resource path="res://src/theme/gdquest.theme" type="Theme" id=8]
+[ext_resource path="res://Ressources/Theme.tres" type="Theme" id=8]
 [ext_resource path="res://Assets/Music/MenuMusicV1.ogg" type="AudioStream" id=9]
 
 [sub_resource type="Environment" id=1]
@@ -16,7 +16,7 @@ glow_enabled = true
 glow_intensity = 1.0
 glow_strength = 1.05
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "GameOver"
 length = 0.4
 tracks/0/type = "value"
@@ -32,7 +32,7 @@ tracks/0/keys = {
 "values": [ -5.0, -80.0 ]
 }
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=3]
 script/source = "extends Control
 
 onready var lab_message = $CenterContainer/VBoxContainer/LabWinnerMessage
@@ -43,8 +43,7 @@ func show_summary(pid):
 	$AnimationPlayer.play(\"show\")
 "
 
-[sub_resource type="Animation" id=3]
-resource_name = "show"
+[sub_resource type="Animation" id=4]
 length = 0.25
 step = 0.05
 tracks/0/type = "value"
@@ -80,7 +79,7 @@ bus = "Music"
 bus = "Sound"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/GameOver = SubResource( 4 )
+anims/GameOver = SubResource( 2 )
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -100
@@ -103,6 +102,7 @@ margin_top = -16.0
 margin_right = 1520.0
 margin_bottom = 832.0
 rect_min_size = Vector2( 294, 848 )
+theme = ExtResource( 8 )
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -147,7 +147,6 @@ margin_bottom = 848.0
 
 [node name="Menu" type="Control" parent="Foreground"]
 pause_mode = 2
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 8 )
@@ -195,11 +194,12 @@ text = "Quit"
 
 [node name="GameSummary" type="Control" parent="Foreground"]
 pause_mode = 2
+visible = false
 modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 8 )
-script = SubResource( 2 )
+script = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -258,7 +258,7 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/GameSummary"]
-anims/show = SubResource( 3 )
+anims/show = SubResource( 4 )
 
 [node name="Camera" type="Camera2D" parent="."]
 pause_mode = 1

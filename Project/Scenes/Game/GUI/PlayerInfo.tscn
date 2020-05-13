@@ -234,6 +234,23 @@ text = "3"
 align = 1
 valign = 1
 
+[node name="Control" type="Control" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 276.0
+margin_bottom = 132.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName" type="Label" parent="Control"]
+margin_left = -20.0
+margin_top = -60.0
+text = "Player 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/die = SubResource( 1 )
 anims/get_damage = SubResource( 2 )
