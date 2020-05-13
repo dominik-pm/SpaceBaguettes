@@ -10,6 +10,7 @@ var player_icon_paths = {
 	"player4": icon_path + "Player4.png"
 }
 
+# '@' means not playing
 var player_names = ["", "", "", ""]
 
 # -- GAME SETTINGS --
@@ -17,7 +18,7 @@ var player_names = ["", "", "", ""]
 var crate_item_drop_chance = 50
 
 # player
-var player_count = 2 # changed in the menu
+#var player_count = 2 # changed in the menu
 var player_maxhealth = 3
 var player_shoot_delay = 1
 var player_invincible_time = 3

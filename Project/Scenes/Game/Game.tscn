@@ -39,7 +39,7 @@ onready var lab_message = $CenterContainer/VBoxContainer/LabWinnerMessage
 
 func show_summary(pid):
 	show()
-	lab_message.text = \"Player \"+str(pid)+\" Won!\"
+	lab_message.text = Global.player_names[int(pid)-1] + \" won!\"
 	$AnimationPlayer.play(\"show\")
 "
 

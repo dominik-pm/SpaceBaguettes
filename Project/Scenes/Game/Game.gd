@@ -42,25 +42,29 @@ func _ready():
 	#cam.limit_right = pos2.transform.origin.x
 	#cam.limit_bottom = pos2.transform.origin.y
 	
-	players_alive = Global.player_count
-	init_players(players_alive)
+	players_alive = init_players()
 
 func _input(event):
 	if event.is_action_pressed("toggle_pause_menu"):
 		pause_menu.visible = !pause_menu.visible
 		get_tree().paused = pause_menu.visible
 
-func init_players(cnt):
-	for i in cnt:
-		var p = spawns[i].global_transform.origin
-		var t = crates.world_to_map(p)
-		var pos = crates.map_to_world(t) + Vector2(32, 32)
-		var player = Preloader.player.instance()
-		player_container.add_child(player)
-		var dir = Vector2(1, 0)
-		if i%2 != 0:
-			dir = Vector2(-1, 0)
-		player.init(pos, i+1, dir)
+func init_players():
+	var cnt = 0
+	for i in 4:
+		# player is not playing, when playername is '@'
+		if Global.player_names[i] != "@":
+			cnt += 1
+			
+			var p = spawns[i].global_transform.origin
+			var t = crates.world_to_map(p)
+			var pos = crates.map_to_world(t) + Vector2(32, 32)
+			var player = Preloader.player.instance()
+			player_container.add_child(player)
+			var dir = Vector2(1, 0)
+			if i%2 != 0:
+				dir = Vector2(-1, 0)
+			player.init(pos, i+1, dir)
 
 # -- player called -->
 # to update the players items, health,..

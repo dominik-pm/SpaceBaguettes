@@ -15,10 +15,11 @@ func init_player_gui():
 	player_infos.push_back(get_node(player_container3))
 	player_infos.push_back(get_node(player_container4))
 	
-	for i in range(Global.player_count):
-		player_infos[i].init(i+1)
-	for i in range(Global.player_count, 4):
-		player_infos[i].hide()
+	for i in range(4):
+		if Global.player_names[i] != "@":
+			player_infos[i].init(i+1)
+		else:
+			player_infos[i].hide()
 
 func player_hit(pid : int):
 	var p = player_infos[pid-1]

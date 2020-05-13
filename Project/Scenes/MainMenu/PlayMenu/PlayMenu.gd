@@ -3,10 +3,12 @@ extends Control
 export (NodePath) var menu
 
 var names
-
 var player_count = 4
-
 var all_entries = {}
+var players_34 = {
+	"3": false,
+	"4": false,
+}
 
 func _ready():
 	menu = get_node(menu)
@@ -18,7 +20,9 @@ func _ready():
 		get_node("VBox/PlayerSelect/Player4/PlayerNameInput")
 	]
 
-func add_player(adding):
+func add_player(adding, pid):
+	players_34[pid] = adding
+	
 	if adding:
 		player_count += 1
 	else:
@@ -36,10 +40,16 @@ func _on_BtnStart_pressed():
 	Settings.set_game_binds()
 	Settings.save_settings()
 	init_player_names()
-	menu.start_game(player_count)
+	menu.start_game()
 
 func init_player_names():
-	for i in range(player_count):
+	for i in range(4):
+		if i > 1:
+			# if the player is not playing, set name to '@' and continue
+			if not players_34[str(i+1)]:
+				Global.player_names[i] = "@"
+				continue
+		
 		var n = check_name(names[i].text)
 		if n != "":
 			Global.player_names[i] = n

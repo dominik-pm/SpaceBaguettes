@@ -44,16 +44,8 @@ func init_main_menu():
 	sett_menu.hide()
 	help_menu.hide()
 
-func start_game(player_count):
+func start_game():
 	$Fade.play("FadeOut") # maybe call the main menu, to do an animation
-	
-	# set player count
-	var cnt = player_count
-	if cnt < 2:
-		cnt = 2
-	elif cnt > 4:
-		cnt = 4
-	Global.player_count = cnt
 
 # should also be in main menu
 func _on_Fade_animation_finished(anim_name):
