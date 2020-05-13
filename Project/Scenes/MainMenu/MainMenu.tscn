@@ -528,6 +528,7 @@ margin_bottom = 680.0
 size_flags_vertical = 3
 
 [node name="PlayMenu" parent="Foreground/Menu/Play" instance=ExtResource( 21 )]
+menu = NodePath("../..")
 
 [node name="Settings" type="Control" parent="Foreground/Menu"]
 visible = false

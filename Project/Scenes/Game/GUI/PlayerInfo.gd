@@ -25,6 +25,11 @@ func _ready():
 
 func init(pid):
 	get_node(player_icon).texture = load(Global.player_icon_paths["player"+str(pid)])
+	# error checking
+	if Global.player_names.size() >= int(pid) and Global.player_names[int(pid)-1] != "":
+		player_name.text = Global.player_names[int(pid)-1]
+	else:
+		player_name.text = "Player"+str(pid)
 
 func get_damage():
 	$AnimationPlayer.play("get_damage")

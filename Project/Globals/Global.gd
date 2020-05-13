@@ -10,6 +10,8 @@ var player_icon_paths = {
 	"player4": icon_path + "Player4.png"
 }
 
+var player_names = ["", "", "", ""]
+
 # -- GAME SETTINGS --
 # game
 var crate_item_drop_chance = 50
