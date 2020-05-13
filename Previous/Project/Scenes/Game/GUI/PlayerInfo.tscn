@@ -1,0 +1,256 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Assets/Game/Items/FastBoots.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Game/UI/HeartIcon.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Game/Items/StrongerExplosions.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Game/Items/BombMove.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Game/Items/BombRange.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Game/Bomb/bomb.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Game/Player/Front_idle.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Game/Baguette/Baguette.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/Game/GUI/PlayerInfo.gd" type="Script" id=9]
+[ext_resource path="res://src/theme/gdquest.theme" type="Theme" id=10]
+
+[sub_resource type="Animation" id=1]
+resource_name = "die"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.25098, 0.25098, 0.25098, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "get_damage"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.35, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0, -1.0, 2.0, 0.0 ]
+}
+
+[node name="PlayerInfo" type="PanelContainer"]
+margin_right = 296.0
+margin_bottom = 152.0
+rect_min_size = Vector2( 256, 0 )
+rect_pivot_offset = Vector2( 148, 76 )
+theme = ExtResource( 10 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+player_icon = NodePath("VBoxContainer/PlayerStatus/PlayerIcon")
+lab_health = NodePath("VBoxContainer/PlayerStatus/VBoxContainer/HealthLabel")
+lab_bombs = NodePath("VBoxContainer/PlayerStatus/VBoxContainer2/BombsLabel")
+lab_baguettes = NodePath("VBoxContainer/PlayerStatus/VBoxContainer3/BaguettesLabel")
+lab_speed = NodePath("VBoxContainer/ItemContainer/SpeedLabel")
+lab_bomb_range = NodePath("VBoxContainer/ItemContainer/RangeLabel")
+lab_explosion_strength = NodePath("VBoxContainer/ItemContainer/ExplosionLabel")
+lab_bomb_move = NodePath("VBoxContainer/ItemContainer/MoveLabel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 276.0
+margin_bottom = 132.0
+
+[node name="PlayerStatus" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 256.0
+margin_bottom = 72.0
+custom_constants/separation = 25
+
+[node name="PlayerIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus"]
+margin_right = 64.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 64, 64 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
+margin_left = 89.0
+margin_right = 121.0
+margin_bottom = 72.0
+alignment = 1
+
+[node name="HealthIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus/VBoxContainer"]
+modulate = Color( 0.905882, 0.298039, 0.235294, 1 )
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="HealthLabel" type="Label" parent="VBoxContainer/PlayerStatus/VBoxContainer"]
+margin_top = 40.0
+margin_right = 32.0
+margin_bottom = 72.0
+text = "3"
+align = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
+margin_left = 146.0
+margin_right = 178.0
+margin_bottom = 72.0
+alignment = 1
+
+[node name="BombsIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus/VBoxContainer2"]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 6
+
+[node name="BombsLabel" type="Label" parent="VBoxContainer/PlayerStatus/VBoxContainer2"]
+margin_top = 40.0
+margin_right = 32.0
+margin_bottom = 72.0
+text = "3"
+align = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
+margin_left = 203.0
+margin_right = 235.0
+margin_bottom = 72.0
+alignment = 1
+
+[node name="BaguettesIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus/VBoxContainer3"]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+
+[node name="BaguettesLabel" type="Label" parent="VBoxContainer/PlayerStatus/VBoxContainer3"]
+margin_top = 40.0
+margin_right = 32.0
+margin_bottom = 72.0
+text = "3"
+align = 1
+
+[node name="ItemContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 80.0
+margin_right = 256.0
+margin_bottom = 112.0
+
+[node name="Speed" type="TextureRect" parent="VBoxContainer/ItemContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="SpeedLabel" type="Label" parent="VBoxContainer/ItemContainer"]
+margin_left = 40.0
+margin_right = 58.0
+margin_bottom = 32.0
+text = "3"
+align = 1
+valign = 1
+
+[node name="Range" type="TextureRect" parent="VBoxContainer/ItemContainer"]
+margin_left = 66.0
+margin_right = 98.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
+
+[node name="RangeLabel" type="Label" parent="VBoxContainer/ItemContainer"]
+margin_left = 106.0
+margin_right = 124.0
+margin_bottom = 32.0
+text = "3"
+align = 1
+valign = 1
+
+[node name="Explosions" type="TextureRect" parent="VBoxContainer/ItemContainer"]
+margin_left = 132.0
+margin_right = 164.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+
+[node name="ExplosionLabel" type="Label" parent="VBoxContainer/ItemContainer"]
+margin_left = 172.0
+margin_right = 190.0
+margin_bottom = 32.0
+text = "3"
+align = 1
+valign = 1
+
+[node name="Move" type="TextureRect" parent="VBoxContainer/ItemContainer"]
+margin_left = 198.0
+margin_right = 230.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="MoveLabel" type="Label" parent="VBoxContainer/ItemContainer"]
+margin_left = 238.0
+margin_right = 256.0
+margin_bottom = 32.0
+text = "3"
+align = 1
+valign = 1
+
+[node name="Control" type="Control" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 276.0
+margin_bottom = 132.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName" type="Label" parent="Control"]
+margin_left = -20.0
+margin_top = -60.0
+text = "Player 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/die = SubResource( 1 )
+anims/get_damage = SubResource( 2 )

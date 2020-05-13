@@ -1,0 +1,174 @@
+[gd_resource type="Theme" load_steps=17 format=2]
+
+[ext_resource path="res://src/theme/button/disabled.stylebox" type="StyleBox" id=1]
+[ext_resource path="res://src/theme/button/focused.stylebox" type="StyleBox" id=2]
+[ext_resource path="res://src/theme/button/hover.stylebox" type="StyleBox" id=3]
+[ext_resource path="res://src/theme/button/normal.stylebox" type="StyleBox" id=4]
+[ext_resource path="res://src/theme/button/pressed.stylebox" type="StyleBox" id=5]
+[ext_resource path="res://src/theme/separator/line.tres" type="StyleBox" id=6]
+[ext_resource path="res://src/theme/slider/grabber_area.stylebox" type="StyleBox" id=7]
+[ext_resource path="res://src/theme/slider/slider.stylebox" type="StyleBox" id=8]
+[ext_resource path="res://src/theme/panel/panel.stylebox" type="StyleBox" id=9]
+[ext_resource path="res://src/theme/fonts/default_font_bold.tres" type="DynamicFont" id=10]
+[ext_resource path="res://src/theme/fonts/default_font.tres" type="DynamicFont" id=11]
+[ext_resource path="res://src/theme/fonts/default_font_code.tres" type="DynamicFont" id=12]
+[ext_resource path="res://Ressources/Trench_32.tres" type="DynamicFont" id=13]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 15.0
+content_margin_right = 6.0
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+bg_color = Color( 0.237915, 0.232422, 0.25, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.367188, 0.367188, 0.367188, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxTexture" id=2]
+region_rect = Rect2( 0, 0, 61, 61 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 6.0
+content_margin_right = 6.0
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+bg_color = Color( 0.235294, 0.231373, 0.247059, 0.0784314 )
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color( 0.745098, 0.745098, 0.745098, 1 )
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[resource]
+default_font = ExtResource( 13 )
+Button/colors/font_color = Color( 0.815686, 0.815686, 0.815686, 1 )
+Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+Button/colors/font_color_hover = Color( 0.941176, 0.941176, 0.941176, 1 )
+Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/constants/hseparation = 4
+Button/fonts/font = null
+Button/styles/disabled = ExtResource( 1 )
+Button/styles/focus = ExtResource( 2 )
+Button/styles/hover = ExtResource( 3 )
+Button/styles/normal = ExtResource( 4 )
+Button/styles/pressed = ExtResource( 5 )
+HBoxContainer/constants/separation = 8
+HSeparator/constants/separation = 4
+HSeparator/styles/separator = ExtResource( 6 )
+HSlider/icons/grabber = null
+HSlider/icons/grabber_disabled = null
+HSlider/icons/grabber_highlight = null
+HSlider/icons/tick = null
+HSlider/styles/focus = null
+HSlider/styles/grabber_area = ExtResource( 7 )
+HSlider/styles/grabber_disabled = null
+HSlider/styles/grabber_highlight = null
+HSlider/styles/slider = ExtResource( 8 )
+ItemList/colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
+ItemList/colors/font_color_selected = Color( 1, 1, 1, 1 )
+ItemList/colors/guide_color = Color( 0, 0, 0, 0.1 )
+ItemList/constants/hseparation = 4
+ItemList/constants/icon_margin = 4
+ItemList/constants/line_separation = 2
+ItemList/constants/vseparation = 2
+ItemList/fonts/font = null
+ItemList/styles/bg = SubResource( 1 )
+ItemList/styles/bg_focus = SubResource( 1 )
+ItemList/styles/cursor = SubResource( 2 )
+ItemList/styles/cursor_unfocused = SubResource( 2 )
+ItemList/styles/selected = SubResource( 3 )
+ItemList/styles/selected_focus = SubResource( 3 )
+LineEdit/colors/clear_button_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+LineEdit/colors/clear_button_color_pressed = Color( 1, 1, 1, 1 )
+LineEdit/colors/cursor_color = Color( 0.941176, 0.941176, 0.941176, 1 )
+LineEdit/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+LineEdit/colors/font_color_selected = Color( 0, 0, 0, 1 )
+LineEdit/colors/selection_color = Color( 0.490196, 0.490196, 0.490196, 1 )
+LineEdit/constants/minimum_spaces = 12
+LineEdit/fonts/font = null
+LineEdit/icons/clear = null
+LineEdit/styles/focus = ExtResource( 2 )
+LineEdit/styles/normal = ExtResource( 4 )
+LineEdit/styles/read_only = ExtResource( 1 )
+MarginContainer/constants/margin_bottom = 16
+MarginContainer/constants/margin_left = 16
+MarginContainer/constants/margin_right = 16
+MarginContainer/constants/margin_top = 16
+Panel/styles/panel = ExtResource( 9 )
+Panel/styles/panelf = null
+Panel/styles/panelnc = null
+PanelContainer/styles/panel = ExtResource( 9 )
+PopupPanel/styles/panel = ExtResource( 9 )
+RichTextLabel/colors/default_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+RichTextLabel/colors/font_color_selected = Color( 0.490196, 0.490196, 0.490196, 1 )
+RichTextLabel/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+RichTextLabel/colors/selection_color = Color( 0.745098, 0.243137, 0.247059, 0.8 )
+RichTextLabel/constants/line_separation = 1
+RichTextLabel/constants/shadow_as_outline = 0
+RichTextLabel/constants/shadow_offset_x = 1
+RichTextLabel/constants/shadow_offset_y = 1
+RichTextLabel/constants/table_hseparation = 3
+RichTextLabel/constants/table_vseparation = 3
+RichTextLabel/fonts/bold_font = ExtResource( 10 )
+RichTextLabel/fonts/bold_italics_font = null
+RichTextLabel/fonts/italics_font = null
+RichTextLabel/fonts/mono_font = null
+RichTextLabel/fonts/normal_font = ExtResource( 11 )
+RichTextLabel/styles/focus = null
+RichTextLabel/styles/normal = null
+TextEdit/colors/background_color = Color( 0, 0, 0, 0 )
+TextEdit/colors/brace_mismatch_color = Color( 1, 0.2, 0.2, 1 )
+TextEdit/colors/breakpoint_color = Color( 0.8, 0.8, 0.4, 0.2 )
+TextEdit/colors/caret_background_color = Color( 0, 0, 0, 1 )
+TextEdit/colors/caret_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+TextEdit/colors/code_folding_color = Color( 0.8, 0.8, 0.8, 0.8 )
+TextEdit/colors/completion_background_color = Color( 0.172549, 0.164706, 0.196078, 1 )
+TextEdit/colors/completion_existing_color = Color( 0.87451, 0.87451, 0.87451, 0.129412 )
+TextEdit/colors/completion_font_color = Color( 0.666667, 0.666667, 0.666667, 1 )
+TextEdit/colors/completion_scroll_color = Color( 1, 1, 1, 1 )
+TextEdit/colors/completion_selected_color = Color( 0.262745, 0.258824, 0.266667, 1 )
+TextEdit/colors/current_line_color = Color( 0.25, 0.25, 0.26, 0.8 )
+TextEdit/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+TextEdit/colors/font_color_selected = Color( 0, 0, 0, 1 )
+TextEdit/colors/function_color = Color( 0.243137, 0.592157, 0.745098, 1 )
+TextEdit/colors/line_number_color = Color( 0.666667, 0.666667, 0.666667, 0.4 )
+TextEdit/colors/mark_color = Color( 1, 0.4, 0.4, 0.4 )
+TextEdit/colors/member_variable_color = Color( 0.901961, 0.305882, 0.34902, 1 )
+TextEdit/colors/number_color = Color( 0.921569, 0.584314, 0.196078, 1 )
+TextEdit/colors/safe_line_number_color = Color( 0.666667, 0.784314, 0.666667, 0.6 )
+TextEdit/colors/selection_color = Color( 0.490196, 0.490196, 0.490196, 1 )
+TextEdit/colors/symbol_color = Color( 0.941176, 0.941176, 0.941176, 1 )
+TextEdit/colors/word_highlighted_color = Color( 0.8, 0.9, 0.9, 0.15 )
+TextEdit/constants/completion_lines = 7
+TextEdit/constants/completion_max_width = 50
+TextEdit/constants/completion_scroll_width = 3
+TextEdit/constants/line_spacing = 4
+TextEdit/fonts/font = ExtResource( 12 )
+TextEdit/icons/tab = null
+TextEdit/styles/completion = null
+TextEdit/styles/focus = ExtResource( 2 )
+TextEdit/styles/normal = ExtResource( 4 )
+TextEdit/styles/read_only = ExtResource( 1 )
+VBoxContainer/constants/separation = 8
+VSeparator/constants/separation = 4
+VSeparator/styles/separator = null
+VSlider/icons/grabber = null
+VSlider/icons/grabber_disabled = null
+VSlider/icons/grabber_highlight = null
+VSlider/icons/tick = null
+VSlider/styles/focus = null
+VSlider/styles/grabber_area = ExtResource( 7 )
+VSlider/styles/grabber_disabled = null
+VSlider/styles/grabber_highlight = null
+VSlider/styles/slider = ExtResource( 8 )

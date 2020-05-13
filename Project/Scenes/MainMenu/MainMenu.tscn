@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=2]
@@ -199,7 +199,6 @@ tracks/1/keys = {
 [node name="MainMenu" type="Node2D"]
 
 [node name="Camera" type="Camera2D" parent="."]
-editor/display_folded = true
 position = Vector2( 960, 540 )
 current = true
 script = ExtResource( 1 )
@@ -213,7 +212,6 @@ position = Vector2( -960, -540 )
 anims/zoom_in_test = SubResource( 1 )
 
 [node name="Background" type="CanvasLayer" parent="."]
-editor/display_folded = true
 layer = -100
 
 [node name="Black" type="ColorRect" parent="Background"]
@@ -229,7 +227,6 @@ __meta__ = {
 [node name="Midground" type="Node" parent="."]
 
 [node name="MidgroundFar" type="CanvasLayer" parent="Midground"]
-editor/display_folded = true
 layer = 0
 
 [node name="Meteor" parent="Midground/MidgroundFar" instance=ExtResource( 3 )]
@@ -260,7 +257,6 @@ frames = SubResource( 2 )
 script = SubResource( 3 )
 
 [node name="MidgroundMid" type="CanvasLayer" parent="Midground"]
-editor/display_folded = true
 layer = 0
 
 [node name="Fighter" parent="Midground/MidgroundMid" instance=ExtResource( 3 )]
@@ -271,7 +267,6 @@ texture = ExtResource( 9 )
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
 
 [node name="MidgroundNear" type="CanvasLayer" parent="Midground"]
-editor/display_folded = true
 layer = 0
 
 [node name="Satellite" parent="Midground/MidgroundNear" instance=ExtResource( 3 )]
@@ -284,7 +279,6 @@ speed = 20
 rotation_speed = -2
 
 [node name="MidgroundStill" type="CanvasLayer" parent="Midground"]
-editor/display_folded = true
 
 [node name="Satellite" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
 position = Vector2( 300, 1200 )
@@ -306,7 +300,6 @@ __meta__ = {
 }
 
 [node name="Main" type="Control" parent="Foreground/Menu"]
-editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -456,6 +449,7 @@ margin_top = 40.0
 margin_right = 959.0
 margin_bottom = 72.0
 text = "Made by: Lugmayr Gabriel, Pömmer Dominik, Leutgeb Sebastian"
+percent_visible = 0.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -536,7 +530,6 @@ size_flags_vertical = 3
 [node name="PlayMenu" parent="Foreground/Menu/Play" instance=ExtResource( 21 )]
 
 [node name="Settings" type="Control" parent="Foreground/Menu"]
-editor/display_folded = true
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -606,10 +599,153 @@ margin_right = 384.0
 margin_bottom = 680.0
 size_flags_vertical = 3
 
-[node name="SettingsMenu" parent="Foreground/Menu/Settings" instance=ExtResource( 23 )]
+[node name="SettingsMenu" type="PanelContainer" parent="Foreground/Menu/Settings"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -300.0
+margin_top = -200.0
+margin_right = 300.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 600, 400 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 580.0
+margin_bottom = 380.0
+custom_constants/separation = 50
+
+[node name="Graphics" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer"]
+margin_right = 560.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+script = ExtResource( 22 )
+
+[node name="Graphics" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics"]
+margin_right = 560.0
+margin_bottom = 32.0
+text = "Graphics"
+
+[node name="ToggleFullscreen" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics"]
+margin_top = 40.0
+margin_right = 560.0
+margin_bottom = 72.0
+
+[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
+margin_right = 276.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+text = "Fullscreen"
+
+[node name="ToggleOn" type="TextureButton" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
+margin_left = 284.0
+margin_right = 560.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+texture_normal = ExtResource( 23 )
+texture_pressed = ExtResource( 23 )
+texture_hover = ExtResource( 23 )
+expand = true
+stretch_mode = 5
+
+[node name="ToggleOff" type="TextureButton" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
+visible = false
+margin_left = 260.0
+margin_right = 386.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+texture_normal = ExtResource( 24 )
+texture_pressed = ExtResource( 24 )
+texture_hover = ExtResource( 24 )
+expand = true
+stretch_mode = 5
+
+[node name="Audio" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer"]
+margin_top = 122.0
+margin_right = 560.0
+margin_bottom = 274.0
+size_flags_horizontal = 3
+script = ExtResource( 25 )
+
+[node name="Audio" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
+margin_right = 560.0
+margin_bottom = 32.0
+text = "Audio"
+
+[node name="Master" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
+margin_top = 40.0
+margin_right = 560.0
+margin_bottom = 72.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
+margin_right = 275.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+text = "Master"
+
+[node name="MasterSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
+margin_left = 285.0
+margin_right = 560.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+value = 50.0
+
+[node name="MasterSample" type="AudioStreamPlayer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
+stream = ExtResource( 26 )
+
+[node name="Sound" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
+margin_top = 80.0
+margin_right = 560.0
+margin_bottom = 112.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
+margin_right = 275.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+text = "Sound"
+
+[node name="SoundSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
+margin_left = 285.0
+margin_right = 560.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+value = 50.0
+ticks_on_borders = true
+
+[node name="SoundSample" type="AudioStreamPlayer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
+stream = ExtResource( 26 )
+
+[node name="Music" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
+margin_top = 120.0
+margin_right = 560.0
+margin_bottom = 152.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
+margin_right = 275.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
+margin_left = 285.0
+margin_right = 560.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+value = 50.0
+ticks_on_borders = true
+
+[node name="MusicSample" type="AudioStreamPlayer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
+stream = ExtResource( 26 )
 
 [node name="HelpMenu" type="PanelContainer" parent="Foreground/Menu"]
-editor/display_folded = true
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -840,7 +976,6 @@ __meta__ = {
 }
 
 [node name="Elements" type="Node2D" parent="Foreground"]
-editor/display_folded = true
 position = Vector2( 1600, 540 )
 
 [node name="Rocket" type="Node2D" parent="Foreground/Elements"]
@@ -866,6 +1001,7 @@ anims/flying = SubResource( 9 )
 stream = ExtResource( 39 )
 volume_db = -5.0
 autoplay = true
+bus = "Music"
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]
@@ -873,6 +1009,9 @@ autoplay = true
 [connection signal="pressed" from="Foreground/Menu/Main/BtnInfo" to="Foreground/Menu/Main/BtnInfo" method="_on_BtnInfo_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
+[connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master/MasterSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_MasterSlider_value_changed"]
+[connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound/SoundSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_SoundSlider_value_changed"]
+[connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music/MusicSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_MusicSlider_value_changed"]
 [connection signal="animation_finished" from="Foreground/Menu/Fade" to="Foreground/Menu" method="_on_Fade_animation_finished"]
 
 [editable path="Midground/MidgroundFar/Meteor"]
