@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Music/MenuMusic.ogg" type="AudioStream" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Scenes/Game/Camera.gd" type="Script" id=7]
 [ext_resource path="res://Ressources/floor_tileset.tres" type="TileSet" id=8]
 [ext_resource path="res://Ressources/crates_tileset.tres" type="TileSet" id=9]
+[ext_resource path="res://Scenes/TextButton.gd" type="Script" id=10]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -145,7 +146,6 @@ margin_bottom = 848.0
 
 [node name="Menu" type="Control" parent="Foreground"]
 pause_mode = 2
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 6 )
@@ -178,18 +178,24 @@ margin_bottom = 611.0
 margin_right = 135.0
 margin_bottom = 42.0
 text = "Resume"
+script = ExtResource( 10 )
+lang_tile = "resume"
 
 [node name="BtnMenu" type="Button" parent="Foreground/Menu/CenterContainer/VBoxContainer"]
 margin_top = 50.0
 margin_right = 135.0
 margin_bottom = 92.0
 text = "Menu"
+script = ExtResource( 10 )
+lang_tile = "menu"
 
 [node name="BtnQuit" type="Button" parent="Foreground/Menu/CenterContainer/VBoxContainer"]
 margin_top = 100.0
 margin_right = 135.0
 margin_bottom = 142.0
 text = "Quit"
+script = ExtResource( 10 )
+lang_tile = "quit"
 
 [node name="GameSummary" type="Control" parent="Foreground"]
 pause_mode = 2
@@ -233,27 +239,33 @@ margin_top = 40.0
 margin_right = 185.0
 margin_bottom = 82.0
 text = "Play again"
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+lang_tile = "play"
 
 [node name="BtnMenu" type="Button" parent="Foreground/GameSummary/CenterContainer/VBoxContainer"]
 margin_top = 90.0
 margin_right = 185.0
 margin_bottom = 132.0
 text = "Menu"
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+lang_tile = "menu"
 
 [node name="BtnQuit" type="Button" parent="Foreground/GameSummary/CenterContainer/VBoxContainer"]
 margin_top = 140.0
 margin_right = 185.0
 margin_bottom = 182.0
 text = "Quit"
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+lang_tile = "quit"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/GameSummary"]
 anims/show = SubResource( 4 )

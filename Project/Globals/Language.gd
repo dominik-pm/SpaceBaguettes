@@ -30,7 +30,12 @@ var lang_english = {
 	"fastboots": "The player's speed will be faster",
 	"bombrange": "The bomb will get a bigger range",
 	"bombexplosion": "The bomb will destroy more crates in a line",
-	"bombmoving": "Bombs will be moved faster"
+	"bombmoving": "Bombs will be moved faster",
+	# Menu Buttons
+	"resume": "Resume",
+	"play": "Play",
+	"menu": "Menu",
+	"quit": "Quit"
 }
 var lang_german = {
 	# Settings Menu
@@ -55,7 +60,12 @@ var lang_german = {
 	"fastboots": "Die Spielergeschwindigkeit wird erhöht",
 	"bombrange": "Die Reichweite der Bombe erhöht sich",
 	"bombexplosion": "Die Bombe kann eine weitere Kiste gleichzeitig zerstören",
-	"bombmoving": "Bomben lassen sich schneller verschieben"
+	"bombmoving": "Bomben lassen sich schneller verschieben",
+	# Menu Buttons
+	"resume": "Fortsetzen",
+	"play": "Spielen",
+	"menu": "Menü",
+	"quit": "Verlassen"
 }
 
 
