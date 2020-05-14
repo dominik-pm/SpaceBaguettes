@@ -35,9 +35,13 @@ func _physics_process(delta):
 	if can_collide:
 		var collision = move_and_collide(vel*delta)
 		if collision:
-			if collision.collider is Player:
-				vel = player.facing*push_force
-				#apply_impulse(player.facing, push_force) # would prob be better (but doesnt work with kinematic body)
+			var body = collision.collider
+			if body is Player:
+				var strength = body.bomb_moving_strength
+				if strength > 0:
+					print("player entered, pushing")
+					$Kick.play() # play kick sound when hitted
+					vel = player.facing*push_force*strength
 
 func _on_ExplodingTimer_timeout():
 	explode()

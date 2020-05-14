@@ -204,6 +204,11 @@ tracks/1/keys = {
 
 [node name="MainMenu" type="Node2D"]
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 39 )
+autoplay = true
+bus = "Music"
+
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2( 960, 540 )
 current = true
@@ -464,6 +469,7 @@ anims/hide = SubResource( 5 )
 anims/show = SubResource( 6 )
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1002,12 +1008,6 @@ position = Vector2( 0, -30 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
 anims/flying = SubResource( 9 )
-
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 39 )
-volume_db = -5.0
-autoplay = true
-bus = "Music"
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]

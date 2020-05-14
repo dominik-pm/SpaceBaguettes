@@ -1,6 +1,6 @@
 extends Node2D
 
-export var speed = 300
+export var speed = 450
 var dir = Vector2(0,0)
 var dist = 1
 var flying = false

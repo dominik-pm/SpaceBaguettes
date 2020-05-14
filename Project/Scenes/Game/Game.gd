@@ -161,7 +161,6 @@ func _get_random_item():
 	for item in Items.drop_probabilities:
 		for i in range(Items.drop_probabilities[item]):
 			items.push_back(item)
-	print(items)
 	
 	# return a random item from the pool
 	var rand_idx = floor(rand_range(0, items.size()))
