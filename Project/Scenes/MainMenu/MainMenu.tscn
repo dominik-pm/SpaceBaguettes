@@ -74,9 +74,10 @@ func _ready():
 script/source = "extends TextureButton
 
 var is_shown = false
+var can_toggle = true
 
 func _ready():
-	pass
+	$Label.percent_visible = 0
 
 func toggle_info():
 	if is_shown:
@@ -87,7 +88,12 @@ func toggle_info():
 		is_shown = true
 
 func _on_BtnInfo_pressed():
-	toggle_info()
+	if can_toggle:
+		toggle_info()
+		can_toggle = false
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	can_toggle = true
 "
 
 [sub_resource type="Animation" id=5]
@@ -449,7 +455,6 @@ margin_top = 40.0
 margin_right = 959.0
 margin_bottom = 72.0
 text = "Made by: Lugmayr Gabriel, Pömmer Dominik, Leutgeb Sebastian"
-percent_visible = 0.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1008,6 +1013,7 @@ bus = "Music"
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/BtnHelp" to="Foreground/Menu" method="_on_BtnHelp_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/BtnInfo" to="Foreground/Menu/Main/BtnInfo" method="_on_BtnInfo_pressed"]
+[connection signal="animation_finished" from="Foreground/Menu/Main/BtnInfo/AnimationPlayer" to="Foreground/Menu/Main/BtnInfo" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master/MasterSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_MasterSlider_value_changed"]
