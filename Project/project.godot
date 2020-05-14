@@ -62,6 +62,7 @@ Items="*res://Globals/Items.gd"
 Settings="*res://Globals/Settings.gd"
 SFX="*res://Globals/SFX.gd"
 Application="*res://Globals/Application.gd"
+Language="*res://Globals/Language.gd"
 
 [display]
 

@@ -1,6 +1,8 @@
 # Stores, saves and loads game Settings in an ini-style file
 extends Node
 
+signal settings_loaded
+
 const SAVE_PATH = "res://config.cfg" # in debug
 #const SAVE_PATH = "user://config.cfg" # on build
 
@@ -32,6 +34,9 @@ var settings = {
 		"4move_right": "",
 		"4shoot": "",
 		"4set_bomb": ""
+	},
+	"general": {
+		"language": 0
 	},
 	"video": {
 		"fullscreen": false
@@ -93,7 +98,7 @@ func load_settings():
 			#else:
 			#	settings[section][key] = ""
 	
-	print("successfully loaded settings")
+	emit_signal("settings_loaded")
 
 func get_setting(category, key):
 	return settings[category][key]

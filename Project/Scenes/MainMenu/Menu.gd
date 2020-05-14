@@ -12,7 +12,10 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		init_main_menu()
+		if help_menu.visible:
+			help_menu.hide()
+		else:
+			init_main_menu()
 
 # -- MAIN MENU BUTTONS -->
 func _on_BtnSettings_pressed():
