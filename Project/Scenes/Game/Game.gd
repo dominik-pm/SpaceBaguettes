@@ -65,6 +65,7 @@ func init_players():
 			if i%2 != 0:
 				dir = Vector2(-1, 0)
 			player.init(pos, i+1, dir)
+	return cnt
 
 # -- player called -->
 # to update the players items, health,..

@@ -48,7 +48,7 @@ config/name="Space Baguettes"
 run/main_scene="res://Scenes/MainMenu/MainMenu.tscn"
 boot_splash/image="res://Assets/Artwork/SplashArt.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
-config/icon="res://Assets/Artwork/Icon1.png"
+config/icon="res://Assets/Artwork/Icon2.png"
 
 [audio]
 

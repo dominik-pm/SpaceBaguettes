@@ -51,7 +51,9 @@ func explode():
 	$ExplosionSound.play()
 	
 	# tell the player
-	player.bomb_exploded()
+	var wr  = weakref(player)
+	if wr.get_ref(): # check if the player is not freed (died)
+		player.bomb_exploded()
 	
 	# tell the game
 	game.explode($Center.global_transform.origin, explosion_size, explosion_strength)
