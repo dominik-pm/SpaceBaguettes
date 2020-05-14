@@ -38,7 +38,7 @@
 [ext_resource path="res://Assets/Menu/Objects/Rockets/flame1.png" type="Texture" id=36]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/flame3.png" type="Texture" id=37]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=38]
-[ext_resource path="res://Assets/Music/MenuMusicV1.ogg" type="AudioStream" id=39]
+[ext_resource path="res://Assets/Music/MenuMusic.ogg" type="AudioStream" id=39]
 
 [sub_resource type="Animation" id=1]
 resource_name = "zoom_in_test"
