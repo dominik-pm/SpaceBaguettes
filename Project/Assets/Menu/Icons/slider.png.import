@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/slider.png-ca052dc939e4adab7e317f462193cc00.image"
+
+[deps]
+
+source_file="res://Assets/Menu/Icons/slider.png"
+dest_files=[ "res://.import/slider.png-ca052dc939e4adab7e317f462193cc00.image" ]
+
+[params]
+

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/theme/gdquest.theme" type="Theme" id=1]
 [ext_resource path="res://src/Components/Title.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/theme/fonts/default_font_bold.tres" type="DynamicFont" id=3]
 [ext_resource path="res://src/Components/TextEdit/TextEdit.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Game/Items/Item.gd" type="Script" id=5]
 
 [node name="Styleguide" type="Control"]
 anchor_right = 1.0
@@ -27,7 +28,7 @@ __meta__ = {
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 796.0
-margin_bottom = 822.0
+margin_bottom = 812.0
 custom_constants/margin_right = 32
 custom_constants/margin_top = 32
 custom_constants/margin_left = 32
@@ -37,11 +38,11 @@ custom_constants/margin_bottom = 32
 margin_left = 32.0
 margin_top = 32.0
 margin_right = 744.0
-margin_bottom = 770.0
+margin_bottom = 760.0
 
 [node name="VisualReference" type="VBoxContainer" parent="Panel/MarginContainer/Column"]
 margin_right = 712.0
-margin_bottom = 126.0
+margin_bottom = 116.0
 
 [node name="Title3" parent="Panel/MarginContainer/Column/VisualReference" instance=ExtResource( 2 )]
 anchor_left = 0.0
@@ -57,17 +58,17 @@ text = "Visual Reference"
 [node name="Label4" type="Label" parent="Panel/MarginContainer/Column/VisualReference"]
 margin_top = 44.0
 margin_right = 712.0
-margin_bottom = 76.0
+margin_bottom = 68.0
 text = "Normal paragraph text"
 
 [node name="Row" type="HBoxContainer" parent="Panel/MarginContainer/Column/VisualReference"]
-margin_top = 84.0
+margin_top = 76.0
 margin_right = 712.0
-margin_bottom = 126.0
+margin_bottom = 116.0
 
 [node name="Button" type="Button" parent="Panel/MarginContainer/Column/VisualReference/Row"]
 margin_right = 232.0
-margin_bottom = 42.0
+margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
 text = "Button"
@@ -75,7 +76,7 @@ text = "Button"
 [node name="Button2" type="Button" parent="Panel/MarginContainer/Column/VisualReference/Row"]
 margin_left = 240.0
 margin_right = 472.0
-margin_bottom = 42.0
+margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
 text = "Button"
@@ -83,20 +84,20 @@ text = "Button"
 [node name="Button3" type="Button" parent="Panel/MarginContainer/Column/VisualReference/Row"]
 margin_left = 480.0
 margin_right = 712.0
-margin_bottom = 42.0
+margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
 text = "Button"
 
 [node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/Column"]
-margin_top = 134.0
+margin_top = 124.0
 margin_right = 712.0
-margin_bottom = 138.0
+margin_bottom = 128.0
 
 [node name="ColorPalette" type="VBoxContainer" parent="Panel/MarginContainer/Column"]
-margin_top = 146.0
+margin_top = 136.0
 margin_right = 712.0
-margin_bottom = 394.0
+margin_bottom = 384.0
 
 [node name="Title" parent="Panel/MarginContainer/Column/ColorPalette" instance=ExtResource( 2 )]
 anchor_left = 0.0
@@ -242,14 +243,14 @@ text = "Error"
 valign = 1
 
 [node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/Column"]
-margin_top = 402.0
+margin_top = 392.0
 margin_right = 712.0
-margin_bottom = 406.0
+margin_bottom = 396.0
 
 [node name="CodeBlock2" type="VBoxContainer" parent="Panel/MarginContainer/Column"]
-margin_top = 414.0
+margin_top = 404.0
 margin_right = 712.0
-margin_bottom = 738.0
+margin_bottom = 728.0
 
 [node name="Title2" parent="Panel/MarginContainer/Column/CodeBlock2" instance=ExtResource( 2 )]
 anchor_left = 0.0
@@ -304,6 +305,9 @@ margin_left = 32.0
 margin_top = 32.0
 margin_right = -32.0
 margin_bottom = -32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Title3" parent="Panel2/Column" instance=ExtResource( 2 )]
 anchor_left = 0.0
@@ -319,15 +323,15 @@ text = "Styleguide"
 [node name="Label3" type="Label" parent="Panel2/Column"]
 margin_top = 44.0
 margin_right = 752.0
-margin_bottom = 181.0
+margin_bottom = 149.0
 text = "The project contains reusable UI components to create in-game debug tools efficiently.
 We're designing these tools both for debugging purposes and to visualize information for tutorials."
 autowrap = true
 
 [node name="HSeparator" type="HSeparator" parent="Panel2/Column"]
-margin_top = 189.0
+margin_top = 157.0
 margin_right = 752.0
-margin_bottom = 193.0
+margin_bottom = 161.0
 
 [node name="Title4" parent="Panel2/Column" instance=ExtResource( 2 )]
 anchor_left = 0.0
@@ -335,15 +339,15 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 201.0
+margin_top = 169.0
 margin_right = 752.0
-margin_bottom = 237.0
+margin_bottom = 205.0
 text = "Design Principles"
 
 [node name="Label2" type="RichTextLabel" parent="Panel2/Column"]
-margin_top = 245.0
+margin_top = 213.0
 margin_right = 752.0
-margin_bottom = 385.0
+margin_bottom = 353.0
 rect_min_size = Vector2( 0, 140 )
 bbcode_enabled = true
 bbcode_text = "- [b]Simple[/b] and sober. We're going for a flat design that doesn't draw too much attention away from what's happening in the game.
@@ -351,3 +355,21 @@ bbcode_text = "- [b]Simple[/b] and sober. We're going for a flat design that doe
 text = "- Simple and sober. We're going for a flat design that doesn't draw too much attention away from what's happening in the game.
 - Informative. Colors, shape, and animations should be intentional and convey meaning."
 scroll_active = false
+
+[node name="OptionButton" type="OptionButton" parent="."]
+margin_left = 889.0
+margin_top = 581.0
+margin_right = 1259.0
+margin_bottom = 615.0
+rect_rotation = 1.102
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Item" type="Node2D" parent="OptionButton"]
+rotation = -0.0549779
+scale = Vector2( 1, 1 )
+script = ExtResource( 5 )
+__meta__ = {
+"_editor_description_": "test?"
+}
