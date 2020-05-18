@@ -2,6 +2,7 @@ extends Sprite
 
 export (NodePath) var relative_origin
 
+export var respawn_interval = 60
 export var rot_off_sprite_left = false
 export var speed = 50
 export var rotation_speed = 0
@@ -19,17 +20,14 @@ func _ready():
 	
 	relative_origin = get_node(relative_origin)
 	start_pos_offset = global_transform.origin - relative_origin.global_transform.origin
-	get_node("VisibilityNotifier2D").connect("viewport_exited", self, "_on_VisibilityNotifier2D_viewport_exited")
+	
+	timer.wait_time = respawn_interval
+	timer.start()
 
 func _process(delta):
 	transform.origin += dir*delta*speed
 	rotate(deg2rad(rotation_speed*delta))
 
-func _on_VisibilityNotifier2D_viewport_exited(viewport):
-	# does not work correctly and also fires when scene is changed :(
-	print(name + " exited")
-	if timer.is_inside_tree():
-		timer.start()
-
 func _on_Timer_timeout():
+	timer.start()
 	transform.origin = relative_origin.global_transform.origin+start_pos_offset

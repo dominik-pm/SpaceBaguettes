@@ -19,7 +19,7 @@ func _ready():
 			player_keybinds[key] = all_player_binds[key]
 	
 	var index = 0
-	var all_containers = [$Forward, $Back, $Left, $Right, $Bomb, $Shoot]
+	var all_containers = [$Forward, $Back, $Left, $Right, $Shoot, $Bomb]
 	
 	# init all keybind buttons
 	for key in player_keybinds:
@@ -34,7 +34,10 @@ func _ready():
 			all_containers[index].add_child(cur_entry)
 		else:
 			# get existing node
-			cur_entry = all_containers[index].get_child(0)
+			if all_containers[index].get_child_count() == 1:
+				cur_entry = all_containers[index].get_child(0)
+			else:
+				cur_entry = all_containers[index].get_child(1)
 		index += 1
 		cur_entry.init(key, value, self)
 		entries[key] = cur_entry
