@@ -19,7 +19,8 @@ func init(k, v, m):
 
 func _input(event):
 	if waiting_input:
-		if event is InputEventKey:
+		# Keyboard or Controller Button
+		if event is InputEventKey or event is InputEventJoypadButton:
 			value = event.scancode
 			menu.change_bind(key, value)
 			set_text()
