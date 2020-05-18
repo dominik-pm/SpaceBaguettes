@@ -43,7 +43,7 @@ func _physics_process(delta):
 					$Kick.play() # play kick sound when hitted
 					vel = player.facing*push_force*strength
 			else:
-				vel = 0
+				vel = Vector2(0,0)
 
 func _on_ExplodingTimer_timeout():
 	explode()
