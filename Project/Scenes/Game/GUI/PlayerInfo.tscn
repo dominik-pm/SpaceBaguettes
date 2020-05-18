@@ -122,12 +122,12 @@ align = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
 margin_left = 146.0
-margin_right = 178.0
+margin_right = 185.0
 margin_bottom = 64.0
 alignment = 1
 
 [node name="BombsIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus/VBoxContainer2"]
-margin_right = 32.0
+margin_right = 39.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
 texture = ExtResource( 6 )
@@ -136,14 +136,14 @@ stretch_mode = 6
 
 [node name="BombsLabel" type="Label" parent="VBoxContainer/PlayerStatus/VBoxContainer2"]
 margin_top = 40.0
-margin_right = 32.0
+margin_right = 39.0
 margin_bottom = 64.0
-text = "3"
+text = "3/3"
 align = 1
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
-margin_left = 203.0
-margin_right = 235.0
+margin_left = 210.0
+margin_right = 242.0
 margin_bottom = 64.0
 alignment = 1
 

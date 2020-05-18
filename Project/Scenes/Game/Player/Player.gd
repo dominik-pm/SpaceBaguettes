@@ -61,6 +61,7 @@ func init_gui():
 	game.update_info(int(pid), Items.BOMBRANGE, 0)
 	game.update_info(int(pid), Items.EXPLOSIONSTRENGTH, 0)
 	game.update_info(int(pid), Items.BOMBMOVING, bomb_moving_strength)
+	game.update_current_bombs(int(pid), max_bombs-bombs_active)
 
 func _process(delta):
 	var axis = get_input_axis()
@@ -129,6 +130,7 @@ func _input(event):
 			bombs_active += 1
 			if bombs_active >= max_bombs:
 				can_place_bomb = false
+			game.update_current_bombs(int(pid), max_bombs-bombs_active)
 			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
 	
 	if event.is_action_pressed(pid+"shoot") and can_shoot and baguette_count > 0:
@@ -156,6 +158,7 @@ func shoot(pos, player_pos):
 func bomb_exploded():
 	bombs_active -= 1
 	can_place_bomb = true
+	game.update_current_bombs(int(pid), max_bombs-bombs_active)
 
 #if item gets picked up
 func get_item(item):

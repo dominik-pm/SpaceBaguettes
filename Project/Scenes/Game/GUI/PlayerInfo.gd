@@ -13,6 +13,9 @@ export (NodePath) var lab_bomb_range
 export (NodePath) var lab_explosion_strength
 export (NodePath) var lab_bomb_move
 
+var bombs_cur = 0
+var bombs_cnt = 0
+
 func _ready():
 	lab_health = get_node(lab_health)
 	lab_bombs = get_node(lab_bombs)
@@ -39,8 +42,13 @@ func died():
 
 func update_health(h):
 	lab_health.text = str(h)
+func update_current_bombs(b):
+	bombs_cur = b
+	lab_bombs.text = str(bombs_cur)+"/"+str(bombs_cnt)
 func update_bombs(b):
-	lab_bombs.text = str(b)
+	bombs_cnt = b
+	#lab_bombs.text = str(b)
+	lab_bombs.text = str(bombs_cur)+"/"+str(bombs_cnt)
 func update_baguettes(b):
 	lab_baguettes.text = str(b)
 

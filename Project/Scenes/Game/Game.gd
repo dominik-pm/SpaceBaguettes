@@ -77,6 +77,9 @@ func init_players():
 func update_info(player : int, item, value):
 	if gui != null:
 		gui.update_info(player, item, value)
+func update_current_bombs(player : int, cur_bombs):
+	if gui != null:
+		gui.update_current_bombs(player, cur_bombs)
 func player_hit(player : int):
 	gui.player_hit(player)
 	cam.request_camera_shake(0.5)

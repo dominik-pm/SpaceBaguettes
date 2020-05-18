@@ -28,6 +28,9 @@ func player_hit(pid : int):
 func player_died(pid : int):
 	player_infos[pid-1].died()
 
+func update_current_bombs(pid : int, cur_bombs):
+	player_infos[pid-1].update_current_bombs(cur_bombs)
+
 func update_info(pid : int, item, value):
 	if player_infos == []:
 		init_player_gui()
