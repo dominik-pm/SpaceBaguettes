@@ -84,12 +84,12 @@ margin_bottom = 132.0
 
 [node name="PlayerStatus" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 256.0
-margin_bottom = 72.0
+margin_bottom = 64.0
 custom_constants/separation = 25
 
 [node name="PlayerIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus"]
 margin_right = 64.0
-margin_bottom = 72.0
+margin_bottom = 64.0
 rect_min_size = Vector2( 64, 64 )
 texture = ExtResource( 7 )
 expand = true
@@ -101,7 +101,7 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
 margin_left = 89.0
 margin_right = 121.0
-margin_bottom = 72.0
+margin_bottom = 64.0
 alignment = 1
 
 [node name="HealthIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus/VBoxContainer"]
@@ -116,14 +116,14 @@ stretch_mode = 6
 [node name="HealthLabel" type="Label" parent="VBoxContainer/PlayerStatus/VBoxContainer"]
 margin_top = 40.0
 margin_right = 32.0
-margin_bottom = 72.0
+margin_bottom = 64.0
 text = "3"
 align = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
 margin_left = 146.0
 margin_right = 178.0
-margin_bottom = 72.0
+margin_bottom = 64.0
 alignment = 1
 
 [node name="BombsIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus/VBoxContainer2"]
@@ -137,14 +137,14 @@ stretch_mode = 6
 [node name="BombsLabel" type="Label" parent="VBoxContainer/PlayerStatus/VBoxContainer2"]
 margin_top = 40.0
 margin_right = 32.0
-margin_bottom = 72.0
+margin_bottom = 64.0
 text = "3"
 align = 1
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer/PlayerStatus"]
 margin_left = 203.0
 margin_right = 235.0
-margin_bottom = 72.0
+margin_bottom = 64.0
 alignment = 1
 
 [node name="BaguettesIcon" type="TextureRect" parent="VBoxContainer/PlayerStatus/VBoxContainer3"]
@@ -158,14 +158,14 @@ stretch_mode = 6
 [node name="BaguettesLabel" type="Label" parent="VBoxContainer/PlayerStatus/VBoxContainer3"]
 margin_top = 40.0
 margin_right = 32.0
-margin_bottom = 72.0
+margin_bottom = 64.0
 text = "3"
 align = 1
 
 [node name="ItemContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 80.0
+margin_top = 72.0
 margin_right = 256.0
-margin_bottom = 112.0
+margin_bottom = 104.0
 
 [node name="Speed" type="TextureRect" parent="VBoxContainer/ItemContainer"]
 margin_right = 32.0
@@ -177,15 +177,16 @@ stretch_mode = 6
 
 [node name="SpeedLabel" type="Label" parent="VBoxContainer/ItemContainer"]
 margin_left = 40.0
-margin_right = 58.0
-margin_bottom = 32.0
+margin_top = 4.0
+margin_right = 54.0
+margin_bottom = 28.0
 text = "3"
 align = 1
 valign = 1
 
 [node name="Range" type="TextureRect" parent="VBoxContainer/ItemContainer"]
-margin_left = 66.0
-margin_right = 98.0
+margin_left = 62.0
+margin_right = 94.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
 texture = ExtResource( 5 )
@@ -193,16 +194,17 @@ expand = true
 stretch_mode = 6
 
 [node name="RangeLabel" type="Label" parent="VBoxContainer/ItemContainer"]
-margin_left = 106.0
-margin_right = 124.0
-margin_bottom = 32.0
+margin_left = 102.0
+margin_top = 4.0
+margin_right = 116.0
+margin_bottom = 28.0
 text = "3"
 align = 1
 valign = 1
 
 [node name="Explosions" type="TextureRect" parent="VBoxContainer/ItemContainer"]
-margin_left = 132.0
-margin_right = 164.0
+margin_left = 124.0
+margin_right = 156.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
 texture = ExtResource( 3 )
@@ -210,16 +212,17 @@ expand = true
 stretch_mode = 6
 
 [node name="ExplosionLabel" type="Label" parent="VBoxContainer/ItemContainer"]
-margin_left = 172.0
-margin_right = 190.0
-margin_bottom = 32.0
+margin_left = 164.0
+margin_top = 4.0
+margin_right = 178.0
+margin_bottom = 28.0
 text = "3"
 align = 1
 valign = 1
 
 [node name="Move" type="TextureRect" parent="VBoxContainer/ItemContainer"]
-margin_left = 198.0
-margin_right = 230.0
+margin_left = 186.0
+margin_right = 218.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 32, 32 )
 texture = ExtResource( 4 )
@@ -227,9 +230,10 @@ expand = true
 stretch_mode = 6
 
 [node name="MoveLabel" type="Label" parent="VBoxContainer/ItemContainer"]
-margin_left = 238.0
-margin_right = 256.0
-margin_bottom = 32.0
+margin_left = 226.0
+margin_top = 4.0
+margin_right = 240.0
+margin_bottom = 28.0
 text = "3"
 align = 1
 valign = 1

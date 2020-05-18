@@ -102,6 +102,7 @@ menu = NodePath("../../../../..")
 margin_top = 200.0
 margin_right = 350.0
 margin_bottom = 242.0
+max_length = 16
 placeholder_text = "name"
 
 [node name="Player2" type="VBoxContainer" parent="VBox/PlayerSelect"]
@@ -161,6 +162,7 @@ menu = NodePath("../../../../..")
 margin_top = 200.0
 margin_right = 350.0
 margin_bottom = 242.0
+max_length = 16
 placeholder_text = "name"
 
 [node name="Player3" type="VBoxContainer" parent="VBox/PlayerSelect"]
@@ -252,6 +254,7 @@ stretch_mode = 5
 margin_top = 200.0
 margin_right = 350.0
 margin_bottom = 242.0
+max_length = 16
 placeholder_text = "name"
 
 [node name="Player4" type="VBoxContainer" parent="VBox/PlayerSelect"]
@@ -344,6 +347,7 @@ stretch_mode = 5
 margin_top = 200.0
 margin_right = 350.0
 margin_bottom = 242.0
+max_length = 16
 placeholder_text = "name"
 
 [node name="Control" type="CenterContainer" parent="VBox"]

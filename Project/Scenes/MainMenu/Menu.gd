@@ -48,7 +48,8 @@ func init_main_menu():
 	help_menu.hide()
 
 func start_game():
-	$Fade.play("FadeOut") # maybe call the main menu, to do an animation
+	$Fade.play("FadeOut")
+	$"../Elements/Rocket".fly_away()
 
 # should also be in main menu
 func _on_Fade_animation_finished(anim_name):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=2]
@@ -21,11 +21,7 @@
 [ext_resource path="res://Assets/Menu/Icons/information.png" type="Texture" id=19]
 [ext_resource path="res://Assets/Menu/Icons/exitLeft.png" type="Texture" id=20]
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenu.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Scenes/MainMenu/SettingsMenu/GraphicsSettings.gd" type="Script" id=22]
-[ext_resource path="res://Assets/Menu/Icons/larger.png" type="Texture" id=23]
-[ext_resource path="res://Assets/Menu/Icons/smaller.png" type="Texture" id=24]
-[ext_resource path="res://Scenes/MainMenu/SettingsMenu/AudioSettings.gd" type="Script" id=25]
-[ext_resource path="res://Assets/Sounds/UI/Success.wav" type="AudioStream" id=26]
+[ext_resource path="res://Scenes/MainMenu/SettingsMenu/SettingsMenu.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Assets/Fonts/Trench_Header.tres" type="DynamicFont" id=27]
 [ext_resource path="res://Assets/Game/Items/ExtraLive.png" type="Texture" id=28]
 [ext_resource path="res://Assets/Game/Items/MoreBombs.png" type="Texture" id=29]
@@ -44,6 +40,7 @@
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket3.png" type="Texture" id=42]
 [ext_resource path="res://Assets/Menu/Objects/Fighters/fighter2.png" type="Texture" id=43]
 [ext_resource path="res://Assets/Menu/Objects/Fighters/fighter33.png" type="Texture" id=44]
+[ext_resource path="res://Assets/Menu/Objects/Stations/station1.png" type="Texture" id=45]
 
 [sub_resource type="Animation" id=1]
 resource_name = "zoom_in_test"
@@ -74,6 +71,14 @@ script/source = "extends AnimatedSprite
 func _ready():
 	play(\"default\")
 "
+
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ ExtResource( 37 ), ExtResource( 36 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
 
 [sub_resource type="GDScript" id=4]
 script/source = "extends TextureButton
@@ -133,21 +138,8 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
-[sub_resource type="GDScript" id=7]
-script/source = "extends OptionButton
-
-func _ready():
-	for lang in Language.languages:
-		add_item(lang)
-	
-	select(Language.current)
-
-func _on_OptionButton_item_selected(id):
-	Language.change_language(id)
-"
-
 [sub_resource type="Animation" id=8]
-step = 0.01
+length = 1.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Fade/Black:modulate")
 tracks/0/interp = 1
@@ -155,7 +147,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 1.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
@@ -179,7 +171,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 1.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ -5.0, -80.0 ]
@@ -194,6 +186,30 @@ animations = [ {
 } ]
 
 [sub_resource type="Animation" id=10]
+resource_name = "fly_away"
+length = 1.5
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 1.5 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 8, -0.25, 0, 0.25, 0, -1024, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 1.5 )
+}
+
+[sub_resource type="Animation" id=11]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -263,12 +279,23 @@ follow_viewport_enable = true
 follow_viewport_scale = 0.7
 
 [node name="Meteor" parent="Midground/MidgroundFar" instance=ExtResource( 3 )]
-position = Vector2( 416, -280 )
+position = Vector2( 416, -248 )
 rotation = 0.261799
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 4 )
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
 respawn_interval = 40
+rotation_speed = 20
+
+[node name="Meteor2" parent="Midground/MidgroundFar" instance=ExtResource( 3 )]
+position = Vector2( 1256, 2000 )
+rotation = 0.261799
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+respawn_interval = 120
+spawn_time_offset = 5
+speed = -45
 rotation_speed = 20
 
 [node name="MidgroundMid" type="CanvasLayer" parent="Midground"]
@@ -277,11 +304,21 @@ follow_viewport_enable = true
 follow_viewport_scale = 0.8
 
 [node name="Fighter" parent="Midground/MidgroundMid" instance=ExtResource( 3 )]
-position = Vector2( 816, -776 )
+position = Vector2( 816, -880 )
 rotation = -0.122173
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 9 )
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
+respawn_interval = 80
+
+[node name="Fighter5" parent="Midground/MidgroundMid" instance=ExtResource( 3 )]
+position = Vector2( 268.423, -1315.09 )
+rotation = -0.392699
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 44 )
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+respawn_interval = 130
+speed = 40
 
 [node name="Satellite" parent="Midground/MidgroundMid" instance=ExtResource( 3 )]
 position = Vector2( 2000, 900 )
@@ -289,6 +326,8 @@ rotation = 1.37706
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 10 )
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
+respawn_interval = 50
+spawn_time_offset = 10
 speed = 30
 rotation_speed = -3
 
@@ -297,63 +336,106 @@ layer = 0
 follow_viewport_enable = true
 follow_viewport_scale = 0.9
 
-[node name="Rocket" parent="Midground/MidgroundNear" instance=ExtResource( 3 )]
-position = Vector2( -176, 456 )
-rotation = -5.45764
-scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 42 )
-relative_origin = NodePath("../../../Camera/RelativeOrigin")
-respawn_interval = 70
-speed = 120
-
 [node name="Fighter2" parent="Midground/MidgroundNear" instance=ExtResource( 3 )]
-position = Vector2( 2128, 376 )
+position = Vector2( 2120, 249 )
 rotation = -2.03505
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 43 )
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
-respawn_interval = 120
-speed = 100
+respawn_interval = 150
+spawn_time_offset = 30
+speed = -50
 
 [node name="Fighter3" parent="Midground/MidgroundNear" instance=ExtResource( 3 )]
-position = Vector2( 2184, 520 )
-rotation = -2.03505
+position = Vector2( 2248, 40 )
+rotation = -2.04204
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 44 )
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
-respawn_interval = 120
-speed = 100
+respawn_interval = 150
+spawn_time_offset = 30
+speed = -45
 
 [node name="Fighter4" parent="Midground/MidgroundNear" instance=ExtResource( 3 )]
-position = Vector2( 2024, 488 )
-rotation = -2.03505
+position = Vector2( 2376, 224 )
+rotation = -2.0944
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 44 )
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
-respawn_interval = 120
-speed = 100
+respawn_interval = 150
+spawn_time_offset = 30
+speed = -56
 
 [node name="MidgroundStill" type="CanvasLayer" parent="Midground"]
 
 [node name="Satellite" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
-position = Vector2( 300, 1200 )
+position = Vector2( 300, 1400 )
 rotation = -2.93215
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 11 )
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
+is_still = true
+spawn_time_offset = 2
 speed = 40
 
 [node name="Comet" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
-position = Vector2( 1657.74, -259 )
+position = Vector2( 1500, -155 )
 rotation = -0.253073
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
+is_still = true
 respawn_interval = 100
 rot_off_sprite_left = true
+speed = 60
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundStill/Comet"]
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 2 )
 script = SubResource( 3 )
+
+[node name="Comet2" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
+position = Vector2( -246.26, 2005 )
+rotation = 2.53945
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+is_still = true
+respawn_interval = 180
+spawn_time_offset = 5
+rot_off_sprite_left = true
+speed = 65
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundStill/Comet2"]
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 2 )
+script = SubResource( 3 )
+
+[node name="Rocket" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
+position = Vector2( -728, 1224 )
+rotation = 0.6353
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 42 )
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+is_still = true
+respawn_interval = 220
+spawn_time_offset = 20
+speed = -60
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundStill/Rocket"]
+show_behind_parent = true
+position = Vector2( 0.46344, 148.079 )
+scale = Vector2( 1.5, 1.5 )
+frames = SubResource( 12 )
+playing = true
+
+[node name="Station" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
+position = Vector2( 1308, -464 )
+rotation = -2.96008
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 45 )
+relative_origin = NodePath("../../../Camera/RelativeOrigin")
+is_still = true
+respawn_interval = 300
+spawn_time_offset = 10
+speed = -15
+rotation_speed = 1
 
 [node name="Foreground" type="CanvasLayer" parent="."]
 
@@ -367,17 +449,19 @@ __meta__ = {
 }
 
 [node name="Main" type="Control" parent="Foreground/Menu"]
+anchor_top = -0.00132588
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.998674
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Buttons" type="VBoxContainer" parent="Foreground/Menu/Main"]
 anchor_bottom = 1.0
-margin_top = 200.0
-margin_right = 384.0
-margin_bottom = -200.0
+margin_left = 0.166084
+margin_top = 199.834
+margin_right = 384.166
+margin_bottom = -200.166
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -525,6 +609,7 @@ anims/hide = SubResource( 5 )
 anims/show = SubResource( 6 )
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -666,185 +751,7 @@ margin_right = 384.0
 margin_bottom = 680.0
 size_flags_vertical = 3
 
-[node name="SettingsMenu" type="PanelContainer" parent="Foreground/Menu/Settings"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -300.0
-margin_top = -200.0
-margin_right = 300.0
-margin_bottom = 200.0
-rect_min_size = Vector2( 600, 400 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu"]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 580.0
-margin_bottom = 474.0
-custom_constants/separation = 50
-
-[node name="Language" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer"]
-margin_right = 560.0
-margin_bottom = 98.0
-
-[node name="Language" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Language"]
-margin_right = 560.0
-margin_bottom = 48.0
-custom_fonts/font = ExtResource( 40 )
-text = "Language"
-script = ExtResource( 41 )
-lang_tile = "language"
-
-[node name="OptionButton" type="OptionButton" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Language"]
-margin_top = 56.0
-margin_right = 560.0
-margin_bottom = 98.0
-text = "English"
-script = SubResource( 7 )
-
-[node name="Graphics" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer"]
-margin_top = 148.0
-margin_right = 560.0
-margin_bottom = 236.0
-size_flags_horizontal = 3
-script = ExtResource( 22 )
-
-[node name="Graphics" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics"]
-margin_right = 560.0
-margin_bottom = 48.0
-custom_fonts/font = ExtResource( 40 )
-text = "Graphics"
-script = ExtResource( 41 )
-lang_tile = "graphics"
-
-[node name="ToggleFullscreen" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics"]
-margin_top = 56.0
-margin_right = 560.0
-margin_bottom = 88.0
-
-[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
-margin_right = 276.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-text = "Fullscreen"
-script = ExtResource( 41 )
-lang_tile = "fullscreen"
-
-[node name="ToggleOn" type="TextureButton" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
-margin_left = 284.0
-margin_right = 560.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-texture_normal = ExtResource( 23 )
-texture_pressed = ExtResource( 23 )
-texture_hover = ExtResource( 23 )
-expand = true
-stretch_mode = 5
-
-[node name="ToggleOff" type="TextureButton" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Graphics/ToggleFullscreen"]
-visible = false
-margin_left = 260.0
-margin_right = 386.0
-margin_bottom = 14.0
-size_flags_horizontal = 3
-texture_normal = ExtResource( 24 )
-texture_pressed = ExtResource( 24 )
-texture_hover = ExtResource( 24 )
-expand = true
-stretch_mode = 5
-
-[node name="Audio" type="VBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer"]
-margin_top = 286.0
-margin_right = 560.0
-margin_bottom = 454.0
-size_flags_horizontal = 3
-script = ExtResource( 25 )
-
-[node name="Audio" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
-margin_right = 560.0
-margin_bottom = 48.0
-custom_fonts/font = ExtResource( 40 )
-text = "Audio"
-script = ExtResource( 41 )
-lang_tile = "audio"
-
-[node name="Master" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
-margin_top = 56.0
-margin_right = 560.0
-margin_bottom = 88.0
-custom_constants/separation = 10
-
-[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
-margin_right = 275.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-text = "Master"
-script = ExtResource( 41 )
-lang_tile = "master"
-
-[node name="MasterSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
-margin_left = 285.0
-margin_right = 560.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-value = 50.0
-
-[node name="MasterSample" type="AudioStreamPlayer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master"]
-stream = ExtResource( 26 )
-
-[node name="Sound" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
-margin_top = 96.0
-margin_right = 560.0
-margin_bottom = 128.0
-custom_constants/separation = 10
-
-[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
-margin_right = 275.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-text = "Sound"
-script = ExtResource( 41 )
-lang_tile = "sound"
-
-[node name="SoundSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
-margin_left = 285.0
-margin_right = 560.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-value = 50.0
-ticks_on_borders = true
-
-[node name="SoundSample" type="AudioStreamPlayer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound"]
-stream = ExtResource( 26 )
-
-[node name="Music" type="HBoxContainer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio"]
-margin_top = 136.0
-margin_right = 560.0
-margin_bottom = 168.0
-custom_constants/separation = 10
-
-[node name="Label" type="Label" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
-margin_right = 275.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-text = "Music"
-script = ExtResource( 41 )
-lang_tile = "music"
-
-[node name="MusicSlider" type="HSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
-margin_left = 285.0
-margin_right = 560.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-value = 50.0
-ticks_on_borders = true
-
-[node name="MusicSample" type="AudioStreamPlayer" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music"]
-stream = ExtResource( 26 )
+[node name="SettingsMenu" parent="Foreground/Menu/Settings" instance=ExtResource( 22 )]
 
 [node name="HelpMenu" type="PanelContainer" parent="Foreground/Menu"]
 visible = false
@@ -871,9 +778,8 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer"]
-visible = false
 margin_right = 896.0
-margin_bottom = 840.0
+margin_bottom = 816.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -888,61 +794,61 @@ lang_tile = "player"
 [node name="LabPlayer" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
 margin_top = 56.0
 margin_right = 884.0
-margin_bottom = 88.0
+margin_bottom = 80.0
 text = "The player is a player"
 autowrap = true
 script = ExtResource( 41 )
 lang_tile = "playerdesc"
 
 [node name="HeaderBombs" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 96.0
+margin_top = 88.0
 margin_right = 884.0
-margin_bottom = 144.0
+margin_bottom = 136.0
 custom_fonts/font = ExtResource( 27 )
 text = "Bombs:"
 script = ExtResource( 41 )
 lang_tile = "bombs"
 
 [node name="LabBombs" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 152.0
+margin_top = 144.0
 margin_right = 884.0
-margin_bottom = 184.0
+margin_bottom = 168.0
 text = "The bomb is a bomb"
 autowrap = true
 script = ExtResource( 41 )
 lang_tile = "bombsdesc"
 
 [node name="HeaderBaguettes" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 192.0
+margin_top = 176.0
 margin_right = 884.0
-margin_bottom = 240.0
+margin_bottom = 224.0
 custom_fonts/font = ExtResource( 27 )
 text = "Baguettes:"
 script = ExtResource( 41 )
 lang_tile = "baguettes"
 
 [node name="LabBaguettes" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 248.0
+margin_top = 232.0
 margin_right = 884.0
-margin_bottom = 280.0
+margin_bottom = 256.0
 text = "The baguette is a baguette"
 autowrap = true
 script = ExtResource( 41 )
 lang_tile = "baguettesdesc"
 
 [node name="HeaderItems" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 288.0
+margin_top = 264.0
 margin_right = 884.0
-margin_bottom = 336.0
+margin_bottom = 312.0
 custom_fonts/font = ExtResource( 27 )
 text = "Items:"
 script = ExtResource( 41 )
 lang_tile = "items"
 
 [node name="ExtraHealth" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 344.0
+margin_top = 320.0
 margin_right = 884.0
-margin_bottom = 408.0
+margin_bottom = 384.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/ExtraHealth"]
@@ -955,9 +861,9 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/ExtraHealth"]
 margin_left = 89.0
-margin_top = 16.0
+margin_top = 20.0
 margin_right = 884.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 size_flags_horizontal = 3
 text = "Der Spieler erhält ein weiteres Leben"
 autowrap = true
@@ -965,9 +871,9 @@ script = ExtResource( 41 )
 lang_tile = "extrahealth"
 
 [node name="MoreBombs" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 416.0
+margin_top = 392.0
 margin_right = 884.0
-margin_bottom = 480.0
+margin_bottom = 456.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/MoreBombs"]
@@ -980,9 +886,9 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/MoreBombs"]
 margin_left = 89.0
-margin_top = 16.0
+margin_top = 20.0
 margin_right = 884.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 size_flags_horizontal = 3
 text = "Eine weitere Bombe kann gleichzeitig platziert werden"
 autowrap = true
@@ -990,9 +896,9 @@ script = ExtResource( 41 )
 lang_tile = "extrabomb"
 
 [node name="ExtraBaguette" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 488.0
+margin_top = 464.0
 margin_right = 884.0
-margin_bottom = 552.0
+margin_bottom = 528.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/ExtraBaguette"]
@@ -1005,9 +911,9 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/ExtraBaguette"]
 margin_left = 89.0
-margin_top = 16.0
+margin_top = 20.0
 margin_right = 884.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 size_flags_horizontal = 3
 text = "Der Spieler erhält ein weiteres Baguette"
 autowrap = true
@@ -1015,9 +921,9 @@ script = ExtResource( 41 )
 lang_tile = "extrabaguette"
 
 [node name="FastBoots" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 560.0
+margin_top = 536.0
 margin_right = 884.0
-margin_bottom = 624.0
+margin_bottom = 600.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/FastBoots"]
@@ -1030,9 +936,9 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/FastBoots"]
 margin_left = 89.0
-margin_top = 16.0
+margin_top = 20.0
 margin_right = 884.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 size_flags_horizontal = 3
 text = "Die Spielergeschwindigkeit wird erhöht"
 autowrap = true
@@ -1040,9 +946,9 @@ script = ExtResource( 41 )
 lang_tile = "fastboots"
 
 [node name="BombRange" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 632.0
+margin_top = 608.0
 margin_right = 884.0
-margin_bottom = 696.0
+margin_bottom = 672.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/BombRange"]
@@ -1055,9 +961,9 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/BombRange"]
 margin_left = 89.0
-margin_top = 16.0
+margin_top = 20.0
 margin_right = 884.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 size_flags_horizontal = 3
 text = "Die Reichweite der Bombe erhöht sich"
 autowrap = true
@@ -1065,9 +971,9 @@ script = ExtResource( 41 )
 lang_tile = "bombrange"
 
 [node name="StrongerExplosion" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 704.0
+margin_top = 680.0
 margin_right = 884.0
-margin_bottom = 768.0
+margin_bottom = 744.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/StrongerExplosion"]
@@ -1080,9 +986,9 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/StrongerExplosion"]
 margin_left = 89.0
-margin_top = 16.0
+margin_top = 20.0
 margin_right = 884.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 size_flags_horizontal = 3
 text = "Die Bombe kann eine weitere Kiste gleichzeitig zerstören"
 autowrap = true
@@ -1090,9 +996,9 @@ script = ExtResource( 41 )
 lang_tile = "bombexplosion"
 
 [node name="BombMove" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 776.0
+margin_top = 752.0
 margin_right = 884.0
-margin_bottom = 840.0
+margin_bottom = 816.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/BombMove"]
@@ -1105,9 +1011,9 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/BombMove"]
 margin_left = 89.0
-margin_top = 16.0
+margin_top = 20.0
 margin_right = 884.0
-margin_bottom = 48.0
+margin_bottom = 44.0
 size_flags_horizontal = 3
 text = "Bomben lassen sich schneller verschieben"
 autowrap = true
@@ -1147,7 +1053,8 @@ texture = ExtResource( 38 )
 position = Vector2( 3.72058, 8.05499 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
-anims/flying = SubResource( 10 )
+anims/fly_away = SubResource( 10 )
+anims/flying = SubResource( 11 )
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]
@@ -1156,10 +1063,4 @@ anims/flying = SubResource( 10 )
 [connection signal="animation_finished" from="Foreground/Menu/Main/BtnInfo/AnimationPlayer" to="Foreground/Menu/Main/BtnInfo" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
-[connection signal="item_selected" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Language/OptionButton" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Language/OptionButton" method="_on_OptionButton_item_selected"]
-[connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Master/MasterSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_MasterSlider_value_changed"]
-[connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Sound/SoundSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_SoundSlider_value_changed"]
-[connection signal="value_changed" from="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music/MusicSlider" to="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio" method="_on_MusicSlider_value_changed"]
 [connection signal="animation_finished" from="Foreground/Menu/Fade" to="Foreground/Menu" method="_on_Fade_animation_finished"]
-
-[editable path="Midground/MidgroundFar/Meteor"]

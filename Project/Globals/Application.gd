@@ -13,4 +13,6 @@ func _notification(what):
 func _input(event):
 	if event.is_action_pressed("toggle_fullscreen"):
 		OS.window_fullscreen = !OS.window_fullscreen
+		Settings.set_setting("video", "fullscreen", OS.window_fullscreen)
+		Settings.save_settings()
 		emit_signal("toggled_fullscreen", OS.window_fullscreen)

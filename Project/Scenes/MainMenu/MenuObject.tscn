@@ -9,4 +9,8 @@ script = ExtResource( 1 )
 wait_time = 4.0
 one_shot = true
 autostart = true
+
+[node name="OffsetTimer" type="Timer" parent="."]
+one_shot = true
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="OffsetTimer" to="." method="_on_OffsetTimer_timeout"]
