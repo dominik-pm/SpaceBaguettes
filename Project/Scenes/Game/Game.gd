@@ -16,6 +16,7 @@ onready var crates = $Container/Crates
 onready var spawns = $PlayerSpawns.get_children()
 onready var container = $Container
 onready var player_container = $Container
+onready var settings_menu = $Foreground/SettingsMenu
 
 # get those by code
 var map_size_x = 19
@@ -32,7 +33,8 @@ func _ready():
 	gui = get_node(gui_path)
 	
 	pause_menu.hide()
-	game_summary.hide()
+	settings_menu.hide()
+	game_summary.hide() 
 	gui.init_player_gui()
 	
 	cellsize = crates.cell_size
@@ -46,8 +48,11 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("toggle_pause_menu"):
-		pause_menu.visible = !pause_menu.visible
-		get_tree().paused = pause_menu.visible
+		if not settings_menu.visible:
+			pause_menu.visible = !pause_menu.visible
+			get_tree().paused = pause_menu.visible
+		else:
+			settings_menu.hide()
 
 func init_players():
 	var cnt = 0
@@ -224,12 +229,17 @@ func _on_BtnResume_pressed():
 	get_tree().paused = false
 	pause_menu.hide()
 
+func _on_BtnSettings_pressed():
+	settings_menu.show()
+
+func _on_BtnCloseSettings_pressed():
+	settings_menu.hide()
+
 func _on_BtnMenu_pressed():
 	get_tree().paused = false
 	get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
 
 func _on_BtnQuit_pressed():
-	# maybe an animation here --
 	get_tree().quit()
 
 func _on_BtnPlay_pressed():

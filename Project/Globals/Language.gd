@@ -33,6 +33,7 @@ var lang_english = {
 	"bombmoving": "Bombs will be moved faster",
 	# Menu Buttons
 	"resume": "Resume",
+	"settings": "Settings",
 	"play": "Play",
 	"menu": "Menu",
 	"quit": "Quit"
@@ -63,6 +64,7 @@ var lang_german = {
 	"bombmoving": "Bomben lassen sich schneller verschieben",
 	# Menu Buttons
 	"resume": "Fortsetzen",
+	"settings": "Einstellungen",
 	"play": "Spielen",
 	"menu": "Menü",
 	"quit": "Verlassen"
