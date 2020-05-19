@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=2]
@@ -22,6 +22,8 @@
 [ext_resource path="res://Assets/Menu/Icons/exitLeft.png" type="Texture" id=20]
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenu.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Scenes/MainMenu/SettingsMenu/SettingsMenu.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Assets/Sounds/UI/click3.ogg" type="AudioStream" id=23]
+[ext_resource path="res://Assets/Sounds/Game/Impact3.wav" type="AudioStream" id=24]
 [ext_resource path="res://Assets/Fonts/Trench_Header.tres" type="DynamicFont" id=27]
 [ext_resource path="res://Assets/Game/Items/ExtraLive.png" type="Texture" id=28]
 [ext_resource path="res://Assets/Game/Items/MoreBombs.png" type="Texture" id=29]
@@ -1038,6 +1040,14 @@ color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Click" type="AudioStreamPlayer" parent="Foreground/Menu"]
+stream = ExtResource( 23 )
+bus = "Sound"
+
+[node name="Start" type="AudioStreamPlayer" parent="Foreground/Menu"]
+stream = ExtResource( 24 )
+bus = "Sound"
 
 [node name="Elements" type="Node2D" parent="Foreground"]
 position = Vector2( 1600, 540 )

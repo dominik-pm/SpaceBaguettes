@@ -45,6 +45,16 @@ func _ready():
 	#cam.limit_bottom = pos2.transform.origin.y
 	
 	players_alive = init_players()
+	
+	$StartCountdown.start_countdown()
+	$StartCountdown.connect("countdown_finished", self, "_on_start_cntdwn_finished")
+
+func _on_start_cntdwn_finished():
+	$StartGame.play()
+	# tell the players that the game started
+	for c in container.get_children():
+		if c is Player:
+			c.start()
 
 func _input(event):
 	if event.is_action_pressed("toggle_pause_menu"):
@@ -69,7 +79,7 @@ func init_players():
 			var dir = Vector2(1, 0)
 			if i%2 != 0:
 				dir = Vector2(-1, 0)
-			player.init(pos, i+1, dir)
+			player.init(pos, i+1, dir, self)
 	return cnt
 
 # -- player called -->
@@ -229,16 +239,20 @@ func _create_explosion(p, dirs):
 # Menu Stuff
 
 func _on_BtnResume_pressed():
+	$Click.play()
 	get_tree().paused = false
 	pause_menu.hide()
 
 func _on_BtnSettings_pressed():
+	$Click.play()
 	settings_menu.show()
 
 func _on_BtnCloseSettings_pressed():
+	$Click.play()
 	settings_menu.hide()
 
 func _on_BtnMenu_pressed():
+	$Click.play()
 	get_tree().paused = false
 	get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
 
@@ -248,3 +262,4 @@ func _on_BtnQuit_pressed():
 func _on_BtnPlay_pressed():
 	get_tree().paused = false
 	get_tree().change_scene("res://Scenes/Game/Game.tscn")
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=206 format=2]
+[gd_scene load_steps=207 format=2]
 
 [ext_resource path="res://Scenes/Game/Bomb/Bomb.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Particles/Explosions/explosion 1.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Assets/Sounds/Game/PlaceBomb.wav" type="AudioStream" id=7]
 [ext_resource path="res://Assets/Sounds/Game/KickBomb.wav" type="AudioStream" id=8]
 [ext_resource path="res://Assets/Game/Bomb/bomb_upper.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Sounds/Game/Explosion2.wav" type="AudioStream" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 24.0
@@ -1078,6 +1079,11 @@ one_shot = true
 [node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 
+[node name="ExplosionSound2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -15.0
+bus = "Sound"
+
 [node name="Place" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 
@@ -1087,4 +1093,4 @@ stream = ExtResource( 8 )
 [connection signal="body_exited" from="PushArea" to="." method="_on_PushArea_body_exited"]
 [connection signal="animation_finished" from="Explosion" to="." method="_on_Explosion_animation_finished"]
 [connection signal="timeout" from="ExplodingTimer" to="." method="_on_ExplodingTimer_timeout"]
-[connection signal="finished" from="ExplosionSound" to="." method="_on_ExplosionSound_finished"]
+[connection signal="finished" from="ExplosionSound2" to="." method="_on_ExplosionSound2_finished"]

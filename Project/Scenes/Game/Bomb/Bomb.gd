@@ -51,6 +51,7 @@ func _on_ExplodingTimer_timeout():
 func explode():
 	$ExplodingTimer.stop()
 	$ExplosionSound.play()
+	$ExplosionSound2.play()
 	
 	# tell the player
 	var wr  = weakref(player)
@@ -86,12 +87,13 @@ func _on_PushArea_body_entered(body):
 				vel = player.facing*push_force*strength
 
 func _on_Explosion_animation_finished():
+	$Explosion.hide()
 	# small logic to only queue free, when the animation and the sound is finished
 	if can_free:
 		queue_free()
 	can_free = true
 
-func _on_ExplosionSound_finished():
+func _on_ExplosionSound2_finished():
 	if can_free:
 		queue_free()
 	can_free = true

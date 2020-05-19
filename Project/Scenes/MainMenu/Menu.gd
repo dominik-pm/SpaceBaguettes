@@ -6,8 +6,11 @@ onready var main_menu = $Main/Buttons
 onready var play_menu = $Play
 onready var sett_menu = $Settings
 onready var help_menu = $HelpMenu
+onready var click_snd = $Click
+onready var start_snd = $Start
 
 func _ready():
+	click_snd.stream.loop = false
 	init_main_menu()
 
 func _input(event):
@@ -19,11 +22,13 @@ func _input(event):
 
 # -- MAIN MENU BUTTONS -->
 func _on_BtnSettings_pressed():
+	click_snd.play()
 	main_menu.hide()
 	sett_menu.show()
 	help_menu.hide()
 
 func _on_BtnPlay_pressed():
+	click_snd.play()
 	main_menu.hide()
 	play_menu.show()
 	help_menu.hide()
@@ -35,6 +40,7 @@ func _on_BtnExit_pressed():
 # <-- MAIN MENU BUTTONS --
 
 func _on_BtnBack_pressed():
+	click_snd.play()
 	Settings.save_settings()
 	init_main_menu()
 
@@ -48,6 +54,7 @@ func init_main_menu():
 	help_menu.hide()
 
 func start_game():
+	start_snd.play()
 	$Fade.play("FadeOut")
 	$"../Elements/Rocket".fly_away()
 

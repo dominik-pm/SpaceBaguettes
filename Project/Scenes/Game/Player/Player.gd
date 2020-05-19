@@ -12,8 +12,8 @@ onready var muzzle = $Muzzle
 
 # item relevant variables
 var bombs_active = 0
-var can_place_bomb = true
-var can_shoot = true
+var can_place_bomb = false
+var can_shoot = false
 var on_bomb = false
 
 # movement variables
@@ -34,24 +34,30 @@ var bomb_moving_strength = 0 # 0: can not move bombs
 
 # game relevant variables
 var pid = "1"
+var game_started = false
 var is_alive = true
 var game
 var can_remove = false
 var invincible = false
 
 func _ready():
-	game = get_parent().get_parent()
 	facing = Vector2(1,0)
 	shooting_delay_timer.wait_time = Global.player_shoot_delay
 	invincible_timer.wait_time = Global.player_invincible_time
 
-func init(pos, p, f):
+func init(pos, p, f, g):
+	game = g
 	global_transform.origin = pos
 	pid = str(p)
 	anim.init(int(pid))
 	facing = f
 	
 	init_gui()
+
+func start():
+	can_shoot = true
+	can_place_bomb = true
+	game_started = true
 
 func init_gui():
 	game.update_info(int(pid), Items.HEALTH, health)
@@ -64,19 +70,20 @@ func init_gui():
 	game.update_current_bombs(int(pid), max_bombs-bombs_active)
 
 func _process(delta):
-	var axis = get_input_axis()
-	apply_friction(speed)
-	apply_movement(axis*speed)
-	motion = move_and_slide(motion)
-	
-	if axis != Vector2.ZERO:
-		facing = axis
-	
-	_set_anim(axis)
-	
-	var target = motion*speed
-	
-	vel = target
+	if game_started:
+		var axis = get_input_axis()
+		apply_friction(speed)
+		apply_movement(axis*speed)
+		motion = move_and_slide(motion)
+		
+		if axis != Vector2.ZERO:
+			facing = axis
+		
+		_set_anim(axis)
+		
+		var target = motion*speed
+		
+		vel = target
 
 # returns which direction the player is going to go
 func get_input_axis():
