@@ -762,7 +762,6 @@ size_flags_vertical = 3
 [node name="SettingsMenu" parent="Foreground/Menu/Settings" instance=ExtResource( 22 )]
 
 [node name="HelpMenu" type="PanelContainer" parent="Foreground/Menu"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -786,8 +785,8 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer"]
-margin_right = 896.0
-margin_bottom = 816.0
+margin_right = 884.0
+margin_bottom = 924.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -802,61 +801,64 @@ lang_tile = "player"
 [node name="LabPlayer" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
 margin_top = 56.0
 margin_right = 884.0
-margin_bottom = 80.0
-text = "The player is a player"
+margin_bottom = 107.0
+text = "Der Spieler kann sich in jede Richtung bewegen, Bomben legen, Baguettes schießen und Items aufsammeln"
 autowrap = true
 script = ExtResource( 41 )
 lang_tile = "playerdesc"
 
 [node name="HeaderBombs" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 88.0
+margin_top = 115.0
 margin_right = 884.0
-margin_bottom = 136.0
+margin_bottom = 163.0
 custom_fonts/font = ExtResource( 27 )
 text = "Bombs:"
 script = ExtResource( 41 )
 lang_tile = "bombs"
 
 [node name="LabBombs" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 144.0
+margin_top = 171.0
 margin_right = 884.0
-margin_bottom = 168.0
-text = "The bomb is a bomb"
+margin_bottom = 222.0
+text = "Gelegte Bomben explodieren nach einer kurzen Zeit.
+Die Explosion wirkt sich in jede Richtung aus und hängt von den Items des Spielers ab."
 autowrap = true
 script = ExtResource( 41 )
 lang_tile = "bombsdesc"
 
 [node name="HeaderBaguettes" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 176.0
+margin_top = 230.0
 margin_right = 884.0
-margin_bottom = 224.0
+margin_bottom = 278.0
 custom_fonts/font = ExtResource( 27 )
 text = "Baguettes:"
 script = ExtResource( 41 )
 lang_tile = "baguettes"
 
 [node name="LabBaguettes" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 232.0
+margin_top = 286.0
 margin_right = 884.0
-margin_bottom = 256.0
-text = "The baguette is a baguette"
+margin_bottom = 364.0
+text = "Der Spieler hat eine begrenzte Anzahl von Baguettes, welche er schießen kann.
+Trifft ein Baguette auf eine Bombe, explodiert diese sofort. 
+Trifft es einen Spieler, verliert dieser ein Leben."
 autowrap = true
 script = ExtResource( 41 )
 lang_tile = "baguettesdesc"
 
 [node name="HeaderItems" type="Label" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 264.0
+margin_top = 372.0
 margin_right = 884.0
-margin_bottom = 312.0
+margin_bottom = 420.0
 custom_fonts/font = ExtResource( 27 )
 text = "Items:"
 script = ExtResource( 41 )
 lang_tile = "items"
 
 [node name="ExtraHealth" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 320.0
+margin_top = 428.0
 margin_right = 884.0
-margin_bottom = 384.0
+margin_bottom = 492.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/ExtraHealth"]
@@ -879,9 +881,9 @@ script = ExtResource( 41 )
 lang_tile = "extrahealth"
 
 [node name="MoreBombs" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 392.0
+margin_top = 500.0
 margin_right = 884.0
-margin_bottom = 456.0
+margin_bottom = 564.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/MoreBombs"]
@@ -904,9 +906,9 @@ script = ExtResource( 41 )
 lang_tile = "extrabomb"
 
 [node name="ExtraBaguette" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 464.0
+margin_top = 572.0
 margin_right = 884.0
-margin_bottom = 528.0
+margin_bottom = 636.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/ExtraBaguette"]
@@ -929,9 +931,9 @@ script = ExtResource( 41 )
 lang_tile = "extrabaguette"
 
 [node name="FastBoots" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 536.0
+margin_top = 644.0
 margin_right = 884.0
-margin_bottom = 600.0
+margin_bottom = 708.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/FastBoots"]
@@ -954,9 +956,9 @@ script = ExtResource( 41 )
 lang_tile = "fastboots"
 
 [node name="BombRange" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 608.0
+margin_top = 716.0
 margin_right = 884.0
-margin_bottom = 672.0
+margin_bottom = 780.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/BombRange"]
@@ -979,9 +981,9 @@ script = ExtResource( 41 )
 lang_tile = "bombrange"
 
 [node name="StrongerExplosion" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 680.0
+margin_top = 788.0
 margin_right = 884.0
-margin_bottom = 744.0
+margin_bottom = 852.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/StrongerExplosion"]
@@ -1004,9 +1006,9 @@ script = ExtResource( 41 )
 lang_tile = "bombexplosion"
 
 [node name="BombMove" type="HBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer"]
-margin_top = 752.0
+margin_top = 860.0
 margin_right = 884.0
-margin_bottom = 816.0
+margin_bottom = 924.0
 custom_constants/separation = 25
 
 [node name="Icon" type="TextureRect" parent="Foreground/Menu/HelpMenu/ScrollContainer/VBoxContainer/BombMove"]

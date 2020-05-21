@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Game/Bomb/Explosion/ExplosionHitBox.gd" type="Script" id=1]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 32.0
+radius = 24.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 24, 24 )
 
 [node name="Node2D" type="Area2D"]
 collision_mask = 2
@@ -15,5 +18,9 @@ shape = SubResource( 1 )
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 autostart = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 2 )
 [connection signal="body_entered" from="." to="." method="_on_Node2D_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
