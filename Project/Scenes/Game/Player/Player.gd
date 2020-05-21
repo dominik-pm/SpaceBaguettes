@@ -56,10 +56,6 @@ func init(pos, p, f, g):
 	anim.init(int(pid))
 	facing = f
 	
-	if pid == "1":
-		device_ID = 
-		use_gamepad = true
-	
 	init_gui()
 
 func start():
