@@ -423,7 +423,6 @@ show_behind_parent = true
 position = Vector2( 0.46344, 148.079 )
 scale = Vector2( 1.5, 1.5 )
 frames = SubResource( 4 )
-frame = 1
 playing = true
 
 [node name="Station" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
