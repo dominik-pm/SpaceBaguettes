@@ -57,6 +57,8 @@ func init(pos, p, f, g):
 	pid = str(p)
 	anim.init(int(pid))
 	facing = f
+	_set_anim(vel)
+	
 	
 	init_gui()
 

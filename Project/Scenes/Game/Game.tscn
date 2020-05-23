@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Scenes/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Music/GameMusic.ogg" type="AudioStream" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Scenes/Background/RocketFire.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=20]
 [ext_resource path="res://Scenes/Game/Player/PlayerSprite.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Scenes/Game/GUI/LabWinnerMessage.gd" type="Script" id=22]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -87,7 +88,7 @@ onready var player_sprite = $Elements/Rocket/PlayerSprite
 
 func show_summary(pid):
 	show()
-	lab_message.text = Global.player_names[int(pid)-1] + \" won!\"
+	lab_message.set_winner(Global.player_names[int(pid)-1])
 	anim.play(\"show\")
 	rocket.fly_in()
 	player_sprite.init(int(pid))
@@ -109,23 +110,23 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="CanvasItemMaterial" id=16]
+[sub_resource type="CanvasItemMaterial" id=7]
 blend_mode = 1
 
-[sub_resource type="Gradient" id=17]
+[sub_resource type="Gradient" id=8]
 offsets = PoolRealArray( 0, 0.468085, 1 )
 colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
 
-[sub_resource type="GradientTexture" id=18]
-gradient = SubResource( 17 )
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
 
-[sub_resource type="Curve" id=19]
+[sub_resource type="Curve" id=10]
 _data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=20]
-curve = SubResource( 19 )
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
 
-[sub_resource type="ParticlesMaterial" id=21]
+[sub_resource type="ParticlesMaterial" id=12]
 flag_disable_z = true
 direction = Vector3( 0, 1, 0 )
 spread = 10.0
@@ -136,8 +137,8 @@ orbit_velocity_random = 0.0
 angle = 180.0
 angle_random = 1.0
 scale = 0.18
-scale_curve = SubResource( 20 )
-color_ramp = SubResource( 18 )
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
 
 [sub_resource type="Animation" id=13]
 length = 2.0
@@ -249,7 +250,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=16]
 resource_name = "stop"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -288,7 +289,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=17]
 script/source = "extends HBoxContainer
 
 func _ready():
@@ -519,17 +520,20 @@ __meta__ = {
 [node name="LabWinnerMessage" type="Label" parent="Foreground/GameSummary"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -138.5
+margin_left = -350.0
 margin_top = 200.0
-margin_right = 138.5
-margin_bottom = 248.0
+margin_right = 350.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 700, 0 )
 custom_fonts/font = ExtResource( 17 )
 text = "Player X won!"
 align = 1
 valign = 1
+script = ExtResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+lang_tile = "winnermessage"
 
 [node name="CenterContainer" type="CenterContainer" parent="Foreground/GameSummary"]
 anchor_right = 1.0
@@ -591,8 +595,8 @@ script = ExtResource( 18 )
 auto_fly_away = true
 
 [node name="RocketFire" parent="Foreground/GameSummary/Elements/Rocket" instance=ExtResource( 19 )]
-material = SubResource( 16 )
-process_material = SubResource( 21 )
+material = SubResource( 7 )
+process_material = SubResource( 12 )
 
 [node name="Rocket" type="Sprite" parent="Foreground/GameSummary/Elements/Rocket"]
 position = Vector2( 4.0708, 38.3857 )
@@ -605,7 +609,7 @@ position = Vector2( 3.72058, 8.05499 )
 anims/fly_away = SubResource( 13 )
 anims/fly_in = SubResource( 14 )
 anims/flying = SubResource( 15 )
-anims/stop = SubResource( 22 )
+anims/stop = SubResource( 16 )
 
 [node name="PlayerSprite" parent="Foreground/GameSummary/Elements/Rocket" instance=ExtResource( 21 )]
 position = Vector2( 3, 39 )
@@ -627,7 +631,7 @@ margin_right = 560.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 0, 48 )
 rect_clip_content = true
-script = SubResource( 7 )
+script = SubResource( 17 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

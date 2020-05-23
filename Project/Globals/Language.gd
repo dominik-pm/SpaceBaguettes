@@ -36,7 +36,9 @@ var lang_english = {
 	"settings": "Settings",
 	"play": "Play",
 	"menu": "Menu",
-	"quit": "Quit"
+	"quit": "Quit",
+	# Game
+	"winnermessage": "won!"
 }
 var lang_german = {
 	# Settings Menu
@@ -67,7 +69,9 @@ var lang_german = {
 	"settings": "Einstellungen",
 	"play": "Spielen",
 	"menu": "Menü",
-	"quit": "Verlassen"
+	"quit": "Verlassen",
+	# Game
+	"winnermessage": "hat gewonnen!"
 }
 
 
