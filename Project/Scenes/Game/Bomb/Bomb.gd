@@ -53,6 +53,8 @@ func explode():
 	$ExplosionSound.play()
 	$ExplosionSound2.play()
 	
+	can_collide = false
+	
 	# tell the player
 	var wr  = weakref(player)
 	if wr.get_ref(): # check if the player is not freed (died)

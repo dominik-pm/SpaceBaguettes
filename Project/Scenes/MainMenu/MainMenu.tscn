@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=2]
@@ -22,8 +22,10 @@
 [ext_resource path="res://Assets/Menu/Icons/exitLeft.png" type="Texture" id=20]
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenu.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Scenes/MainMenu/SettingsMenu/SettingsMenu.tscn" type="PackedScene" id=22]
-[ext_resource path="res://Assets/Sounds/UI/click3.ogg" type="AudioStream" id=23]
-[ext_resource path="res://Assets/Sounds/Game/Impact3.wav" type="AudioStream" id=24]
+[ext_resource path="res://Assets/Sounds/UI/ButtonClick.ogg" type="AudioStream" id=23]
+[ext_resource path="res://Assets/Sounds/Game/TransitionSound.wav" type="AudioStream" id=24]
+[ext_resource path="res://Assets/Sounds/UI/ButtonClick2.wav" type="AudioStream" id=25]
+[ext_resource path="res://Scenes/Background/RocketFire.tscn" type="PackedScene" id=26]
 [ext_resource path="res://Assets/Fonts/Trench_Header.tres" type="DynamicFont" id=27]
 [ext_resource path="res://Assets/Game/Items/ExtraLive.png" type="Texture" id=28]
 [ext_resource path="res://Assets/Game/Items/MoreBombs.png" type="Texture" id=29]
@@ -33,8 +35,6 @@
 [ext_resource path="res://Assets/Game/Items/StrongerExplosions.png" type="Texture" id=33]
 [ext_resource path="res://Assets/Game/Items/BombMove.png" type="Texture" id=34]
 [ext_resource path="res://Scenes/MainMenu/Rocket.gd" type="Script" id=35]
-[ext_resource path="res://Assets/Menu/Objects/Rockets/flame1.png" type="Texture" id=36]
-[ext_resource path="res://Assets/Menu/Objects/Rockets/flame3.png" type="Texture" id=37]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=38]
 [ext_resource path="res://Assets/Music/MenuMusic.ogg" type="AudioStream" id=39]
 [ext_resource path="res://Ressources/Trench_48.tres" type="DynamicFont" id=40]
@@ -74,15 +74,34 @@ func _ready():
 	play(\"default\")
 "
 
-[sub_resource type="SpriteFrames" id=4]
-animations = [ {
-"frames": [ ExtResource( 37 ), ExtResource( 36 ) ],
-"loop": true,
-"name": "default",
-"speed": 10.0
-} ]
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0, 0.468085, 1 )
+colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=8]
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 10.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 180.0
+angle_random = 1.0
+scale = 0.08
+scale_curve = SubResource( 7 )
+color_ramp = SubResource( 5 )
+
+[sub_resource type="GDScript" id=9]
 script/source = "extends TextureButton
 
 var is_shown = false
@@ -92,23 +111,21 @@ func _ready():
 	$Label.percent_visible = 0
 
 func toggle_info():
-	if is_shown:
-		$AnimationPlayer.play(\"hide\")
-		is_shown = false
-	else:
-		$AnimationPlayer.play(\"show\")
-		is_shown = true
-
-func _on_BtnInfo_pressed():
 	if can_toggle:
-		toggle_info()
 		can_toggle = false
+		
+		if is_shown:
+			$AnimationPlayer.play(\"hide\")
+			is_shown = false
+		else:
+			$AnimationPlayer.play(\"show\")
+			is_shown = true
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	can_toggle = true
 "
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=10]
 length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Label:percent_visible")
@@ -123,7 +140,7 @@ tracks/0/keys = {
 "values": [ 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=11]
 length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Label:percent_visible")
@@ -138,8 +155,8 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
-[sub_resource type="Animation" id=8]
-length = 1.5
+[sub_resource type="Animation" id=12]
+length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Fade/Black:modulate")
 tracks/0/interp = 1
@@ -147,7 +164,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.5 ),
+"times": PoolRealArray( 0, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
@@ -177,17 +194,8 @@ tracks/2/keys = {
 "values": [ -5.0, -80.0 ]
 }
 
-[sub_resource type="SpriteFrames" id=9]
-animations = [ {
-"frames": [ ExtResource( 36 ), ExtResource( 37 ) ],
-"loop": true,
-"name": "flying",
-"speed": 10.0
-} ]
-
-[sub_resource type="Animation" id=10]
-resource_name = "fly_away"
-length = 1.5
+[sub_resource type="Animation" id=13]
+length = 2.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
 tracks/0/interp = 1
@@ -196,7 +204,7 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.3, 1.5 )
+"times": PoolRealArray( 0, 0.4, 2 )
 }
 tracks/1/type = "bezier"
 tracks/1/path = NodePath(".:position:y")
@@ -205,11 +213,58 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 8, -0.25, 0, 0.25, 0, -1024, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.3, 1.5 )
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 16, -0.25, 0, 0.25, 0, -1024, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4, 2 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RocketFire:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=14]
+length = 3.0
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 2.5, 3 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 1024, -0.25, 0, 0.25, 0, -10, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 2.5, 3 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RocketFire:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=15]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -236,8 +291,23 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 2, 5 ), Vector2( 0, -8 ), Vector2( 2, -3 ), Vector2( 0, 0 ), Vector2( 3, 7 ), Vector2( -1, -3 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("RocketFire:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [node name="MainMenu" type="Node2D"]
+__meta__ = {
+"_edit_vertical_guides_": [ 1600.0 ]
+}
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 39 )
@@ -321,7 +391,7 @@ respawn_interval = 130
 speed = 40
 
 [node name="Satellite" parent="Midground/MidgroundMid" instance=ExtResource( 3 )]
-position = Vector2( 2000, 900 )
+position = Vector2( 2256, 900 )
 rotation = 1.37706
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 10 )
@@ -411,20 +481,18 @@ script = SubResource( 3 )
 position = Vector2( -728, 1224 )
 rotation = 0.6353
 scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 42 )
 relative_origin = NodePath("../../../Camera/RelativeOrigin")
 is_still = true
 respawn_interval = 220
 spawn_time_offset = 20
 speed = -60
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundStill/Rocket"]
-show_behind_parent = true
-position = Vector2( 0.46344, 148.079 )
-scale = Vector2( 1.5, 1.5 )
-frames = SubResource( 4 )
-frame = 1
-playing = true
+[node name="RocketFire" parent="Midground/MidgroundStill/Rocket" instance=ExtResource( 26 )]
+position = Vector2( 1.16051, 147.48 )
+process_material = SubResource( 8 )
+
+[node name="Sprite" type="Sprite" parent="Midground/MidgroundStill/Rocket"]
+texture = ExtResource( 42 )
 
 [node name="Station" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
 position = Vector2( 1308, -464 )
@@ -448,11 +516,14 @@ script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+rocket = NodePath("../Elements/Rocket")
 
 [node name="Main" type="Control" parent="Foreground/Menu"]
 anchor_top = -0.00132588
 anchor_right = 1.0
 anchor_bottom = 0.998674
+margin_top = 1.43195
+margin_bottom = 1.43201
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -524,16 +595,18 @@ stretch_mode = 5
 [node name="TextureRect2" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay"]
 self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
 show_behind_parent = true
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 5.0
-margin_bottom = 5.0
+anchor_left = -0.0416608
+anchor_top = -0.0483398
+anchor_right = 0.958339
+anchor_bottom = 0.95166
+margin_left = 9.16608
+margin_top = 9.83398
+margin_right = 9.16608
+margin_bottom = 9.83398
 texture = ExtResource( 16 )
 stretch_mode = 6
 __meta__ = {
-"_edit_use_anchors_": true
+"_edit_use_anchors_": false
 }
 
 [node name="CenterContainer3" type="CenterContainer" parent="Foreground/Menu/Main/Buttons"]
@@ -595,7 +668,7 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 19 )
 texture_pressed = ExtResource( 19 )
 texture_hover = ExtResource( 19 )
-script = SubResource( 5 )
+script = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -611,8 +684,8 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Menu/Main/BtnInfo"]
-anims/hide = SubResource( 6 )
-anims/show = SubResource( 7 )
+anims/hide = SubResource( 10 )
+anims/show = SubResource( 11 )
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
 visible = false
@@ -762,6 +835,7 @@ size_flags_vertical = 3
 [node name="SettingsMenu" parent="Foreground/Menu/Settings" instance=ExtResource( 22 )]
 
 [node name="HelpMenu" type="PanelContainer" parent="Foreground/Menu"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -785,7 +859,7 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer"]
-margin_right = 884.0
+margin_right = 896.0
 margin_bottom = 924.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1031,7 +1105,7 @@ script = ExtResource( 41 )
 lang_tile = "bombmoving"
 
 [node name="Fade" type="AnimationPlayer" parent="Foreground/Menu"]
-anims/FadeOut = SubResource( 8 )
+anims/FadeOut = SubResource( 12 )
 
 [node name="Black" type="ColorRect" parent="Foreground/Menu/Fade"]
 visible = false
@@ -1047,21 +1121,24 @@ __meta__ = {
 stream = ExtResource( 23 )
 bus = "Sound"
 
+[node name="Click2" type="AudioStreamPlayer" parent="Foreground/Menu"]
+stream = ExtResource( 25 )
+volume_db = -5.0
+bus = "Sound"
+
 [node name="Start" type="AudioStreamPlayer" parent="Foreground/Menu"]
 stream = ExtResource( 24 )
 bus = "Sound"
 
 [node name="Elements" type="Node2D" parent="Foreground"]
-position = Vector2( 1600, 540 )
+position = Vector2( 1629, 540 )
 
 [node name="Rocket" type="Node2D" parent="Foreground/Elements"]
+position = Vector2( 0.77289, -3.56776 )
+rotation = 0.000990935
 script = ExtResource( 35 )
 
-[node name="Flame" type="AnimatedSprite" parent="Foreground/Elements/Rocket"]
-position = Vector2( 2.27332, 311.943 )
-scale = Vector2( 2.5, 2.5 )
-frames = SubResource( 9 )
-animation = "flying"
+[node name="RocketFire" parent="Foreground/Elements/Rocket" instance=ExtResource( 26 )]
 
 [node name="Rocket" type="Sprite" parent="Foreground/Elements/Rocket"]
 position = Vector2( 4.0708, 38.3857 )
@@ -1071,14 +1148,16 @@ texture = ExtResource( 38 )
 position = Vector2( 3.72058, 8.05499 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
-anims/fly_away = SubResource( 10 )
-anims/flying = SubResource( 11 )
+anims/fly_away = SubResource( 13 )
+anims/fly_in = SubResource( 14 )
+anims/flying = SubResource( 15 )
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/BtnHelp" to="Foreground/Menu" method="_on_BtnHelp_pressed"]
-[connection signal="pressed" from="Foreground/Menu/Main/BtnInfo" to="Foreground/Menu/Main/BtnInfo" method="_on_BtnInfo_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Main/BtnInfo" to="Foreground/Menu" method="_on_BtnInfo_pressed"]
 [connection signal="animation_finished" from="Foreground/Menu/Main/BtnInfo/AnimationPlayer" to="Foreground/Menu/Main/BtnInfo" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="animation_finished" from="Foreground/Menu/Fade" to="Foreground/Menu" method="_on_Fade_animation_finished"]
+[connection signal="animation_finished" from="Foreground/Elements/Rocket/AnimationPlayer" to="Foreground/Elements/Rocket" method="_on_AnimationPlayer_animation_finished"]

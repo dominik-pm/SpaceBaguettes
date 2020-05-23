@@ -9,6 +9,7 @@ onready var hitbox_col = $HitBox/CollisionShape2D
 onready var shooting_delay_timer = $ShootingDelay
 onready var invincible_timer = $HitInvincibleDuration
 onready var muzzle = $Muzzle
+onready var particles_damage = $Particles2D
 
 # item relevant variables
 var bombs_active = 0
@@ -48,6 +49,7 @@ func _ready():
 	facing = Vector2(1,0)
 	shooting_delay_timer.wait_time = Global.player_shoot_delay
 	invincible_timer.wait_time = Global.player_invincible_time
+	anim_player.play("default")
 
 func init(pos, p, f, g):
 	game = g
@@ -249,35 +251,49 @@ func get_hit():
 	if not invincible:
 		$Damage.play() # plays Damage-Sound
 		
+		# activate the particles
+		particles_damage.emitting = true
+		
+		# tell the game
 		game.player_hit(int(pid))
 		
+		# disable the hitbox
 		hitbox_col.set_deferred("disabled", true)
 		
+		# invincible stuff
 		invincible = true
 		invincible_timer.start()
 		anim_player.play("invincible", -1, 0.9/Global.player_invincible_time)
 		
+		# health logic
 		health -= 1
 		game.update_info(int(pid), Items.HEALTH, health)
 		if health <= 0:
 			_die()
 
-func _die():
-	is_alive = false
-	# play death sound
-	$Death.play()
-	# tell the game
-	game.player_died(int(pid))
+func disable_player():
 	# death animation
-	$AnimationPlayer.play("die")
-	# spawn gravestone
-	var g = Preloader.gravestone.instance()
-	game.add_node(g)#get_tree().root.add_node(g)
-	g.global_transform.origin = game.get_tile_pos_center(muzzle.global_transform.origin)
+	anim_player.play("die")
 	# disable movement/collisions
 	set_process(false)
 	hitbox_col.set_deferred("disabled", true)
 	$EnvironmentCollider.set_deferred("disabled", true)
+
+func _die():
+	is_alive = false
+	
+	# play death sound
+	$Death.play()
+	
+	# tell the game
+	game.player_died(int(pid))
+	
+	# spawn gravestone
+	var g = Preloader.gravestone.instance()
+	game.add_node(g)#get_tree().root.add_node(g)
+	g.global_transform.origin = game.get_tile_pos_center(muzzle.global_transform.origin)
+	
+	disable_player()
 
 func _on_ShootingDelay_timeout():
 	can_shoot = true
@@ -287,13 +303,13 @@ func _on_HitInvincibleDuration_timeout():
 	hitbox_col.set_deferred("disabled", false)
 	invincible = false
 
+# to remove the player completely (not necessary ?)
 func _on_AnimationPlayer_animation_finished(anim_name):
 	pass
 	if anim_name == "die":
 		if can_remove:
 			queue_free()
 		can_remove = true
-
 func _on_Death_finished():
 	pass
 	if can_remove:

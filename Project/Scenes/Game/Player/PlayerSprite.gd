@@ -9,6 +9,7 @@ func init(index):
 	
 	anim_player = get_child(idx)
 	anim_player.show()
+	anim_player.play("idleDown")
 
 func play(anim_name):
 	if anim_player != null:

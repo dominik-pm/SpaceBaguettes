@@ -1,6 +1,6 @@
 extends Control
 
-var help_menu_open = false
+export (NodePath) var rocket
 
 onready var main_menu = $Main/Buttons
 onready var play_menu = $Play
@@ -9,9 +9,14 @@ onready var help_menu = $HelpMenu
 onready var click_snd = $Click
 onready var start_snd = $Start
 
+var help_menu_open = false
+
 func _ready():
 	click_snd.stream.loop = false
 	init_main_menu()
+	
+	rocket = get_node(rocket)
+	rocket.fly_in()
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
@@ -46,6 +51,13 @@ func _on_BtnBack_pressed():
 
 func _on_BtnHelp_pressed():
 	help_menu.visible = !help_menu.visible
+	if help_menu.visible:
+		$Click2.play()
+
+func _on_BtnInfo_pressed():
+	$Main/BtnInfo.toggle_info()
+	if $Main/BtnInfo.is_shown:
+		$Click2.play()
 
 func init_main_menu():
 	main_menu.show()
@@ -56,9 +68,10 @@ func init_main_menu():
 func start_game():
 	start_snd.play()
 	$Fade.play("FadeOut")
-	$"../Elements/Rocket".fly_away()
+	rocket.fly_away()
 
 # should also be in main menu
 func _on_Fade_animation_finished(anim_name):
 	if anim_name == "FadeOut":
 		get_tree().change_scene("res://Scenes/Game/Game.tscn")
+

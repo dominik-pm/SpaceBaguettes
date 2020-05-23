@@ -104,7 +104,7 @@ func player_died(player : int):
 			game_over = true
 			
 			# show the game summary
-			var winner_id = _get_winner()
+			var winner_id = _get_winner() # also hides the winner
 			game_summary.show_summary(winner_id)
 			
 			# animation and sound
@@ -135,6 +135,7 @@ func _get_winner():
 		if c is Player:
 			var player = c
 			if player.is_alive:
+				player.disable_player() # to hide him when the game ends
 				winner = int(player.pid)
 	return winner
 
