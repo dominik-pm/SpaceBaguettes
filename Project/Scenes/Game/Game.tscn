@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Scenes/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Music/GameMusic.ogg" type="AudioStream" id=2]
@@ -19,9 +19,10 @@
 [ext_resource path="res://Assets/Fonts/Trench_Header.tres" type="DynamicFont" id=17]
 [ext_resource path="res://Scenes/MainMenu/Rocket.gd" type="Script" id=18]
 [ext_resource path="res://Scenes/Background/RocketFire.tscn" type="PackedScene" id=19]
-[ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=20]
+[ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1_transparent.png" type="Texture" id=20]
 [ext_resource path="res://Scenes/Game/Player/PlayerSprite.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Scenes/Game/GUI/LabWinnerMessage.gd" type="Script" id=22]
+[ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1_no_window.png" type="Texture" id=23]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -598,6 +599,13 @@ auto_fly_away = true
 material = SubResource( 7 )
 process_material = SubResource( 12 )
 
+[node name="RocketBackground" type="Sprite" parent="Foreground/GameSummary/Elements/Rocket"]
+position = Vector2( 4.0708, 38.3857 )
+texture = ExtResource( 23 )
+
+[node name="PlayerSprite" parent="Foreground/GameSummary/Elements/Rocket" instance=ExtResource( 21 )]
+position = Vector2( 3, 39 )
+
 [node name="Rocket" type="Sprite" parent="Foreground/GameSummary/Elements/Rocket"]
 position = Vector2( 4.0708, 38.3857 )
 texture = ExtResource( 20 )
@@ -610,9 +618,6 @@ anims/fly_away = SubResource( 13 )
 anims/fly_in = SubResource( 14 )
 anims/flying = SubResource( 15 )
 anims/stop = SubResource( 16 )
-
-[node name="PlayerSprite" parent="Foreground/GameSummary/Elements/Rocket" instance=ExtResource( 21 )]
-position = Vector2( 3, 39 )
 
 [node name="SettingsMenu" parent="Foreground" instance=ExtResource( 11 )]
 visible = false
