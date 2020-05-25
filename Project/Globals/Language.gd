@@ -4,7 +4,8 @@ signal language_changed
 
 enum languages {
 	ENGLISH,
-	GERMAN
+	GERMAN,
+   FRENCH
 }
 
 var lang_english = {
@@ -74,6 +75,39 @@ var lang_german = {
 	"winnermessage": "hat gewonnen!"
 }
 
+var lang_french = {
+	# Settings Menu
+	"language": "langue",
+	"graphics": "graphique",
+	"fullscreen": "plein écran",
+	"audio": "l'audio",
+	"master": "maître",
+	"sound": "du son",
+	"music": "la musique",
+	# Help Menu
+	"player": "joueur",
+	"playerdesc": "Le joueur peut se déplacer dans n'importe quelle direction, placer des bombes, tirer des baguettes et collecter des objets",
+	"bombs": "bombe",
+	"bombsdesc": "Les bombes placées explosent peu de temps après.\nL'explosion affecte dans toutes les directions et dépend des objets du joueur.",
+	"baguettes": "baguette",
+	"baguettesdesc": "Le joueur dispose d'un nombre limité de baguettes qu'il peut tirer.\nSi une baguette touche une bombe, elle explose immédiatement.\nSi un joueur est touché, il perd une vie.",
+	"items": "items",
+	"extrahealth": "Le joueur obtient une autre vie",
+	"extrabomb": "Une autre bombe peut être placée simultanément",
+	"extrabaguette": "Le joueur reçoit une autre baguette",
+	"fastboots": "La vitesse du joueur est augmentée",
+	"bombrange": "La portée de la bombe augmente",
+	"bombexplosion": "La bombe peut détruire une autre caisse en même temps",
+	"bombmoving": "Les bombes peuvent être déplacées plus rapidement",
+	# Menu Buttons
+	"resume": "continuer",
+	"settings": "paramètres",
+	"play": "jouer",
+	"menu": "menu",
+	"quit": "quittez",
+	# Game
+	"winnermessage": "a gagné!"
+}
 
 var current
 

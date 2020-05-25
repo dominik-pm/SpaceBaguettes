@@ -14,6 +14,9 @@ func _on_language_changed(new_lang):
 		Language.languages.GERMAN:
 			if Language.lang_german.has(lang_tile):
 				change_text(Language.lang_german[lang_tile])
+		Language.languages.FRENCH:
+			if Language.lang_french.has(lang_tile):
+				change_text(Language.lang_french[lang_tile])
 
 func change_text(s):
 	text = str(s)
