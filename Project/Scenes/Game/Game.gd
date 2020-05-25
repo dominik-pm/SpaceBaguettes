@@ -244,6 +244,10 @@ func _on_BtnResume_pressed():
 	get_tree().paused = false
 	pause_menu.hide()
 
+func _on_BtnRestart_pressed():
+	get_tree().paused = false
+	get_tree().change_scene("res://Scenes/Game/Game.tscn")
+
 func _on_BtnSettings_pressed():
 	$Click.play()
 	settings_menu.show()
@@ -263,4 +267,3 @@ func _on_BtnQuit_pressed():
 func _on_BtnPlay_pressed():
 	get_tree().paused = false
 	get_tree().change_scene("res://Scenes/Game/Game.tscn")
-
