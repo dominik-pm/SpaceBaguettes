@@ -24,10 +24,6 @@ var last_move # last used direction
 var vel = Vector2(0,0)
 var facing = Vector2(0,0)
 
-# gamepad variables
-var use_gamepad = false
-var device_ID
-
 # items
 var health = Global.player_maxhealth
 var max_bombs = Global.starting_bombs
@@ -79,11 +75,7 @@ func init_gui():
 
 func _process(delta):
 	if game_started:
-		var axis
-		if !use_gamepad:
-			axis = get_input_axis()
-		else:
-			axis = GP_get_input_axis()
+		var axis = get_input_axis()
 		apply_friction(speed)
 		apply_movement(axis*speed)
 		motion = move_and_slide(motion)
@@ -129,38 +121,6 @@ func get_input_axis():
 		axis.x = -1
 
 	return axis.normalized()
-	
-func GP_get_input_axis():
-	var axis = Vector2.ZERO
-	
-	if Input.is_action_just_pressed("GP_move_forward") and InputEventJoypadMotion.device == device_ID:
-		last_move = "GP_move_forward"
-	elif Input.is_action_just_pressed("GP_move_backward") and InputEventJoypadMotion.device == device_ID:
-		last_move = "GP_move_backward"
-	elif Input.is_action_just_pressed("GP_move_right") and InputEventJoypadMotion.device == device_ID:
-		last_move = "GP_move_right"
-	elif Input.is_action_just_pressed("GP_move_left") and InputEventJoypadMotion.device == device_ID:
-		last_move = "GP_move_left"
-	
-	if Input.is_action_pressed("GP_move_forward") and last_move == "GP_move_forward":
-		axis.y = -1
-	elif Input.is_action_pressed("GP_move_backward") and last_move == "GP_move_backward":
-		axis.y = 1
-	elif Input.is_action_pressed("GP_move_right") and last_move == "GP_move_right":
-		axis.x = 1
-	elif Input.is_action_pressed("GP_move_left") and last_move == "GP_move_left":
-		axis.x = -1
-	
-	elif Input.is_action_pressed("GP_move_forward"):
-		axis.y = -1
-	elif Input.is_action_pressed("GP_move_backward"):
-		axis.y = 1
-	elif Input.is_action_pressed("GP_move_right"):
-		axis.x = 1
-	elif Input.is_action_pressed("GP_move_left"):
-		axis.x = -1
-
-	return axis.normalized()
 
 # reduces the current speed
 func apply_friction(amount):
@@ -173,10 +133,6 @@ func apply_friction(amount):
 func apply_movement(accel):
 	motion += accel
 	motion = motion.clamped(speed)
-	
-# To Save the Device_ID of the GamePad of the Player
-func get_device_id(deviceid): 
-	device_ID = deviceid
 
 func _input(event):
 	if event.is_action_pressed(pid+"set_bomb") and can_place_bomb:
