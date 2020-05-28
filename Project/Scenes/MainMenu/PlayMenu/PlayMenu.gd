@@ -19,6 +19,7 @@ func _ready():
 		get_node("VBox/PlayerSelect/Player3/PlayerNameInput"),
 		get_node("VBox/PlayerSelect/Player4/PlayerNameInput")
 	]
+	$VBox/Control/BtnStart.grab_focus()
 
 func add_player(adding, pid):
 	players_34[pid] = adding
