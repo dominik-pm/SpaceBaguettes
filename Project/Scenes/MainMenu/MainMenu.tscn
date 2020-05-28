@@ -545,9 +545,10 @@ __meta__ = {
 rocket = NodePath("../Elements/Rocket")
 
 [node name="Main" type="Control" parent="Foreground/Menu"]
-anchor_top = -0.00132588
-anchor_right = 1.0
-anchor_bottom = 0.998674
+anchor_left = 0.00106799
+anchor_top = -0.00322453
+anchor_right = 1.00107
+anchor_bottom = 0.996775
 margin_top = 1.43195
 margin_bottom = 1.43201
 __meta__ = {
@@ -592,9 +593,9 @@ __meta__ = {
 self_modulate = Color( 1, 0, 0, 1 )
 show_behind_parent = true
 margin_left = 5.0
-margin_top = 5.0
+margin_top = 1.65967
 margin_right = 105.0
-margin_bottom = 105.0
+margin_bottom = 101.66
 texture = ExtResource( 15 )
 stretch_mode = 6
 script = ExtResource( 37 )

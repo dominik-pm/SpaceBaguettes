@@ -256,6 +256,7 @@ func _on_BtnSettings_pressed():
 func _on_BtnCloseSettings_pressed():
 	$Click.play()
 	settings_menu.hide()
+	$Foreground/Menu/CenterContainer/VBoxContainer/BtnResume.grab_focus()
 
 func _on_BtnMenu_pressed():
 	$Click.play()
