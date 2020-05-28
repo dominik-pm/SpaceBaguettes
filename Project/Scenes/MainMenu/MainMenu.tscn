@@ -542,6 +542,7 @@ __meta__ = {
 [node name="CenterContainer" type="CenterContainer" parent="Foreground/Menu/Main/Buttons"]
 margin_right = 383.0
 margin_bottom = 221.0
+focus_neighbour_bottom = NodePath("../CenterContainer2")
 size_flags_vertical = 3
 
 [node name="BtnSettings" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer"]
@@ -577,6 +578,8 @@ __meta__ = {
 margin_top = 229.0
 margin_right = 383.0
 margin_bottom = 450.0
+focus_neighbour_top = NodePath("../CenterContainer")
+focus_neighbour_bottom = NodePath("../CenterContainer3")
 size_flags_vertical = 3
 
 [node name="BtnPlay" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer2"]
@@ -613,6 +616,7 @@ __meta__ = {
 margin_top = 458.0
 margin_right = 383.0
 margin_bottom = 679.0
+focus_neighbour_top = NodePath("../CenterContainer2")
 size_flags_vertical = 3
 
 [node name="BtnExit" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer3"]
@@ -633,9 +637,9 @@ self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
 show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 5.0
+margin_left = 6.50732
 margin_top = 5.0
-margin_right = 5.0
+margin_right = 6.50732
 margin_bottom = 5.0
 texture = ExtResource( 17 )
 stretch_mode = 6
