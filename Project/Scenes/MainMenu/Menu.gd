@@ -8,6 +8,7 @@ onready var sett_menu = $Settings
 onready var help_menu = $HelpMenu
 onready var click_snd = $Click
 onready var start_snd = $Start
+onready var start_snd2 = $Start2
 
 var help_menu_open = false
 
@@ -67,6 +68,7 @@ func init_main_menu():
 
 func start_game():
 	start_snd.play()
+	start_snd2.play()
 	$Fade.play("FadeOut")
 	rocket.fly_away()
 

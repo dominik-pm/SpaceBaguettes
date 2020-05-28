@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/StartGame.wav-3c26e3eb5677f156d9a1df02c0f474dd.sample"
+path="res://.import/StartGame.wav-80926882dbf9f9ccdf4bcbc82605eaaf.sample"
 
 [deps]
 
-source_file="res://Assets/Sounds/Game/StartGame.wav"
-dest_files=[ "res://.import/StartGame.wav-3c26e3eb5677f156d9a1df02c0f474dd.sample" ]
+source_file="res://Assets/Sounds/UI/StartGame.wav"
+dest_files=[ "res://.import/StartGame.wav-80926882dbf9f9ccdf4bcbc82605eaaf.sample" ]
 
 [params]
 

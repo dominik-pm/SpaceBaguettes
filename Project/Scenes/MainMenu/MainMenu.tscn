@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=2]
@@ -23,7 +23,7 @@
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenu.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Scenes/MainMenu/SettingsMenu/SettingsMenu.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Assets/Sounds/UI/ButtonClick.ogg" type="AudioStream" id=23]
-[ext_resource path="res://Assets/Sounds/Game/TransitionSound.wav" type="AudioStream" id=24]
+[ext_resource path="res://Assets/Sounds/UI/thelick.ogg" type="AudioStream" id=24]
 [ext_resource path="res://Assets/Sounds/UI/ButtonClick2.wav" type="AudioStream" id=25]
 [ext_resource path="res://Scenes/Background/RocketFire.tscn" type="PackedScene" id=26]
 [ext_resource path="res://Assets/Fonts/Trench_Header.tres" type="DynamicFont" id=27]
@@ -35,6 +35,7 @@
 [ext_resource path="res://Assets/Game/Items/StrongerExplosions.png" type="Texture" id=33]
 [ext_resource path="res://Assets/Game/Items/BombMove.png" type="Texture" id=34]
 [ext_resource path="res://Scenes/MainMenu/Rocket.gd" type="Script" id=35]
+[ext_resource path="res://Assets/Sounds/UI/StartGame.wav" type="AudioStream" id=36]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=38]
 [ext_resource path="res://Assets/Music/MenuMusic.ogg" type="AudioStream" id=39]
 [ext_resource path="res://Ressources/Trench_48.tres" type="DynamicFont" id=40]
@@ -192,6 +193,30 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ -5.0, -80.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Start:volume_db")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 2.0, 2.0, -20.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Start2:volume_db")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -10.0, -20.0 ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -1132,13 +1157,18 @@ bus = "Sound"
 
 [node name="Start" type="AudioStreamPlayer" parent="Foreground/Menu"]
 stream = ExtResource( 24 )
+volume_db = 2.0
+bus = "Sound"
+
+[node name="Start2" type="AudioStreamPlayer" parent="Foreground/Menu"]
+stream = ExtResource( 36 )
+volume_db = -10.0
 bus = "Sound"
 
 [node name="Elements" type="Node2D" parent="Foreground"]
 position = Vector2( 1629, 540 )
 
 [node name="Rocket" type="Node2D" parent="Foreground/Elements"]
-position = Vector2( 0.77289, -3.56776 )
 rotation = 0.000990935
 script = ExtResource( 35 )
 
