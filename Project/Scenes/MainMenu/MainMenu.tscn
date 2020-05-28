@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=2]
@@ -36,6 +36,7 @@
 [ext_resource path="res://Assets/Game/Items/BombMove.png" type="Texture" id=34]
 [ext_resource path="res://Scenes/MainMenu/Rocket.gd" type="Script" id=35]
 [ext_resource path="res://Assets/Sounds/UI/StartGame.wav" type="AudioStream" id=36]
+[ext_resource path="res://Scenes/MainMenu/MainButtons.gd" type="Script" id=37]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=38]
 [ext_resource path="res://Assets/Music/MenuMusic.ogg" type="AudioStream" id=39]
 [ext_resource path="res://Ressources/Trench_48.tres" type="DynamicFont" id=40]
@@ -588,7 +589,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings"]
-self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
+self_modulate = Color( 1, 0, 0, 1 )
 show_behind_parent = true
 margin_left = 5.0
 margin_top = 5.0
@@ -596,6 +597,7 @@ margin_right = 105.0
 margin_bottom = 105.0
 texture = ExtResource( 15 )
 stretch_mode = 6
+script = ExtResource( 37 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -634,6 +636,7 @@ margin_right = 9.16608
 margin_bottom = 9.83398
 texture = ExtResource( 16 )
 stretch_mode = 6
+script = ExtResource( 37 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -670,6 +673,7 @@ margin_right = 6.50732
 margin_bottom = 5.0
 texture = ExtResource( 17 )
 stretch_mode = 6
+script = ExtResource( 37 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -773,6 +777,7 @@ margin_right = 105.0
 margin_bottom = 105.0
 texture = ExtResource( 20 )
 stretch_mode = 6
+script = ExtResource( 37 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -847,6 +852,7 @@ margin_right = 105.0
 margin_bottom = 105.0
 texture = ExtResource( 20 )
 stretch_mode = 6
+script = ExtResource( 37 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
