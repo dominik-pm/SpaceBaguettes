@@ -65,6 +65,7 @@ func init_main_menu():
 	play_menu.hide()
 	sett_menu.hide()
 	help_menu.hide()
+	$Main/Buttons/CenterContainer2/BtnPlay.grab_focus()
 
 func start_game():
 	start_snd.play()

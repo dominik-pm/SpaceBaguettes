@@ -61,6 +61,7 @@ func _input(event):
 		if not settings_menu.visible:
 			pause_menu.visible = !pause_menu.visible
 			get_tree().paused = pause_menu.visible
+			$Foreground/Menu/CenterContainer/VBoxContainer/BtnResume.grab_focus()
 		else:
 			settings_menu.hide()
 

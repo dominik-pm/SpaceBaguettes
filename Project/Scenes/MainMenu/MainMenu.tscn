@@ -567,7 +567,6 @@ __meta__ = {
 [node name="CenterContainer" type="CenterContainer" parent="Foreground/Menu/Main/Buttons"]
 margin_right = 383.0
 margin_bottom = 221.0
-focus_neighbour_bottom = NodePath("../CenterContainer2")
 size_flags_vertical = 3
 
 [node name="BtnSettings" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer"]
@@ -575,6 +574,8 @@ margin_left = 141.0
 margin_top = 60.0
 margin_right = 241.0
 margin_bottom = 160.0
+focus_next = NodePath("../../CenterContainer2/BtnPlay")
+focus_previous = NodePath("../../CenterContainer3/BtnExit")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 theme = ExtResource( 14 )
@@ -603,8 +604,6 @@ __meta__ = {
 margin_top = 229.0
 margin_right = 383.0
 margin_bottom = 450.0
-focus_neighbour_top = NodePath("../CenterContainer")
-focus_neighbour_bottom = NodePath("../CenterContainer3")
 size_flags_vertical = 3
 
 [node name="BtnPlay" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer2"]
@@ -612,6 +611,8 @@ margin_left = 141.0
 margin_top = 60.0
 margin_right = 241.0
 margin_bottom = 160.0
+focus_next = NodePath("../../CenterContainer3/BtnExit")
+focus_previous = NodePath("../../CenterContainer/BtnSettings")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 theme = ExtResource( 14 )
@@ -641,7 +642,6 @@ __meta__ = {
 margin_top = 458.0
 margin_right = 383.0
 margin_bottom = 679.0
-focus_neighbour_top = NodePath("../CenterContainer2")
 size_flags_vertical = 3
 
 [node name="BtnExit" type="TextureButton" parent="Foreground/Menu/Main/Buttons/CenterContainer3"]
@@ -649,6 +649,8 @@ margin_left = 141.0
 margin_top = 60.0
 margin_right = 241.0
 margin_bottom = 160.0
+focus_next = NodePath("../../CenterContainer/BtnSettings")
+focus_previous = NodePath("../../CenterContainer2/BtnPlay")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 theme = ExtResource( 14 )
