@@ -1,4 +1,4 @@
-# SpaceBaguettes
+# Space Baguettes
 
 ## About
 This project was made as a school project in 'ITP'. <br/>
