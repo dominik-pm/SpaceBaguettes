@@ -14,19 +14,19 @@
 This project was made as a school project in 'ITP' ("Informationstechnische Projekte"). <br/>
 It is a bomberman-type game with french players and a space theme.<br/>
 Team Members:
-- Lugmayr Gabriel
-- Pömmer Dominik
-- Leutgeb Sebastian
+- Gabriel Lugmayr
+- Dominik Pömmer
+- Sebastian Leutgeb
 
 ##  2. <a name='Gameplay'></a>Gameplay
 ###  2.1. <a name='Player'></a>Player:
-- Der Spieler kann sich in jede Richtung bewegen, Bomben legen, Baguettes schießen und Items aufsammeln.
+- The player can move in any direction, place bombs, fire baguettes and also collect items.
 
 ###  2.2. <a name='Bombs'></a>Bombs:
-- Gelegte Bomben explodieren nach einer kurzen Zeit. Die Explosion wirkt sich in jede Richtung aus und hängt von den Items des Spielers ab.
+- Placed bombs explode after a short time. The Explosion fires in every direction and depends on the items of the player.
 
 ###  2.3. <a name='Baguettes'></a>Baguettes:
-- Der Spieler hat eine begrenzte Anzahl von Baguettes, welche er schießen kann. Trifft ein Baguette auf eine Bombe, explodiert diese sofort. Trifft es einen Spieler, verliert dieser ein Leben
+- The player has a certain amount of baguettes, that can be fired.\nWhen a baguette hits a bomb, it explodes. When it hits a player, he loses one health point.
 
 ###  2.4. <a name='Items'></a>Items:
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/MoreBombs.png" alt="MoreBombs" width="100"/> The player will get one more live
@@ -43,6 +43,6 @@ Team Members:
 
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombMove.png" alt="BombMove" width="100"/> Bombs will be moved faster
 
-##  3. <a name='WannaPlaythatGame'></a>Wanna Play the Game?
+##  3. <a name='WannaPlaythatGame'></a>Wanna Play that Game?
 www.spacebaguettes.tk
 or check out the Downloads folder
