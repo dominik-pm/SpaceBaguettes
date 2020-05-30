@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=2]
@@ -11,7 +11,6 @@
 [ext_resource path="res://Assets/Menu/Objects/Fighters/fighter1.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Menu/Objects/Satellites/satellite1.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Menu/Objects/Satellites/satellite2.png" type="Texture" id=11]
-[ext_resource path="res://src/theme/gdquest.theme" type="Theme" id=12]
 [ext_resource path="res://Scenes/MainMenu/Menu.gd" type="Script" id=13]
 [ext_resource path="res://Ressources/Theme.tres" type="Theme" id=14]
 [ext_resource path="res://Assets/Menu/Icons/wrench.png" type="Texture" id=15]
@@ -36,7 +35,7 @@
 [ext_resource path="res://Assets/Game/Items/BombMove.png" type="Texture" id=34]
 [ext_resource path="res://Scenes/MainMenu/Rocket.gd" type="Script" id=35]
 [ext_resource path="res://Assets/Sounds/UI/StartGame.wav" type="AudioStream" id=36]
-[ext_resource path="res://Scenes/MainMenu/MainButtons.gd" type="Script" id=37]
+[ext_resource path="res://Scenes/MainMenu/TextureButtons.gd" type="Script" id=37]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=38]
 [ext_resource path="res://Assets/Music/MenuMusic.ogg" type="AudioStream" id=39]
 [ext_resource path="res://Ressources/Trench_48.tres" type="DynamicFont" id=40]
@@ -543,7 +542,7 @@ rotation_speed = 1
 [node name="Menu" type="Control" parent="Foreground"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 12 )
+theme = ExtResource( 14 )
 script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -631,7 +630,7 @@ texture_hover = ExtResource( 16 )
 stretch_mode = 5
 
 [node name="TextureRect2" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay"]
-self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
+self_modulate = Color( 0.392157, 0.670588, 0.909804, 1 )
 show_behind_parent = true
 anchor_left = -0.0416608
 anchor_top = -0.0483398
@@ -701,6 +700,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TextureRect4" type="TextureRect" parent="Foreground/Menu/Main/BtnHelp"]
+self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 5.0
+margin_bottom = 5.0
+texture = ExtResource( 18 )
+stretch_mode = 6
+script = ExtResource( 37 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="BtnInfo" type="TextureButton" parent="Foreground/Menu/Main"]
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -728,6 +743,22 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Menu/Main/BtnInfo"]
 anims/hide = SubResource( 11 )
 anims/show = SubResource( 12 )
+
+[node name="TextureRect5" type="TextureRect" parent="Foreground/Menu/Main/BtnInfo"]
+self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 5.0
+margin_bottom = 5.0
+texture = ExtResource( 19 )
+stretch_mode = 6
+script = ExtResource( 37 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
 visible = false
@@ -804,6 +835,9 @@ size_flags_vertical = 3
 [node name="PlayMenu" parent="Foreground/Menu/Play" instance=ExtResource( 21 )]
 menu = NodePath("../..")
 
+[node name="BtnStart" parent="Foreground/Menu/Play/PlayMenu/VBox/Control" index="0"]
+focus_next = NodePath("../../../../BackButton/CenterContainer/BtnBack")
+
 [node name="Settings" type="Control" parent="Foreground/Menu"]
 visible = false
 anchor_left = 0.5
@@ -839,6 +873,10 @@ margin_left = 142.0
 margin_top = 60.0
 margin_right = 242.0
 margin_bottom = 160.0
+focus_neighbour_right = NodePath("../../../../Main/BtnHelp")
+focus_neighbour_bottom = NodePath("../../../../Main/BtnInfo")
+focus_next = NodePath("../../../SettingsMenu")
+focus_previous = NodePath("../../../SettingsMenu/VBoxContainer/Audio/Music/MusicSlider")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 theme = ExtResource( 14 )
@@ -878,6 +916,9 @@ size_flags_vertical = 3
 
 [node name="SettingsMenu" parent="Foreground/Menu/Settings" instance=ExtResource( 22 )]
 
+[node name="MusicSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music" index="1"]
+focus_next = NodePath("../../../../../BackButton/CenterContainer/BtnBack")
+
 [node name="HelpMenu" type="PanelContainer" parent="Foreground/Menu"]
 visible = false
 anchor_left = 0.5
@@ -904,7 +945,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer"]
 margin_right = 896.0
-margin_bottom = 924.0
+margin_bottom = 1050.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -1210,3 +1251,7 @@ anims/flying = SubResource( 16 )
 [connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="animation_finished" from="Foreground/Menu/Fade" to="Foreground/Menu" method="_on_Fade_animation_finished"]
 [connection signal="animation_finished" from="Foreground/Elements/Rocket/AnimationPlayer" to="Foreground/Elements/Rocket" method="_on_AnimationPlayer_animation_finished"]
+
+[editable path="Foreground/Menu/Play/PlayMenu"]
+
+[editable path="Foreground/Menu/Settings/SettingsMenu"]

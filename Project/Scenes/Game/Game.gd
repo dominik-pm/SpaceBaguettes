@@ -252,6 +252,7 @@ func _on_BtnRestart_pressed():
 func _on_BtnSettings_pressed():
 	$Click.play()
 	settings_menu.show()
+	$Foreground/SettingsMenu/Control/HBoxContainer/BtnCloseSettings.grab_focus()
 
 func _on_BtnCloseSettings_pressed():
 	$Click.play()

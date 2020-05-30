@@ -27,10 +27,12 @@ func _on_btnon_pressed():
 	Settings.set_setting("video", "fullscreen", true)
 	OS.window_fullscreen = true
 	btn_off.show()
+	btn_off.grab_focus()
 	btn_on.hide()
 
 func _on_btnoff_pressed():
 	Settings.set_setting("video", "fullscreen", false)
 	OS.window_fullscreen = false
 	btn_on.show()
+	btn_on.grab_focus()
 	btn_off.hide()

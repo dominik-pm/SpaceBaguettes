@@ -4,6 +4,8 @@ onready var container = $Container
 onready var name_input = $PlayerNameInput
 
 onready var btn_add = $BtnAdd
+onready var btn_rem = $Container/Icons/HBoxContainer/BtnRemove
+
 
 export (String) var pid
 export (NodePath) var menu
@@ -17,12 +19,14 @@ func remove_player():
 	container.hide()
 	name_input.hide()
 	btn_add.show()
+	btn_add.grab_focus()
 
 func add_player():
 	menu.add_player(true, pid)
 	container.show()
 	name_input.show()
 	btn_add.hide()
+	btn_rem.grab_focus()
 
 func _on_BtnRemove_pressed():
 	remove_player()

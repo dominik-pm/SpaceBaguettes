@@ -32,12 +32,14 @@ func _on_BtnSettings_pressed():
 	main_menu.hide()
 	sett_menu.show()
 	help_menu.hide()
+	$Settings/BackButton/CenterContainer/BtnBack.grab_focus()
 
 func _on_BtnPlay_pressed():
 	click_snd.play()
 	main_menu.hide()
 	play_menu.show()
 	help_menu.hide()
+	$Play/BackButton/CenterContainer/BtnBack.grab_focus()
 
 func _on_BtnExit_pressed():
 	Settings.save_settings()
