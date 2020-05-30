@@ -3,8 +3,8 @@ extends Node
 
 signal settings_loaded
 
-#const SAVE_PATH = "res://config.cfg" # in debug
-const SAVE_PATH = "user://config.cfg" # on build
+const SAVE_PATH = "res://config.cfg" # in debug
+#const SAVE_PATH = "user://config.cfg" # on build
 
 var config_file = ConfigFile.new()
 
