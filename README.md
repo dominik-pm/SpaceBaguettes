@@ -5,7 +5,7 @@
 	* 2.2. [Bombs:](#Bombs)
 	* 2.3. [Baguettes:](#Baguettes)
 	* 2.4. [Items:](#Items)
-* 3. [Wanna Play that Game?](#WannaPlaythatGame)
+* 3. [Want To Play The Game?](#WannaPlaytheGame)
 
 # Space Baguettes 
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Artwork/SplashArt2.png" alt="SpaceBaguettes Splash Screen"> 
@@ -14,9 +14,9 @@
 This project was made as a school project in 'ITP' ("Informationstechnische Projekte"). <br/>
 It is a bomberman-type game with french players and a space theme.<br/>
 Team Members:
-- Gabriel Lugmayr
-- Dominik Pömmer
-- Sebastian Leutgeb
+- Lugmayr Gabriel
+- Pömmer Dominik
+- Leutgeb Sebastian
 
 ##  2. <a name='Gameplay'></a>Gameplay
 ###  2.1. <a name='Player'></a>Player:
@@ -43,6 +43,6 @@ Team Members:
 
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombMove.png" alt="BombMove" width="100"/> Bombs will be moved faster
 
-##  3. <a name='WannaPlaythatGame'></a>Wanna Play that Game?
+##  3. <a name='WannaPlaytheGame'></a>Want To Play The Game?
 www.spacebaguettes.tk
 or check out the Downloads folder
