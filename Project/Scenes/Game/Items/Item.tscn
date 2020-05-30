@@ -49,7 +49,8 @@ anims/fade = SubResource( 2 )
 
 [node name="PickUp" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-volume_db = -10.0
+volume_db = -8.0
+bus = "Sound"
 [connection signal="body_entered" from="PickupArea" to="." method="_on_PickupArea_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="finished" from="PickUp" to="." method="_on_PickUp_finished"]

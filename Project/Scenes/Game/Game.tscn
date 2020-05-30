@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Scenes/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Music/GameMusic.ogg" type="AudioStream" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://Scenes/Game/Player/PlayerSprite.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Scenes/Game/GUI/LabWinnerMessage.gd" type="Script" id=22]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1_no_window.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Sounds/UI/click4.ogg" type="AudioStream" id=24]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -338,7 +339,7 @@ __meta__ = {
 }
 
 [node name="Scaler" type="Node2D" parent="StartCountdown/CenterControl"]
-scale = Vector2( 1.5, 1.5 )
+scale = Vector2( 0.5, 0.5 )
 
 [node name="Label" type="Label" parent="StartCountdown/CenterControl/Scaler"]
 modulate = Color( 1, 1, 1, 0 )
@@ -362,6 +363,11 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="StartCountdown"]
 anims/countdown = SubResource( 3 )
+
+[node name="Tick" type="AudioStreamPlayer" parent="StartCountdown"]
+stream = ExtResource( 24 )
+volume_db = -5.0
+bus = "Sound"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/GameOver = SubResource( 4 )
@@ -436,6 +442,7 @@ margin_bottom = 816.0
 
 [node name="Menu" type="Control" parent="Foreground"]
 pause_mode = 2
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 6 )
@@ -649,6 +656,7 @@ anims/flying = SubResource( 15 )
 anims/stop = SubResource( 16 )
 
 [node name="SettingsMenu" parent="Foreground" instance=ExtResource( 11 )]
+visible = false
 margin_bottom = 294.0
 mouse_filter = 1
 

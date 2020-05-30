@@ -9,10 +9,6 @@
 [ext_resource path="res://Assets/Particles/trace_05.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Sounds/Game/Shoot.wav" type="AudioStream" id=8]
 
-[sub_resource type="CapsuleShape2D" id=1]
-radius = 4.77512
-height = 39.4418
-
 [sub_resource type="CanvasItemMaterial" id=2]
 blend_mode = 1
 
@@ -119,6 +115,10 @@ color_ramp = SubResource( 16 )
 hue_variation = 0.29
 hue_variation_random = 1.0
 
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 4.77512
+height = 15.6105
+
 [sub_resource type="Animation" id=18]
 resource_name = "rattle"
 length = 0.4
@@ -142,10 +142,6 @@ tracks/0/keys = {
 collision_mask = 3
 script = ExtResource( 3 )
 speed = 350
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 1.5708
-shape = SubResource( 1 )
 
 [node name="Particles1" type="Particles2D" parent="."]
 modulate = Color( 1, 1, 1, 0.231373 )
@@ -188,6 +184,10 @@ local_coords = false
 process_material = SubResource( 17 )
 texture = ExtResource( 6 )
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 1 )
+
 [node name="Sprites" type="Node2D" parent="."]
 scale = Vector2( 0.025, 0.025 )
 
@@ -204,3 +204,5 @@ anims/rattle = SubResource( 18 )
 
 [node name="Shoot" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+volume_db = -1.0
+bus = "Sound"

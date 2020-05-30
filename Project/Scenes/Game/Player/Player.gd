@@ -161,8 +161,10 @@ func shoot(pos, player_pos):
 	
 	# so that the bullet always flies in the center of the tiles
 	if facing.x == 0:
+		# player facing down/up
 		b.global_transform.origin = Vector2(pos.x, player_pos.y)
 	else:# player.facing.y == 0:
+		# player facing left/right
 		b.global_transform.origin = Vector2(player_pos.x, pos.y)
 
 # when one of current bombs explode

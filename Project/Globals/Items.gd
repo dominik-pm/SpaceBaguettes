@@ -28,9 +28,9 @@ var icons = {
 var drop_probabilities = {
 	TESTBUFF: 0,
 	HEALTH: 2,
-	MOREBOMBS: 2,
-	BAGUETTES: 2,
-	SPEED: 2,
+	MOREBOMBS: 3,
+	BAGUETTES: 3,
+	SPEED: 1,
 	BOMBRANGE: 3,
 	EXPLOSIONSTRENGTH: 1,
 	BOMBMOVING: 2

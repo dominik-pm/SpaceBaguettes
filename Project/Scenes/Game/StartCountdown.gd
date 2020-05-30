@@ -25,6 +25,12 @@ func update_label():
 		lab.text = "start!"
 	else:
 		lab.text = str(cnt)
+		
+		# play sound
+		$Tick.stream.loop = false
+		$Tick.play()
+	
+	# play animation
 	anim.play("countdown")
 
 func _on_timer_timeout():
