@@ -26,7 +26,7 @@ Team Members:
 - Placed bombs explode after a short time. The Explosion fires in every direction and depends on the items of the player.
 
 ###  2.3. <a name='Baguettes'></a>Baguettes:
-- The player has a certain amount of baguettes, that can be fired.\nWhen a baguette hits a bomb, it explodes. When it hits a player, he loses one health point.
+- The player has a certain amount of baguettes, that can be fired. When a baguette hits a bomb, it explodes. When it hits a player, he loses one health point.
 
 ###  2.4. <a name='Items'></a>Items:
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/MoreBombs.png" alt="MoreBombs" width="100"/> The player will get one more live
