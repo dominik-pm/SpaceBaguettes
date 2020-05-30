@@ -43,6 +43,6 @@ Team Members:
 
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombMove.png" alt="BombMove" width="100"/> Bombs will be moved faster
 
-##  3. <a name='WannaPlaythatGame'></a>Wanna Play that Game?
+##  3. <a name='WannaPlaythatGame'></a>Wanna Play the Game?
 www.spacebaguettes.tk
 or check out the Downloads folder
