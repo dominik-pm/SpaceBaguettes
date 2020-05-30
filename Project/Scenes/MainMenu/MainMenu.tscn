@@ -595,7 +595,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings"]
-self_modulate = Color( 1, 0, 0, 1 )
+self_modulate = Color( 0.388235, 0.670588, 0.909804, 1 )
 show_behind_parent = true
 margin_left = 5.0
 margin_top = 5.0
@@ -630,7 +630,7 @@ texture_hover = ExtResource( 16 )
 stretch_mode = 5
 
 [node name="TextureRect2" type="TextureRect" parent="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay"]
-self_modulate = Color( 0.392157, 0.670588, 0.909804, 1 )
+self_modulate = Color( 0.239216, 0.560784, 0.74902, 1 )
 show_behind_parent = true
 anchor_left = -0.0416608
 anchor_top = -0.0483398
