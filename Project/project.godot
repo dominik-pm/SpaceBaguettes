@@ -45,10 +45,13 @@ _global_script_class_icons={
 [application]
 
 config/name="Space Baguettes"
+config/description="This game was made as a school project in 'ITP'"
 run/main_scene="res://Scenes/MainMenu/MainMenu.tscn"
-boot_splash/image="res://Assets/Artwork/SplashArt.png"
+boot_splash/image="res://Assets/Artwork/SplashArt2.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://Assets/Artwork/Icon2.png"
+config/macos_native_icon="res://Assets/Artwork/GameIconMacOS.icns"
+config/windows_native_icon="res://Assets/Artwork/GameIcon.ico"
 
 [audio]
 
@@ -284,5 +287,6 @@ quality/filters/anisotropic_filter_level=8
 quality/shadows/filter_mode=2
 quality/filters/use_nearest_mipmap_filter=true
 quality/voxel_cone_tracing/high_quality=true
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 quality/filters/msaa=3
 environment/default_environment="res://default_env.tres"

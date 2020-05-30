@@ -46,15 +46,14 @@
 [ext_resource path="res://Assets/Menu/Objects/Fighters/fighter33.png" type="Texture" id=44]
 [ext_resource path="res://Assets/Menu/Objects/Stations/station1.png" type="Texture" id=45]
 
-[sub_resource type="GDScript" id=16]
+[sub_resource type="GDScript" id=1]
 script/source = "extends AudioStreamPlayer
 
 func _ready():
 	play()
 "
 
-[sub_resource type="Animation" id=1]
-resource_name = "zoom_in_test"
+[sub_resource type="Animation" id=2]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera:zoom")
 tracks/0/interp = 1
@@ -68,7 +67,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ) ]
 }
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
 "loop": true,
@@ -76,27 +75,27 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[sub_resource type="GDScript" id=3]
+[sub_resource type="GDScript" id=4]
 script/source = "extends AnimatedSprite
 
 func _ready():
 	play(\"default\")
 "
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=5]
 offsets = PoolRealArray( 0, 0.468085, 1 )
 colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
 
-[sub_resource type="GradientTexture" id=5]
-gradient = SubResource( 4 )
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=7]
 _data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=7]
-curve = SubResource( 6 )
+[sub_resource type="CurveTexture" id=8]
+curve = SubResource( 7 )
 
-[sub_resource type="ParticlesMaterial" id=8]
+[sub_resource type="ParticlesMaterial" id=9]
 flag_disable_z = true
 direction = Vector3( 0, 1, 0 )
 spread = 10.0
@@ -107,10 +106,10 @@ orbit_velocity_random = 0.0
 angle = 180.0
 angle_random = 1.0
 scale = 0.08
-scale_curve = SubResource( 7 )
-color_ramp = SubResource( 5 )
+scale_curve = SubResource( 8 )
+color_ramp = SubResource( 6 )
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=10]
 script/source = "extends TextureButton
 
 var is_shown = false
@@ -134,7 +133,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 	can_toggle = true
 "
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Label:percent_visible")
@@ -149,7 +148,7 @@ tracks/0/keys = {
 "values": [ 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Label:percent_visible")
@@ -164,7 +163,7 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Fade/Black:modulate")
@@ -227,7 +226,7 @@ tracks/4/keys = {
 "values": [ -10.0, -20.0 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 2.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -262,7 +261,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=15]
 length = 3.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -297,7 +296,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=16]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -346,7 +345,7 @@ __meta__ = {
 stream = ExtResource( 39 )
 volume_db = -5.0
 bus = "Music"
-script = SubResource( 16 )
+script = SubResource( 1 )
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2( 960, 540 )
@@ -359,7 +358,7 @@ speed = 40
 position = Vector2( -960, -540 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/zoom_in_test = SubResource( 1 )
+anims/zoom_in_test = SubResource( 2 )
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -100
@@ -492,8 +491,8 @@ speed = 60
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundStill/Comet"]
 scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 2 )
-script = SubResource( 3 )
+frames = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="Comet2" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
 position = Vector2( -246.26, 2005 )
@@ -507,8 +506,8 @@ speed = 65
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundStill/Comet2"]
 scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 2 )
-script = SubResource( 3 )
+frames = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="Rocket" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
 position = Vector2( -728, 1224 )
@@ -522,7 +521,7 @@ speed = -60
 
 [node name="RocketFire" parent="Midground/MidgroundStill/Rocket" instance=ExtResource( 26 )]
 position = Vector2( 1.16051, 147.48 )
-process_material = SubResource( 8 )
+process_material = SubResource( 9 )
 
 [node name="Sprite" type="Sprite" parent="Midground/MidgroundStill/Rocket"]
 texture = ExtResource( 42 )
@@ -711,7 +710,7 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 19 )
 texture_pressed = ExtResource( 19 )
 texture_hover = ExtResource( 19 )
-script = SubResource( 9 )
+script = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -727,8 +726,8 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Menu/Main/BtnInfo"]
-anims/hide = SubResource( 10 )
-anims/show = SubResource( 11 )
+anims/hide = SubResource( 11 )
+anims/show = SubResource( 12 )
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
 visible = false
@@ -1150,7 +1149,7 @@ script = ExtResource( 41 )
 lang_tile = "bombmoving"
 
 [node name="Fade" type="AnimationPlayer" parent="Foreground/Menu"]
-anims/FadeOut = SubResource( 12 )
+anims/FadeOut = SubResource( 13 )
 
 [node name="Black" type="ColorRect" parent="Foreground/Menu/Fade"]
 visible = false
@@ -1198,9 +1197,9 @@ texture = ExtResource( 38 )
 position = Vector2( 3.72058, 8.05499 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
-anims/fly_away = SubResource( 13 )
-anims/fly_in = SubResource( 14 )
-anims/flying = SubResource( 15 )
+anims/fly_away = SubResource( 14 )
+anims/fly_in = SubResource( 15 )
+anims/flying = SubResource( 16 )
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]
