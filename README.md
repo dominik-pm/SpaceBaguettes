@@ -1,4 +1,4 @@
-# Space Baguettes
+# Space Baguettes <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Artwork/SplashArt2.png" alt="SpaceBaguettes Splash Screen">
 
 ## About
 This project was made as a school project in 'ITP' ("Informationstechnische Projekte"). <br/>
@@ -19,16 +19,20 @@ Team Members:
 - Der Spieler hat eine begrenzte Anzahl von Baguettes, welche er schießen kann. Trifft ein Baguette auf eine Bombe, explodiert diese sofort. Trifft es einen Spieler, verliert dieser ein Leben
 
 ### Items:
-<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/MoreBombs.png" alt="MoreBombs" width="100"/> Der Spieler erhält ein weiteres Leben
+<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/MoreBombs.png" alt="MoreBombs" width="100"/> The player will get one more live
 
-<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/ExtraLive.png" alt="ExtraLive" width="100"/> Eine weitere Bombe kann gleichzeitig platziert werden
+<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/ExtraLive.png" alt="ExtraLive" width="100"/> The player will be able to place more bombs at the same time
 
-<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/Baguettes.png" alt="MoreBaguettes" width="100"/> Der Spieler erhält ein weiteres Baguette
+<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/Baguettes.png" alt="MoreBaguettes" width="100"/> The player will get another baguette
 
-<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/FastBoots.png" alt="FastBoots" width="100"/> Die Spielergeschwindigkeit wird erhöht
+<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/FastBoots.png" alt="FastBoots" width="100"/> The player's speed will be faster
 
-<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombRange.png" alt="BombRange" width="100"/> Die Reichweite der Bombe erhöht sich
+<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombRange.png" alt="BombRange" width="100"/> The bomb will get a bigger range
 
-<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/StrongerExplosions.png" alt="StrongerExplosions" width="100"/> Die Bombe kann eine weitere Kiste gleichzeitig zerstören
+<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/StrongerExplosions.png" alt="StrongerExplosions" width="100"/> The bomb will destroy more crates in a line
 
-<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombMove.png" alt="BombMove" width="100"/> Bomben lassen sich schneller verschieben
+<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombMove.png" alt="BombMove" width="100"/> Bombs will be moved faster
+
+## Wanna Play that Game?
+www.spacebaguettes.tk
+or check out the Downloads folder
