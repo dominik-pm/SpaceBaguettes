@@ -14,9 +14,9 @@
 This project was made as a school project in 'ITP' ("Informationstechnische Projekte"). <br/>
 It is a bomberman-type game with french players and a space theme.<br/>
 Team Members:
-- Gabriel Lugmayr
-- Dominik Pömmer
-- Sebastian Leutgeb
+- Lugmayr Gabriel
+- Pömmer Dominik
+- Leutgeb Sebastian
 
 ##  2. <a name='Gameplay'></a>Gameplay
 ###  2.1. <a name='Player'></a>Player:
