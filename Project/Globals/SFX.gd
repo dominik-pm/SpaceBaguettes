@@ -1,6 +1,6 @@
 extends Node
 
-const min_db = -40
+const min_db = -30
 const max_db = 10
 
 enum {

@@ -1,6 +1,5 @@
 extends Node2D
 
-
 export (NodePath) var pause_menu_path = null
 var pause_menu = null
 export (NodePath) var game_summary_path = null

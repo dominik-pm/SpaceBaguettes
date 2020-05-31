@@ -66,6 +66,7 @@ tracks/0/keys = {
 [node name="FireLine" type="KinematicBody2D"]
 show_behind_parent = true
 script = ExtResource( 2 )
+speed = 600
 
 [node name="Particles2D" type="Particles2D" parent="."]
 material = SubResource( 1 )

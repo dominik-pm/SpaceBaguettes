@@ -1,18 +1,25 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/Menu/Background/StarsNear.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Menu/Background/StarsFar.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Menu/Background/StarsMid.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Background/Stars.gd" type="Script" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "move"
+length = 20.0
+loop = true
 
 [node name="Stars" type="ParallaxBackground"]
 layer = -1
+script = ExtResource( 4 )
 
-[node name="Far" type="ParallaxLayer" parent="."]
-motion_scale = Vector2( 0.2, 0.2 )
+[node name="Near" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.6, 0.6 )
 motion_mirroring = Vector2( 1920, 1080 )
 
-[node name="StarsFar" type="Sprite" parent="Far"]
-texture = ExtResource( 2 )
+[node name="StarsNear" type="Sprite" parent="Near"]
+texture = ExtResource( 1 )
 centered = false
 
 [node name="Middle" type="ParallaxLayer" parent="."]
@@ -23,10 +30,13 @@ motion_mirroring = Vector2( 1920, 1080 )
 texture = ExtResource( 3 )
 centered = false
 
-[node name="Near" type="ParallaxLayer" parent="."]
-motion_scale = Vector2( 0.6, 0.6 )
+[node name="Far" type="ParallaxLayer" parent="."]
+motion_scale = Vector2( 0.2, 0.2 )
 motion_mirroring = Vector2( 1920, 1080 )
 
-[node name="StarsNear" type="Sprite" parent="Near"]
-texture = ExtResource( 1 )
+[node name="StarsFar" type="Sprite" parent="Far"]
+texture = ExtResource( 2 )
 centered = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/move = SubResource( 1 )

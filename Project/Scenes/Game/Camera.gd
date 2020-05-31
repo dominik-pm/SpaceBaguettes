@@ -17,6 +17,8 @@ func _ready():
 	amplitude = shake_amplitude
 
 func _process(delta):
+	global_transform.origin.y -= delta*10
+	
 	var damping := ease(timer.time_left / timer.wait_time, DAMP_EASING)
 	
 	# shake
