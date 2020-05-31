@@ -64,6 +64,7 @@ func _input(event):
 			$Foreground/Menu/CenterContainer/VBoxContainer/BtnResume.grab_focus()
 		else:
 			settings_menu.hide()
+			$Foreground/Menu/CenterContainer/VBoxContainer/BtnSettings.grab_focus()
 
 func init_players():
 	var cnt = 0
@@ -257,7 +258,7 @@ func _on_BtnSettings_pressed():
 func _on_BtnCloseSettings_pressed():
 	$Click.play()
 	settings_menu.hide()
-	$Foreground/Menu/CenterContainer/VBoxContainer/BtnResume.grab_focus()
+	$Foreground/Menu/CenterContainer/VBoxContainer/BtnSettings.grab_focus()
 
 func _on_BtnMenu_pressed():
 	$Click.play()
