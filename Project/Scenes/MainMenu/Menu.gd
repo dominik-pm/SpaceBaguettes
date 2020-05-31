@@ -39,7 +39,7 @@ func _on_BtnPlay_pressed():
 	main_menu.hide()
 	play_menu.show()
 	help_menu.hide()
-	$Play/BackButton/CenterContainer/BtnBack.grab_focus()
+	$Play/PlayMenu/VBox/Control/BtnStart.grab_focus()
 
 func _on_BtnExit_pressed():
 	Settings.save_settings()
