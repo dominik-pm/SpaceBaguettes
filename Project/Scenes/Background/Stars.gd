@@ -2,14 +2,7 @@ extends ParallaxBackground
 
 export var moving = false
 
-#onready var anim = $AnimationPlayer
-
-var speed = -10
-
-func _ready():
-	pass
-#	if moving:
-#		anim.play("move")
+export var speed = -12
 
 func _process(delta):
 	if moving:

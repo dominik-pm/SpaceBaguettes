@@ -27,7 +27,7 @@ var icons = {
 # items get chosen from a pool where each item is in it [n] times
 var drop_probabilities = {
 	TESTBUFF: 0,
-	HEALTH: 2,
+	HEALTH: 1,
 	MOREBOMBS: 4,
 	BAGUETTES: 3,
 	SPEED: 1,

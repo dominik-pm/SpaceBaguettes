@@ -93,7 +93,49 @@ tracks/0/keys = {
 "values": [ -5.0, -80.0 ]
 }
 
-[sub_resource type="GDScript" id=28]
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 25 ), ExtResource( 29 ), ExtResource( 34 ), ExtResource( 32 ) ],
+"loop": true,
+"name": "default",
+"speed": 8.0
+} ]
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends AnimatedSprite
+
+func _ready():
+	play(\"default\")
+"
+
+[sub_resource type="Gradient" id=7]
+offsets = PoolRealArray( 0, 0.468085, 1 )
+colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
+
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
+
+[sub_resource type="Curve" id=9]
+_data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=10]
+curve = SubResource( 9 )
+
+[sub_resource type="ParticlesMaterial" id=11]
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 10.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 180.0
+angle_random = 1.0
+scale = 0.08
+scale_curve = SubResource( 10 )
+color_ramp = SubResource( 8 )
+
+[sub_resource type="GDScript" id=12]
 script/source = "extends Control
 
 onready var lab_message = $LabWinnerMessage
@@ -109,7 +151,7 @@ func show_summary(pid):
 	player_sprite.init(int(pid))
 "
 
-[sub_resource type="Animation" id=29]
+[sub_resource type="Animation" id=13]
 length = 0.25
 step = 0.05
 tracks/0/type = "value"
@@ -125,23 +167,23 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="CanvasItemMaterial" id=30]
+[sub_resource type="CanvasItemMaterial" id=14]
 blend_mode = 1
 
-[sub_resource type="Gradient" id=31]
+[sub_resource type="Gradient" id=15]
 offsets = PoolRealArray( 0, 0.468085, 1 )
 colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
 
-[sub_resource type="GradientTexture" id=32]
-gradient = SubResource( 31 )
+[sub_resource type="GradientTexture" id=16]
+gradient = SubResource( 15 )
 
-[sub_resource type="Curve" id=33]
+[sub_resource type="Curve" id=17]
 _data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=34]
-curve = SubResource( 33 )
+[sub_resource type="CurveTexture" id=18]
+curve = SubResource( 17 )
 
-[sub_resource type="ParticlesMaterial" id=35]
+[sub_resource type="ParticlesMaterial" id=19]
 flag_disable_z = true
 direction = Vector3( 0, 1, 0 )
 spread = 10.0
@@ -152,10 +194,10 @@ orbit_velocity_random = 0.0
 angle = 180.0
 angle_random = 1.0
 scale = 0.18
-scale_curve = SubResource( 34 )
-color_ramp = SubResource( 32 )
+scale_curve = SubResource( 18 )
+color_ramp = SubResource( 16 )
 
-[sub_resource type="Animation" id=36]
+[sub_resource type="Animation" id=20]
 length = 2.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -190,7 +232,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=37]
+[sub_resource type="Animation" id=21]
 length = 3.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -225,7 +267,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=38]
+[sub_resource type="Animation" id=22]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -265,7 +307,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=39]
+[sub_resource type="Animation" id=23]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
@@ -303,54 +345,12 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="GDScript" id=40]
+[sub_resource type="GDScript" id=24]
 script/source = "extends HBoxContainer
 
 func _ready():
 	rect_size = Vector2(rect_size.x, 48)
 "
-
-[sub_resource type="SpriteFrames" id=41]
-animations = [ {
-"frames": [ ExtResource( 25 ), ExtResource( 29 ), ExtResource( 34 ), ExtResource( 32 ) ],
-"loop": true,
-"name": "default",
-"speed": 8.0
-} ]
-
-[sub_resource type="GDScript" id=42]
-script/source = "extends AnimatedSprite
-
-func _ready():
-	play(\"default\")
-"
-
-[sub_resource type="Gradient" id=5]
-offsets = PoolRealArray( 0, 0.468085, 1 )
-colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
-
-[sub_resource type="GradientTexture" id=6]
-gradient = SubResource( 5 )
-
-[sub_resource type="Curve" id=7]
-_data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=8]
-curve = SubResource( 7 )
-
-[sub_resource type="ParticlesMaterial" id=9]
-flag_disable_z = true
-direction = Vector3( 0, 1, 0 )
-spread = 10.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 100.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-angle = 180.0
-angle_random = 1.0
-scale = 0.08
-scale_curve = SubResource( 8 )
-color_ramp = SubResource( 6 )
 
 [node name="Game" type="Node2D"]
 pause_mode = 2
@@ -364,8 +364,6 @@ environment = SubResource( 1 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-volume_db = -5.0
-autoplay = true
 bus = "Music"
 
 [node name="GameOver" type="AudioStreamPlayer" parent="."]
@@ -438,7 +436,174 @@ __meta__ = {
 }
 
 [node name="Stars" parent="." instance=ExtResource( 3 )]
+layer = -2
 moving = true
+
+[node name="BGObjects" type="Node" parent="."]
+
+[node name="MidgroundFar" type="CanvasLayer" parent="BGObjects"]
+layer = -1
+follow_viewport_enable = true
+follow_viewport_scale = 0.7
+
+[node name="Meteor" parent="BGObjects/MidgroundFar" instance=ExtResource( 40 )]
+position = Vector2( 416, -216 )
+rotation = 0.261799
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 12 )
+relative_origin = NodePath("../../..")
+respawn_interval = 40
+rotation_speed = 20
+
+[node name="Meteor2" parent="BGObjects/MidgroundFar" instance=ExtResource( 40 )]
+position = Vector2( 1256, 2000 )
+rotation = 0.261799
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 12 )
+relative_origin = NodePath("../../..")
+respawn_interval = 120
+spawn_time_offset = 5
+speed = -45
+rotation_speed = 20
+
+[node name="MidgroundMid" type="CanvasLayer" parent="BGObjects"]
+layer = -1
+follow_viewport_enable = true
+follow_viewport_scale = 0.8
+
+[node name="Fighter" parent="BGObjects/MidgroundMid" instance=ExtResource( 40 )]
+position = Vector2( 816, -880 )
+rotation = -0.122173
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 33 )
+relative_origin = NodePath("../../..")
+respawn_interval = 80
+
+[node name="Fighter5" parent="BGObjects/MidgroundMid" instance=ExtResource( 40 )]
+position = Vector2( 268.423, -1315.09 )
+rotation = -0.392699
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 36 )
+relative_origin = NodePath("../../..")
+respawn_interval = 130
+speed = 40
+
+[node name="Satellite" parent="BGObjects/MidgroundMid" instance=ExtResource( 40 )]
+position = Vector2( 2256, 900 )
+rotation = 1.37706
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 30 )
+relative_origin = NodePath("../../..")
+respawn_interval = 50
+spawn_time_offset = 10
+speed = 30
+rotation_speed = -3
+
+[node name="MidgroundNear" type="CanvasLayer" parent="BGObjects"]
+layer = -1
+follow_viewport_enable = true
+follow_viewport_scale = 0.9
+
+[node name="Fighter2" parent="BGObjects/MidgroundNear" instance=ExtResource( 40 )]
+position = Vector2( 2120, 249 )
+rotation = -2.03505
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 38 )
+relative_origin = NodePath("../../..")
+respawn_interval = 150
+spawn_time_offset = 30
+speed = -50
+
+[node name="Fighter3" parent="BGObjects/MidgroundNear" instance=ExtResource( 40 )]
+position = Vector2( 2248, 40 )
+rotation = -2.04204
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 36 )
+relative_origin = NodePath("../../..")
+respawn_interval = 150
+spawn_time_offset = 30
+speed = -45
+
+[node name="Fighter4" parent="BGObjects/MidgroundNear" instance=ExtResource( 40 )]
+position = Vector2( 2376, 224 )
+rotation = -2.0944
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 36 )
+relative_origin = NodePath("../../..")
+respawn_interval = 150
+spawn_time_offset = 30
+speed = -56
+
+[node name="MidgroundStill" type="CanvasLayer" parent="BGObjects"]
+layer = -1
+
+[node name="Satellite" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
+position = Vector2( 300, 1400 )
+rotation = -2.93215
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 31 )
+relative_origin = NodePath("../../..")
+is_still = true
+spawn_time_offset = 2
+speed = 40
+
+[node name="Comet" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
+position = Vector2( 1500, -155 )
+rotation = -0.253073
+relative_origin = NodePath("../../..")
+is_still = true
+respawn_interval = 100
+rot_off_sprite_left = true
+speed = 60
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="BGObjects/MidgroundStill/Comet"]
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 5 )
+script = SubResource( 6 )
+
+[node name="Comet2" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
+position = Vector2( -246.26, 2005 )
+rotation = 2.53945
+relative_origin = NodePath("../../..")
+is_still = true
+respawn_interval = 180
+spawn_time_offset = 5
+rot_off_sprite_left = true
+speed = 65
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="BGObjects/MidgroundStill/Comet2"]
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 5 )
+script = SubResource( 6 )
+
+[node name="Rocket" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
+position = Vector2( -728, 1224 )
+rotation = 0.6353
+scale = Vector2( 0.4, 0.4 )
+relative_origin = NodePath("../../..")
+is_still = true
+respawn_interval = 220
+spawn_time_offset = 20
+speed = -60
+
+[node name="RocketFire" parent="BGObjects/MidgroundStill/Rocket" instance=ExtResource( 19 )]
+position = Vector2( 1.16051, 147.48 )
+process_material = SubResource( 11 )
+
+[node name="Sprite" type="Sprite" parent="BGObjects/MidgroundStill/Rocket"]
+texture = ExtResource( 35 )
+
+[node name="Station" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
+position = Vector2( 1308, -464 )
+rotation = -2.96008
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 37 )
+relative_origin = NodePath("../../..")
+is_still = true
+respawn_interval = 300
+spawn_time_offset = 10
+speed = -15
+rotation_speed = 1
 
 [node name="GUI" type="Control" parent="."]
 anchor_right = 1.0
@@ -591,7 +756,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 6 )
-script = SubResource( 28 )
+script = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -672,7 +837,7 @@ __meta__ = {
 lang_tile = "quit"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/GameSummary"]
-anims/show = SubResource( 29 )
+anims/show = SubResource( 13 )
 
 [node name="Elements" type="Node2D" parent="Foreground/GameSummary"]
 position = Vector2( 1629, 540 )
@@ -682,8 +847,8 @@ script = ExtResource( 18 )
 auto_fly_away = true
 
 [node name="RocketFire" parent="Foreground/GameSummary/Elements/Rocket" instance=ExtResource( 19 )]
-material = SubResource( 30 )
-process_material = SubResource( 35 )
+material = SubResource( 14 )
+process_material = SubResource( 19 )
 
 [node name="RocketBackground" type="Sprite" parent="Foreground/GameSummary/Elements/Rocket"]
 position = Vector2( 4.0708, 38.3857 )
@@ -700,10 +865,10 @@ texture = ExtResource( 20 )
 position = Vector2( 3.72058, 8.05499 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/GameSummary/Elements/Rocket"]
-anims/fly_away = SubResource( 36 )
-anims/fly_in = SubResource( 37 )
-anims/flying = SubResource( 38 )
-anims/stop = SubResource( 39 )
+anims/fly_away = SubResource( 20 )
+anims/fly_in = SubResource( 21 )
+anims/flying = SubResource( 22 )
+anims/stop = SubResource( 23 )
 
 [node name="SettingsMenu" parent="Foreground" instance=ExtResource( 11 )]
 visible = false
@@ -722,7 +887,7 @@ margin_right = 560.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 0, 48 )
 rect_clip_content = true
-script = SubResource( 40 )
+script = SubResource( 24 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -789,172 +954,6 @@ tile_set = ExtResource( 9 )
 cell_y_sort = true
 format = 1
 tile_data = PoolIntArray( 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 0, 17, 1, 0, 18, 1, 0, 65536, 1, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 65548, 0, 0, 65549, 0, 0, 65550, 0, 0, 65554, 1, 0, 131072, 1, 0, 131074, 1, 0, 131076, 1, 0, 131077, 0, 0, 131078, 1, 0, 131079, 0, 0, 131080, 1, 0, 131081, 0, 0, 131082, 1, 0, 131083, 0, 0, 131084, 1, 0, 131085, 0, 0, 131086, 1, 0, 131088, 1, 0, 131090, 1, 0, 196608, 1, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0, 196618, 0, 0, 196619, 0, 0, 196620, 0, 0, 196621, 0, 0, 196622, 0, 0, 196626, 1, 0, 262144, 1, 0, 262145, 0, 0, 262146, 1, 0, 262147, 0, 0, 262148, 1, 0, 262149, 0, 0, 262150, 1, 0, 262151, 0, 0, 262152, 1, 0, 262153, 0, 0, 262154, 1, 0, 262155, 0, 0, 262156, 1, 0, 262157, 0, 0, 262158, 1, 0, 262159, 0, 0, 262160, 1, 0, 262161, 0, 0, 262162, 1, 0, 327680, 1, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 327690, 0, 0, 327691, 0, 0, 327692, 0, 0, 327693, 0, 0, 327694, 0, 0, 327695, 0, 0, 327696, 0, 0, 327697, 0, 0, 327698, 1, 0, 393216, 1, 0, 393217, 0, 0, 393218, 1, 0, 393219, 0, 0, 393220, 1, 0, 393221, 0, 0, 393222, 1, 0, 393223, 0, 0, 393224, 1, 0, 393225, 0, 0, 393226, 1, 0, 393227, 0, 0, 393228, 1, 0, 393229, 0, 0, 393230, 1, 0, 393231, 0, 0, 393232, 1, 0, 393233, 0, 0, 393234, 1, 0, 458752, 1, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0, 458765, 0, 0, 458766, 0, 0, 458767, 0, 0, 458768, 0, 0, 458769, 0, 0, 458770, 1, 0, 524288, 1, 0, 524289, 0, 0, 524290, 1, 0, 524291, 0, 0, 524292, 1, 0, 524293, 0, 0, 524294, 1, 0, 524295, 0, 0, 524296, 1, 0, 524297, 0, 0, 524298, 1, 0, 524299, 0, 0, 524300, 1, 0, 524301, 0, 0, 524302, 1, 0, 524303, 0, 0, 524304, 1, 0, 524305, 0, 0, 524306, 1, 0, 589824, 1, 0, 589828, 0, 0, 589829, 0, 0, 589830, 0, 0, 589831, 0, 0, 589832, 0, 0, 589833, 0, 0, 589834, 0, 0, 589835, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 589842, 1, 0, 655360, 1, 0, 655362, 1, 0, 655364, 1, 0, 655365, 0, 0, 655366, 1, 0, 655367, 0, 0, 655368, 1, 0, 655369, 0, 0, 655370, 1, 0, 655371, 0, 0, 655372, 1, 0, 655373, 0, 0, 655374, 1, 0, 655376, 1, 0, 655378, 1, 0, 720896, 1, 0, 720900, 0, 0, 720901, 0, 0, 720902, 0, 0, 720903, 0, 0, 720904, 0, 0, 720905, 0, 0, 720906, 0, 0, 720907, 0, 0, 720908, 0, 0, 720909, 0, 0, 720910, 0, 0, 720914, 1, 0, 786432, 1, 0, 786433, 1, 0, 786434, 1, 0, 786435, 1, 0, 786436, 1, 0, 786437, 1, 0, 786438, 1, 0, 786439, 1, 0, 786440, 1, 0, 786441, 1, 0, 786442, 1, 0, 786443, 1, 0, 786444, 1, 0, 786445, 1, 0, 786446, 1, 0, 786447, 1, 0, 786448, 1, 0, 786449, 1, 0, 786450, 1, 0 )
-
-[node name="BGObjects" type="Node" parent="."]
-
-[node name="MidgroundFar" type="CanvasLayer" parent="BGObjects"]
-layer = -1
-follow_viewport_enable = true
-follow_viewport_scale = 0.7
-
-[node name="Meteor" parent="BGObjects/MidgroundFar" instance=ExtResource( 40 )]
-position = Vector2( 416, -216 )
-rotation = 0.261799
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 12 )
-relative_origin = NodePath("../../..")
-respawn_interval = 40
-rotation_speed = 20
-
-[node name="Meteor2" parent="BGObjects/MidgroundFar" instance=ExtResource( 40 )]
-position = Vector2( 1256, 2000 )
-rotation = 0.261799
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 12 )
-relative_origin = NodePath("../../..")
-respawn_interval = 120
-spawn_time_offset = 5
-speed = -45
-rotation_speed = 20
-
-[node name="MidgroundMid" type="CanvasLayer" parent="BGObjects"]
-layer = -1
-follow_viewport_enable = true
-follow_viewport_scale = 0.8
-
-[node name="Fighter" parent="BGObjects/MidgroundMid" instance=ExtResource( 40 )]
-position = Vector2( 816, -880 )
-rotation = -0.122173
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 33 )
-relative_origin = NodePath("../../..")
-respawn_interval = 80
-
-[node name="Fighter5" parent="BGObjects/MidgroundMid" instance=ExtResource( 40 )]
-position = Vector2( 268.423, -1315.09 )
-rotation = -0.392699
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 36 )
-relative_origin = NodePath("../../..")
-respawn_interval = 130
-speed = 40
-
-[node name="Satellite" parent="BGObjects/MidgroundMid" instance=ExtResource( 40 )]
-position = Vector2( 2256, 900 )
-rotation = 1.37706
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 30 )
-relative_origin = NodePath("../../..")
-respawn_interval = 50
-spawn_time_offset = 10
-speed = 30
-rotation_speed = -3
-
-[node name="MidgroundNear" type="CanvasLayer" parent="BGObjects"]
-layer = -1
-follow_viewport_enable = true
-follow_viewport_scale = 0.9
-
-[node name="Fighter2" parent="BGObjects/MidgroundNear" instance=ExtResource( 40 )]
-position = Vector2( 2120, 249 )
-rotation = -2.03505
-scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 38 )
-relative_origin = NodePath("../../..")
-respawn_interval = 150
-spawn_time_offset = 30
-speed = -50
-
-[node name="Fighter3" parent="BGObjects/MidgroundNear" instance=ExtResource( 40 )]
-position = Vector2( 2248, 40 )
-rotation = -2.04204
-scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 36 )
-relative_origin = NodePath("../../..")
-respawn_interval = 150
-spawn_time_offset = 30
-speed = -45
-
-[node name="Fighter4" parent="BGObjects/MidgroundNear" instance=ExtResource( 40 )]
-position = Vector2( 2376, 224 )
-rotation = -2.0944
-scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 36 )
-relative_origin = NodePath("../../..")
-respawn_interval = 150
-spawn_time_offset = 30
-speed = -56
-
-[node name="MidgroundStill" type="CanvasLayer" parent="BGObjects"]
-layer = -1
-
-[node name="Satellite" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
-position = Vector2( 300, 1400 )
-rotation = -2.93215
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 31 )
-relative_origin = NodePath("../../..")
-is_still = true
-spawn_time_offset = 2
-speed = 40
-
-[node name="Comet" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
-position = Vector2( 1500, -155 )
-rotation = -0.253073
-relative_origin = NodePath("../../..")
-is_still = true
-respawn_interval = 100
-rot_off_sprite_left = true
-speed = 60
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="BGObjects/MidgroundStill/Comet"]
-scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 41 )
-script = SubResource( 42 )
-
-[node name="Comet2" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
-position = Vector2( -246.26, 2005 )
-rotation = 2.53945
-relative_origin = NodePath("../../..")
-is_still = true
-respawn_interval = 180
-spawn_time_offset = 5
-rot_off_sprite_left = true
-speed = 65
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="BGObjects/MidgroundStill/Comet2"]
-scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 41 )
-script = SubResource( 42 )
-
-[node name="Rocket" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
-position = Vector2( -728, 1224 )
-rotation = 0.6353
-scale = Vector2( 0.4, 0.4 )
-relative_origin = NodePath("../../..")
-is_still = true
-respawn_interval = 220
-spawn_time_offset = 20
-speed = -60
-
-[node name="RocketFire" parent="BGObjects/MidgroundStill/Rocket" instance=ExtResource( 19 )]
-position = Vector2( 1.16051, 147.48 )
-process_material = SubResource( 9 )
-
-[node name="Sprite" type="Sprite" parent="BGObjects/MidgroundStill/Rocket"]
-texture = ExtResource( 35 )
-
-[node name="Station" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
-position = Vector2( 1308, -464 )
-rotation = -2.96008
-scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 37 )
-relative_origin = NodePath("../../..")
-is_still = true
-respawn_interval = 300
-spawn_time_offset = 10
-speed = -15
-rotation_speed = 1
 [connection signal="pressed" from="Foreground/Menu/CenterContainer/VBoxContainer/BtnResume" to="." method="_on_BtnResume_pressed"]
 [connection signal="pressed" from="Foreground/Menu/CenterContainer/VBoxContainer/BtnRestart" to="." method="_on_BtnRestart_pressed"]
 [connection signal="pressed" from="Foreground/Menu/CenterContainer/VBoxContainer/BtnSettings" to="." method="_on_BtnSettings_pressed"]

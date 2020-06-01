@@ -1,10 +1,21 @@
 extends Node2D
 
-export var speed = 450
+export var speed = 500
 var dir = Vector2(0,0)
 var dist = 1
 var flying = false
 var start_pos
+
+var testing = false
+
+func _ready():
+	if testing:
+		# to test (when starting the scene with F6):
+		global_transform.origin = Vector2(300, 300)
+		hide()
+		yield(get_tree().create_timer(2), "timeout")
+		show()
+		init(Vector2(1, 0), 6)
 
 func init(d, distance):
 	dir = d
@@ -32,7 +43,7 @@ func init(d, distance):
 				child.process_material.angle = rad2deg(a)
 	
 	# remove our self after the timespan of the bomb explosion
-	yield(get_tree().create_timer(Global.bomb_explosion_time), "timeout")
+	yield(get_tree().create_timer(Global.bomb_explosion_duration+0.1), "timeout")
 	_remove_self()
 
 # fade alpha and queue free once animation is finished
@@ -46,7 +57,7 @@ func _process(delta):
 	# only move when flying is true
 	if flying:
 		# move
-		transform.origin += dir*delta*speed
+		transform.origin += dir*delta*speed*(1+(dist/5))
 		
 		# calculate the distance to the target position
 		var d = transform.origin - (start_pos+(dir*dist*Global.tilesize))

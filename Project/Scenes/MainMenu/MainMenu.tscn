@@ -66,7 +66,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ) ]
 }
 
-[sub_resource type="SpriteFrames" id=41]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
 "loop": true,
@@ -74,7 +74,7 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[sub_resource type="GDScript" id=42]
+[sub_resource type="GDScript" id=4]
 script/source = "extends AnimatedSprite
 
 func _ready():
@@ -490,8 +490,8 @@ speed = 60
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundStill/Comet"]
 scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 41 )
-script = SubResource( 42 )
+frames = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="Comet2" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
 position = Vector2( -246.26, 2005 )
@@ -505,8 +505,8 @@ speed = 65
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Midground/MidgroundStill/Comet2"]
 scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 41 )
-script = SubResource( 42 )
+frames = SubResource( 3 )
+script = SubResource( 4 )
 
 [node name="Rocket" parent="Midground/MidgroundStill" instance=ExtResource( 3 )]
 position = Vector2( -728, 1224 )

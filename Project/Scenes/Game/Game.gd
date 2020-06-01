@@ -27,6 +27,8 @@ var game_over = false
 var players_alive = 4
 
 func _ready():
+	$Music.play()
+	
 	pause_menu = get_node(pause_menu_path)
 	game_summary = get_node(game_summary_path)
 	gui = get_node(gui_path)
