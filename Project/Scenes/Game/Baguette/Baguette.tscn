@@ -9,17 +9,17 @@
 [ext_resource path="res://Assets/Particles/trace_05.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Sounds/Game/Shoot.wav" type="AudioStream" id=8]
 
-[sub_resource type="CanvasItemMaterial" id=2]
+[sub_resource type="CanvasItemMaterial" id=19]
 blend_mode = 1
 
-[sub_resource type="Gradient" id=3]
+[sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0, 0.207407, 0.644444, 1 )
 colors = PoolColorArray( 1, 1, 1, 0, 0, 1, 0.844727, 1, 0, 0.241211, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=4]
-gradient = SubResource( 3 )
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticlesMaterial" id=4]
 flag_disable_z = true
 direction = Vector3( -1, 0, 0 )
 spread = 0.0
@@ -29,17 +29,17 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 angle = -90.0
 scale = 0.25
-color_ramp = SubResource( 4 )
+color_ramp = SubResource( 3 )
 hue_variation_random = 0.2
 
-[sub_resource type="Gradient" id=6]
+[sub_resource type="Gradient" id=5]
 offsets = PoolRealArray( 0, 0.140741, 0.562963, 1 )
 colors = PoolColorArray( 1, 1, 1, 0, 1, 0.632813, 0, 1, 1, 0.914063, 0, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=7]
-gradient = SubResource( 6 )
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
 
-[sub_resource type="ParticlesMaterial" id=8]
+[sub_resource type="ParticlesMaterial" id=7]
 flag_disable_z = true
 direction = Vector3( -1, 0, 0 )
 spread = 0.0
@@ -48,26 +48,26 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 angle = -90.0
 scale = 0.3
-color_ramp = SubResource( 7 )
+color_ramp = SubResource( 6 )
 hue_variation_random = 0.2
 
-[sub_resource type="CanvasItemMaterial" id=9]
+[sub_resource type="CanvasItemMaterial" id=8]
 blend_mode = 1
 
-[sub_resource type="Gradient" id=10]
+[sub_resource type="Gradient" id=9]
 offsets = PoolRealArray( 0, 0.118519, 0.659259, 1 )
 colors = PoolColorArray( 1, 1, 1, 0, 1, 0, 0, 1, 1, 0.603922, 0, 0.533333, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=11]
-gradient = SubResource( 10 )
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
 
-[sub_resource type="Curve" id=12]
+[sub_resource type="Curve" id=11]
 _data = [ Vector2( 0, 0.897727 ), 0.0, 0.0, 0, 0, Vector2( 0.158228, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.734177, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.987342, 0.906818 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=13]
-curve = SubResource( 12 )
+[sub_resource type="CurveTexture" id=12]
+curve = SubResource( 11 )
 
-[sub_resource type="ParticlesMaterial" id=14]
+[sub_resource type="ParticlesMaterial" id=13]
 emission_shape = 2
 emission_box_extents = Vector3( 60, 10, 1 )
 flag_disable_z = true
@@ -83,19 +83,19 @@ orbit_velocity_random = 0.0
 angle = 180.0
 angle_random = 1.0
 scale = 0.3
-scale_curve = SubResource( 13 )
-color_ramp = SubResource( 11 )
+scale_curve = SubResource( 12 )
+color_ramp = SubResource( 10 )
 hue_variation = 0.15
 hue_variation_random = 1.0
 
-[sub_resource type="Gradient" id=15]
+[sub_resource type="Gradient" id=14]
 offsets = PoolRealArray( 0, 0.0888889, 0.325926, 1 )
 colors = PoolColorArray( 0, 0, 0, 0, 0.705078, 1, 0, 1, 0.258824, 1, 0.378975, 1, 0.764706, 1, 0.729412, 0 )
 
-[sub_resource type="GradientTexture" id=16]
-gradient = SubResource( 15 )
+[sub_resource type="GradientTexture" id=15]
+gradient = SubResource( 14 )
 
-[sub_resource type="ParticlesMaterial" id=17]
+[sub_resource type="ParticlesMaterial" id=16]
 emission_shape = 2
 emission_box_extents = Vector3( 20, 15, 1 )
 flag_disable_z = true
@@ -111,11 +111,11 @@ angle = 180.0
 angle_random = 1.0
 scale = 0.03
 scale_random = 0.01
-color_ramp = SubResource( 16 )
+color_ramp = SubResource( 15 )
 hue_variation = 0.29
 hue_variation_random = 1.0
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=17]
 radius = 4.77512
 height = 15.6105
 
@@ -141,52 +141,51 @@ tracks/0/keys = {
 ]]
 collision_mask = 3
 script = ExtResource( 3 )
-speed = 350
 
 [node name="Particles1" type="Particles2D" parent="."]
 modulate = Color( 1, 1, 1, 0.231373 )
 light_mask = 2
-material = SubResource( 2 )
+material = SubResource( 19 )
 position = Vector2( -36, 0 )
 amount = 24
 lifetime = 3.0
-process_material = SubResource( 5 )
+process_material = SubResource( 4 )
 texture = ExtResource( 7 )
 
 [node name="Particles2" type="Particles2D" parent="."]
 modulate = Color( 1, 1, 1, 0.337255 )
 light_mask = 2
-material = SubResource( 2 )
+material = SubResource( 19 )
 position = Vector2( -24, 0 )
-amount = 16
+amount = 18
 lifetime = 2.0
 local_coords = false
-process_material = SubResource( 8 )
+process_material = SubResource( 7 )
 texture = ExtResource( 4 )
 
 [node name="Particles3" type="Particles2D" parent="."]
 modulate = Color( 1, 1, 1, 0.121569 )
 light_mask = 2
-material = SubResource( 9 )
+material = SubResource( 8 )
 position = Vector2( -80, 0 )
 local_coords = false
-process_material = SubResource( 14 )
+process_material = SubResource( 13 )
 texture = ExtResource( 5 )
 
 [node name="Particles4" type="Particles2D" parent="."]
 modulate = Color( 1, 1, 1, 0.231373 )
 light_mask = 2
-material = SubResource( 2 )
+material = SubResource( 19 )
 amount = 32
 lifetime = 4.0
 speed_scale = 2.0
 local_coords = false
-process_material = SubResource( 17 )
+process_material = SubResource( 16 )
 texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 1 )
+shape = SubResource( 17 )
 
 [node name="Sprites" type="Node2D" parent="."]
 scale = Vector2( 0.025, 0.025 )

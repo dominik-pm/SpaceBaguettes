@@ -57,13 +57,24 @@ func set_game_binds():
 		var value = settings["bindings"][key]
 		
 		var actionlist = InputMap.get_action_list(key)
+		
 		if !actionlist.empty():
 			InputMap.action_erase_event(key, actionlist[0])
 		
-		if str(value) != "":
+		if str(value) != "" and value != null:
 			var new_key = InputEventKey.new()
 			new_key.set_scancode(value)
 			InputMap.action_add_event(key, new_key)
+		else:
+			#print("key is null")
+			for action in actionlist:
+				if action is InputEventJoypadButton:
+					pass # dont remove controller motion input
+				elif action is InputEventJoypadMotion:
+					pass # dont remove controller motion input
+				else:
+					# removing key (was set to null from user)
+					InputMap.action_erase_event(key, actionlist[action])
 
 func save_settings():
 	for section in settings.keys():

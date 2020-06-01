@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 class_name Baguette
 
-export var speed = 250
+export var speed = 425
 
 var game
 var dir

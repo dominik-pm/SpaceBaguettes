@@ -57,7 +57,7 @@ func _process(delta):
 	# only move when flying is true
 	if flying:
 		# move
-		transform.origin += dir*delta*speed*(1+(dist/5))
+		transform.origin += dir*delta*speed*((dist+1)/2)# same just simplified (1+((dist-1)/2))
 		
 		# calculate the distance to the target position
 		var d = transform.origin - (start_pos+(dir*dist*Global.tilesize))

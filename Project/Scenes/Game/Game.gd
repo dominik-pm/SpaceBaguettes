@@ -138,7 +138,6 @@ func _get_winner():
 		if c is Player:
 			var player = c
 			if player.is_alive:
-				player.disable_player() # to hide him when the game ends
 				winner = int(player.pid)
 	return winner
 

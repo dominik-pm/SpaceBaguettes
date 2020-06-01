@@ -57,7 +57,7 @@ func init_player_names():
 			Global.player_names[i] = n
 		else:
 			Global.player_names[i] = "Player"+str(i+1)
-	print(Global.player_names)
+	#print(Global.player_names)
 
 # returns "" if the name is not valid
 func check_name(s : String):

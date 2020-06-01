@@ -242,6 +242,8 @@ func disable_player():
 func _die():
 	is_alive = false
 	
+	disable_player()
+	
 	# play death sound
 	$Death.play()
 	
@@ -252,8 +254,6 @@ func _die():
 	var g = Preloader.gravestone.instance()
 	game.add_node(g)#get_tree().root.add_node(g)
 	g.global_transform.origin = game.get_tile_pos_center(muzzle.global_transform.origin)
-	
-	disable_player()
 
 func _on_ShootingDelay_timeout():
 	can_shoot = true
