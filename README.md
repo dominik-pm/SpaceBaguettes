@@ -13,6 +13,7 @@
 ##  1. <a name='About'></a>About
 This project was made as a school project in 'ITP' ("Informationstechnische Projekte"). <br/>
 It is a bomberman-type game with french players and a space theme.<br/>
+The game was made with the Godot Engine: https://godotengine.org <br/>
 Team Members:
 - Lugmayr Gabriel
 - Pömmer Dominik
@@ -45,4 +46,4 @@ Team Members:
 
 ##  3. <a name='WannaPlaytheGame'></a>Want To Play The Game?
 www.spacebaguettes.tk
-or check out the Downloads folder
+or check out the Releases in this repository
