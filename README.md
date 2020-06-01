@@ -13,6 +13,7 @@
 ##  1. <a name='About'></a>About
 This project was made as a school project in 'ITP' ("Informationstechnische Projekte"). <br/>
 It is a bomberman-type game with french players and a space theme.<br/>
+The game was made with the Godot Engine: https://godotengine.org <br/>
 Team Members:
 - Lugmayr Gabriel
 - Pömmer Dominik
