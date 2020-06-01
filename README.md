@@ -45,4 +45,4 @@ Team Members:
 
 ##  3. <a name='WannaPlaytheGame'></a>Want To Play The Game?
 www.spacebaguettes.tk
-or check out the Downloads folder
+or check out the Releases in this repository
