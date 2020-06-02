@@ -11,6 +11,7 @@
 [ext_resource path="res://Assets/Menu/Objects/Fighters/fighter1.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Menu/Objects/Satellites/satellite1.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Menu/Objects/Satellites/satellite2.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Sounds/Game/StartGame.ogg" type="AudioStream" id=12]
 [ext_resource path="res://Scenes/MainMenu/Menu.gd" type="Script" id=13]
 [ext_resource path="res://Ressources/Theme.tres" type="Theme" id=14]
 [ext_resource path="res://Assets/Menu/Icons/wrench.png" type="Texture" id=15]
@@ -34,7 +35,6 @@
 [ext_resource path="res://Assets/Game/Items/StrongerExplosions.png" type="Texture" id=33]
 [ext_resource path="res://Assets/Game/Items/BombMove.png" type="Texture" id=34]
 [ext_resource path="res://Scenes/MainMenu/Rocket.gd" type="Script" id=35]
-[ext_resource path="res://Assets/Sounds/UI/StartGame.wav" type="AudioStream" id=36]
 [ext_resource path="res://Scenes/MainMenu/TextureButtons.gd" type="Script" id=37]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=38]
 [ext_resource path="res://Assets/Music/MenuMusic.ogg" type="AudioStream" id=39]
@@ -1217,7 +1217,7 @@ volume_db = 2.0
 bus = "Sound"
 
 [node name="Start2" type="AudioStreamPlayer" parent="Foreground/Menu"]
-stream = ExtResource( 36 )
+stream = ExtResource( 12 )
 volume_db = -10.0
 bus = "Sound"
 

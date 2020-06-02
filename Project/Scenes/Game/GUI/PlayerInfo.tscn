@@ -11,8 +11,6 @@
 [ext_resource path="res://Scenes/Game/GUI/PlayerInfo.gd" type="Script" id=9]
 [ext_resource path="res://Ressources/Theme.tres" type="Theme" id=10]
 
-
-
 [sub_resource type="Animation" id=1]
 resource_name = "die"
 length = 0.25

@@ -64,7 +64,9 @@ func explode():
 	game.explode($Center.global_transform.origin, explosion_size, explosion_strength)
 	
 	# Animation
-	$Explosion.play("explode1")
+	randomize()
+	var i = (randi() % 3) + 1
+	$Explosion.play("explode"+str(i))
 	$Sprite.hide()
 	
 	# Stop physics
