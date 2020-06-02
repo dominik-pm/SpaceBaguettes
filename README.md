@@ -2,17 +2,17 @@
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Artwork/SplashArt.png" alt="SpaceBaguettes Splash Screen"> 
 
 * 1. [General](#General)
-* 2. [Spielen](#Spielen)
-* 3. [ Gameplay](#Gameplay)
+* 2. [Play](#Play)
+* 3. [Gameplay](#Gameplay)
 	* 3.1. [Player](#Player)
 	* 3.2. [Bombs](#Bombs)
 	* 3.3. [Baguettes](#Baguettes)
 	* 3.4. [Items](#Items)
-* 4. [Applikation](#Applikation)
-	* 4.1. [Installation](#Installation)
-	* 4.2. [In-Game UI](#In-GameUI)
-	* 4.3. [Hauptmenü](#Hauptmen)
-	* 4.4. [In-Game-Menü](#In-Game-Men)
+* 4. [Application](#Application)
+	* 4.1. [Install](#Install)
+	* 4.2. [Ingame UI](#IngameUI)
+	* 4.3. [Main Menu](#MainMenu)
+	* 4.4. [Ingame Menu](#IngameMenu)
 
 ##  1. <a name='General'></a>General
 This project was made as a school project in 'ITP' ("Informationstechnische Projekte"). <br/>
@@ -23,12 +23,9 @@ Team Members:
 - Pömmer Dominik
 - Leutgeb Sebastian
 
-##  2. <a name='Spielen'></a>Spielen
-Das Spiel kann auf
-itch.io oder auf spacebaguettes.tk gespielt und auch heruntergeladen
-werden. Für ältere Versionen siehe auch <a href="https://github.com/dominik-pm/SpaceBaguettes/releases">Releases of this repository</a>. Wir empfehlen die heruntergeladene Version für die entsprechende Plattform
-(Windows, Linux , Mac), da es dort flüssiger spielbar ist als im Browser.
-
+##  2. <a name='Play'></a>Spielen
+The game can be played and downloaded on itch.io or on spacebaguettes.tk
+For older versions, see <a href="https://github.com/dominik-pm/SpaceBaguettes/releases">Releases of this repository</a>. We suggest downloading the game for your platform (Windows, Linux , Mac) instead of playing it in the browser, because it runs more smoothly.
 
 ##  3. <a name='Gameplay'></a> Gameplay
 ###  3.1. <a name='Player'></a>Player:
@@ -55,26 +52,24 @@ werden. Für ältere Versionen siehe auch <a href="https://github.com/dominik-pm
 
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombMove.png" alt="BombMove" width="100"/> Bombs will be moved faster
 
-##  4. <a name='Applikation'></a>Applikation
-###  4.1. <a name='Installation'></a>Installation
-Das heruntergeladene Spiel kann einfach geöffnet werden. (d.h. es muss nicht installiert
-werden)
+##  4. <a name='Application'></a>Application
+###  4.1. <a name='Install'></a>Install
+You do not have to install the game. It can simply be opened.
 
-###  4.2. <a name='In-GameUI'></a>In-Game UI
-Kann ohne Maus komplett mit der Tastatur oder auch mit einem Controller (Xbox,
-Playstation, Nintento) bedient werden.
+###  4.2. <a name='IngameUI'></a>Ingame UI
+You can navigate through the UI with the mouse, keyboard or a controller (XBox, PlayStation, Nintendo)
 
-###  4.3. <a name='Hauptmen'></a>Hauptmenü
-Es kann:
-- Das Einstellungsmenü aufgerufen werden
-- Das Spiel-Starten Menü aufgefüfen werden (Keybinds können angepasst werden)
-- Das Spiel beendet werden
-- Die Spielanleitung angezeigt werden
+###  4.3. <a name='MainMenu'></a>Main Menu
+In there you can:
+- open the settings menu
+- open the start-game menu (for setting the keybinds)
+- close the close
+- open the game instructions
 
-###  4.4. <a name='In-Game-Men'></a>In-Game-Menü
-Kann im Spiel mit der ESC-Taste aufgerufen werden
-Es kann:
-- Das aktuelle Spiel neugestarted werden
-- Das Einstellungsmenü aufgerufen werden
-- Ins Menü gewechselt werden
-- Das Spiel beendet werden
+###  4.4. <a name='IngameMenu'></a>Ingame Menu
+Can be opened ingame with the ESC-key
+In there you can:
+- restart the current game
+- open the settings menu
+- go back to the main menu
+- close the game
