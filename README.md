@@ -9,11 +9,12 @@
 	* 3.3. [Baguettes](#Baguettes)
 	* 3.4. [Items](#Items)
 * 4. [Controls](#Controls)
+	* 4.1. [Controller](#Controller)
 * 5. [Application](#Application)
-	* 4.1. [Install](#Install)
-	* 4.2. [Ingame UI](#IngameUI)
-	* 4.3. [Main Menu](#MainMenu)
-	* 4.4. [Ingame Menu](#IngameMenu)
+	* 5.1. [Install](#Install)
+	* 5.2. [Ingame UI](#IngameUI)
+	* 5.3. [Main Menu](#MainMenu)
+	* 5.4. [Ingame Menu](#IngameMenu)
 
 ##  1. <a name='General'></a>General
 This project was made as a school project in 'ITP' ("Informationstechnische Projekte"). <br/>
