@@ -53,7 +53,7 @@ For older versions, see <a href="https://github.com/dominik-pm/SpaceBaguettes/re
 
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombMove.png" alt="BombMove" width="100"/> Bombs will be moved faster
 
-##  4. <a name='Controls'></a>Application
+##  4. <a name='Controls'>Controls</a>
 It kann be played with the keyboard or different kinds of controllers (PlayStation, XBox, Nintendo).</br>
 The keybindings are set in the sart-game menu.
 
