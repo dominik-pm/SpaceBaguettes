@@ -4,10 +4,10 @@
 * 1. [General](#General)
 * 2. [Spielen](#Spielen)
 * 3. [ Gameplay](#Gameplay)
-	* 3.1. [Player:](#Player:)
-	* 3.2. [Bombs:](#Bombs:)
-	* 3.3. [Baguettes:](#Baguettes:)
-	* 3.4. [Items:](#Items:)
+	* 3.1. [Player](#Player)
+	* 3.2. [Bombs](#Bombs)
+	* 3.3. [Baguettes](#Baguettes)
+	* 3.4. [Items](#Items)
 * 4. [Applikation](#Applikation)
 	* 4.1. [Installation](#Installation)
 	* 4.2. [In-Game UI](#In-GameUI)
@@ -31,16 +31,16 @@ werden. Für ältere Versionen siehe auch <a href="https://github.com/dominik-pm
 
 
 ##  3. <a name='Gameplay'></a> Gameplay
-###  3.1. <a name='Player:'></a>Player:
+###  3.1. <a name='Player'></a>Player:
 - The player can move in any direction, place bombs, fire baguettes and also collect items.
 
-###  3.2. <a name='Bombs:'></a>Bombs:
+###  3.2. <a name='Bombs'></a>Bombs:
 - Placed bombs explode after a short time. The Explosion fires in every direction and depends on the items of the player.
 
-###  3.3. <a name='Baguettes:'></a>Baguettes:
+###  3.3. <a name='Baguettes'></a>Baguettes:
 - The player has a certain amount of baguettes, that can be fired. When a baguette hits a bomb, it explodes. When it hits a player, he loses one health point.
 
-###  3.4. <a name='Items:'></a>Items:
+###  3.4. <a name='Items'></a>Items:
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/MoreBombs.png" alt="MoreBombs" width="100"/> The player will get one more live
 
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/ExtraLive.png" alt="ExtraLive" width="100"/> The player will be able to place more bombs at the same time
