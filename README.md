@@ -8,7 +8,8 @@
 	* 3.2. [Bombs](#Bombs)
 	* 3.3. [Baguettes](#Baguettes)
 	* 3.4. [Items](#Items)
-* 4. [Application](#Application)
+* 4. [Controls](#Controls)
+* 5. [Application](#Application)
 	* 4.1. [Install](#Install)
 	* 4.2. [Ingame UI](#IngameUI)
 	* 4.3. [Main Menu](#MainMenu)
@@ -52,21 +53,40 @@ For older versions, see <a href="https://github.com/dominik-pm/SpaceBaguettes/re
 
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombMove.png" alt="BombMove" width="100"/> Bombs will be moved faster
 
-##  4. <a name='Application'></a>Application
-###  4.1. <a name='Install'></a>Install
+##  4. <a name='Controls'></a>Application
+It kann be played with the keyboard or different kinds of controllers (PlayStation, XBox, Nintendo).</br>
+The keybindings are set in the sart-game menu.
+
+###  4.1. <a name='Controller'>Controller</a>Install
+The first connected controller is for the first player, the second connected one for the second player, ...</br>
+The controller keys can not be changed. </br>
+Move
+- D-pad
+- or left stick
+Shoot
+- PlayStation: Circle
+- XBox: B
+- Nintendo: A
+Place Bombs
+- PlayStation: Cross
+- XBox: A
+- Nintendo: B
+
+##  5. <a name='Application'></a>Application
+###  5.1. <a name='Install'></a>Install
 You do not have to install the game. It can simply be opened.
 
-###  4.2. <a name='IngameUI'></a>Ingame UI
-You can navigate through the UI with the mouse, keyboard or a controller (XBox, PlayStation, Nintendo)
+###  5.2. <a name='IngameUI'></a>Ingame UI
+You can navigate through the UI with the mouse, the keyboard or a controller.
 
-###  4.3. <a name='MainMenu'></a>Main Menu
+###  5.3. <a name='MainMenu'></a>Main Menu
 In there you can:
 - open the settings menu
 - open the start-game menu (for setting the keybinds)
 - close the close
 - open the game instructions
 
-###  4.4. <a name='IngameMenu'></a>Ingame Menu
+###  5.4. <a name='IngameMenu'></a>Ingame Menu
 Can be opened ingame with the ESC-key
 In there you can:
 - restart the current game
