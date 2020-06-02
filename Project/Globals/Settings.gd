@@ -3,8 +3,8 @@ extends Node
 
 signal settings_loaded
 
-const SAVE_PATH = "res://config.cfg" # in debug
-#const SAVE_PATH = "user://config.cfg" # on build
+#const SAVE_PATH = "res://config.cfg" # in debug
+const SAVE_PATH = "user://config.cfg" # on build
 
 var config_file = ConfigFile.new()
 
@@ -16,24 +16,24 @@ var settings = {
 		"1move_right": 68,
 		"1shoot": 70,
 		"1set_bomb": 32,
-		"2move_forward": 38,
-		"2move_backward": 40,
-		"2move_left": 37,
-		"2move_right": 39,
-		"2shoot": 189,
-		"2set_bomb": 190,
-		"3move_forward": "",
-		"3move_backward": "",
-		"3move_left": "",
-		"3move_right": "",
-		"3shoot": "",
-		"3set_bomb": "",
-		"4move_forward": "",
-		"4move_backward": "",
-		"4move_left": "",
-		"4move_right": "",
-		"4shoot": "",
-		"4set_bomb": ""
+		"2move_forward": 16777232,
+		"2move_backward": 16777234,
+		"2move_left": 16777231,
+		"2move_right": 16777233,
+		"2shoot": 45,
+		"2set_bomb": 46,
+		"3move_forward": 73,
+		"3move_backward": 75,
+		"3move_left": 74,
+		"3move_right": 76,
+		"3shoot": 72,
+		"3set_bomb": 85,
+		"4move_forward": 16777358,
+		"4move_backward": 16777355,
+		"4move_left": 16777354,
+		"4move_right": 16777356,
+		"4shoot": 16777359,
+		"4set_bomb": 16777353
 	},
 	"general": {
 		"language": 0
