@@ -28,6 +28,8 @@ var players_alive = 4
 
 func _ready():
 	$Music.play()
+	$Click.stream.loop = false
+	$StartGame.stream.loop = false
 	
 	pause_menu = get_node(pause_menu_path)
 	game_summary = get_node(game_summary_path)
