@@ -24,8 +24,8 @@ Team Members:
 - Leutgeb Sebastian
 
 ##  2. <a name='Play'></a>Spielen
-The game can be played and downloaded on itch.io or on spacebaguettes.tk
-For older versions, see <a href="https://github.com/dominik-pm/SpaceBaguettes/releases">Releases of this repository</a>. We suggest downloading the game for your platform (Windows, Linux , Mac) instead of playing it in the browser, because it runs more smoothly.
+The game can be played and downloaded on <a href="https://nitrogen64.itch.io/spacebaguettes">itch.io</a> or on <a href="http://spacebaguettes.tk">spacebaguettes.tk</a>
+For older versions, see <a href="https://github.com/dominik-pm/SpaceBaguettes/releases">Releases</a>. We suggest downloading the game for your platform (Windows, Linux , Mac) instead of playing it in the browser, because it runs more smoothly.
 
 ##  3. <a name='Gameplay'></a> Gameplay
 ###  3.1. <a name='Player'></a>Player:
