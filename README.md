@@ -61,14 +61,14 @@ The keybindings are set in the sart-game menu.
 ###  4.1. <a name='Controller'></a>Controller
 The first connected controller is for the first player, the second connected one for the second player, ...</br>
 The controller keys can not be changed. </br>
-Move
+Move:
 - D-pad
-- or left stick </br>
-Shoot
+- or left stick
+Shoot:
 - PlayStation: Circle
 - XBox: B
-- Nintendo: A </br>
-Place Bombs
+- Nintendo: A
+Place Bombs:
 - PlayStation: Cross
 - XBox: A
 - Nintendo: B
