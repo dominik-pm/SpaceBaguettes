@@ -24,7 +24,7 @@ Team Members:
 - Pömmer Dominik
 - Leutgeb Sebastian
 
-##  2. <a name='Play'></a>Spielen
+##  2. <a name='Play'></a>Play
 The game can be played and downloaded on <a href="https://nitrogen64.itch.io/spacebaguettes">itch.io</a> or on <a href="http://spacebaguettes.tk">spacebaguettes.tk</a>
 For older versions, see <a href="https://github.com/dominik-pm/SpaceBaguettes/releases">Releases</a>. We suggest downloading the game for your platform (Windows, Linux , Mac) instead of playing it in the browser, because it runs more smoothly.
 
@@ -53,27 +53,27 @@ For older versions, see <a href="https://github.com/dominik-pm/SpaceBaguettes/re
 
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Game/Items/BombMove.png" alt="BombMove" width="100"/> Bombs will be moved faster
 
-##  4. <a name='Controls'>Controls</a>
+##  4. <a name='Controls'></a>Controls
 It kann be played with the keyboard or different kinds of controllers (PlayStation, XBox, Nintendo).</br>
 The keybindings are set in the sart-game menu.
 
-###  4.1. <a name='Controller'>Controller</a>Install
+###  4.1. <a name='Controller'></a>Controller
 The first connected controller is for the first player, the second connected one for the second player, ...</br>
 The controller keys can not be changed. </br>
 Move
 - D-pad
-- or left stick
+- or left stick </br>
 Shoot
 - PlayStation: Circle
 - XBox: B
-- Nintendo: A
+- Nintendo: A </br>
 Place Bombs
 - PlayStation: Cross
 - XBox: A
 - Nintendo: B
 
 ##  5. <a name='Application'></a>Application
-###  5.1. <a name='Install'></a>Install
+###  5.1. <a name='Install'>Install</a>
 You do not have to install the game. It can simply be opened.
 
 ###  5.2. <a name='IngameUI'></a>Ingame UI
