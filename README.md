@@ -8,7 +8,7 @@
 * 3. [Want To Play The Game?](#WannaPlaytheGame)
 
 # Space Baguettes 
-<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Artwork/SplashArt2.png" alt="SpaceBaguettes Splash Screen"> 
+<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Artwork/SplashArt.png" alt="SpaceBaguettes Splash Screen"> 
 
 ##  1. <a name='About'></a>About
 This project was made as a school project in 'ITP' ("Informationstechnische Projekte"). <br/>
