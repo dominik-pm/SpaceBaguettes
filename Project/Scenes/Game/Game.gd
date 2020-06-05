@@ -170,7 +170,7 @@ func _destroy_crate(tile):
 	
 	# with a certain probability, drop an item
 	randomize()
-	if randi()%(100/Global.crate_item_drop_chance) == 0:
+	if rand_range(0, 100) < Global.crate_item_drop_chance:
 		_spawn_item(pos)
 func _spawn_item(pos):
 	var i = Preloader.item.instance()

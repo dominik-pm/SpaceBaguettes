@@ -10,7 +10,12 @@ func init(pos, dirs):
 	create_hit_tiles()
 	
 	# maybe not need (but it would never be removed)
-	yield(get_tree().create_timer(Global.bomb_explosion_duration*1.5), "timeout")
+	var t = Timer.new()
+	t.wait_time = Global.bomb_explosion_duration*1.5
+	add_child(t)
+	t.start()
+	t.connect("timeout", self, "_on_destroy_timout")
+func _on_destroy_timout():
 	queue_free()
 
 func create_hit_tiles():

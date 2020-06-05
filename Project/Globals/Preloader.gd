@@ -12,3 +12,6 @@ var gravestone = preload("res://Scenes/Game/Effects/GraveStone.tscn")
 # effects
 var effect_pop = preload("res://Scenes/Game/Effects/PopEffect.tscn")
 var effect_impact = preload("res://Scenes/Game/Effects/Impact.tscn")
+
+# menu
+var conf_item_entry = preload("res://Scenes/MainMenu/ConfigurationMenu/ItemEntry.tscn")

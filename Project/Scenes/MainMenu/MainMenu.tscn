@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=2]
@@ -35,6 +35,7 @@
 [ext_resource path="res://Assets/Game/Items/StrongerExplosions.png" type="Texture" id=33]
 [ext_resource path="res://Assets/Game/Items/BombMove.png" type="Texture" id=34]
 [ext_resource path="res://Scenes/MainMenu/Rocket.gd" type="Script" id=35]
+[ext_resource path="res://Assets/Menu/Icons/gear.png" type="Texture" id=36]
 [ext_resource path="res://Scenes/MainMenu/TextureButtons.gd" type="Script" id=37]
 [ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1.png" type="Texture" id=38]
 [ext_resource path="res://Assets/Music/MenuMusic.ogg" type="AudioStream" id=39]
@@ -44,6 +45,10 @@
 [ext_resource path="res://Assets/Menu/Objects/Fighters/fighter2.png" type="Texture" id=43]
 [ext_resource path="res://Assets/Menu/Objects/Fighters/fighter33.png" type="Texture" id=44]
 [ext_resource path="res://Assets/Menu/Objects/Stations/station1.png" type="Texture" id=45]
+[ext_resource path="res://Scenes/TextButton.gd" type="Script" id=46]
+[ext_resource path="res://Scenes/MainMenu/ItemDropProbabilities.gd" type="Script" id=47]
+[ext_resource path="res://Scenes/MainMenu/ConfigurationMenu/ConfigMenu.gd" type="Script" id=48]
+[ext_resource path="res://Scenes/MainMenu/ConfigurationMenu/BaseSubMenu.gd" type="Script" id=50]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends AudioStreamPlayer
@@ -162,7 +167,83 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="GDScript" id=13]
+script/source = "extends VBoxContainer
+
+onready var entry = $DropEntry
+
+func _ready():
+	entry.init(self)
+
+func load_last():
+	var value = Settings.get_setting(\"configuration\", \"ItemDropChance\") 
+	_set_value(value)
+
+func load_default():
+	var value = Settings.get_setting(\"defaultConfiguration\", \"ItemDropChance\")
+	_set_value(value)
+
+func value_changed(value):
+	Global.crate_item_drop_chance = value
+	Settings.set_setting(\"configuration\", \"ItemDropChance\", value)
+
+func _set_value(value):
+	# set drop prob
+	Global.crate_item_drop_chance = value
+	# tell the entry the value
+	entry.set_value(value)
+"
+
+[sub_resource type="GDScript" id=14]
+script/source = "extends HBoxContainer
+
+onready var lab = $Label
+onready var sldr = $HSlider
+
+var change_rate = true
+
+var menu
+
+func init(m):
+	menu = m
+	
+	set_value(Global.crate_item_drop_chance)
+
+func set_value(v):
+	# set it to false to not count the next value change signal as a user signal
+	change_rate = false
+	sldr.value = v
+
+func _on_HSlider_value_changed(v):
+	lab.text = str(v) + \"%\"
+	if change_rate:
+		menu.value_changed(v)
+	else:
+		change_rate = true
+"
+
+[sub_resource type="GDScript" id=19]
+script/source = "extends ConfigBaseEntry
+
+func change_variable(value = Global.player_maxhealth):
+	Global.player_maxhealth = value
+"
+
+[sub_resource type="GDScript" id=20]
+script/source = "extends ConfigBaseEntry
+
+func change_variable(value = Global.starting_baguettes):
+	Global.starting_baguettes = value
+"
+
+[sub_resource type="GDScript" id=21]
+script/source = "extends ConfigBaseEntry
+
+func change_variable(value = Global.starting_bombs):
+	Global.starting_bombs = value
+"
+
+[sub_resource type="Animation" id=15]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Fade/Black:modulate")
@@ -225,7 +306,7 @@ tracks/4/keys = {
 "values": [ -10.0, -20.0 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=16]
 length = 2.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -260,7 +341,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=17]
 length = 3.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -295,7 +376,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=18]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -716,6 +797,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="BtnConfiguration" type="TextureButton" parent="Foreground/Menu/Main"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -110.004
+margin_top = 5.0
+margin_right = -10.0038
+margin_bottom = 105.0
+rect_scale = Vector2( 0.5, 0.5 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 36 )
+texture_pressed = ExtResource( 36 )
+texture_hover = ExtResource( 36 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect4" type="TextureRect" parent="Foreground/Menu/Main/BtnConfiguration"]
+self_modulate = Color( 0.745098, 0.243137, 0.247059, 1 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 5.0
+margin_bottom = 5.0
+texture = ExtResource( 36 )
+stretch_mode = 6
+script = ExtResource( 37 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="BtnInfo" type="TextureButton" parent="Foreground/Menu/Main"]
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -919,7 +1033,198 @@ size_flags_vertical = 3
 [node name="MusicSlider" parent="Foreground/Menu/Settings/SettingsMenu/VBoxContainer/Audio/Music" index="1"]
 focus_next = NodePath("../../../../../BackButton/CenterContainer/BtnBack")
 
+[node name="ConfigMenu" type="PanelContainer" parent="Foreground/Menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -468.0
+margin_top = -276.0
+margin_right = 468.0
+margin_bottom = 276.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Foreground/Menu/ConfigMenu"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 916.0
+margin_bottom = 532.0
+
+[node name="ConfigMenu" type="VBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer"]
+margin_right = 884.0
+margin_bottom = 526.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 50
+script = ExtResource( 48 )
+
+[node name="Buttons" type="HBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu"]
+margin_right = 884.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="LastBtn" type="Button" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/Buttons"]
+margin_left = 680.0
+margin_right = 760.0
+margin_bottom = 42.0
+text = "last "
+script = ExtResource( 46 )
+lang_tile = "last"
+
+[node name="DefaultBtn" type="Button" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/Buttons"]
+margin_left = 768.0
+margin_right = 884.0
+margin_bottom = 42.0
+text = "default"
+script = ExtResource( 46 )
+lang_tile = "default"
+
+[node name="ItemDropOverall" type="VBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu"]
+margin_top = 92.0
+margin_right = 884.0
+margin_bottom = 180.0
+script = SubResource( 13 )
+
+[node name="Header" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall"]
+margin_right = 884.0
+margin_bottom = 48.0
+custom_fonts/font = ExtResource( 27 )
+text = "Item Drop Probability (Per Box):"
+script = ExtResource( 41 )
+lang_tile = "itemdroprate"
+
+[node name="DropEntry" type="HBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall"]
+margin_top = 56.0
+margin_right = 884.0
+margin_bottom = 88.0
+script = SubResource( 14 )
+
+[node name="Text" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall/DropEntry"]
+margin_right = 289.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+text = "Percentage"
+script = ExtResource( 41 )
+lang_tile = "percentage"
+
+[node name="Label" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall/DropEntry"]
+margin_left = 297.0
+margin_right = 586.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+text = "50%"
+align = 1
+
+[node name="HSlider" type="HSlider" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall/DropEntry"]
+margin_left = 594.0
+margin_right = 884.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ItemDropProbabilities" type="VBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu"]
+margin_top = 230.0
+margin_right = 884.0
+margin_bottom = 278.0
+script = ExtResource( 47 )
+
+[node name="Header" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropProbabilities"]
+margin_right = 884.0
+margin_bottom = 48.0
+custom_fonts/font = ExtResource( 27 )
+text = "Item Drop Probability (Relative):"
+script = ExtResource( 41 )
+lang_tile = "itemdropraterel"
+
+[node name="PlayerConfiguration" type="VBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu"]
+margin_top = 328.0
+margin_right = 884.0
+margin_bottom = 526.0
+script = ExtResource( 50 )
+
+[node name="Header" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration"]
+margin_right = 884.0
+margin_bottom = 48.0
+custom_fonts/font = ExtResource( 27 )
+text = "Player Configuration:"
+script = ExtResource( 41 )
+lang_tile = "playerconfig"
+
+[node name="Health" type="HBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration"]
+margin_top = 56.0
+margin_right = 884.0
+margin_bottom = 98.0
+script = SubResource( 19 )
+
+[node name="Text" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration/Health"]
+margin_top = 5.0
+margin_right = 751.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+text = "Max Health"
+script = ExtResource( 41 )
+lang_tile = "maxhealth"
+
+[node name="Input" type="SpinBox" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration/Health"]
+margin_left = 759.0
+margin_right = 884.0
+margin_bottom = 42.0
+min_value = 1.0
+max_value = 20.0
+value = 1.0
+
+[node name="Baguettes" type="HBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration"]
+margin_top = 106.0
+margin_right = 884.0
+margin_bottom = 148.0
+script = SubResource( 20 )
+setting = "Baguettes"
+
+[node name="Text" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration/Baguettes"]
+margin_top = 5.0
+margin_right = 751.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+text = "Baguettes to Start"
+script = ExtResource( 41 )
+lang_tile = "startbaguettes"
+
+[node name="Input" type="SpinBox" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration/Baguettes"]
+margin_left = 759.0
+margin_right = 884.0
+margin_bottom = 42.0
+max_value = 20.0
+value = 1.0
+
+[node name="Bombs" type="HBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration"]
+margin_top = 156.0
+margin_right = 884.0
+margin_bottom = 198.0
+script = SubResource( 21 )
+setting = "Bombs"
+
+[node name="Text" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration/Bombs"]
+margin_top = 5.0
+margin_right = 751.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+text = "Bombs to Start"
+script = ExtResource( 41 )
+lang_tile = "startbombs"
+
+[node name="Input" type="SpinBox" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration/Bombs"]
+margin_left = 759.0
+margin_right = 884.0
+margin_bottom = 42.0
+min_value = 1.0
+max_value = 8.0
+value = 1.0
+
 [node name="HelpMenu" type="PanelContainer" parent="Foreground/Menu"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -943,7 +1248,7 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/HelpMenu/ScrollContainer"]
-margin_right = 884.0
+margin_right = 896.0
 margin_bottom = 1141.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1190,7 +1495,7 @@ script = ExtResource( 41 )
 lang_tile = "bombmoving"
 
 [node name="Fade" type="AnimationPlayer" parent="Foreground/Menu"]
-anims/FadeOut = SubResource( 13 )
+anims/FadeOut = SubResource( 15 )
 
 [node name="Black" type="ColorRect" parent="Foreground/Menu/Fade"]
 visible = false
@@ -1238,17 +1543,21 @@ texture = ExtResource( 38 )
 position = Vector2( 3.72058, 8.05499 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
-anims/fly_away = SubResource( 14 )
-anims/fly_in = SubResource( 15 )
-anims/flying = SubResource( 16 )
+anims/fly_away = SubResource( 16 )
+anims/fly_in = SubResource( 17 )
+anims/flying = SubResource( 18 )
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/BtnHelp" to="Foreground/Menu" method="_on_BtnHelp_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Main/BtnConfiguration" to="Foreground/Menu" method="_on_BtnConfiguration_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/BtnInfo" to="Foreground/Menu" method="_on_BtnInfo_pressed"]
 [connection signal="animation_finished" from="Foreground/Menu/Main/BtnInfo/AnimationPlayer" to="Foreground/Menu/Main/BtnInfo" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
+[connection signal="pressed" from="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/Buttons/LastBtn" to="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu" method="_on_LastBtn_pressed"]
+[connection signal="pressed" from="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/Buttons/DefaultBtn" to="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu" method="_on_DefaultBtn_pressed"]
+[connection signal="value_changed" from="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall/DropEntry/HSlider" to="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall/DropEntry" method="_on_HSlider_value_changed"]
 [connection signal="animation_finished" from="Foreground/Menu/Fade" to="Foreground/Menu" method="_on_Fade_animation_finished"]
 [connection signal="animation_finished" from="Foreground/Elements/Rocket/AnimationPlayer" to="Foreground/Elements/Rocket" method="_on_AnimationPlayer_animation_finished"]
 

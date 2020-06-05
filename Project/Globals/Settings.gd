@@ -3,8 +3,8 @@ extends Node
 
 signal settings_loaded
 
-#const SAVE_PATH = "res://config.cfg" # in debug
-const SAVE_PATH = "user://config.cfg" # on build
+const SAVE_PATH = "res://config.cfg" # in debug
+#const SAVE_PATH = "user://config.cfg" # on build
 
 var config_file = ConfigFile.new()
 
@@ -45,6 +45,32 @@ var settings = {
 		"master_volume": 50.0,
 		"sound_volume": 50.0,
 		"music_volume": 50.0
+	},
+	"defaultConfiguration": {
+		"ItemDropChance": 30,
+		"Item0": 1,
+		"Item1": 3,
+		"Item2": 3,
+		"Item3": 0,
+		"Item4": 2,
+		"Item5": 1,
+		"Item6": 2,
+		"MaxHealth": 3,
+		"Baguettes": 3,
+		"Bombs": 1
+	},
+	"configuration": {
+		"ItemDropChance": 30,
+		"Item0": 1,
+		"Item1": 3,
+		"Item2": 3,
+		"Item3": 0,
+		"Item4": 2,
+		"Item5": 1,
+		"Item6": 2,
+		"MaxHealth": 3,
+		"Baguettes": 3,
+		"Bombs": 1
 	}
 }
  
@@ -103,7 +129,14 @@ func load_settings():
 	for section in settings.keys():
 		for key in settings[section]:
 			var value = config_file.get_value(section, key, "")
+			
+			# if there is no value set, save a new config file
+			if str(value) == "":
+				save_settings()
+				return
+			
 			settings[section][key] = value
+			
 			#if str(value) != "":
 			#	settings[section][key] = value
 			#else:

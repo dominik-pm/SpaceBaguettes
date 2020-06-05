@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/MainMenu/ConfigurationMenu/ItemEntry.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Game/Items/Baguettes.png" type="Texture" id=2]
+
+[node name="ItemEntry" type="HBoxContainer"]
+margin_right = 472.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 64 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="TextureRect" parent="."]
+margin_right = 234.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="DropRate" type="HSlider" parent="."]
+margin_left = 238.0
+margin_right = 472.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 6.0
+value = 2.0
+[connection signal="value_changed" from="DropRate" to="." method="_on_DropRate_value_changed"]

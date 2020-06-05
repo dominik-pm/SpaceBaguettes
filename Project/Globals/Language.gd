@@ -40,7 +40,17 @@ var lang_english = {
 	"menu": "Menu",
 	"quit": "Quit",
 	# Game
-	"winnermessage": "won!"
+	"winnermessage": "won!",
+	# Configuration
+	"last": 			"last",
+	"default": 			"default",
+	"itemdroprate": 	"Item Drop Probability (Per Box):",
+	"percentage": 		"Percentage",
+	"itemdropraterel": 	"Item Drop Probability (Relative):",
+	"playerconfig": 	"Player Configuration:",
+	"maxhealth": 		"Max Health",
+	"startbaguettes": 	"Baguettes to Start",
+	"startbombs":		"Bombs to Start"
 }
 var lang_german = {
 	# Settings Menu
@@ -74,7 +84,17 @@ var lang_german = {
 	"menu": "Menü",
 	"quit": "Verlassen",
 	# Game
-	"winnermessage": "hat gewonnen!"
+	"winnermessage": "hat gewonnen!",
+	# Configuration
+	"last": 			"last",
+	"default": 			"default",
+	"itemdroprate": 	"Item Drop Probability (Per Box):",
+	"percentage": 		"Percentage",
+	"itemdropraterel": 	"Item Drop Probability (Relative):",
+	"playerconfig": 	"Player Configuration:",
+	"maxhealth": 		"Max Health",
+	"startbaguettes": 	"Baguettes to Start",
+	"startbombs":		"Bombs to Start"
 }
 
 var lang_french = {
@@ -109,7 +129,17 @@ var lang_french = {
 	"menu": "menu",
 	"quit": "quittez",
 	# Game
-	"winnermessage": "a gagné!"
+	"winnermessage": "a gagné!",
+	# Configuration
+	"last": 			"last",
+	"default": 			"default",
+	"itemdroprate": 	"Item Drop Probability (Per Box):",
+	"percentage": 		"Percentage",
+	"itemdropraterel": 	"Item Drop Probability (Relative):",
+	"playerconfig": 	"Player Configuration:",
+	"maxhealth": 		"Max Health",
+	"startbaguettes": 	"Baguettes to Start",
+	"startbombs":		"Bombs to Start"
 }
 
 var current

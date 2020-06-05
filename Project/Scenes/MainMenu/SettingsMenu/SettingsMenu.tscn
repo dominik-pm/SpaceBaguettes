@@ -187,7 +187,7 @@ lang_tile = "master"
 [node name="MasterSlider" type="HSlider" parent="VBoxContainer/Audio/Master"]
 margin_left = 285.0
 margin_right = 560.0
-margin_bottom = 15.0
+margin_bottom = 16.0
 focus_next = NodePath("../../Sound/SoundSlider")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
@@ -213,7 +213,7 @@ lang_tile = "sound"
 [node name="SoundSlider" type="HSlider" parent="VBoxContainer/Audio/Sound"]
 margin_left = 285.0
 margin_right = 560.0
-margin_bottom = 15.0
+margin_bottom = 16.0
 focus_next = NodePath("../../Music/MusicSlider")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
@@ -241,7 +241,7 @@ lang_tile = "music"
 [node name="MusicSlider" type="HSlider" parent="VBoxContainer/Audio/Music"]
 margin_left = 285.0
 margin_right = 560.0
-margin_bottom = 15.0
+margin_bottom = 16.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 value = 50.0
