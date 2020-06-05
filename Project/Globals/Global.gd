@@ -16,6 +16,7 @@ var player_names = ["", "", "", ""]
 # -- GAME SETTINGS --
 # game
 var crate_item_drop_chance = 30.0
+var sudden_death_spawn_rate = 5.0
 
 # player
 #var player_count = 2 # changed in the menu

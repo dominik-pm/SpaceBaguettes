@@ -17,9 +17,14 @@ onready var container = $Container
 onready var player_container = $Container
 onready var settings_menu = $Foreground/SettingsMenu
 
+var sudden_death_timer = null
+
 # get those by code
 var map_size_x = 19
-var map_size_y = 15
+var map_size_y = 13
+
+var sudden_death_start_x = 7
+var sudden_death_start_y = 5
 
 var cellsize
 
@@ -160,6 +165,15 @@ func bullet_hit(pos, dir):
 func _destroy_crate(tile):
 	var pos = crates.map_to_world(tile) + (cellsize/2)
 	
+	# check how many crates are left 
+	var crates_count = crates.get_used_cells_by_id(crates.get_cellv(tile)).size()
+	if crates_count == 1: # 114: 2 are gone; 1, not 0 because the crate is destroyed afterwards
+		# when there are no crates left:
+		# start the sudden death
+		start_sudden_death()
+		# destroy the metall crates in the middle and spawn items there
+		_destroy_center_metall(sudden_death_start_x, sudden_death_start_y)
+	
 	# remove the tile in the tilemap
 	crates.set_cellv(tile, -1)
 	
@@ -172,6 +186,46 @@ func _destroy_crate(tile):
 	randomize()
 	if rand_range(0, 100) < Global.crate_item_drop_chance:
 		_spawn_item(pos)
+
+func start_sudden_death():
+	if sudden_death_timer == null:
+		sudden_death_timer = Timer.new()
+		add_child(sudden_death_timer)
+		sudden_death_timer.connect("timeout", self, "_on_sudden_death_timeout")
+		sudden_death_timer.wait_time = Global.sudden_death_spawn_rate
+		sudden_death_timer.start()
+
+func _on_sudden_death_timeout():
+	var pos = Vector2()
+	pos.x = int(rand_range(sudden_death_start_x, map_size_x-sudden_death_start_x))
+	pos.y = int(rand_range(sudden_death_start_y, map_size_y-sudden_death_start_y))
+	var cell_index = crates.get_cellv(pos)
+	_spawn_item(crates.map_to_world(pos)+(cellsize/2))
+	
+	sudden_death_timer.start()
+
+func _destroy_center_metall(startx, starty):
+	var tileset = crates.get_tileset()
+	var cnt = 0
+	var w = map_size_x
+	var h = map_size_y
+	
+	for x in w:
+		for y in h:
+			if x > startx and y > starty:
+				if x < w-startx-1 and y < h-starty-1:
+					var cell_index = crates.get_cell(x, y)
+					if cell_index != -1:
+						var tiletype = tileset.tile_get_name(cell_index)
+						
+						# check if that tile can be destroyed (a wooden crate)
+						if tiletype == "metall_crate":
+							crates.set_cell(x, y, -1)
+							# always spawn an item
+							_spawn_item(crates.map_to_world(Vector2(x, y)) + (cellsize/2))
+
+
+
 func _spawn_item(pos):
 	var i = Preloader.item.instance()
 	container.add_child(i)

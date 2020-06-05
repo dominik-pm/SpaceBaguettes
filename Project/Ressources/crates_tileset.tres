@@ -45,7 +45,7 @@ points = PoolVector2Array( 64, 80, 0, 80, 0, 16, 64, 16 )
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, -16 )
 } ]
 0/z_index = 0
-1/name = "crate_metall.png 1"
+1/name = "metall_crate"
 1/texture = ExtResource( 2 )
 1/tex_offset = Vector2( 0, -16 )
 1/modulate = Color( 1, 1, 1, 1 )
