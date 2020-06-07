@@ -1,17 +1,41 @@
 extends BotState
 
 # returns true/false if this state wants to be active
-func has_target():
-	# returns true if we are not on a save location
-	if not is_loc_save(bot.coord):
-		# bots position is unsave
-		return true
-	elif bot.target != null and not is_loc_save(bot.target):
-		# bots target is unsave
-		return true
+func get_target():
+	# returns null if everything is fine
+	# otherwise, returns a new safe location
+	if bot.target != null:
+		if is_loc_save(bot.target):
+			# target is safe, go towards it
+			return null
+	if is_loc_save(bot.coord) and bot.target != null:
+		# target is not safe and position is safe -> stay
+		return bot.coord
+	if is_loc_save(bot.coord) and bot.target == null:
+		# location is safe and theres no target
+		return null
 	else:
-		# bot is save
-		return false
+		# get a safe location
+		var bomb = is_bomb_explosion_in_range(bot.coord)
+		var bagu = is_baguette_danger(bot.coord)
+		var safe_loc = null
+		if bomb != null:
+			safe_loc = get_save_loc(bot.coord, bomb)
+		elif bagu != null:
+			safe_loc = get_save_loc(bot.coord, bagu)
+		print("getting safe loc: " + str(safe_loc))
+		return safe_loc
+	
+	## returns true if we are not on a save location
+	#if not is_loc_save(bot.coord):
+	#	# bots position is unsave
+	#	return true
+	#elif bot.target != null and not is_loc_save(bot.target):
+	#	# bots target is unsave
+	#	return true
+	#else:
+	#	# bot is save
+	#	return false
 
 # to figure out where to go
 func update(target):
@@ -50,8 +74,12 @@ func update(target):
 		return target # everything is save, do as you were
 
 # called when the target is reached
-func exit():
-	print("Bot: exiting from defending")
+func target_reached():
+	pass
+
+# called when this state is aborted (defending is more important)
+func abort():
+	pass
 
 func _to_string():
 	return "Defending"

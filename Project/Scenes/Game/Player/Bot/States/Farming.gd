@@ -2,43 +2,57 @@ extends BotState
 
 var crate_radius = 3
 
-var position_to_place = null
+#var position_to_place = null
 
 # returns true/false if this state wants to be active
-func has_target():
+func get_target():
 	#return false
-	var b = crates_nearby(bot.coord).size() > 0
-	return b
+	var nearby_crates = crates_nearby(bot.coord) #.size() > 0 -> 
+	if nearby_crates.size() > 0:
+		var new_target = get_best_crate_pos(nearby_crates)
+		if new_target != null:
+			# found a position to place
+			#position_to_place = new_target
+			if bot.coord != new_target:
+				return new_target
+	
+	return null
+	#return b
 
 # to figure out where to go
 func update(target):
-	if target == null:
-		print("updating")
-		if position_to_place == null:
-			print("updating2")
-			var nearby_crates = crates_nearby(bot.coord)
-			if nearby_crates.size() > 0:
-				print("updating3")
-				var new_target = get_best_crate_pos(nearby_crates)
-				if new_target != null:
-					# found a position to place
-					print("updating4")
-					position_to_place = new_target
-					return new_target
-		else:
-			pass
-			# return position_to_place
+	#if target == null:
+	#	print("updating")
+	#	#if position_to_place == null:
+	#		#print("updating2")
+	#	var nearby_crates = crates_nearby(bot.coord)
+	#	if nearby_crates.size() > 0:
+	#		print("updating3")
+	#		var new_target = get_best_crate_pos(nearby_crates)
+	#		if new_target != null:
+	#			# found a position to place
+	#			print("updating4")
+	#			#position_to_place = new_target
+	#			return new_target
+	#	#else:
+	#	#	pass
+	#		# return position_to_place
 	
 	return target
 
 # called when the target is reached
-func exit():
+func target_reached():
 	# lay bomb
-	if position_to_place != null:
-		if bot.coord == position_to_place:
-			print("Bot Farming: placing bomb")
-			bot.try_place_bomb()
-		position_to_place = null
+	#if position_to_place != null:
+	#if bot.coord == position_to_place:
+	print("Bot Farming: placing bomb")
+	bot.try_place_bomb()
+	#position_to_place = null
+
+# called when this state is aborted (defending is more important)
+func abort():
+	pass
+
 
 func _to_string():
 	return "Farming"
@@ -59,14 +73,14 @@ func get_best_crate_pos(crates):
 	# 1. criteria: get the nearest ones (all with the same distance)
 	var best_crates = get_nearest_crates(crates)
 	
-	print(best_crates.size())
+	#print(best_crates.size())
 	
 	# 2. criteria: get the ones with the most crates to destroy
 	var new_bests = []
 	if best_crates.size() > 0:
 		new_bests = get_with_most_crates(best_crates)
 	
-	print(new_bests.size())
+	#print(new_bests.size())
 	
 	if new_bests.size() == 0:
 		print("Bot farming: schade, fehler")

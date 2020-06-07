@@ -4,7 +4,7 @@ var movement_range = Vector2(2, 2)
 
 # returns true/false if this state wants to be active
 func has_target():
-	return false#true
+	return null#false#true
 
 # to figure out where to go
 func update(target):
@@ -38,7 +38,11 @@ func update(target):
 		return pos+dir
 
 # called when the target is reached
-func exit():
+func target_reached():
+	pass
+
+# called when this state is aborted (defending is more important)
+func abort():
 	pass
 
 func _to_string():

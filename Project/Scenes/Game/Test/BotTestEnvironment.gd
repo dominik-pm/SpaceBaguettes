@@ -316,7 +316,7 @@ func _get_random_item():
 	return items[rand_idx]
 
 # bomb called
-func explode(p, r, s):
+func explode(p, r, s, pid):
 	# get the coordinates of the tile the explosion is on
 	var coord = crates.world_to_map(p)
 	
@@ -330,7 +330,7 @@ func explode(p, r, s):
 	# get the position of the center of the tile
 	var pos = crates.map_to_world(coord) + (cellsize/2)
 	
-	_create_explosion(pos, directions)
+	_create_explosion(pos, directions, pid)
 # destroy the first wooden crate found in a line 
 # from the coord_start into the dir with a depth of r
 func _destroy_line(coord_start, dir, r, s):
@@ -360,10 +360,10 @@ func _destroy_line(coord_start, dir, r, s):
 	# it didnt hit anything
 	return r
 # to instance the explosion effect
-func _create_explosion(p, dirs):
+func _create_explosion(p, dirs, pid):
 	var e = Preloader.explosion.instance()
 	container.add_child(e)
-	e.init(p, dirs)
+	e.init(p, dirs, pid)
 
 
 # Menu Stuff
