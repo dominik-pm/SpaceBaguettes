@@ -62,7 +62,8 @@ func init_player_names():
 # returns "" if the name is not valid
 func check_name(s : String):
 	# an empty string is not valid
-	if s == "":
+	# a '@' or a '-' is also not valid
+	if s == "" or s == "@" or s == "-":
 		return ""
 	# if the string is longer than 16 -> adjust it to 16 chars
 	elif s.length() > 16:

@@ -16,7 +16,9 @@ func init_player_gui():
 	player_infos.push_back(get_node(player_container4))
 	
 	for i in range(4):
-		if Global.player_names[i] != "@":
+		if Global.player_names[i] != "@" and Global.player_names[i] != "-":
+			player_infos[i].init(i+1)
+		elif Global.player_names[i] == "@":
 			player_infos[i].init(i+1)
 		else:
 			player_infos[i].hide()
@@ -33,7 +35,8 @@ func update_current_bombs(pid : int, cur_bombs):
 
 func update_info(pid : int, item, value):
 	if player_infos == []:
-		init_player_gui()
+		return
+		#init_player_gui()
 	
 	var p = player_infos[pid-1]
 	match item:

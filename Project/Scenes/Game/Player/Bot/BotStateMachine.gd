@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-class_name Player
+class_name Bot
 
 onready var anim_player = $AnimationPlayer
 onready var anim = $PlayerSprite
@@ -10,6 +10,7 @@ onready var shooting_delay_timer = $ShootingDelay
 onready var invincible_timer = $HitInvincibleDuration
 onready var muzzle = $Muzzle
 onready var particles_damage = $Particles2D
+
 
 # item relevant variables
 var bombs_active = 0
@@ -41,13 +42,51 @@ var game
 var can_remove = false
 var invincible = false
 
+# -- STATE MACHINE -->
+var curr_state = null
+var last_state = null
+enum state {
+	DEFENDING,
+	ATTACKING,
+	LOOTING,
+	FARMING,
+	MOVING,
+	IDLE
+}
+onready var all_states = {
+	state.DEFENDING : $States/Defending,
+	state.ATTACKING : $States/Attacking,
+	state.LOOTING 	: $States/Looting,
+	state.FARMING 	: $States/Farming,
+	state.MOVING 	: $States/Moving,
+	state.IDLE 		: $States/Idle
+}
+# <-- STATE MACHINE --
+
+# bot vars -->
+var target_timeout = 5
+var target_timer = null
+var start_coord
+var coord = Vector2(0,0)
+var all_bombs = []
+var all_baguettes = []
+var target = null
+var prev_target = null
+
+
 func _ready():
 	facing = Vector2(1,0)
 	shooting_delay_timer.wait_time = Global.player_shoot_delay
 	invincible_timer.wait_time = Global.player_invincible_time
 	anim_player.play("default")
+	
+	target_timer = $States/TargetTimeout
+	target_timer.one_shot = true
+	target_timer.autostart = false
+	target_timer.wait_time = target_timeout
 
 func init(pos, p, f, g):
+	
 	game = g
 	global_transform.origin = pos
 	pid = str(p)
@@ -55,7 +94,14 @@ func init(pos, p, f, g):
 	facing = f
 	_set_anim(vel)
 	
-	$Nametag/Label.text = str(Global.player_names[int(pid)-1])
+	$Nametag/Label.text = "Bot "+ str(pid) #Global.player_names[int(pid)-1]
+	
+	# bot knowledge
+	all_bombs = game.bombs
+	start_coord = game.get_coord(global_transform.origin)
+	all_baguettes = game.baguettes
+	
+	init_states()
 
 func start():
 	can_shoot = true
@@ -72,9 +118,101 @@ func init_gui():
 	game.update_info(int(pid), Items.BOMBMOVING, bomb_moving_strength)
 	game.update_current_bombs(int(pid), max_bombs-bombs_active)
 
+func init_states():
+	for state_idx in state:
+		var idx = state[state_idx]
+		all_states[idx].init(self, game)
+
+func try_place_bomb():
+	if can_place_bomb:
+		if not on_bomb:
+			# placing bomb
+			print("Bot: placing bomb")
+			
+			on_bomb = true
+			bombs_active += 1
+			if bombs_active >= max_bombs:
+				can_place_bomb = false
+			game.update_current_bombs(int(pid), max_bombs-bombs_active)
+			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
+
+
+func try_shoot():
+	if can_shoot and baguette_count > 0:
+		can_shoot = false
+		baguette_count -= 1
+		game.update_info(int(pid), Items.BAGUETTES, baguette_count)
+		shooting_delay_timer.start()
+		var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
+		shoot(pos, muzzle.global_transform.origin)
+
+func change_state(next_state):
+	# only do change if it is a new state
+	if curr_state != next_state:
+		# if there was a curr_state, exit it
+		if curr_state != null:
+			curr_state.exit()
+		
+		last_state = curr_state
+		curr_state = next_state
+
+		print("Bot: changed state from: " + str(last_state) + " to:" + str(curr_state) + "!")
+	elif next_state != null:
+		# change from state to state (shouldnt happen)
+		pass
+		#print("Bot: tried to change to the same state again!")
+	else:
+		# change from null to null (can happen?)
+		pass
 func _process(delta):
 	if game_started:
-		var axis = get_input_axis()
+		
+		coord = game.get_coord(muzzle.global_transform.origin)
+		
+		# -- GET STATE --
+		
+		# only change to any other state if the current state is null or idle
+		if curr_state in [state.IDLE, null]:
+			if all_states[state.ATTACKING].has_target():
+				change_state(all_states[state.ATTACKING])
+			elif all_states[state.LOOTING].has_target():
+				change_state(all_states[state.LOOTING])
+			elif all_states[state.FARMING].has_target():
+				change_state(all_states[state.FARMING])
+			elif all_states[state.MOVING].has_target():
+				change_state(all_states[state.MOVING])
+			elif all_states[state.IDLE].has_target():
+				change_state(all_states[state.IDLE])
+		
+		
+		# -- DEFENDING --
+		# change state to defending if there is danger (high priority!)
+		if all_states[state.DEFENDING].has_target():
+			change_state(all_states[state.DEFENDING])
+		
+		
+		# -- UPDATE CURRENT STATE --
+		if curr_state != null:
+			prev_target = target
+			target = curr_state.update(target)
+			if target != prev_target:
+				target_timer.start()
+				print("Bot: new target: " + str(target))
+		
+		
+		# -- CHECK IF TARGET IS SAFE --
+		target = all_states[state.DEFENDING].update(target)
+		if target != prev_target:
+			prev_target = target
+			print("Bot: aborting target to defending")
+			change_state(all_states[state.DEFENDING])
+		
+		
+		# -- PATHFINDING TO TARGET --
+		var axis = Vector2.ZERO
+		axis = get_dir(target)
+		
+		# -- move -->
 		apply_friction(speed)
 		apply_movement(axis*speed)
 		motion = move_and_slide(motion)
@@ -84,42 +222,64 @@ func _process(delta):
 		
 		_set_anim(axis)
 		
-		var target = motion*speed
-		
-		vel = target
+		var target_vel = motion*speed
+		vel = target_vel
 
 # returns which direction the player is going to go
-func get_input_axis():
-	var axis = Vector2.ZERO
+func get_dir(state_target):
+	var dir = Vector2.ZERO
 	
-	if Input.is_action_just_pressed(pid + "move_forward"):
-		last_move = pid+"move_forward"
-	elif Input.is_action_just_pressed(pid + "move_backward"):
-		last_move = pid+"move_backward"
-	elif Input.is_action_just_pressed(pid + "move_right"):
-		last_move = pid+"move_right"
-	elif Input.is_action_just_pressed(pid + "move_left"):
-		last_move = pid+"move_left"
-	
-	if Input.is_action_pressed(pid + "move_forward") and last_move == pid + "move_forward":
-		axis.y = -1
-	elif Input.is_action_pressed(pid + "move_backward") and last_move == pid + "move_backward":
-		axis.y = 1
-	elif Input.is_action_pressed(pid + "move_right") and last_move == pid + "move_right":
-		axis.x = 1
-	elif Input.is_action_pressed(pid + "move_left") and last_move == pid + "move_left":
-		axis.x = -1
-	
-	elif Input.is_action_pressed(pid + "move_forward"):
-		axis.y = -1
-	elif Input.is_action_pressed(pid + "move_backward"):
-		axis.y = 1
-	elif Input.is_action_pressed(pid + "move_right"):
-		axis.x = 1
-	elif Input.is_action_pressed(pid + "move_left"):
-		axis.x = -1
+	if state_target == null:
+		# the current state doesnt have a target
+		change_state(null)
+	else:
+		#print("we got target")
+		
+		# the current state has a target to get to
+		# -> get the dir for the target position
+		
+		var target_dist_x = abs(muzzle.global_transform.origin.x - (target.x*game.cellsize.x+(game.cellsize.x/2)))
+		var target_dist_y = abs(muzzle.global_transform.origin.y - (target.y*game.cellsize.y+(game.cellsize.y/2)))
+		
+		#print("target distance: " + str(target_dist_x)+", " + str(target_dist_y))
+		
+		# -- PATHFINDING --> (currently can only do one turn)
+		# check if lane free ! -------------------
+		var next_block = coord
+		if target_dist_x > game.cellsize.x/8:
+			dir.x = (target.x*game.cellsize.x+(game.cellsize.x/2))-muzzle.global_transform.origin.x
+			next_block = coord+dir.normalized()
+		# when we dont need to anymove to x or there is a block, move y
+		if dir.x == 0 or game.check_block(next_block) != 0:
+			if target_dist_y > game.cellsize.y/8:
+				dir.y = (target.y*game.cellsize.y+(game.cellsize.x/2))-muzzle.global_transform.origin.y
+		# <-- PATHFINDING --
+		
+		
+		if dir == Vector2.ZERO:
+			# target hit!
+			print("Bot: target hit!")
+			prev_target = target
+			target = null
+			if target != prev_target:
+				target_timer.start()
+				print("Bot: new target: " + str(target))
+			#print(dir)
+			change_state(null)
 
-	return axis.normalized()
+	return dir.normalized()
+
+# checks if there is a clear path in a certain direction
+func lane_free(pos, axis, r):
+	for i in range(1, r+1):
+		var block = Vector2(pos.x + i*axis.x, pos.y + i*axis.y)
+		if game.check_block(block) != 0:
+			return false
+	return true
+
+func _on_TargetTimeout_timeout():
+	print("Bot: ran out of time for the target, setting it to null")
+	target = null
 
 # reduces the current speed
 func apply_friction(amount):
@@ -133,27 +293,9 @@ func apply_movement(accel):
 	motion += accel
 	motion = motion.clamped(speed)
 
-func _input(event):
-	if event.is_action_pressed(pid+"set_bomb") and can_place_bomb:
-		if not on_bomb:
-			on_bomb = true
-			bombs_active += 1
-			if bombs_active >= max_bombs:
-				can_place_bomb = false
-			game.update_current_bombs(int(pid), max_bombs-bombs_active)
-			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
-	
-	if event.is_action_pressed(pid+"shoot") and can_shoot and baguette_count > 0:
-		can_shoot = false
-		baguette_count -= 1
-		game.update_info(int(pid), Items.BAGUETTES, baguette_count)
-		shooting_delay_timer.start()
-		var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
-		shoot(pos, muzzle.global_transform.origin)
-
 func shoot(pos, player_pos):
 	var b = Preloader.baguette.instance()
-	b.init(game, self, facing, game.get_coord(pos))
+	b.init(game, self, facing, coord)
 	game.add_node(b)
 	
 	b.add_collision_exception_with(hitbox)
@@ -231,6 +373,8 @@ func get_hit():
 			_die()
 
 func disable_player():
+	game_started = false
+	
 	# death animation
 	anim_player.play("die")
 	# disable movement/collisions

@@ -16,6 +16,7 @@ var push_force = 64
 
 var game
 var player
+var coord = Vector2(0,0)
 
 func _ready():
 	$ExplodingTimer.wait_time = Global.bomb_explosion_time
@@ -23,9 +24,10 @@ func _ready():
 	$Place.play()
 	# start anim for bomb ---
 
-func init(g, p, e_range, e_strenth):
+func init(g, p, c, e_range, e_strenth):
 	game = g
 	player = p
+	coord = c
 	explosion_size = e_range
 	explosion_strength = e_strenth
 	add_collision_exception_with(player)
@@ -34,6 +36,8 @@ func init(g, p, e_range, e_strenth):
 func _physics_process(delta):
 	if can_collide:
 		var collision = move_and_collide(vel*delta)
+		if vel.length() > 0:
+			coord = game.get_coord($Center.global_transform.origin)
 		if collision:
 			var body = collision.collider
 			if body is Player:

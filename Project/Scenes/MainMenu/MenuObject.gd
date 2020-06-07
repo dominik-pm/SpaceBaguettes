@@ -39,7 +39,7 @@ func _process(delta):
 		transform.origin = start_pos_offset + relative_origin.global_transform.origin
 
 func _on_Timer_timeout():
-	print(name + " is respawning")
+	#print(name + " is respawning")
 	moving = false
 	
 	transform.origin = start_pos_offset + relative_origin.global_transform.origin

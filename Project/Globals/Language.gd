@@ -41,6 +41,7 @@ var lang_english = {
 	"quit": "Quit",
 	# Game
 	"winnermessage": "won!",
+	"suddendeath": "Sudden Death!",
 	# Configuration
 	"last": 			"last",
 	"default": 			"default",
@@ -85,6 +86,7 @@ var lang_german = {
 	"quit": "Verlassen",
 	# Game
 	"winnermessage": "hat gewonnen!",
+	"suddendeath": "Sudden Death!",
 	# Configuration
 	"last": 			"last",
 	"default": 			"default",
@@ -130,6 +132,7 @@ var lang_french = {
 	"quit": "quittez",
 	# Game
 	"winnermessage": "a gagné!",
+	"suddendeath": "Sudden Death!",
 	# Configuration
 	"last": 			"last",
 	"default": 			"default",

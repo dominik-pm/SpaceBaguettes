@@ -63,11 +63,12 @@ func _ready():
 	for p in players:
 		p.init_gui()
 	
-	$StartCountdown.start_countdown()
-	$StartCountdown.connect("countdown_finished", self, "_on_start_cntdwn_finished")
+	_on_start_cntdwn_finished()
+	#$StartCountdown.start_countdown()
+	#$StartCountdown.connect("countdown_finished", self, "_on_start_cntdwn_finished")
 
 func _on_start_cntdwn_finished():
-	$StartGame.play()
+	#$StartGame.play()
 	# tell the players that the game started
 	for c in container.get_children():
 		if c is Player or c is Bot:
@@ -85,8 +86,14 @@ func _input(event):
 
 func init_players():
 	var cnt = 0
+	
+	Global.player_names[0] = "Player1"
+	Global.player_names[1] = "@"
+	Global.player_names[2] = "-"
+	Global.player_names[3] = "-"
+
 	for i in 4:
-		# player is not playing, when playername is '@'
+		# '-' is not playing; '@' is a bot
 		if Global.player_names[i] != "@" and Global.player_names[i] != "-":
 			# init player
 			cnt += 1
@@ -101,14 +108,12 @@ func init_players():
 				dir = Vector2(-1, 0)
 			player.init(pos, i+1, dir, self)
 			players.push_back(player)
-		elif Global.player_names[i] == "@" and i != 3:
+		elif Global.player_names[i] == "@":
 			# init bot (for now), maybe with slider or something
-			#Global.player_names[i] = "Bot"+str(i+1)
-			Global.player_names[i+1] = "-"
 			
 			cnt += 1
 			
-			var p = spawns[i].global_transform.origin
+			var p = spawns[2].global_transform.origin # was index i
 			var t = crates.world_to_map(p)
 			var pos = crates.map_to_world(t) + Vector2(32, 32)
 			var bot = Preloader.bot.instance()
@@ -370,7 +375,7 @@ func _on_BtnResume_pressed():
 
 func _on_BtnRestart_pressed():
 	get_tree().paused = false
-	get_tree().change_scene("res://Scenes/Game/Game.tscn")
+	get_tree().change_scene("res://Scenes/Game/Test/BotTestEnvironment.tscn")
 
 func _on_BtnSettings_pressed():
 	$Click.play()

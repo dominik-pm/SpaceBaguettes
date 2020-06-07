@@ -6,6 +6,7 @@ export var speed = 425
 
 var game
 var dir
+var coord : Vector2
 
 func _ready():
 	$AnimationPlayer.play("rattle")
@@ -22,11 +23,12 @@ func _ready():
 				child.process_material = child.process_material.duplicate()
 				child.process_material.angle = -90+rotation_degrees
 
-func init(g, p, d):
+func init(g, p, d, c):
 	game = g
 	add_collision_exception_with(p)
 	add_collision_exception_with(p.hitbox)
 	dir = d
+	coord = c
 	
 	if dir.x == 0:
 		$Sprites/Baguette.hide()
@@ -46,7 +48,7 @@ func _physics_process(delta):
 		elif collider is Bomb:
 			collider.explode()
 			destroy()
-		elif collider is Player:
+		elif collider is Player or collider is Bot:
 			# dont do anything, bc this is the environment collider for the player
 			pass
 		else:
