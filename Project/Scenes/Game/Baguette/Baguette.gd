@@ -5,6 +5,7 @@ class_name Baguette
 export var speed = 425
 
 var game
+var player
 var dir
 var coord : Vector2
 
@@ -25,8 +26,9 @@ func _ready():
 
 func init(g, p, d, c):
 	game = g
-	add_collision_exception_with(p)
-	add_collision_exception_with(p.hitbox)
+	player = p
+	add_collision_exception_with(player)
+	add_collision_exception_with(player.hitbox)
 	dir = d
 	coord = c
 	
@@ -43,6 +45,7 @@ func _physics_process(delta):
 			collider.destroy()
 			destroy()
 		elif collider is PlayerHitbox:
+			game.player_hit_enemy(player.pid) # for stats
 			collider.player.get_hit()
 			destroy()
 		elif collider is Bomb:
@@ -60,7 +63,7 @@ func _physics_process(delta):
 			i.global_transform.origin = collision.position
 			i.init(dir)
 			
-			game.bullet_hit(collision.position, dir)
+			game.bullet_hit(collision.position, dir, player.pid)
 			destroy()
 
 func destroy():

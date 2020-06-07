@@ -9,7 +9,7 @@
 [ext_resource path="res://Assets/Particles/trace_05.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Sounds/Game/Shoot.wav" type="AudioStream" id=8]
 
-[sub_resource type="CanvasItemMaterial" id=19]
+[sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
 
 [sub_resource type="Gradient" id=2]
@@ -145,7 +145,7 @@ script = ExtResource( 3 )
 [node name="Particles1" type="Particles2D" parent="."]
 modulate = Color( 1, 1, 1, 0.231373 )
 light_mask = 2
-material = SubResource( 19 )
+material = SubResource( 1 )
 position = Vector2( -36, 0 )
 amount = 24
 lifetime = 3.0
@@ -155,7 +155,7 @@ texture = ExtResource( 7 )
 [node name="Particles2" type="Particles2D" parent="."]
 modulate = Color( 1, 1, 1, 0.337255 )
 light_mask = 2
-material = SubResource( 19 )
+material = SubResource( 1 )
 position = Vector2( -24, 0 )
 amount = 18
 lifetime = 2.0
@@ -175,7 +175,7 @@ texture = ExtResource( 5 )
 [node name="Particles4" type="Particles2D" parent="."]
 modulate = Color( 1, 1, 1, 0.231373 )
 light_mask = 2
-material = SubResource( 19 )
+material = SubResource( 1 )
 amount = 32
 lifetime = 4.0
 speed_scale = 2.0

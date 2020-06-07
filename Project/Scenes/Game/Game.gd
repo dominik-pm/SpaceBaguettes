@@ -36,6 +36,23 @@ var players = []
 var bombs = []
 var baguettes = []
 
+# stats
+var all_stats = ["crates destroyed", "players hit", "bombs placed", "baguettes shot"]
+var stats = {
+	#"player1": {
+	#	"crates destroyed": 1,
+	#	"players hit": 1,
+	#	"bombs placed": 1,
+	#	"baguettes shot": 1
+	#},
+	#"player2": {
+	#	"crates destroyed": 2,
+	#	"players hit": 3,
+	#	"bombs placed": 4,
+	#	"baguettes shot": 5
+	#}
+}
+
 func _ready():
 	$Music.play()
 	$Click.stream.loop = false
@@ -65,6 +82,15 @@ func _ready():
 	
 	$StartCountdown.start_countdown()
 	$StartCountdown.connect("countdown_finished", self, "_on_start_cntdwn_finished")
+	
+	init_stats()
+
+func init_stats():
+	for p in players:
+		stats[Global.player_names[int(p.pid)-1]] = {}
+		for i in range(all_stats.size()):
+			var stat = all_stats[i]
+			stats[Global.player_names[int(p.pid)-1]][stat] = 0
 
 func _on_start_cntdwn_finished():
 	$StartGame.play()
@@ -101,10 +127,9 @@ func init_players():
 				dir = Vector2(-1, 0)
 			player.init(pos, i+1, dir, self)
 			players.push_back(player)
-		elif Global.player_names[i] == "@" and i != 3:
+		elif Global.player_names[i] == "@":
 			# init bot (for now), maybe with slider or something
-			#Global.player_names[i] = "Bot"+str(i+1)
-			Global.player_names[i+1] = "-"
+			Global.player_names[i] = "Bot"+str(i+1)
 			
 			cnt += 1
 			
@@ -128,6 +153,9 @@ func update_info(player : int, item, value):
 func update_current_bombs(player : int, cur_bombs):
 	if gui != null:
 		gui.update_current_bombs(player, cur_bombs)
+# called by baguette/bomb
+func player_hit_enemy(pid):
+	stats[Global.player_names[int(pid)-1]]["players hit"] += 1
 func player_hit(player : int):
 	gui.player_hit(player)
 	cam.request_camera_shake(0.5)
@@ -143,7 +171,7 @@ func player_died(player : int):
 			
 			# show the game summary
 			var winner_id = _get_winner() # also hides the winner
-			game_summary.show_summary(winner_id)
+			game_summary.show_summary(winner_id, stats)
 			
 			# animation and sound
 			$GameOver.play()
@@ -153,6 +181,9 @@ func get_tile_pos_center(p):
 	pos = crates.map_to_world(pos) + (cellsize/2)
 	return pos
 func place_bomb(player, pos, e_range, e_strenth):
+	# stats
+	stats[Global.player_names[int(player.pid)-1]]["bombs placed"] += 1
+	
 	# convert the pos into a coordinate of the grid
 	var coord = crates.world_to_map(pos)
 	# convert it back to a world position to get the top center of it
@@ -163,6 +194,8 @@ func place_bomb(player, pos, e_range, e_strenth):
 	container.add_child(b)
 	b.init(self, player, coord, e_range, e_strenth)
 	b.global_transform.origin = p
+func shot_baguette(pid): # just for stats
+	stats[Global.player_names[int(pid)-1]]["baguettes shot"] += 1
 func add_node(node):
 	container.add_child(node)
 # <-- player called --
@@ -209,7 +242,7 @@ func _get_winner():
 	return winner
 
 # bullet called
-func bullet_hit(pos, dir):
+func bullet_hit(pos, dir, pid):
 	# get the tile
 	var tile = crates.world_to_map(pos+(dir*(cellsize/2)))
 	
@@ -221,6 +254,8 @@ func bullet_hit(pos, dir):
 		if tilename == "wooden_crate":
 			# remove the crate
 			_destroy_crate(tile)
+			# statistics
+			stats[Global.player_names[int(pid)-1]]["crates destroyed"] += 1
 
 func _destroy_crate(tile):
 	var pos = crates.map_to_world(tile) + (cellsize/2)
@@ -311,24 +346,24 @@ func _get_random_item():
 	return items[rand_idx]
 
 # bomb called
-func explode(p, r, s):
+func explode(p, r, s, pid):
 	# get the coordinates of the tile the explosion is on
 	var coord = crates.world_to_map(p)
 	
 	# destroy the crates and get how far the explosion got in each direction
 	var directions = [0, 0, 0, 0]
-	directions[0] = _destroy_line(coord, Vector2(0,-1), r, s)
-	directions[1] = _destroy_line(coord, Vector2(1,0), r, s)
-	directions[2] = _destroy_line(coord, Vector2(0,1), r, s)
-	directions[3] = _destroy_line(coord, Vector2(-1,0), r, s)
+	directions[0] = _destroy_line(coord, Vector2(0,-1), r, s, pid)
+	directions[1] = _destroy_line(coord, Vector2(1,0), r, s, pid)
+	directions[2] = _destroy_line(coord, Vector2(0,1), r, s, pid)
+	directions[3] = _destroy_line(coord, Vector2(-1,0), r, s, pid)
 	
 	# get the position of the center of the tile
 	var pos = crates.map_to_world(coord) + (cellsize/2)
 	
-	_create_explosion(pos, directions)
+	_create_explosion(pos, directions, pid)
 # destroy the first wooden crate found in a line 
 # from the coord_start into the dir with a depth of r
-func _destroy_line(coord_start, dir, r, s):
+func _destroy_line(coord_start, dir, r, s, pid):
 	var tileset = crates.get_tileset()
 	var cnt = 0
 	
@@ -346,6 +381,9 @@ func _destroy_line(coord_start, dir, r, s):
 				cnt += 1
 				# remote the crate
 				_destroy_crate(block_coordinates)
+				# statistics
+				stats[Global.player_names[int(pid)-1]]["crates destroyed"] += 1
+				
 				# return when there are as many block destroyed as the explosion strength 
 				if cnt >= s:
 					return i # only remove the first crate
@@ -355,10 +393,10 @@ func _destroy_line(coord_start, dir, r, s):
 	# it didnt hit anything
 	return r
 # to instance the explosion effect
-func _create_explosion(p, dirs):
+func _create_explosion(p, dirs, pid):
 	var e = Preloader.explosion.instance()
 	container.add_child(e)
-	e.init(p, dirs)
+	e.init(p, dirs, pid)
 
 
 # Menu Stuff

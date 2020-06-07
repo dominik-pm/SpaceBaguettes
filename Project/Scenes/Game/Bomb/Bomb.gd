@@ -65,7 +65,7 @@ func explode():
 		player.bomb_exploded()
 	
 	# tell the game
-	game.explode($Center.global_transform.origin, explosion_size, explosion_strength)
+	game.explode($Center.global_transform.origin, explosion_size, explosion_strength, player.pid)
 	
 	# Animation
 	randomize()

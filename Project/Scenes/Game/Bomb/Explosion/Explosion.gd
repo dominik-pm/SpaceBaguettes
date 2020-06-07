@@ -2,10 +2,13 @@ extends Node2D
 
 var d
 
-func init(pos, dirs):
+var pid_fired = null
+
+func init(pos, dirs, pid):
 	global_transform.origin = pos
 	# dirs is the length of the explosion in each direction (top, right, bot, left)
 	d = dirs
+	pid_fired = pid
 	
 	create_hit_tiles()
 	

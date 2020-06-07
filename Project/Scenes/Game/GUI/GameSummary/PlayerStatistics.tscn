@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/Game/GUI/GameSummary/PlayerStatistics.gd" type="Script" id=1]
+
+[node name="Player1" type="HBoxContainer"]
+margin_top = 393.0
+margin_right = 619.0
+margin_bottom = 686.0
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName" type="Label" parent="."]
+margin_top = 139.0
+margin_right = 307.0
+margin_bottom = 153.0
+size_flags_horizontal = 3
+text = "Player 1"
+align = 1
+
+[node name="Statistics" type="VBoxContainer" parent="."]
+margin_left = 311.0
+margin_right = 619.0
+margin_bottom = 293.0
+size_flags_horizontal = 3
+alignment = 1

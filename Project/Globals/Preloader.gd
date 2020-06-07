@@ -16,3 +16,7 @@ var effect_impact = preload("res://Scenes/Game/Effects/Impact.tscn")
 
 # menu
 var conf_item_entry = preload("res://Scenes/MainMenu/ConfigurationMenu/ItemEntry.tscn")
+
+# game summary
+var player_summary = preload("res://Scenes/Game/GUI/GameSummary/PlayerStatistics.tscn")
+var player_stat = preload("res://Scenes/Game/GUI/GameSummary/Stat.tscn")

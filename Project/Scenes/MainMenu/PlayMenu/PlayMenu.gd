@@ -49,8 +49,11 @@ func init_player_names():
 		if i > 1:
 			# if the player is not playing, set name to '@' and continue
 			if not players_34[str(i+1)]:
-				Global.player_names[i] = "@"
+				Global.player_names[i] = "-"
 				continue
+		
+		# check if its a bot (idk how, maybe a button)
+		# set Global.player_names[i] = "@"
 		
 		var n = check_name(names[i].text)
 		if n != "":
@@ -63,7 +66,7 @@ func init_player_names():
 func check_name(s : String):
 	# an empty string is not valid
 	# a '@' or a '-' is also not valid
-	if s == "" or s == "@" or s == "-":
+	if s == "":
 		return ""
 	# if the string is longer than 16 -> adjust it to 16 chars
 	elif s.length() > 16:

@@ -147,6 +147,7 @@ func _input(event):
 		can_shoot = false
 		baguette_count -= 1
 		game.update_info(int(pid), Items.BAGUETTES, baguette_count)
+		game.shot_baguette(pid)
 		shooting_delay_timer.start()
 		var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
 		shoot(pos, muzzle.global_transform.origin)
