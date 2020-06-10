@@ -92,31 +92,31 @@ func _process(delta):
 func get_input_axis():
 	var axis = Vector2.ZERO
 	
-	if Input.is_action_just_pressed(pid + "move_forward"):
+	if Input.is_action_just_pressed(pid + "move_forward") or Input.is_action_just_pressed(pid + "move_forward_gp"):
 		last_move = pid+"move_forward"
-	elif Input.is_action_just_pressed(pid + "move_backward"):
+	elif Input.is_action_just_pressed(pid + "move_backward") or Input.is_action_just_pressed(pid + "move_backward_gp"):
 		last_move = pid+"move_backward"
-	elif Input.is_action_just_pressed(pid + "move_right"):
+	elif Input.is_action_just_pressed(pid + "move_right") or Input.is_action_just_pressed(pid + "move_right_gp"):
 		last_move = pid+"move_right"
-	elif Input.is_action_just_pressed(pid + "move_left"):
+	elif Input.is_action_just_pressed(pid + "move_left") or Input.is_action_just_pressed(pid + "move_left_gp"):
 		last_move = pid+"move_left"
 	
-	if Input.is_action_pressed(pid + "move_forward") and last_move == pid + "move_forward":
+	if (Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(pid + "move_forward_gp")) and last_move == pid + "move_forward":
 		axis.y = -1
-	elif Input.is_action_pressed(pid + "move_backward") and last_move == pid + "move_backward":
+	elif (Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp")) and last_move == pid + "move_backward":
 		axis.y = 1
-	elif Input.is_action_pressed(pid + "move_right") and last_move == pid + "move_right":
+	elif (Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(pid + "move_right_gp")) and last_move == pid + "move_right":
 		axis.x = 1
-	elif Input.is_action_pressed(pid + "move_left") and last_move == pid + "move_left":
+	elif (Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(pid + "move_left_gp")) and last_move == pid + "move_left":
 		axis.x = -1
 	
-	elif Input.is_action_pressed(pid + "move_forward"):
+	elif Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(pid + "move_forward_gp"):
 		axis.y = -1
-	elif Input.is_action_pressed(pid + "move_backward"):
+	elif Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp"):
 		axis.y = 1
-	elif Input.is_action_pressed(pid + "move_right"):
+	elif Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(pid + "move_right_gp"):
 		axis.x = 1
-	elif Input.is_action_pressed(pid + "move_left"):
+	elif Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(pid + "move_left_gp"):
 		axis.x = -1
 
 	return axis.normalized()
