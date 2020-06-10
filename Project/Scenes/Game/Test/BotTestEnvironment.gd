@@ -11,7 +11,8 @@ var gui = null
 onready var cam = $Camera
 onready var pos1 = $Position1
 onready var pos2 = $Position2
-onready var crates = $Container/Crates
+onready var navigation = $Container/Path2D
+onready var crates = $Container/Path2D/Crates
 onready var spawns = $PlayerSpawns.get_children()
 onready var container = $Container
 onready var player_container = $Container
@@ -188,6 +189,8 @@ func _process(delta):
 				baguettes.push_back(c)
 func get_coord(pos):
 	return crates.world_to_map(pos)
+func get_pos(coord):
+	return crates.map_to_world(coord)
 func check_block(block):
 	var cell_index = crates.get_cellv(block)
 	

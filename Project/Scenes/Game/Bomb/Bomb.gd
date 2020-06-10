@@ -64,8 +64,9 @@ func explode():
 	if wr.get_ref(): # check if the player is not freed (died)
 		player.bomb_exploded()
 	
-	# tell the game
-	game.explode($Center.global_transform.origin, explosion_size, explosion_strength, player.pid)
+		# tell the game
+		game.explode($Center.global_transform.origin, explosion_size, explosion_strength, player.pid)
+	
 	
 	# Animation
 	randomize()

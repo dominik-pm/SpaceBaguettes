@@ -271,6 +271,11 @@ func get_dir(state_target):
 	if state_target == null:
 		# the current state doesnt have a target
 		change_state(null)
+	elif true:
+		print(state_target)
+		var path = game.navigation.get_simple_path(muzzle.global_transform.origin, game.get_pos(state_target), false)
+		#var path = game.navigation.get_simple_path(coord, state_target, false)
+		print(path)
 	else:
 		#print("we got target")
 		

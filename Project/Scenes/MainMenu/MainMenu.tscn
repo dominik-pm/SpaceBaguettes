@@ -1034,6 +1034,7 @@ size_flags_vertical = 3
 focus_next = NodePath("../../../../../BackButton/CenterContainer/BtnBack")
 
 [node name="ConfigMenu" type="PanelContainer" parent="Foreground/Menu"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1053,7 +1054,7 @@ margin_right = 916.0
 margin_bottom = 532.0
 
 [node name="ConfigMenu" type="VBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer"]
-margin_right = 884.0
+margin_right = 896.0
 margin_bottom = 526.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

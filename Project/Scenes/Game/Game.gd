@@ -216,6 +216,8 @@ func _process(delta):
 				baguettes.push_back(c)
 func get_coord(pos):
 	return crates.world_to_map(pos)
+func get_pos(coord):
+	return crates.map_to_world(coord)
 func check_block(block):
 	var cell_index = crates.get_cellv(block)
 	
