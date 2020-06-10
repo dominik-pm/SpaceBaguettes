@@ -134,7 +134,7 @@ func apply_movement(accel):
 	motion = motion.clamped(speed)
 
 func _input(event):
-	if event.is_action_pressed(pid+"set_bomb") and can_place_bomb:
+	if (event.is_action_pressed(pid+"set_bomb") or Input.is_action_pressed(pid + "set_bomb_gp")) and can_place_bomb:
 		if not on_bomb:
 			on_bomb = true
 			bombs_active += 1
@@ -143,7 +143,7 @@ func _input(event):
 			game.update_current_bombs(int(pid), max_bombs-bombs_active)
 			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
 	
-	if event.is_action_pressed(pid+"shoot") and can_shoot and baguette_count > 0:
+	if (event.is_action_pressed(pid+"shoot") or Input.is_action_pressed(pid + "shoot_gp")) and can_shoot and baguette_count > 0:
 		can_shoot = false
 		baguette_count -= 1
 		game.update_info(int(pid), Items.BAGUETTES, baguette_count)
