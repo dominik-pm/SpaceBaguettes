@@ -787,9 +787,7 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 [node name="Container" type="YSort" parent="."]
 pause_mode = 1
 
-[node name="Path2D" type="Navigation2D" parent="Container"]
-
-[node name="Crates" type="TileMap" parent="Container/Path2D"]
+[node name="Crates" type="TileMap" parent="Container"]
 position = Vector2( -1, 0 )
 tile_set = ExtResource( 9 )
 cell_y_sort = true

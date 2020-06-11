@@ -10,7 +10,8 @@ var player_icon_paths = {
 	"player4": icon_path + "Player4.png"
 }
 
-# '@' means not playing
+# '-' means not playing; '@' means is bot
+var players = ["", "", "", ""]
 var player_names = ["", "", "", ""]
 
 # -- GAME SETTINGS --

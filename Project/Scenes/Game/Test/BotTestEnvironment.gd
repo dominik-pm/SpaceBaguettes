@@ -11,8 +11,7 @@ var gui = null
 onready var cam = $Camera
 onready var pos1 = $Position1
 onready var pos2 = $Position2
-onready var navigation = $Container/Path2D
-onready var crates = $Container/Path2D/Crates
+onready var crates = $Container/Crates
 onready var spawns = $PlayerSpawns.get_children()
 onready var container = $Container
 onready var player_container = $Container
@@ -35,9 +34,12 @@ var players = []
 
 # for the bots
 var bombs = []
+var items = []
 var baguettes = []
 
 func _ready():
+	print(Global.player_names)
+	
 	$Music.play()
 	$Click.stream.loop = false
 	$StartGame.stream.loop = false
@@ -181,6 +183,12 @@ func _process(delta):
 		if c is Bomb:
 			bombs.push_back(c)
 	
+	# get items
+	items.clear()
+	for c in container.get_children():
+		if c is Item:
+			items.push_back(c)
+	
 	# get baguettes
 	baguettes.clear()
 	for c in container.get_children():
@@ -193,7 +201,13 @@ func get_pos(coord):
 	return crates.map_to_world(coord)
 func check_block(block):
 	var cell_index = crates.get_cellv(block)
-	
+
+	# it is out of bounds
+	if block.x < 0 or block.y < 0:
+		if block.x > map_size_x-1 or block.y > map_size_y-1:
+			return -1
+
+	# it is free
 	if cell_index == -1:
 		return 0
 	
@@ -253,7 +267,7 @@ func _destroy_crate(tile):
 	# with a certain probability, drop an item
 	randomize()
 	if rand_range(0, 100) < Global.crate_item_drop_chance:
-		_spawn_item(pos)
+		_spawn_item(tile)
 
 func start_sudden_death():
 	if sudden_death_timer == null:
@@ -275,7 +289,7 @@ func _on_sudden_death_timeout():
 	pos.x = int(rand_range(sudden_death_start_x, map_size_x-sudden_death_start_x))
 	pos.y = int(rand_range(sudden_death_start_y, map_size_y-sudden_death_start_y))
 	var cell_index = crates.get_cellv(pos)
-	_spawn_item(crates.map_to_world(pos)+(cellsize/2))
+	_spawn_item(pos)
 	
 	sudden_death_timer.start()
 
@@ -297,12 +311,15 @@ func _destroy_center_metall(startx, starty):
 						if tiletype == "metall_crate":
 							crates.set_cell(x, y, -1)
 							# always spawn an item
-							_spawn_item(crates.map_to_world(Vector2(x, y)) + (cellsize/2))
+							_spawn_item(Vector2(x, y))
 
 
-func _spawn_item(pos):
+func _spawn_item(coord):
+	var pos = crates.map_to_world(coord) + (cellsize/2)
+	
 	var i = Preloader.item.instance()
 	container.add_child(i)
+	i.coord = coord
 	i.global_transform.origin = pos
 	i.init(_get_random_item())
 func _get_random_item():

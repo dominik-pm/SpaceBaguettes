@@ -7,14 +7,14 @@ var crate_radius = 3
 # returns true/false if this state wants to be active
 func get_target():
 	#return false
-	var nearby_crates = crates_nearby(bot.coord) #.size() > 0 -> 
+	var nearby_crates = crates_nearby(bot.coord)
 	if nearby_crates.size() > 0:
 		var new_target = get_best_crate_pos(nearby_crates)
 		if new_target != null:
 			# found a position to place
 			#position_to_place = new_target
-			if bot.coord != new_target:
-				return new_target
+			#if bot.coord != new_target:
+			return new_target
 	
 	return null
 	#return b
@@ -45,7 +45,7 @@ func target_reached():
 	# lay bomb
 	#if position_to_place != null:
 	#if bot.coord == position_to_place:
-	print("Bot Farming: placing bomb")
+	#print("Bot Farming: placing bomb")
 	bot.try_place_bomb()
 	#position_to_place = null
 
@@ -96,6 +96,7 @@ func get_nearest_crates(crates):
 	var best_crates = []
 	var nearest = null
 	var crate = null
+	
 	for c in crates:
 		# get the pos where the bomb can be placed
 		var pos = c

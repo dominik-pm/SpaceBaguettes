@@ -64,13 +64,14 @@ onready var all_states = {
 # <-- STATE MACHINE --
 
 # bot vars -->
-var target_timeout = 5
+var target_timeout = 3.5
 var target_timer = null
 var start_coord
 var coord = Vector2(0,0)
 var all_bombs = []
+var all_items = []
 var all_baguettes = []
-var target = null
+var target = null setget set_target
 var prev_target = null
 
 
@@ -94,12 +95,13 @@ func init(pos, p, f, g):
 	facing = f
 	_set_anim(vel)
 	
-	$Nametag/Label.text = "Bot "+ str(pid) #Global.player_names[int(pid)-1]
+	$Nametag/Label.text = Global.player_names[int(pid)-1]
 	
 	# bot knowledge
 	all_bombs = game.bombs
-	start_coord = game.get_coord(global_transform.origin)
+	all_items = game.items
 	all_baguettes = game.baguettes
+	start_coord = game.get_coord(global_transform.origin)
 	
 	init_states()
 
@@ -147,6 +149,17 @@ func try_shoot():
 		var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
 		shoot(pos, muzzle.global_transform.origin)
 
+func set_target(new_value):
+	# check if we dont already have this value
+	if target != new_value:
+		prev_target = target
+		target = new_value
+		
+		# we got a valid new target
+		if target != null:
+			print("Bot: set new target: " + str(target))
+			target_timer.stop()
+			target_timer.start()
 func set_curr_state(state):
 	if curr_state != state:
 		print("Bot: changed from " + str(curr_state) + " to " + str(state))
@@ -159,7 +172,7 @@ func change_state(next_state):
 			curr_state.exit()
 		
 		last_state = curr_state
-		curr_state = next_state
+		self.curr_state = next_state
 
 		print("Bot: changed state from: " + str(last_state) + " to:" + str(curr_state) + "!")
 	elif next_state != null:
@@ -179,72 +192,53 @@ func _process(delta):
 		# get new state and new target
 		var new_target = null
 		if curr_state in [state.IDLE, null] and target == null:
-			new_target = all_states[state.ATTACKING].get_target()
-			if new_target != null:
-				curr_state = all_states[state.ATTACKING]
-			else:
-				new_target = all_states[state.FARMING].get_target()
+			for idx in all_states:
+				new_target = all_states[idx].get_target()
 				if new_target != null:
-					curr_state = all_states[state.FARMING]
+					self.curr_state = all_states[idx]
+					break
+			
+			#new_target = all_states[state.ATTACKING].get_target()
+			#if new_target != null:
+			#	curr_state = all_states[state.ATTACKING]
+			#else:
+			#	new_target = all_states[state.FARMING].get_target()
+			#	if new_target != null:
+			#		curr_state = all_states[state.FARMING]
 		
-		# set the new target
-		if new_target != null:
-			target = new_target
+		## set the new target
+		#if new_target != null:
+		#	self.target = new_target
 		
 		# update current state
 		if curr_state != null:
 			if curr_state != all_states[state.DEFENDING]: # gets done later anyways
-				target = curr_state.update(target)
+				new_target = curr_state.update(new_target)
 				
-				if target == null:
+				if new_target == null:
 					print("Bot: current state returned null on update")
 					curr_state.abort()
-					curr_state = null
-		
-		# only change to any other state if the current state is null or idle
-		#if curr_state in [state.IDLE, null]:
-		#	if all_states[state.ATTACKING].has_target():
-		#		change_state(all_states[state.ATTACKING])
-		#	elif all_states[state.LOOTING].has_target():
-		#		change_state(all_states[state.LOOTING])
-		#	elif all_states[state.FARMING].has_target():
-		#		change_state(all_states[state.FARMING])
-		#	elif all_states[state.MOVING].has_target():
-		#		change_state(all_states[state.MOVING])
-		#	elif all_states[state.IDLE].has_target():
-		#		change_state(all_states[state.IDLE])
+					self.curr_state = null
 		
 		
 		# -- DEFENDING --
-		var def_target = all_states[state.DEFENDING].get_target()# update(target)
+		# -> check if the new target is safe
+		var def_target = all_states[state.DEFENDING].update(new_target)
 		
-		if def_target != null and def_target != target:
-			print("Bot: found def target to abort to: " + str(def_target))
+		if def_target != null and def_target != new_target:
+			#print("Bot: found def target to abort to: " + str(def_target))
 			if curr_state != null:
 				curr_state.abort()
-			curr_state = all_states[state.DEFENDING]
-			target = def_target
-		
-		# change state to defending if there is danger (high priority!)
-		#if all_states[state.DEFENDING].has_target():
-		#	change_state(all_states[state.DEFENDING])
-		
-		
-		# -- UPDATE CURRENT STATE --
-		#if curr_state != null:
-		#	prev_target = target
-		#	target = curr_state.update(target)
-		#	if target != prev_target:
-		#		target_timer.start()
-		#		print("Bot: new target: " + str(target))
+			self.curr_state = all_states[state.DEFENDING]
+			self.target = def_target
+			new_target = null
+		#else:
+		#	print(str(new_target) + " is safe")
 		
 		
-		# -- CHECK IF TARGET IS SAFE --
-		#target = all_states[state.DEFENDING].update(target)
-		#if target != prev_target:
-		#	prev_target = target
-		#	print("Bot: aborting target to defending")
-		#	change_state(all_states[state.DEFENDING])
+		# set the new target
+		if new_target != null:
+			self.target = new_target
 		
 		
 		# -- PATHFINDING TO TARGET --
@@ -268,12 +262,20 @@ func _process(delta):
 func get_dir(state_target):
 	var dir = Vector2.ZERO
 	
+	#if state_target != null:
+	#	if game.check_block(state_target) != 0:
+	#		print("Bot: THIS IS NOT GOOD")
+	
 	if state_target == null:
 		# the current state doesnt have a target
-		change_state(null)
-	elif true:
+		if curr_state != null:
+			curr_state.abort()
+		self.curr_state = null
+		self.target = null
+	elif false:
+		print(coord)
 		print(state_target)
-		var path = game.navigation.get_simple_path(muzzle.global_transform.origin, game.get_pos(state_target), false)
+		var path = game.navigation.get_simple_path(muzzle.global_transform.origin, game.get_pos(state_target), true)
 		#var path = game.navigation.get_simple_path(coord, state_target, false)
 		print(path)
 	else:
@@ -290,12 +292,12 @@ func get_dir(state_target):
 		# -- PATHFINDING --> (currently can only do one turn)
 		# check if lane free ! -------------------
 		var next_block = coord
-		if target_dist_x > game.cellsize.x/8:
+		if target_dist_x > game.cellsize.x/16:
 			dir.x = (target.x*game.cellsize.x+(game.cellsize.x/2))-muzzle.global_transform.origin.x
 			next_block = coord+dir.normalized()
 		# when we dont need to anymove to x or there is a block, move y
 		if dir.x == 0 or game.check_block(next_block) != 0:
-			if target_dist_y > game.cellsize.y/8:
+			if target_dist_y > game.cellsize.y/16:
 				dir.y = (target.y*game.cellsize.y+(game.cellsize.x/2))-muzzle.global_transform.origin.y
 		# <-- PATHFINDING --
 		
@@ -306,14 +308,14 @@ func get_dir(state_target):
 			#prev_target = target
 			if curr_state != null:
 				curr_state.target_reached()
-				curr_state = null
-			target = null
+				self.curr_state = null
+			self.target = null
 			#if target != prev_target:
 			#	target_timer.start()
 			#	print("Bot: new target: " + str(target))
 			##print(dir)
 			#change_state(null)
-
+	
 	return dir.normalized()
 
 # checks if there is a clear path in a certain direction
@@ -326,7 +328,8 @@ func lane_free(pos, axis, r):
 
 func _on_TargetTimeout_timeout():
 	print("Bot: ran out of time for the target, setting it to null")
-	target = null
+	self.target = null
+	target_timer.stop()
 
 # reduces the current speed
 func apply_friction(amount):

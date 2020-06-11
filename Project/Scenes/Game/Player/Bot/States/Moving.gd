@@ -3,12 +3,26 @@ extends BotState
 var movement_range = Vector2(2, 2)
 
 # returns true/false if this state wants to be active
-func has_target():
-	return null#false#true
+func get_target():
+	var new_target = get_random_loc(bot.coord)
+	return new_target
 
 # to figure out where to go
 func update(target):
-	var pos = bot.coord
+	return target
+
+# called when the target is reached
+func target_reached():
+	pass
+
+# called when this state is aborted (defending is more important)
+func abort():
+	pass
+
+func _to_string():
+	return "Moving"
+
+func get_random_loc(pos):
 	var dir = Vector2.ZERO
 	
 	# one of the dir coordinate should be 2 (so that the target is in a radius)
@@ -32,18 +46,7 @@ func update(target):
 				dir.y += -1
 	
 	if cnt == 0:
-		# coulndt find block to move to -> return old target
-		return target
+		# coulndt find block to move to
+		return null
 	else:
 		return pos+dir
-
-# called when the target is reached
-func target_reached():
-	pass
-
-# called when this state is aborted (defending is more important)
-func abort():
-	pass
-
-func _to_string():
-	return "Moving"

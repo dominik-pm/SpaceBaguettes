@@ -34,6 +34,7 @@ var players = []
 
 # for the bots
 var bombs = []
+var items = []
 var baguettes = []
 
 # stats
@@ -113,7 +114,7 @@ func init_players():
 	var cnt = 0
 	for i in 4:
 		# player is not playing, when playername is '@'
-		if Global.player_names[i] != "@" and Global.player_names[i] != "-":
+		if Global.players[i] != "@" and Global.players[i] != "-":
 			# init player
 			cnt += 1
 			
@@ -127,10 +128,7 @@ func init_players():
 				dir = Vector2(-1, 0)
 			player.init(pos, i+1, dir, self)
 			players.push_back(player)
-		elif Global.player_names[i] == "@":
-			# init bot (for now), maybe with slider or something
-			Global.player_names[i] = "Bot"+str(i+1)
-			
+		elif Global.players[i] == "@":
 			cnt += 1
 			
 			var p = spawns[i].global_transform.origin
@@ -207,6 +205,12 @@ func _process(delta):
 	for c in container.get_children():
 		if c is Bomb:
 			bombs.push_back(c)
+	
+	# get items
+	items.clear()
+	for c in container.get_children():
+		if c is Item:
+			items.push_back(c)
 	
 	# get baguettes
 	baguettes.clear()
