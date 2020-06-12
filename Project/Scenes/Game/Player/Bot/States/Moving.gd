@@ -4,6 +4,8 @@ var movement_range = Vector2(2, 2)
 
 # returns true/false if this state wants to be active
 func get_target():
+	return null # disabled
+	
 	var new_target = get_random_loc(bot.coord)
 	return new_target
 

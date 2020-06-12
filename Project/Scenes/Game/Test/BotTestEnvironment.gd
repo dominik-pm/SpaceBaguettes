@@ -38,8 +38,6 @@ var items = []
 var baguettes = []
 
 func _ready():
-	print(Global.player_names)
-	
 	$Music.play()
 	$Click.stream.loop = false
 	$StartGame.stream.loop = false
@@ -90,14 +88,12 @@ func _input(event):
 func init_players():
 	var cnt = 0
 	
-	Global.player_names[0] = "Player1"
-	Global.player_names[1] = "@"
-	Global.player_names[2] = "-"
-	Global.player_names[3] = "-"
+	Global.players = ["Player1", "@", "-", "-"]
+	Global.player_names = ["Player 1", "Bot 1", "-", "-"]
 
 	for i in 4:
 		# '-' is not playing; '@' is a bot
-		if Global.player_names[i] != "@" and Global.player_names[i] != "-":
+		if Global.players[i] != "@" and Global.players[i] != "-":
 			# init player
 			cnt += 1
 			
@@ -111,7 +107,7 @@ func init_players():
 				dir = Vector2(-1, 0)
 			player.init(pos, i+1, dir, self)
 			players.push_back(player)
-		elif Global.player_names[i] == "@":
+		elif Global.players[i] == "@":
 			# init bot (for now), maybe with slider or something
 			
 			cnt += 1
@@ -160,6 +156,10 @@ func get_tile_pos_center(p):
 	var pos = crates.world_to_map(p)
 	pos = crates.map_to_world(pos) + (cellsize/2)
 	return pos
+func player_hit_enemy(pid):
+	return null
+func shot_baguette(pid):
+	return null
 func place_bomb(player, pos, e_range, e_strenth):
 	# convert the pos into a coordinate of the grid
 	var coord = crates.world_to_map(pos)
@@ -176,6 +176,8 @@ func add_node(node):
 # <-- player called --
 
 # -- for bots -->
+func find_path(pos, tar):
+	return crates.find_path_local(pos, tar)
 func _process(delta):
 	# get bombs
 	bombs.clear()
@@ -231,7 +233,7 @@ func _get_winner():
 	return winner
 
 # bullet called
-func bullet_hit(pos, dir):
+func bullet_hit(pos, dir, c):
 	# get the tile
 	var tile = crates.world_to_map(pos+(dir*(cellsize/2)))
 	

@@ -199,6 +199,8 @@ func add_node(node):
 # <-- player called --
 
 # -- for bots -->
+func find_path(pos, tar):
+	return crates.find_path_local(pos, tar)
 func _process(delta):
 	# get bombs
 	bombs.clear()

@@ -1,7 +1,7 @@
 [gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scenes/Game/Player/Bot/States/Defending.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Game/Player/Bot/BotStateMachine.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Game/Player/Bot/Bot2.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Game/Player/HitBox.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Particles/blackSmoke00.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Sounds/Game/Damage.wav" type="AudioStream" id=5]
@@ -142,7 +142,7 @@ script = ExtResource( 11 )
 one_shot = true
 
 [node name="Muzzle" type="Position2D" parent="."]
-position = Vector2( 0, -11 )
+position = Vector2( 0, -9 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2( -32, -56 )

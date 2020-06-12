@@ -14,12 +14,15 @@ func update(target):
 	if target != null:
 		if is_loc_save(target):
 			# target is safe, go towards it
+			#print("target safe")
 			return null
 	if is_loc_save(bot.coord) and target != null:
 		# target is not safe and position is safe -> stay
+		#print("pos safe")
 		return bot.coord
 	if is_loc_save(bot.coord) and target == null:
 		# location is safe and theres no target
+		#print("safe no target")
 		return null
 	else:
 		# get a safe location
@@ -53,6 +56,7 @@ func get_save_loc(pos, danger):
 	var target = null
 	
 	# get the direction away from danger
+	var dist = (pos-danger.coord).length()
 	var d = pos-danger.coord
 	if abs(d.x) > abs(d.y):
 		d.y = 0
@@ -61,32 +65,45 @@ func get_save_loc(pos, danger):
 	d = d.normalized()
 	
 	if danger is Bomb:
+		# idea: 
+		# 1. if not on bomb:
+			# walk away out of the fireline (normal to dir)
+			# if not possible: walk one block further away (dir)
+		# 2. else: 
+			# walk one block away
+		
 		var bomb = danger
 		
 		if d == Vector2.ZERO:
 			# on the bomb
-			# -> set x or y of direction to 1 or -1 so that code below works
-			randomize()
-			var r = int(floor(rand_range(0, 4)))
-			d.x = (r%2)*(r-2) 		# 0:  0; 1: -1; 2: 0; 3: 1
-			d.y = ((r+1)%2)*(r-1) 	# 0: -1; 1:  0; 2: 1; 3: 0
-		
-		# check if we can walk away normal to the danger
-		if bot.lane_free(bomb.coord, d, bomb.explosion_size + 1):
-			target = bomb.coord+(d * (bomb.explosion_size+1) )
-		# else check if we can walk away sideways
-		elif bot.lane_free(pos, Vector2(d.y, d.x), 1):
-			target = pos+Vector2(d.y, d.x)
-		elif bot.lane_free(pos, -Vector2(d.y, d.x), 1):
-			target = pos-Vector2(d.y, d.x)
+			# go in any direction possible
+			for i in range(4):
+				var k = -1 if i < 2 else 1 # -1, -1, 1, 1
+				var x = (i%2)*k
+				var y = ((i+1)%2)*k
+				if bot.lane_free(pos, Vector2(x, y), 1):
+					target = pos+Vector2(x, y)
+					break
 		else:
-			# small knight move (one forward, one up/down)
-			if bot.lane_free(pos+d, Vector2(d.y, d.x), 1):
-				target = pos+d+Vector2(d.y, d.x)
-			elif bot.lane_free(pos+d, -Vector2(d.y, d.x), 1):
-				target = pos+d-Vector2(d.y, d.x)
+			# check if we can walk away sideways
+			if bot.lane_free(pos, Vector2(d.y, d.x), 1):
+				target = pos+Vector2(d.y, d.x)
+			elif bot.lane_free(pos, -Vector2(d.y, d.x), 1):
+				target = pos-Vector2(d.y, d.x)
+			# else: walk away (away from bomb)
+			elif bot.lane_free(bomb.coord, d*dist, 1):
+				target = bomb.coord+d*(dist+1)
+			else:
+				# schade eigentlich
+				return null
 		
 	elif danger is Baguette:
+		# idea: 
+		# 1. walk away out of the baguettes trajectory (normal to dir)
+			# if not possible: walk one block further away (dir)
+		# 2. else: 
+			# walk one block away
+		
 		var baguette = danger
 		# check if we can walk away sideways
 		if bot.lane_free(pos, Vector2(d.y, d.x), 1):
@@ -94,11 +111,7 @@ func get_save_loc(pos, danger):
 		elif bot.lane_free(pos, -Vector2(d.y, d.x), 1):
 			target = pos-Vector2(d.y, d.x)
 		else:
-			# small knight move (one forward, one up/down)
-			if bot.lane_free(pos+d, Vector2(d.y, d.x), 1):
-				target = pos+d+Vector2(d.y, d.x)
-			elif bot.lane_free(pos+d, -Vector2(d.y, d.x), 1):
-				target = pos+d-Vector2(d.y, d.x)
+			target = pos+d
 	
 	return target
 

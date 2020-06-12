@@ -6,7 +6,8 @@ var crate_radius = 3
 
 # returns true/false if this state wants to be active
 func get_target():
-	#return false
+	#return null # disabled
+	
 	var nearby_crates = crates_nearby(bot.coord)
 	if nearby_crates.size() > 0:
 		var new_target = get_best_crate_pos(nearby_crates)
@@ -17,7 +18,6 @@ func get_target():
 			return new_target
 	
 	return null
-	#return b
 
 # to figure out where to go
 func update(target):
@@ -79,18 +79,17 @@ func get_best_crate_pos(crates):
 	var new_bests = []
 	if best_crates.size() > 0:
 		new_bests = get_with_most_crates(best_crates)
+		
+		# get a random one out of all bests
+		randomize()
+		var best_one = new_bests[floor(rand_range(0, new_bests.size()))]
+		#print("best one is: " + str(best_one))
+		
+		return best_one
 	
-	#print(new_bests.size())
-	
-	if new_bests.size() == 0:
-		print("Bot farming: schade, fehler")
-	
-	# get a random one out of all bests
-	randomize()
-	var best_one = new_bests[floor(rand_range(0, new_bests.size()))]
-	#print("best one is: " + str(best_one))
-	
-	return best_one
+	else:
+		print("Bot farming: didnt find best loc for crate, even tough there are crates availiable")
+		return null
 
 func get_nearest_crates(crates):
 	var best_crates = []

@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-class_name Bot3
+class_name Bot
 
 onready var anim_player = $AnimationPlayer
 onready var anim = $PlayerSprite
@@ -108,7 +108,7 @@ func init(pos, p, f, g):
 	all_bombs = game.bombs
 	all_items = game.items
 	all_baguettes = game.baguettes
-	start_coord = game.get_coord(global_transform.origin)
+	start_coord = game.get_coord(muzzle.global_transform.origin)
 	
 	init_states()
 
@@ -143,7 +143,7 @@ func try_place_bomb():
 			if bombs_active >= max_bombs:
 				can_place_bomb = false
 			game.update_current_bombs(int(pid), max_bombs-bombs_active)
-			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
+			get_parent().get_parent().place_bomb(self, muzzle.global_transform.origin, explosion_range, explosion_strength)
 
 
 func try_shoot():
@@ -161,13 +161,10 @@ func set_target(new_value):
 	if target != new_value:
 		prev_target = target
 		target = new_value
+		path = []
 		
 		# we got a valid new target
 		if target != null:
-			# find path with astar
-			path = game.find_path(coord, target)
-			target_point_world = path[1]
-			
 			print("Bot: set new target: " + str(target))
 			target_timer.stop()
 			target_timer.start()
@@ -230,13 +227,14 @@ func _process(delta):
 					print("Bot: current state returned null on update")
 					curr_state.abort()
 					self.curr_state = null
+					path = []
 		
 		
 		# -- DEFENDING --
 		# -> check if the new target is safe
 		var def_target = all_states[state.DEFENDING].update(new_target)
 		
-		if def_target != null and def_target != new_target:
+		if def_target != null:# and def_target != new_target:
 			#print("Bot: found def target to abort to: " + str(def_target))
 			if curr_state != null:
 				curr_state.abort()
@@ -274,78 +272,53 @@ func _process(delta):
 func get_dir(state_target):
 	var dir = Vector2.ZERO
 	
-	#if state_target != null:
-	#	if game.check_block(state_target) != 0:
-	#		print("Bot: THIS IS NOT GOOD")
-	
 	if state_target == null:
 		# the current state doesnt have a target
 		if curr_state != null:
 			curr_state.abort()
 		self.curr_state = null
 		self.target = null
-	elif true:
-		# get point to move to
-		var arrived_to_next_point = is_at(target_point_world)
-		if arrived_to_next_point:
-			path.remove(0)
-			if len(path) == 0:
-				# target hit!
-				print("target hit!")
-				target_point_world = null
-				
-				if curr_state != null:
-					curr_state.target_reached()
-					self.curr_state = null
-				self.target = null
-			else:
-				target_point_world = path[0]
-		
-		if target_point_world != null:
-			dir = target_point_world - muzzle.global_transform.origin
-			#print("getting dir to: " + str(target_point_world))
+		target_point_world = null
+		path = []
 	else:
-		# old method self coded
-		
-		#print("we got target")
-		
-		# the current state has a target to get to
-		# -> get the dir for the target position
-		
-		var target_dist_x = abs(muzzle.global_transform.origin.x - (target.x*game.cellsize.x+(game.cellsize.x/2)))
-		var target_dist_y = abs(muzzle.global_transform.origin.y - (target.y*game.cellsize.y+(game.cellsize.y/2)))
-		
-		#print("target distance: " + str(target_dist_x)+", " + str(target_dist_y))
-		
-		# -- PATHFINDING --> (currently can only do one turn)
-		# check if lane free ! -------------------
-		var next_block = coord
-		if target_dist_x > game.cellsize.x/16:
-			dir.x = (target.x*game.cellsize.x+(game.cellsize.x/2))-muzzle.global_transform.origin.x
-			next_block = coord+dir.normalized()
-		# when we dont need to anymove to x or there is a block, move y
-		if dir.x == 0 or game.check_block(next_block) != 0:
-			if target_dist_y > game.cellsize.y/16:
-				dir.y = (target.y*game.cellsize.y+(game.cellsize.x/2))-muzzle.global_transform.origin.y
-		# <-- PATHFINDING --
-		
-		
-		if dir == Vector2.ZERO:
-			# target hit!
-			print("Bot: target hit!")
-			#prev_target = target
-			if curr_state != null:
-				curr_state.target_reached()
-				self.curr_state = null
-			self.target = null
-			#if target != prev_target:
-			#	target_timer.start()
-			#	print("Bot: new target: " + str(target))
-			##print(dir)
-			#change_state(null)
+		if path.size() == 0:
+			# find path with astar
+			path = game.find_path(coord, target)
+			if path.size() > 1:
+				target_point_world = path[0] # 0 would be the one where we standing
+			elif path.size() == 1:
+				target_hit()
+			else:
+				self.target = null
+				print("no path found for target: " + str(state_target))
+		else:
+			var arrived_to_next_point = is_at(target_point_world)
+			if arrived_to_next_point:
+				# at the next loc
+				path.remove(0)
+				if len(path) == 0:
+					target_hit()
+				else:
+					target_point_world = path[0]
+			
+			if target_point_world != null:
+				dir = target_point_world - muzzle.global_transform.origin
+				if abs(dir.x) > abs(dir.y):
+					dir.y = 0
+				else:
+					dir.x = 0
+	
 	
 	return dir.normalized()
 
+func target_hit():
+	# final target hit
+	print("target hit!")
+	if curr_state != null:
+		curr_state.target_reached()
+		self.curr_state = null
+	prev_target = target
+	self.target = null
 
 func is_at(world_position):
 	if world_position != null:
@@ -359,11 +332,12 @@ func lane_free(pos, axis, r):
 	for i in range(1, r+1):
 		var block = Vector2(pos.x + i*axis.x, pos.y + i*axis.y)
 		if game.check_block(block) != 0:
+			# block is not free
 			return false
 	return true
 
 func _on_TargetTimeout_timeout():
-	return # disabled
+	#return # disabled
 	print("Bot: ran out of time for the target, setting it to null")
 	self.target = null
 	target_timer.stop()

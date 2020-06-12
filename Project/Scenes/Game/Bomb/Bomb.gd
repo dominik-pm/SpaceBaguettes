@@ -4,6 +4,7 @@ class_name Bomb
 
 onready var anim = $AnimationPlayer
 
+var exploding = false
 var explosion_size
 var explosion_strength
 var can_collide = false
@@ -53,6 +54,8 @@ func _on_ExplodingTimer_timeout():
 	explode()
 
 func explode():
+	exploding = true
+	
 	$ExplodingTimer.stop()
 	$ExplosionSound.play()
 	$ExplosionSound2.play()
@@ -100,9 +103,11 @@ func _on_Explosion_animation_finished():
 	# small logic to only queue free, when the animation and the sound is finished
 	if can_free:
 		queue_free()
+	exploding = false
 	can_free = true
 
 func _on_ExplosionSound2_finished():
 	if can_free:
 		queue_free()
 	can_free = true
+	exploding = false

@@ -27,12 +27,13 @@ func get_nearest_item(from_pos):
 	var nearest = null
 
 	for item in bot.all_items:
-		if nearest != null:
-			var dist = (item.coord-from_pos).length()
-			if dist < (nearest-from_pos).length():
+		if not item.taken:
+			if nearest != null:
+				var dist = (item.coord-from_pos).length()
+				if dist < (nearest-from_pos).length():
+					nearest = item.coord
+			else:
 				nearest = item.coord
-		else:
-			nearest = item.coord
 
 	if nearest != null:
 		if abs(nearest.x-from_pos.x) <= item_radius and abs(nearest.y-from_pos.y) <= item_radius:
