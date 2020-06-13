@@ -1,7 +1,5 @@
 extends KinematicBody2D
 
-class_name Bot
-
 onready var anim_player = $AnimationPlayer
 onready var anim = $PlayerSprite
 onready var hitbox = $HitBox

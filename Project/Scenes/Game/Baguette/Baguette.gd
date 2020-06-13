@@ -51,7 +51,7 @@ func _physics_process(delta):
 		elif collider is Bomb:
 			collider.explode()
 			destroy()
-		elif collider is Player or collider is Bot:
+		elif collider.is_in_group("Player"):
 			# dont do anything, bc this is the environment collider for the player
 			pass
 		else:

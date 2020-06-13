@@ -1,6 +1,6 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenu.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenuOnline.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Game/Player/Player1/Front_idle.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Menu/Icons/gamepad1.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayerInput.tscn" type="PackedScene" id=4]
@@ -9,8 +9,7 @@
 [ext_resource path="res://Assets/Game/Player/Icons/Player3.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Menu/Icons/gamepad2.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Menu/Icons/gamepad3.png" type="Texture" id=9]
-[ext_resource path="res://Assets/Menu/Icons/minus.png" type="Texture" id=10]
-[ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayerAddRemove.gd" type="Script" id=11]
+[ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayerAddRemNetwork.gd" type="Script" id=10]
 [ext_resource path="res://Assets/Menu/Icons/plus.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Menu/Icons/gamepad4.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Menu/Icons/buttonStart.png" type="Texture" id=14]
@@ -18,14 +17,14 @@
 [ext_resource path="res://Scenes/MainMenu/TextureButtons.gd" type="Script" id=16]
 [ext_resource path="res://Assets/Menu/Icons/robot.png" type="Texture" id=17]
 
-[node name="PlayOfflineMenu" type="PanelContainer"]
+[node name="PlayOnlineMenu" type="PanelContainer"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -413.0
+margin_left = -421.0
 margin_top = -341.0
-margin_right = 413.0
+margin_right = 421.0
 margin_bottom = 341.0
 theme = ExtResource( 15 )
 script = ExtResource( 1 )
@@ -37,21 +36,43 @@ __meta__ = {
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 822.0
-margin_bottom = 662.0
+margin_bottom = 692.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBox"]
+margin_right = 802.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Status" type="Label" parent="VBox/HBoxContainer"]
+margin_left = 410.0
+margin_right = 802.0
+margin_bottom = 32.0
+text = "Connected at 192.168.1.1:31400!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PlayerSelect" type="GridContainer" parent="VBox"]
+margin_top = 40.0
 margin_right = 802.0
-margin_bottom = 534.0
+margin_bottom = 564.0
 custom_constants/vseparation = 50
 custom_constants/hseparation = 50
 columns = 2
 
 [node name="Player1" type="VBoxContainer" parent="VBox/PlayerSelect"]
 margin_right = 376.0
-margin_bottom = 242.0
+margin_bottom = 232.0
+script = ExtResource( 10 )
+pid = "1"
+menu = NodePath("../../..")
 
 [node name="Container" type="HBoxContainer" parent="VBox/PlayerSelect/Player1"]
 margin_right = 376.0
@@ -99,23 +120,34 @@ __meta__ = {
 margin_left = 176.0
 margin_right = 376.0
 margin_bottom = 192.0
-menu = NodePath("../../../../../../PlayOfflineMenu")
+menu = NodePath("../../../../../../PlayOnlineMenu")
 
-[node name="PlayerNameInput" type="LineEdit" parent="VBox/PlayerSelect/Player1"]
+[node name="BotIcon" type="TextureRect" parent="VBox/PlayerSelect/Player1/Container"]
+visible = false
+margin_left = 384.0
+margin_right = 584.0
+margin_bottom = 192.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 3
+texture = ExtResource( 17 )
+expand = true
+stretch_mode = 6
+
+[node name="PlayerName" type="Label" parent="VBox/PlayerSelect/Player1"]
 margin_top = 200.0
 margin_right = 376.0
-margin_bottom = 242.0
+margin_bottom = 232.0
 focus_next = NodePath("../../Player2/PlayerNameInput")
-max_length = 16
-placeholder_text = "name"
+text = "Player 1"
+align = 1
 
 [node name="Player2" type="VBoxContainer" parent="VBox/PlayerSelect"]
 margin_left = 426.0
 margin_right = 802.0
-margin_bottom = 242.0
-script = ExtResource( 11 )
+margin_bottom = 232.0
+script = ExtResource( 10 )
 pid = "2"
-menu = NodePath("../../../../PlayOfflineMenu")
+menu = NodePath("../../..")
 
 [node name="Container" type="HBoxContainer" parent="VBox/PlayerSelect/Player2"]
 margin_right = 376.0
@@ -159,6 +191,7 @@ __meta__ = {
 }
 
 [node name="BtnMakeBot" type="TextureButton" parent="VBox/PlayerSelect/Player2/Container/Icons/HBoxContainer"]
+visible = false
 margin_left = 56.0
 margin_right = 104.0
 margin_bottom = 48.0
@@ -192,41 +225,39 @@ __meta__ = {
 }
 
 [node name="Keys" parent="VBox/PlayerSelect/Player2/Container" instance=ExtResource( 4 )]
+visible = false
 margin_left = 176.0
 margin_right = 376.0
 margin_bottom = 192.0
-player_id = "2"
-menu = NodePath("../../../../../../PlayOfflineMenu")
+menu = NodePath("../../../../../../PlayOnlineMenu")
 
 [node name="BotIcon" type="TextureRect" parent="VBox/PlayerSelect/Player2/Container"]
-visible = false
-margin_left = -42.0
-margin_top = 292.0
-margin_right = 158.0
-margin_bottom = 484.0
+margin_left = 176.0
+margin_right = 376.0
+margin_bottom = 192.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
 texture = ExtResource( 17 )
 expand = true
 stretch_mode = 6
 
-[node name="PlayerNameInput" type="LineEdit" parent="VBox/PlayerSelect/Player2"]
+[node name="PlayerName" type="Label" parent="VBox/PlayerSelect/Player2"]
 margin_top = 200.0
 margin_right = 376.0
-margin_bottom = 242.0
+margin_bottom = 232.0
 focus_next = NodePath("../../Player3")
-max_length = 16
-placeholder_text = "name"
+text = "Player 2"
+align = 1
 
 [node name="Player3" type="VBoxContainer" parent="VBox/PlayerSelect"]
-margin_top = 292.0
+margin_top = 282.0
 margin_right = 376.0
-margin_bottom = 534.0
+margin_bottom = 524.0
 rect_min_size = Vector2( 0, 242 )
 rect_clip_content = true
-script = ExtResource( 11 )
+script = ExtResource( 10 )
 pid = "3"
-menu = NodePath("../../../../PlayOfflineMenu")
+menu = NodePath("../../..")
 
 [node name="Container" type="HBoxContainer" parent="VBox/PlayerSelect/Player3"]
 margin_right = 376.0
@@ -259,7 +290,7 @@ margin_right = 168.0
 margin_bottom = 192.0
 
 [node name="ControllerIcon" type="TextureRect" parent="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer"]
-margin_right = 50.0
+margin_right = 168.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 48, 48 )
 size_flags_horizontal = 3
@@ -271,8 +302,9 @@ __meta__ = {
 }
 
 [node name="BtnMakeBot" type="TextureButton" parent="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer"]
-margin_left = 58.0
-margin_right = 108.0
+visible = false
+margin_left = 88.0
+margin_right = 168.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 48, 48 )
 focus_next = NodePath("../BtnRemove2")
@@ -304,47 +336,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BtnRemove" type="TextureButton" parent="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer"]
-margin_left = 116.0
-margin_right = 168.0
-margin_bottom = 48.0
-rect_min_size = Vector2( 48, 48 )
-focus_next = NodePath("../../../../PlayerNameInput")
-mouse_default_cursor_shape = 2
-size_flags_horizontal = 3
-texture_normal = ExtResource( 10 )
-texture_pressed = ExtResource( 10 )
-texture_hover = ExtResource( 10 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect4" type="TextureRect" parent="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer/BtnRemove"]
-self_modulate = Color( 0.203922, 0.592157, 0.72549, 1 )
-show_behind_parent = true
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 3.0
-margin_bottom = 3.0
-texture = ExtResource( 10 )
-expand = true
-stretch_mode = 6
-script = ExtResource( 16 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Keys" parent="VBox/PlayerSelect/Player3/Container" instance=ExtResource( 4 )]
 visible = false
 margin_left = 176.0
 margin_right = 376.0
 margin_bottom = 192.0
-player_id = "3"
-menu = NodePath("../../../../../../PlayOfflineMenu")
+menu = NodePath("../../../../..")
 
 [node name="BotIcon" type="TextureRect" parent="VBox/PlayerSelect/Player3/Container"]
 margin_left = 176.0
@@ -387,24 +384,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerNameInput" type="LineEdit" parent="VBox/PlayerSelect/Player3"]
+[node name="PlayerName" type="Label" parent="VBox/PlayerSelect/Player3"]
 margin_top = 200.0
 margin_right = 376.0
-margin_bottom = 242.0
+margin_bottom = 232.0
 focus_next = NodePath("../../Player4")
-max_length = 16
-placeholder_text = "name"
+text = "Player 3"
+align = 1
 
 [node name="Player4" type="VBoxContainer" parent="VBox/PlayerSelect"]
 margin_left = 426.0
-margin_top = 292.0
+margin_top = 282.0
 margin_right = 802.0
-margin_bottom = 534.0
+margin_bottom = 524.0
 rect_min_size = Vector2( 0, 242 )
 rect_clip_content = true
-script = ExtResource( 11 )
+script = ExtResource( 10 )
 pid = "4"
-menu = NodePath("../../../../PlayOfflineMenu")
+menu = NodePath("../../..")
 
 [node name="Container" type="HBoxContainer" parent="VBox/PlayerSelect/Player4"]
 margin_right = 376.0
@@ -437,7 +434,7 @@ margin_right = 168.0
 margin_bottom = 192.0
 
 [node name="ControllerIcon" type="TextureRect" parent="VBox/PlayerSelect/Player4/Container/Icons/HBoxContainer"]
-margin_right = 50.0
+margin_right = 168.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 48, 48 )
 size_flags_horizontal = 3
@@ -449,8 +446,9 @@ __meta__ = {
 }
 
 [node name="BtnMakeBot" type="TextureButton" parent="VBox/PlayerSelect/Player4/Container/Icons/HBoxContainer"]
-margin_left = 58.0
-margin_right = 108.0
+visible = false
+margin_left = 88.0
+margin_right = 168.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 48, 48 )
 focus_next = NodePath("../BtnRemove")
@@ -482,51 +480,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BtnRemove" type="TextureButton" parent="VBox/PlayerSelect/Player4/Container/Icons/HBoxContainer"]
-margin_left = 116.0
-margin_right = 168.0
-margin_bottom = 48.0
-rect_min_size = Vector2( 48, 48 )
-focus_next = NodePath("../../../../PlayerNameInput")
-mouse_default_cursor_shape = 2
-size_flags_horizontal = 3
-texture_normal = ExtResource( 10 )
-texture_pressed = ExtResource( 10 )
-texture_hover = ExtResource( 10 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect3" type="TextureRect" parent="VBox/PlayerSelect/Player4/Container/Icons/HBoxContainer/BtnRemove"]
-self_modulate = Color( 0.203922, 0.592157, 0.72549, 1 )
-show_behind_parent = true
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 3.0
-margin_bottom = 3.0
-texture = ExtResource( 10 )
-expand = true
-stretch_mode = 6
-script = ExtResource( 16 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Keys" parent="VBox/PlayerSelect/Player4/Container" instance=ExtResource( 4 )]
+visible = false
 margin_left = 176.0
 margin_right = 376.0
 margin_bottom = 192.0
-player_id = "4"
-menu = NodePath("../../../../../../PlayOfflineMenu")
+menu = NodePath("../../../../../../PlayOnlineMenu")
 
 [node name="BotIcon" type="TextureRect" parent="VBox/PlayerSelect/Player4/Container"]
-visible = false
-margin_left = 168.0
-margin_right = 368.0
+margin_left = 176.0
+margin_right = 376.0
 margin_bottom = 192.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
@@ -564,18 +527,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerNameInput" type="LineEdit" parent="VBox/PlayerSelect/Player4"]
+[node name="PlayerName" type="Label" parent="VBox/PlayerSelect/Player4"]
 margin_top = 200.0
 margin_right = 376.0
-margin_bottom = 242.0
+margin_bottom = 232.0
 focus_next = NodePath("../../../Control/BtnStart")
-max_length = 16
-placeholder_text = "name"
+text = "Player 4"
+align = 1
 
 [node name="Control" type="CenterContainer" parent="VBox"]
-margin_top = 542.0
+margin_top = 572.0
 margin_right = 802.0
-margin_bottom = 642.0
+margin_bottom = 672.0
 
 [node name="BtnStart" type="TextureButton" parent="VBox/Control"]
 margin_left = 351.0
@@ -610,9 +573,7 @@ __meta__ = {
 }
 [connection signal="pressed" from="VBox/PlayerSelect/Player2/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player2" method="_on_BtnMakeBot_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player3" method="_on_BtnMakeBot_pressed"]
-[connection signal="pressed" from="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer/BtnRemove" to="VBox/PlayerSelect/Player3" method="_on_BtnRemove_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player3/BtnAdd" to="VBox/PlayerSelect/Player3" method="_on_BtnAdd_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player4/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player4" method="_on_BtnMakeBot_pressed"]
-[connection signal="pressed" from="VBox/PlayerSelect/Player4/Container/Icons/HBoxContainer/BtnRemove" to="VBox/PlayerSelect/Player4" method="_on_BtnRemove_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player4/BtnAdd" to="VBox/PlayerSelect/Player4" method="_on_BtnAdd_pressed"]
 [connection signal="pressed" from="VBox/Control/BtnStart" to="." method="_on_BtnStart_pressed"]

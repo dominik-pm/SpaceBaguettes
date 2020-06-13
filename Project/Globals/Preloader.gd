@@ -1,6 +1,7 @@
 extends Node
 
 var player = preload("res://Scenes/Game/Player/Player.tscn")
+var nplayer = preload("res://Scenes/NetworkedGame/Player/NPlayer.tscn")
 var bot = preload("res://Scenes/Game/Player/Bot/Bot.tscn")
 var bomb = preload("res://Scenes/Game/Bomb/Bomb.tscn")
 var explosion = preload("res://Scenes/Game/Bomb/Explosion/Explosion.tscn")

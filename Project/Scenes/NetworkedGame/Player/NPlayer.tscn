@@ -3,7 +3,7 @@
 [ext_resource path="res://Scenes/Game/Player/PlayerSprite.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Particles/blackSmoke00.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Fonts/trench100free.otf" type="DynamicFontData" id=3]
-[ext_resource path="res://Scenes/Game/Player/Player.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/NetworkedGame/Player/NPlayer.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/Game/Player/HitBox.gd" type="Script" id=13]
 [ext_resource path="res://Assets/Sounds/Game/Damage.wav" type="AudioStream" id=14]
 [ext_resource path="res://Assets/Sounds/Game/Death.wav" type="AudioStream" id=15]
@@ -104,8 +104,10 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 0.501961 ), Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 0.501961 ), Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 0.501961 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[node name="Player" type="KinematicBody2D"]
-script = ExtResource( 12 )
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
+script = ExtResource( 4 )
 
 [node name="Muzzle" type="Position2D" parent="."]
 position = Vector2( 0, -8 )

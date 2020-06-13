@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=73 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=2]
@@ -48,7 +48,9 @@
 [ext_resource path="res://Scenes/TextButton.gd" type="Script" id=46]
 [ext_resource path="res://Scenes/MainMenu/ItemDropProbabilities.gd" type="Script" id=47]
 [ext_resource path="res://Scenes/MainMenu/ConfigurationMenu/ConfigMenu.gd" type="Script" id=48]
+[ext_resource path="res://Scenes/MainMenu/Play.gd" type="Script" id=49]
 [ext_resource path="res://Scenes/MainMenu/ConfigurationMenu/BaseSubMenu.gd" type="Script" id=50]
+[ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenuOnline.tscn" type="PackedScene" id=51]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends AudioStreamPlayer
@@ -875,15 +877,15 @@ __meta__ = {
 }
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -960.0
-margin_top = -400.0
+margin_top = -412.0
 margin_right = 960.0
-margin_bottom = 400.0
+margin_bottom = 388.0
+script = ExtResource( 49 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -909,6 +911,7 @@ margin_left = 142.0
 margin_top = 60.0
 margin_right = 242.0
 margin_bottom = 160.0
+focus_next = NodePath("../../../PlayMenu/VBoxContainer/OfflineContainer/Offline")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 theme = ExtResource( 14 )
@@ -946,11 +949,114 @@ margin_right = 384.0
 margin_bottom = 680.0
 size_flags_vertical = 3
 
-[node name="PlayMenu" parent="Foreground/Menu/Play" instance=ExtResource( 21 )]
+[node name="PlayMenu" type="PanelContainer" parent="Foreground/Menu/Play"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -421.0
+margin_top = -256.0
+margin_right = 421.0
+margin_bottom = 158.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/Play/PlayMenu"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 822.0
+margin_bottom = 394.0
+custom_constants/separation = 50
+
+[node name="OfflineContainer" type="HBoxContainer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer"]
+margin_right = 802.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 64 )
+alignment = 1
+
+[node name="Offline" type="Button" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OfflineContainer"]
+margin_left = 315.0
+margin_right = 487.0
+margin_bottom = 64.0
+focus_next = NodePath("../../OnlineContainer/BtnContainer/Host")
+focus_previous = NodePath("../../../../BackButton/CenterContainer/BtnBack")
+text = "Play Offline"
+
+[node name="Divider" type="ColorRect" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer"]
+margin_top = 114.0
+margin_right = 802.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 0, 2 )
+color = Color( 0.854902, 0.854902, 0.854902, 1 )
+
+[node name="OnlineContainer" type="VBoxContainer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer"]
+margin_top = 166.0
+margin_right = 802.0
+margin_bottom = 374.0
+
+[node name="BtnContainer" type="HBoxContainer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer"]
+margin_right = 802.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 0, 64 )
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Host" type="Button" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer/BtnContainer"]
+margin_right = 397.0
+margin_bottom = 64.0
+focus_next = NodePath("../Join")
+size_flags_horizontal = 3
+text = "Host Game"
+
+[node name="Join" type="Button" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer/BtnContainer"]
+margin_left = 405.0
+margin_right = 802.0
+margin_bottom = 64.0
+focus_next = NodePath("../../NameInput")
+size_flags_horizontal = 3
+text = "Join Game"
+
+[node name="NameInput" type="LineEdit" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer"]
+margin_top = 72.0
+margin_right = 802.0
+margin_bottom = 136.0
+rect_min_size = Vector2( 0, 64 )
+focus_next = NodePath("../IPContainer/IPInput")
+size_flags_horizontal = 3
+max_length = 16
+placeholder_text = "name"
+
+[node name="IPContainer" type="HBoxContainer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer"]
+margin_top = 144.0
+margin_right = 802.0
+margin_bottom = 208.0
+rect_min_size = Vector2( 0, 64 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer/IPContainer"]
+margin_right = 397.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="IPInput" type="LineEdit" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer/IPContainer"]
+margin_left = 405.0
+margin_right = 802.0
+margin_bottom = 64.0
+focus_next = NodePath("../../../OfflineContainer/Offline")
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_length = 15
+placeholder_text = "IP"
+
+[node name="PlayOfflineMenu" parent="Foreground/Menu/Play" instance=ExtResource( 21 )]
+visible = false
 menu = NodePath("../..")
 
-[node name="BtnStart" parent="Foreground/Menu/Play/PlayMenu/VBox/Control" index="0"]
-focus_next = NodePath("../../../../BackButton/CenterContainer/BtnBack")
+[node name="PlayOnlineMenu" parent="Foreground/Menu/Play" instance=ExtResource( 51 )]
+visible = false
 
 [node name="Settings" type="Control" parent="Foreground/Menu"]
 visible = false
@@ -1555,13 +1661,14 @@ anims/flying = SubResource( 21 )
 [connection signal="pressed" from="Foreground/Menu/Main/BtnInfo" to="Foreground/Menu" method="_on_BtnInfo_pressed"]
 [connection signal="animation_finished" from="Foreground/Menu/Main/BtnInfo/AnimationPlayer" to="Foreground/Menu/Main/BtnInfo" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Play/PlayMenu/VBoxContainer/OfflineContainer/Offline" to="Foreground/Menu/Play" method="_on_offline_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer/BtnContainer/Host" to="Foreground/Menu/Play" method="_on_host_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer/BtnContainer/Join" to="Foreground/Menu/Play" method="_on_join_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="pressed" from="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/Buttons/LastBtn" to="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu" method="_on_LastBtn_pressed"]
 [connection signal="pressed" from="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/Buttons/DefaultBtn" to="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu" method="_on_DefaultBtn_pressed"]
 [connection signal="value_changed" from="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall/DropEntry/HSlider" to="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall/DropEntry" method="_on_HSlider_value_changed"]
 [connection signal="animation_finished" from="Foreground/Menu/Fade" to="Foreground/Menu" method="_on_Fade_animation_finished"]
 [connection signal="animation_finished" from="Foreground/Elements/Rocket/AnimationPlayer" to="Foreground/Elements/Rocket" method="_on_AnimationPlayer_animation_finished"]
-
-[editable path="Foreground/Menu/Play/PlayMenu"]
 
 [editable path="Foreground/Menu/Settings/SettingsMenu"]

@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const NETWORK_ERROR_DISTANCE = 10
+
 onready var anim_player = $AnimationPlayer
 onready var anim = $PlayerSprite
 onready var hitbox = $HitBox
@@ -16,6 +18,8 @@ var can_shoot = false
 var on_bomb = false
 
 # movement variables
+remote var axis = Vector2.ZERO
+remote var other_pos = Vector2.ZERO
 export var speed = 200
 var motion = Vector2.ZERO # the direction in which the player goes
 var last_move # last used direction
@@ -45,7 +49,9 @@ func _ready():
 	invincible_timer.wait_time = Global.player_invincible_time
 	anim_player.play("default")
 
-func init(pos, p, f, g):
+func init(pos, p, f, g, nid):
+	set_network_master(nid)
+	
 	game = g
 	global_transform.origin = pos
 	pid = str(p)
@@ -72,7 +78,16 @@ func init_gui():
 
 func _process(delta):
 	if game_started:
-		var axis = get_input_axis()
+		# network
+		if is_network_master():
+			axis = get_input_axis()
+			rset_unreliable("axis", axis)
+			rset_unreliable("other_pos", global_transform.origin)
+		else:
+			# check if position is not far off, else correct it
+			if (other_pos-global_transform.origin).length() > NETWORK_ERROR_DISTANCE:
+				global_transform.origin = other_pos
+		
 		apply_friction(speed)
 		apply_movement(axis*speed)
 		motion = move_and_slide(motion)
@@ -90,33 +105,33 @@ func _process(delta):
 func get_input_axis():
 	var axis = Vector2.ZERO
 	
-	if Input.is_action_just_pressed(pid + "move_forward") or Input.is_action_just_pressed(pid + "move_forward_gp"):
-		last_move = pid+"move_forward"
-	elif Input.is_action_just_pressed(pid + "move_backward") or Input.is_action_just_pressed(pid + "move_backward_gp"):
-		last_move = pid+"move_backward"
-	elif Input.is_action_just_pressed(pid + "move_right") or Input.is_action_just_pressed(pid + "move_right_gp"):
-		last_move = pid+"move_right"
-	elif Input.is_action_just_pressed(pid + "move_left") or Input.is_action_just_pressed(pid + "move_left_gp"):
-		last_move = pid+"move_left"
+	if Input.is_action_just_pressed("1move_forward") or Input.is_action_just_pressed("1move_forward_gp"):
+		last_move = "1move_forward"
+	elif Input.is_action_just_pressed("1move_backward") or Input.is_action_just_pressed("1move_backward_gp"):
+		last_move = "1move_backward"
+	elif Input.is_action_just_pressed("1move_right") or Input.is_action_just_pressed("1move_right_gp"):
+		last_move = "1move_right"
+	elif Input.is_action_just_pressed("1move_left") or Input.is_action_just_pressed("1move_left_gp"):
+		last_move = "1move_left"
 	
-	if (Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(pid + "move_forward_gp")) and last_move == pid + "move_forward":
+	if (Input.is_action_pressed("1move_forward") or Input.is_action_pressed("1move_forward_gp")) and last_move == "1move_forward":
 		axis.y = -1
-	elif (Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp")) and last_move == pid + "move_backward":
+	elif (Input.is_action_pressed("1move_backward") or Input.is_action_pressed("1move_backward_gp")) and last_move == "1move_backward":
 		axis.y = 1
-	elif (Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(pid + "move_right_gp")) and last_move == pid + "move_right":
+	elif (Input.is_action_pressed("1move_right") or Input.is_action_pressed("1move_right_gp")) and last_move == "1move_right":
 		axis.x = 1
-	elif (Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(pid + "move_left_gp")) and last_move == pid + "move_left":
+	elif (Input.is_action_pressed("1move_left") or Input.is_action_pressed("1move_left_gp")) and last_move == "1move_left":
 		axis.x = -1
 	
-	elif Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(pid + "move_forward_gp"):
+	elif Input.is_action_pressed("1move_forward") or Input.is_action_pressed("1move_forward_gp"):
 		axis.y = -1
-	elif Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp"):
+	elif Input.is_action_pressed("1move_backward") or Input.is_action_pressed("1move_backward_gp"):
 		axis.y = 1
-	elif Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(pid + "move_right_gp"):
+	elif Input.is_action_pressed("1move_right") or Input.is_action_pressed("1move_right_gp"):
 		axis.x = 1
-	elif Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(pid + "move_left_gp"):
+	elif Input.is_action_pressed("1move_left") or Input.is_action_pressed("1move_left_gp"):
 		axis.x = -1
-
+	
 	return axis.normalized()
 
 # reduces the current speed
@@ -132,31 +147,36 @@ func apply_movement(accel):
 	motion = motion.clamped(speed)
 
 func _input(event):
-	if (event.is_action_pressed(pid+"set_bomb") or Input.is_action_pressed(pid + "set_bomb_gp")) and can_place_bomb:
-		if not on_bomb:
-			on_bomb = true
-			bombs_active += 1
-			if bombs_active >= max_bombs:
-				can_place_bomb = false
-			game.update_current_bombs(int(pid), max_bombs-bombs_active)
-			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
-	
-	if (event.is_action_pressed(pid+"shoot") or Input.is_action_pressed(pid + "shoot_gp")) and can_shoot and baguette_count > 0:
-		can_shoot = false
-		baguette_count -= 1
-		game.update_info(int(pid), Items.BAGUETTES, baguette_count)
-		game.shot_baguette(pid)
-		shooting_delay_timer.start()
-		var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
-		shoot(pos, muzzle.global_transform.origin)
+	if is_network_master():
+		
+		if (event.is_action_pressed("1set_bomb") or Input.is_action_pressed("1set_bomb_gp")) and can_place_bomb:
+			if not on_bomb:
+				on_bomb = true
+				if bombs_active >= max_bombs:
+					can_place_bomb = false
+				rpc("place_bomb")
+		
+		if (event.is_action_pressed("1shoot") or Input.is_action_pressed("1shoot_gp")) and can_shoot and baguette_count > 0:
+			can_shoot = false
+			shooting_delay_timer.start()
+			var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
+			rpc("shoot", pos)
 
-func shoot(pos, player_pos):
+sync func place_bomb():
+	bombs_active += 1
+	game.update_current_bombs(int(pid), max_bombs-bombs_active)
+	game.place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength) 
+
+sync func shoot(pos):
+	baguette_count -= 1
+	game.update_info(int(pid), Items.BAGUETTES, baguette_count)
+	game.shot_baguette(pid)
+	
+	var player_pos = muzzle.global_transform.origin
 	var b = Preloader.baguette.instance()
 	b.init(game, self, facing, game.get_coord(pos))
 	game.add_node(b)
-	
 	b.add_collision_exception_with(hitbox)
-	
 	# so that the bullet always flies in the center of the tiles
 	if facing.x == 0:
 		# player facing down/up
@@ -201,7 +221,7 @@ func get_item(item):
 			bomb_moving_strength += 1
 			value = bomb_moving_strength
 		_:
-			print(pid+": "+str(item)+" is not implemented!")
+			print("1: "+str(item)+" is not implemented!")
 	
 	game.update_info(int(pid), item, value)
 
@@ -226,8 +246,8 @@ func get_hit():
 		# health logic
 		health -= 1
 		game.update_info(int(pid), Items.HEALTH, health)
-		if health <= 0:
-			_die()
+		if health <= 0 and is_network_master():
+			rpc("_die")
 
 func disable_player():
 	# death animation
@@ -237,7 +257,7 @@ func disable_player():
 	hitbox_col.set_deferred("disabled", true)
 	$EnvironmentCollider.set_deferred("disabled", true)
 
-func _die():
+sync func _die():
 	is_alive = false
 	
 	disable_player()

@@ -84,7 +84,19 @@ func _ready():
 	$StartCountdown.start_countdown()
 	$StartCountdown.connect("countdown_finished", self, "_on_start_cntdwn_finished")
 	
+	Network.connect("start_game", self, "_on_network_restart")
+	Network.connect("update_connections", self, "_on_network_update")
+	
 	init_stats()
+
+func _on_network_restart():
+	# restarting game
+	get_tree().change_scene("res://Scenes/NetworkedGame/NGame.tscn")
+
+func _on_network_update(players):
+	if players.size() <= 1:
+		Network.close_connection()
+		get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
 
 func init_stats():
 	for p in players:
@@ -104,7 +116,6 @@ func _input(event):
 	if event.is_action_pressed("toggle_pause_menu") and not game_summary.visible:
 		if not settings_menu.visible:
 			pause_menu.visible = !pause_menu.visible
-			get_tree().paused = pause_menu.visible
 			$Foreground/Menu/CenterContainer/VBoxContainer/BtnResume.grab_focus()
 		else:
 			settings_menu.hide()
@@ -112,7 +123,8 @@ func _input(event):
 
 func init_players():
 	var cnt = 0
-	for i in 4:
+	var i = 0
+	for network_id in Network.connected_players:
 		# player is not playing, when playername is '@'
 		if Global.players[i] != "@" and Global.players[i] != "-":
 			# init player
@@ -121,12 +133,12 @@ func init_players():
 			var p = spawns[i].global_transform.origin
 			var t = crates.world_to_map(p)
 			var pos = crates.map_to_world(t) + Vector2(32, 32)
-			var player = Preloader.player.instance()
+			var player = Preloader.nplayer.instance()
 			player_container.add_child(player)
 			var dir = Vector2(1, 0)
 			if i%2 != 0:
 				dir = Vector2(-1, 0)
-			player.init(pos, i+1, dir, self)
+			player.init(pos, i+1, dir, self, network_id)
 			players.push_back(player)
 		elif Global.players[i] == "@":
 			cnt += 1
@@ -141,6 +153,7 @@ func init_players():
 				dir = Vector2(-1, 0)
 			bot.init(pos, i+1, dir, self)
 			players.push_back(bot)
+		i += 1
 	return cnt
 
 # -- player called -->
@@ -178,7 +191,7 @@ func get_tile_pos_center(p):
 	var pos = crates.world_to_map(p)
 	pos = crates.map_to_world(pos) + (cellsize/2)
 	return pos
-func place_bomb(player, pos, e_range, e_strenth):
+sync func place_bomb(player, pos, e_range, e_strenth):
 	# stats
 	stats[Global.player_names[int(player.pid)-1]]["bombs placed"] += 1
 	
@@ -291,10 +304,11 @@ func _destroy_crate(tile):
 	container.add_child(e)
 	e.global_transform.origin = pos
 	
-	# with a certain probability, drop an item
-	randomize()
-	if rand_range(0, 100) < Global.crate_item_drop_chance:
-		_spawn_item(pos)
+	if Network.local_id == 1: # only the server
+		# with a certain probability, drop an item
+		randomize()
+		if rand_range(0, 100) < Global.crate_item_drop_chance:
+			_spawn_item(pos)
 
 func start_sudden_death():
 	if sudden_death_timer == null:
@@ -312,11 +326,12 @@ func start_sudden_death():
 		sudden_death_timer.start()
 
 func _on_sudden_death_timeout():
-	var pos = Vector2()
-	pos.x = int(rand_range(sudden_death_start_x, map_size_x-sudden_death_start_x))
-	pos.y = int(rand_range(sudden_death_start_y, map_size_y-sudden_death_start_y))
-	var cell_index = crates.get_cellv(pos)
-	_spawn_item(crates.map_to_world(pos)+(cellsize/2))
+	if Network.local_id == 1:
+		var pos = Vector2()
+		pos.x = int(rand_range(sudden_death_start_x, map_size_x-sudden_death_start_x))
+		pos.y = int(rand_range(sudden_death_start_y, map_size_y-sudden_death_start_y))
+		var cell_index = crates.get_cellv(pos)
+		_spawn_item(crates.map_to_world(pos)+(cellsize/2))
 	
 	sudden_death_timer.start()
 
@@ -338,14 +353,18 @@ func _destroy_center_metall(startx, starty):
 						if tiletype == "metall_crate":
 							crates.set_cell(x, y, -1)
 							# always spawn an item
-							_spawn_item(crates.map_to_world(Vector2(x, y)) + (cellsize/2))
+							if Network.local_id == 1:
+								_spawn_item(crates.map_to_world(Vector2(x, y)) + (cellsize/2))
 
 
 func _spawn_item(pos):
+	var item = _get_random_item()
+	rpc("place_item", item, pos)
+sync func place_item(item, pos):
 	var i = Preloader.item.instance()
 	container.add_child(i)
 	i.global_transform.origin = pos
-	i.init(_get_random_item())
+	i.init(item)
 func _get_random_item():
 	randomize()
 	
@@ -417,12 +436,10 @@ func _create_explosion(p, dirs, pid):
 
 func _on_BtnResume_pressed():
 	$Click.play()
-	get_tree().paused = false
 	pause_menu.hide()
 
 func _on_BtnRestart_pressed():
-	get_tree().paused = false
-	get_tree().change_scene("res://Scenes/Game/Game.tscn")
+	Network.restart_game()
 
 func _on_BtnSettings_pressed():
 	$Click.play()
@@ -435,13 +452,13 @@ func _on_BtnCloseSettings_pressed():
 	$Foreground/Menu/CenterContainer/VBoxContainer/BtnSettings.grab_focus()
 
 func _on_BtnMenu_pressed():
+	Network.close_connection()
 	$Click.play()
-	get_tree().paused = false
 	get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
 
 func _on_BtnQuit_pressed():
+	Network.close_connection()
 	get_tree().quit()
 
 func _on_BtnPlay_pressed():
-	get_tree().paused = false
-	get_tree().change_scene("res://Scenes/Game/Game.tscn")
+	Network.restart_game()

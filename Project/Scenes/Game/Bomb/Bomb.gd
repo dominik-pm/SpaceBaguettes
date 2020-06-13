@@ -41,7 +41,7 @@ func _physics_process(delta):
 			coord = game.get_coord($Center.global_transform.origin)
 		if collision:
 			var body = collision.collider
-			if body is Player:
+			if body.is_in_group("Player"):
 				var strength = body.bomb_moving_strength
 				if strength > 0:
 					print("player entered, pushing")
@@ -90,7 +90,7 @@ func _on_PushArea_body_exited(body):
 func _on_PushArea_body_entered(body):
 	if can_collide:
 		#if body.is_in_group("PlayerHitbox"):
-		if body is Player:
+		if body.is_in_group("Player"):
 			#var strength = body.player.bomb_moving_strength
 			var strength = body.bomb_moving_strength
 			if strength > 0:

@@ -104,7 +104,9 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 0.501961 ), Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 0.501961 ), Color( 1, 1, 1, 1 ), Color( 0.431373, 0.431373, 0.431373, 0.501961 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
 script = ExtResource( 12 )
 
 [node name="Muzzle" type="Position2D" parent="."]

@@ -78,6 +78,7 @@ func _ready():
 	#save_settings()
 	load_settings()
 
+
 func set_game_binds():
 	for key in settings["bindings"]:
 		var value = settings["bindings"][key]

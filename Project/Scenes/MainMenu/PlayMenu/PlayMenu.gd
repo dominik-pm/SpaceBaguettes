@@ -14,11 +14,16 @@ func _ready():
 		get_node("VBox/PlayerSelect/Player3/PlayerNameInput"),
 		get_node("VBox/PlayerSelect/Player4/PlayerNameInput")
 	]
-	
+
+func show():
+	visible = true
 	$VBox/Control/BtnStart.grab_focus()
 
 func add_player(adding, pid):
-	Global.players[int(pid)-1] = "-"
+	if adding:
+		Global.players[int(pid)-1] = ""
+	else:
+		Global.players[int(pid)-1] = "-"
 
 func make_bot(is_bot, pid):
 	Global.players[int(pid)-1] = "@" if is_bot else ""
@@ -32,8 +37,6 @@ func remove_duplicate(k):
 	all_entries[k].set_text()
 
 func _on_BtnStart_pressed():
-	Settings.set_game_binds()
-	Settings.save_settings()
 	init_player_names()
 	menu.start_game()
 

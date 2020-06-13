@@ -1,0 +1,1112 @@
+[gd_scene load_steps=68 format=2]
+
+[ext_resource path="res://Scenes/NetworkedGame/NGame.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Music/GameMusic.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Game/GUI/GameGUI.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Game/GUI/PlayerInfo.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Ressources/Theme.tres" type="Theme" id=6]
+[ext_resource path="res://Scenes/Game/Camera.gd" type="Script" id=7]
+[ext_resource path="res://Ressources/floor_tileset.tres" type="TileSet" id=8]
+[ext_resource path="res://Ressources/crates_tileset.tres" type="TileSet" id=9]
+[ext_resource path="res://Scenes/TextButton.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/MainMenu/SettingsMenu/SettingsMenu.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Assets/Menu/Objects/Debris/Meteor.png" type="Texture" id=12]
+[ext_resource path="res://Scenes/Game/StartCountdown.gd" type="Script" id=13]
+[ext_resource path="res://Assets/Sounds/Game/StartGame.ogg" type="AudioStream" id=14]
+[ext_resource path="res://Assets/Sounds/UI/ButtonClick.ogg" type="AudioStream" id=15]
+[ext_resource path="res://Assets/Sounds/Game/GameOver.wav" type="AudioStream" id=16]
+[ext_resource path="res://Assets/Fonts/Trench_Header.tres" type="DynamicFont" id=17]
+[ext_resource path="res://Scenes/MainMenu/Rocket.gd" type="Script" id=18]
+[ext_resource path="res://Scenes/Background/RocketFire.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1_transparent.png" type="Texture" id=20]
+[ext_resource path="res://Scenes/Game/Player/PlayerSprite.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Scenes/Game/GUI/LabWinnerMessage.gd" type="Script" id=22]
+[ext_resource path="res://Assets/Menu/Objects/Rockets/rocket1_no_window.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Sounds/UI/click4.ogg" type="AudioStream" id=24]
+[ext_resource path="res://Assets/Menu/Objects/Debris/Comet/Komet 01@4x.png" type="Texture" id=25]
+[ext_resource path="res://Assets/Fonts/trench100free.otf" type="DynamicFontData" id=26]
+[ext_resource path="res://Scenes/TextLabel.gd" type="Script" id=27]
+[ext_resource path="res://Scenes/Game/GUI/GameSummary/Statistics.gd" type="Script" id=28]
+[ext_resource path="res://Assets/Menu/Objects/Debris/Comet/Komet 02@4x.png" type="Texture" id=29]
+[ext_resource path="res://Assets/Menu/Objects/Satellites/satellite1.png" type="Texture" id=30]
+[ext_resource path="res://Assets/Menu/Objects/Satellites/satellite2.png" type="Texture" id=31]
+[ext_resource path="res://Assets/Menu/Objects/Debris/Comet/Komet 04@4x.png" type="Texture" id=32]
+[ext_resource path="res://Assets/Menu/Objects/Fighters/fighter1.png" type="Texture" id=33]
+[ext_resource path="res://Assets/Menu/Objects/Debris/Comet/Komet 03@4x.png" type="Texture" id=34]
+[ext_resource path="res://Assets/Menu/Objects/Rockets/rocket3.png" type="Texture" id=35]
+[ext_resource path="res://Assets/Menu/Objects/Fighters/fighter33.png" type="Texture" id=36]
+[ext_resource path="res://Assets/Menu/Objects/Stations/station1.png" type="Texture" id=37]
+[ext_resource path="res://Assets/Menu/Objects/Fighters/fighter2.png" type="Texture" id=38]
+[ext_resource path="res://Scenes/Game/pathfinding.gd" type="Script" id=39]
+[ext_resource path="res://Scenes/MainMenu/MenuObject.tscn" type="PackedScene" id=40]
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_intensity = 1.0
+glow_strength = 1.05
+
+[sub_resource type="DynamicFont" id=2]
+size = 128
+outline_size = 2
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 26 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "countdown"
+tracks/0/type = "value"
+tracks/0/path = NodePath("CenterControl/Scaler/Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CenterControl/Scaler:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 1.5, 1.5 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Music:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -5.0, -80.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "StartSuddenDeath"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Foreground/SuddenDeath/SuddenDeathLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 1.8, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Foreground/SuddenDeath:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.4, 0.4 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 25 ), ExtResource( 29 ), ExtResource( 34 ), ExtResource( 32 ) ],
+"loop": true,
+"name": "default",
+"speed": 8.0
+} ]
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends AnimatedSprite
+
+func _ready():
+	play(\"default\")
+"
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0, 0.468085, 1 )
+colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+
+[sub_resource type="Curve" id=10]
+_data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 10.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 180.0
+angle_random = 1.0
+scale = 0.08
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 96
+outline_size = 1
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 26 )
+
+[sub_resource type="GDScript" id=27]
+script/source = "extends Control
+
+onready var btn_restart = $CenterContainer/VBoxContainer/BtnRestart
+
+func _ready():
+	if Network.local_id != null and Network.local_id != 1:
+		btn_restart.hide()
+"
+
+[sub_resource type="GDScript" id=14]
+script/source = "extends Control
+
+onready var lab_message = $LabWinnerMessage
+onready var anim = $AnimationPlayer
+onready var rocket = $Elements/Rocket
+onready var player_sprite = $Elements/Rocket/PlayerSprite
+onready var statistics = $Statistics
+
+onready var btn_play = $CenterContainer/VBoxContainer/BtnPlay
+
+func _ready():
+	if Network.local_id != null and Network.local_id != 1:
+		btn_play.hide()
+
+func show_summary(winner_pid, stats):
+	show()
+	$CenterContainer/VBoxContainer/BtnPlay.grab_focus()
+	var n = Global.player_names[int(winner_pid)-1]
+	lab_message.set_winner(n)
+	anim.play(\"show\")
+	rocket.fly_in()
+	player_sprite.init(int(winner_pid))
+	
+	statistics.show_player_stats(stats)
+"
+
+[sub_resource type="Animation" id=15]
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="CanvasItemMaterial" id=16]
+blend_mode = 1
+
+[sub_resource type="Gradient" id=17]
+offsets = PoolRealArray( 0, 0.468085, 1 )
+colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
+
+[sub_resource type="GradientTexture" id=18]
+gradient = SubResource( 17 )
+
+[sub_resource type="Curve" id=19]
+_data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=20]
+curve = SubResource( 19 )
+
+[sub_resource type="ParticlesMaterial" id=21]
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 10.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 180.0
+angle_random = 1.0
+scale = 0.18
+scale_curve = SubResource( 20 )
+color_ramp = SubResource( 18 )
+
+[sub_resource type="Animation" id=22]
+length = 2.0
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4, 2 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 16, -0.25, 0, 0.25, 0, -1024, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4, 2 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RocketFire:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=23]
+length = 3.0
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 2.5, 3 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 1024, -0.25, 0, 0.25, 0, -10, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 2.5, 3 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RocketFire:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=24]
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 0.5, 0.0, 0.0, -0.4, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 2, 5 ), Vector2( 0, -8 ), Vector2( 2, -3 ), Vector2( 0, 0 ), Vector2( 3, 7 ), Vector2( -1, -3 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RocketFire:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=25]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RocketFire:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="GDScript" id=26]
+script/source = "extends HBoxContainer
+
+func _ready():
+	rect_size = Vector2(rect_size.x, 48)
+"
+
+[node name="NGame" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 1 )
+pause_menu_path = NodePath("Foreground/Menu")
+game_summary_path = NodePath("Foreground/GameSummary")
+gui_path = NodePath("GUI")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -5.0
+bus = "Music"
+
+[node name="GameOver" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+bus = "Sound"
+
+[node name="StartGame" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+bus = "Sound"
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+bus = "Sound"
+
+[node name="StartCountdown" type="CanvasLayer" parent="."]
+script = ExtResource( 13 )
+
+[node name="CenterControl" type="Control" parent="StartCountdown"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Scaler" type="Node2D" parent="StartCountdown/CenterControl"]
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Label" type="Label" parent="StartCountdown/CenterControl/Scaler"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -75.0
+margin_right = 200.0
+margin_bottom = 75.0
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 2 )
+text = "start"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StartCountdown"]
+anims/countdown = SubResource( 3 )
+
+[node name="Tick" type="AudioStreamPlayer" parent="StartCountdown"]
+stream = ExtResource( 24 )
+volume_db = -5.0
+bus = "Sound"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/GameOver = SubResource( 4 )
+anims/StartSuddenDeath = SubResource( 5 )
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="Black" type="ColorRect" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stars" parent="." instance=ExtResource( 3 )]
+layer = -2
+moving = true
+
+[node name="BGObjects" type="Node" parent="."]
+
+[node name="MidgroundFar" type="CanvasLayer" parent="BGObjects"]
+layer = -1
+follow_viewport_enable = true
+follow_viewport_scale = 0.7
+
+[node name="Meteor" parent="BGObjects/MidgroundFar" instance=ExtResource( 40 )]
+position = Vector2( 416, -216 )
+rotation = 0.261799
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 12 )
+relative_origin = NodePath("../../../../NGame")
+respawn_interval = 40
+rotation_speed = 20
+
+[node name="Meteor2" parent="BGObjects/MidgroundFar" instance=ExtResource( 40 )]
+position = Vector2( 1256, 2000 )
+rotation = 0.261799
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 12 )
+relative_origin = NodePath("../../../../NGame")
+respawn_interval = 120
+spawn_time_offset = 5
+speed = -45
+rotation_speed = 20
+
+[node name="MidgroundMid" type="CanvasLayer" parent="BGObjects"]
+layer = -1
+follow_viewport_enable = true
+follow_viewport_scale = 0.8
+
+[node name="Fighter" parent="BGObjects/MidgroundMid" instance=ExtResource( 40 )]
+position = Vector2( 816, -880 )
+rotation = -0.122173
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 33 )
+relative_origin = NodePath("../../../../NGame")
+respawn_interval = 80
+
+[node name="Fighter5" parent="BGObjects/MidgroundMid" instance=ExtResource( 40 )]
+position = Vector2( 268.423, -1315.09 )
+rotation = -0.392699
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 36 )
+relative_origin = NodePath("../../../../NGame")
+respawn_interval = 130
+speed = 40
+
+[node name="Satellite" parent="BGObjects/MidgroundMid" instance=ExtResource( 40 )]
+position = Vector2( 2256, 900 )
+rotation = 1.37706
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 30 )
+relative_origin = NodePath("../../../../NGame")
+respawn_interval = 50
+spawn_time_offset = 10
+speed = 30
+rotation_speed = -3
+
+[node name="MidgroundNear" type="CanvasLayer" parent="BGObjects"]
+layer = -1
+follow_viewport_enable = true
+follow_viewport_scale = 0.9
+
+[node name="Fighter2" parent="BGObjects/MidgroundNear" instance=ExtResource( 40 )]
+position = Vector2( 2120, 249 )
+rotation = -2.03505
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 38 )
+relative_origin = NodePath("../../../../NGame")
+respawn_interval = 150
+spawn_time_offset = 30
+speed = -50
+
+[node name="Fighter3" parent="BGObjects/MidgroundNear" instance=ExtResource( 40 )]
+position = Vector2( 2248, 40 )
+rotation = -2.04204
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 36 )
+relative_origin = NodePath("../../../../NGame")
+respawn_interval = 150
+spawn_time_offset = 30
+speed = -45
+
+[node name="Fighter4" parent="BGObjects/MidgroundNear" instance=ExtResource( 40 )]
+position = Vector2( 2376, 224 )
+rotation = -2.0944
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 36 )
+relative_origin = NodePath("../../../../NGame")
+respawn_interval = 150
+spawn_time_offset = 30
+speed = -56
+
+[node name="MidgroundStill" type="CanvasLayer" parent="BGObjects"]
+layer = -1
+
+[node name="Satellite" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
+position = Vector2( 300, 1400 )
+rotation = -2.93215
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 31 )
+relative_origin = NodePath("../../../../NGame")
+is_still = true
+spawn_time_offset = 2
+speed = 40
+
+[node name="Comet" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
+position = Vector2( 1500, -155 )
+rotation = -0.253073
+relative_origin = NodePath("../../../../NGame")
+is_still = true
+respawn_interval = 100
+rot_off_sprite_left = true
+speed = 60
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="BGObjects/MidgroundStill/Comet"]
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 6 )
+script = SubResource( 7 )
+
+[node name="Comet2" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
+position = Vector2( -246.26, 2005 )
+rotation = 2.53945
+relative_origin = NodePath("../../../../NGame")
+is_still = true
+respawn_interval = 180
+spawn_time_offset = 5
+rot_off_sprite_left = true
+speed = 65
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="BGObjects/MidgroundStill/Comet2"]
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 6 )
+script = SubResource( 7 )
+
+[node name="Rocket" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
+position = Vector2( -728, 1224 )
+rotation = 0.6353
+scale = Vector2( 0.4, 0.4 )
+relative_origin = NodePath("../../../../NGame")
+is_still = true
+respawn_interval = 220
+spawn_time_offset = 20
+speed = -60
+
+[node name="RocketFire" parent="BGObjects/MidgroundStill/Rocket" instance=ExtResource( 19 )]
+position = Vector2( 1.16051, 147.48 )
+process_material = SubResource( 12 )
+
+[node name="Sprite" type="Sprite" parent="BGObjects/MidgroundStill/Rocket"]
+texture = ExtResource( 35 )
+
+[node name="Station" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
+position = Vector2( 1308, -464 )
+rotation = -2.96008
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 37 )
+relative_origin = NodePath("../../../../NGame")
+is_still = true
+respawn_interval = 300
+spawn_time_offset = 10
+speed = -15
+rotation_speed = 1
+
+[node name="GUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1216.0
+margin_top = -16.0
+margin_right = -384.0
+margin_bottom = -248.0
+rect_min_size = Vector2( 294, 848 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+player_container1 = NodePath("../../NGame/GUI/VBoxContainer/PlayerInfo1")
+player_container2 = NodePath("../../NGame/GUI/VBoxContainer/PlayerInfo2")
+player_container3 = NodePath("../../NGame/GUI/VBoxContainer/PlayerInfo3")
+player_container4 = NodePath("../../NGame/GUI/VBoxContainer/PlayerInfo4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+custom_constants/separation = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerInfo1" parent="GUI/VBoxContainer" instance=ExtResource( 5 )]
+player_icon = NodePath("../PlayerInfo1/VBoxContainer/PlayerStatus/PlayerIcon")
+lab_health = NodePath("../PlayerInfo1/VBoxContainer/PlayerStatus/VBoxContainer/HealthLabel")
+lab_bombs = NodePath("../PlayerInfo1/VBoxContainer/PlayerStatus/VBoxContainer2/BombsLabel")
+lab_baguettes = NodePath("../PlayerInfo1/VBoxContainer/PlayerStatus/VBoxContainer3/BaguettesLabel")
+lab_speed = NodePath("../PlayerInfo1/VBoxContainer/ItemContainer/SpeedLabel")
+lab_bomb_range = NodePath("../PlayerInfo1/VBoxContainer/ItemContainer/RangeLabel")
+lab_explosion_strength = NodePath("../PlayerInfo1/VBoxContainer/ItemContainer/ExplosionLabel")
+lab_bomb_move = NodePath("../PlayerInfo1/VBoxContainer/ItemContainer/MoveLabel")
+
+[node name="PlayerInfo2" parent="GUI/VBoxContainer" instance=ExtResource( 5 )]
+margin_top = 232.0
+margin_bottom = 384.0
+player_icon = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo2/VBoxContainer/PlayerStatus/PlayerIcon")
+lab_health = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo2/VBoxContainer/PlayerStatus/VBoxContainer/HealthLabel")
+lab_bombs = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo2/VBoxContainer/PlayerStatus/VBoxContainer2/BombsLabel")
+lab_baguettes = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo2/VBoxContainer/PlayerStatus/VBoxContainer3/BaguettesLabel")
+lab_speed = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo2/VBoxContainer/ItemContainer/SpeedLabel")
+lab_bomb_range = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo2/VBoxContainer/ItemContainer/RangeLabel")
+lab_explosion_strength = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo2/VBoxContainer/ItemContainer/ExplosionLabel")
+lab_bomb_move = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo2/VBoxContainer/ItemContainer/MoveLabel")
+
+[node name="PlayerInfo3" parent="GUI/VBoxContainer" instance=ExtResource( 5 )]
+margin_top = 464.0
+margin_bottom = 616.0
+player_icon = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo3/VBoxContainer/PlayerStatus/PlayerIcon")
+lab_health = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo3/VBoxContainer/PlayerStatus/VBoxContainer/HealthLabel")
+lab_bombs = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo3/VBoxContainer/PlayerStatus/VBoxContainer2/BombsLabel")
+lab_baguettes = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo3/VBoxContainer/PlayerStatus/VBoxContainer3/BaguettesLabel")
+lab_speed = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo3/VBoxContainer/ItemContainer/SpeedLabel")
+lab_bomb_range = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo3/VBoxContainer/ItemContainer/RangeLabel")
+lab_explosion_strength = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo3/VBoxContainer/ItemContainer/ExplosionLabel")
+lab_bomb_move = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo3/VBoxContainer/ItemContainer/MoveLabel")
+
+[node name="PlayerInfo4" parent="GUI/VBoxContainer" instance=ExtResource( 5 )]
+margin_top = 696.0
+margin_bottom = 848.0
+player_icon = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo4/VBoxContainer/PlayerStatus/PlayerIcon")
+lab_health = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo4/VBoxContainer/PlayerStatus/VBoxContainer/HealthLabel")
+lab_bombs = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo4/VBoxContainer/PlayerStatus/VBoxContainer2/BombsLabel")
+lab_baguettes = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo4/VBoxContainer/PlayerStatus/VBoxContainer3/BaguettesLabel")
+lab_speed = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo4/VBoxContainer/ItemContainer/SpeedLabel")
+lab_bomb_range = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo4/VBoxContainer/ItemContainer/RangeLabel")
+lab_explosion_strength = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo4/VBoxContainer/ItemContainer/ExplosionLabel")
+lab_bomb_move = NodePath("../../../../NGame/GUI/VBoxContainer/PlayerInfo4/VBoxContainer/ItemContainer/MoveLabel")
+
+[node name="Foreground" type="CanvasLayer" parent="."]
+
+[node name="SuddenDeath" type="Node2D" parent="Foreground"]
+position = Vector2( 960, 540 )
+scale = Vector2( 0.4, 0.4 )
+
+[node name="SuddenDeathLabel" type="Label" parent="Foreground/SuddenDeath"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -289.5
+margin_top = -48.0
+margin_right = 289.5
+margin_bottom = 48.0
+custom_fonts/font = SubResource( 13 )
+text = "Sudden Death!"
+align = 1
+valign = 1
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+lang_tile = "suddendeath"
+
+[node name="Menu" type="Control" parent="Foreground"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 6 )
+script = SubResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="Foreground/Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Foreground/Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Foreground/Menu/CenterContainer"]
+margin_left = 890.0
+margin_top = 419.0
+margin_right = 1029.0
+margin_bottom = 661.0
+
+[node name="BtnResume" type="Button" parent="Foreground/Menu/CenterContainer/VBoxContainer"]
+margin_right = 139.0
+margin_bottom = 42.0
+focus_neighbour_top = NodePath("../BtnQuit")
+focus_neighbour_bottom = NodePath("../BtnRestart")
+focus_next = NodePath("../BtnRestart")
+focus_previous = NodePath("../BtnQuit")
+mouse_default_cursor_shape = 2
+text = "Resume"
+script = ExtResource( 10 )
+lang_tile = "resume"
+
+[node name="BtnRestart" type="Button" parent="Foreground/Menu/CenterContainer/VBoxContainer"]
+margin_top = 50.0
+margin_right = 139.0
+margin_bottom = 92.0
+focus_neighbour_top = NodePath("../BtnResume")
+focus_neighbour_bottom = NodePath("../BtnSettings")
+focus_next = NodePath("../BtnSettings")
+focus_previous = NodePath("../BtnResume")
+mouse_default_cursor_shape = 2
+text = "Restart"
+script = ExtResource( 10 )
+lang_tile = "restart"
+
+[node name="BtnSettings" type="Button" parent="Foreground/Menu/CenterContainer/VBoxContainer"]
+margin_top = 100.0
+margin_right = 139.0
+margin_bottom = 142.0
+focus_neighbour_top = NodePath("../BtnRestart")
+focus_neighbour_bottom = NodePath("../BtnMenu")
+focus_next = NodePath("../BtnMenu")
+focus_previous = NodePath("../BtnRestart")
+mouse_default_cursor_shape = 2
+text = "Settings"
+script = ExtResource( 10 )
+lang_tile = "settings"
+
+[node name="BtnMenu" type="Button" parent="Foreground/Menu/CenterContainer/VBoxContainer"]
+margin_top = 150.0
+margin_right = 139.0
+margin_bottom = 192.0
+focus_neighbour_top = NodePath("../BtnSettings")
+focus_neighbour_bottom = NodePath("../BtnQuit")
+focus_next = NodePath("../BtnQuit")
+focus_previous = NodePath("../BtnSettings")
+mouse_default_cursor_shape = 2
+text = "Menu"
+script = ExtResource( 10 )
+lang_tile = "menu"
+
+[node name="BtnQuit" type="Button" parent="Foreground/Menu/CenterContainer/VBoxContainer"]
+margin_top = 200.0
+margin_right = 139.0
+margin_bottom = 242.0
+focus_neighbour_top = NodePath("../BtnMenu")
+focus_neighbour_bottom = NodePath("../BtnResume")
+focus_next = NodePath("../BtnResume")
+focus_previous = NodePath("../BtnMenu")
+mouse_default_cursor_shape = 2
+text = "Quit"
+script = ExtResource( 10 )
+lang_tile = "quit"
+
+[node name="GameSummary" type="Control" parent="Foreground"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 6 )
+script = SubResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background2" type="ColorRect" parent="Foreground/GameSummary"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabWinnerMessage" type="Label" parent="Foreground/GameSummary"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -350.0
+margin_top = 200.0
+margin_right = 350.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 700, 0 )
+custom_fonts/font = ExtResource( 17 )
+text = "Player X won!"
+align = 1
+valign = 1
+script = ExtResource( 22 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+lang_tile = "winnermessage"
+
+[node name="Statistics" type="Control" parent="Foreground/GameSummary"]
+anchor_bottom = 1.0
+margin_right = 512.0
+rect_min_size = Vector2( 0, 512 )
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Foreground/GameSummary/Statistics"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Foreground/GameSummary/Statistics/VBoxContainer"]
+margin_right = 512.0
+margin_bottom = 490.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control3" type="Control" parent="Foreground/GameSummary/Statistics/VBoxContainer"]
+margin_top = 590.0
+margin_right = 512.0
+margin_bottom = 1080.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="Foreground/GameSummary"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Foreground/GameSummary/CenterContainer"]
+margin_left = 881.0
+margin_top = 469.0
+margin_right = 1038.0
+margin_bottom = 611.0
+rect_min_size = Vector2( 128, 128 )
+
+[node name="BtnPlay" type="Button" parent="Foreground/GameSummary/CenterContainer/VBoxContainer"]
+margin_right = 157.0
+margin_bottom = 42.0
+mouse_default_cursor_shape = 2
+text = "Play again"
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+lang_tile = "play"
+
+[node name="BtnMenu" type="Button" parent="Foreground/GameSummary/CenterContainer/VBoxContainer"]
+margin_top = 50.0
+margin_right = 157.0
+margin_bottom = 92.0
+mouse_default_cursor_shape = 2
+text = "Menu"
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+lang_tile = "menu"
+
+[node name="BtnQuit" type="Button" parent="Foreground/GameSummary/CenterContainer/VBoxContainer"]
+margin_top = 100.0
+margin_right = 157.0
+margin_bottom = 142.0
+mouse_default_cursor_shape = 2
+text = "Quit"
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+lang_tile = "quit"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/GameSummary"]
+anims/show = SubResource( 15 )
+
+[node name="Elements" type="Node2D" parent="Foreground/GameSummary"]
+position = Vector2( 1629, 540 )
+
+[node name="Rocket" type="Node2D" parent="Foreground/GameSummary/Elements"]
+script = ExtResource( 18 )
+auto_fly_away = true
+
+[node name="RocketFire" parent="Foreground/GameSummary/Elements/Rocket" instance=ExtResource( 19 )]
+material = SubResource( 16 )
+process_material = SubResource( 21 )
+
+[node name="RocketBackground" type="Sprite" parent="Foreground/GameSummary/Elements/Rocket"]
+position = Vector2( 4.0708, 38.3857 )
+texture = ExtResource( 23 )
+
+[node name="PlayerSprite" parent="Foreground/GameSummary/Elements/Rocket" instance=ExtResource( 21 )]
+position = Vector2( 3, 39 )
+
+[node name="Rocket" type="Sprite" parent="Foreground/GameSummary/Elements/Rocket"]
+position = Vector2( 4.0708, 38.3857 )
+texture = ExtResource( 20 )
+
+[node name="WindowCenter" type="Position2D" parent="Foreground/GameSummary/Elements/Rocket"]
+position = Vector2( 3.72058, 8.05499 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/GameSummary/Elements/Rocket"]
+anims/fly_away = SubResource( 22 )
+anims/fly_in = SubResource( 23 )
+anims/flying = SubResource( 24 )
+anims/stop = SubResource( 25 )
+
+[node name="SettingsMenu" parent="Foreground" instance=ExtResource( 11 )]
+visible = false
+margin_bottom = 294.0
+mouse_filter = 1
+
+[node name="Control" type="Control" parent="Foreground/SettingsMenu"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 580.0
+margin_bottom = 521.0
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Foreground/SettingsMenu/Control"]
+margin_right = 560.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 0, 48 )
+rect_clip_content = true
+script = SubResource( 26 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Foreground/SettingsMenu/Control/HBoxContainer"]
+margin_right = 507.0
+margin_bottom = 48.0
+mouse_filter = 1
+size_flags_horizontal = 3
+
+[node name="BtnCloseSettings" type="Button" parent="Foreground/SettingsMenu/Control/HBoxContainer"]
+margin_left = 515.0
+margin_right = 560.0
+margin_bottom = 48.0
+mouse_default_cursor_shape = 2
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera" type="Camera2D" parent="."]
+pause_mode = 1
+position = Vector2( 756, 408 )
+current = true
+script = ExtResource( 7 )
+shake_amplitude = 0.05
+shake_duration = 0.15
+
+[node name="TimerShake" type="Timer" parent="Camera"]
+one_shot = true
+
+[node name="Position1" type="Position2D" parent="."]
+position = Vector2( 0, -16 )
+
+[node name="Position2" type="Position2D" parent="."]
+position = Vector2( 1216, 832 )
+
+[node name="PlayerSpawns" type="Node2D" parent="."]
+pause_mode = 1
+position = Vector2( 64, 64 )
+
+[node name="Spawn1" type="Position2D" parent="PlayerSpawns"]
+position = Vector2( 32, 32 )
+
+[node name="Spawn2" type="Position2D" parent="PlayerSpawns"]
+position = Vector2( 1056, 672 )
+
+[node name="Spawn3" type="Position2D" parent="PlayerSpawns"]
+position = Vector2( 32, 672 )
+
+[node name="Spawn4" type="Position2D" parent="PlayerSpawns"]
+position = Vector2( 1056, 32 )
+
+[node name="Floor" type="TileMap" parent="."]
+tile_set = ExtResource( 8 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 65548, 0, 0, 65549, 0, 0, 65550, 0, 0, 65551, 0, 0, 65552, 0, 0, 65553, 0, 0, 65554, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0, 131084, 0, 0, 131085, 0, 0, 131086, 0, 0, 131087, 0, 0, 131088, 0, 0, 131089, 0, 0, 131090, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0, 196618, 0, 0, 196619, 0, 0, 196620, 0, 0, 196621, 0, 0, 196622, 0, 0, 196623, 0, 0, 196624, 0, 0, 196625, 0, 0, 196626, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 262153, 0, 0, 262154, 0, 0, 262155, 0, 0, 262156, 0, 0, 262157, 0, 0, 262158, 0, 0, 262159, 0, 0, 262160, 0, 0, 262161, 0, 0, 262162, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 327690, 0, 0, 327691, 0, 0, 327692, 0, 0, 327693, 0, 0, 327694, 0, 0, 327695, 0, 0, 327696, 0, 0, 327697, 0, 0, 327698, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 393227, 0, 0, 393228, 0, 0, 393229, 0, 0, 393230, 0, 0, 393231, 0, 0, 393232, 0, 0, 393233, 0, 0, 393234, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0, 458765, 0, 0, 458766, 0, 0, 458767, 0, 0, 458768, 0, 0, 458769, 0, 0, 458770, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 524294, 0, 0, 524295, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0, 524304, 0, 0, 524305, 0, 0, 524306, 0, 0, 589824, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0, 589829, 0, 0, 589830, 0, 0, 589831, 0, 0, 589832, 0, 0, 589833, 0, 0, 589834, 0, 0, 589835, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 589839, 0, 0, 589840, 0, 0, 589841, 0, 0, 589842, 0, 0, 655360, 0, 0, 655361, 0, 0, 655362, 0, 0, 655363, 0, 0, 655364, 0, 0, 655365, 0, 0, 655366, 0, 0, 655367, 0, 0, 655368, 0, 0, 655369, 0, 0, 655370, 0, 0, 655371, 0, 0, 655372, 0, 0, 655373, 0, 0, 655374, 0, 0, 655375, 0, 0, 655376, 0, 0, 655377, 0, 0, 655378, 0, 0, 720896, 0, 0, 720897, 0, 0, 720898, 0, 0, 720899, 0, 0, 720900, 0, 0, 720901, 0, 0, 720902, 0, 0, 720903, 0, 0, 720904, 0, 0, 720905, 0, 0, 720906, 0, 0, 720907, 0, 0, 720908, 0, 0, 720909, 0, 0, 720910, 0, 0, 720911, 0, 0, 720912, 0, 0, 720913, 0, 0, 720914, 0, 0, 786432, 0, 0, 786433, 0, 0, 786434, 0, 0, 786435, 0, 0, 786436, 0, 0, 786437, 0, 0, 786438, 0, 0, 786439, 0, 0, 786440, 0, 0, 786441, 0, 0, 786442, 0, 0, 786443, 0, 0, 786444, 0, 0, 786445, 0, 0, 786446, 0, 0, 786447, 0, 0, 786448, 0, 0, 786449, 0, 0, 786450, 0, 0 )
+
+[node name="Container" type="YSort" parent="."]
+pause_mode = 2
+
+[node name="Crates" type="TileMap" parent="Container"]
+position = Vector2( -1, 0 )
+tile_set = ExtResource( 9 )
+cell_y_sort = true
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 0, 17, 1, 0, 18, 1, 0, 65536, 1, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 65548, 0, 0, 65549, 0, 0, 65550, 0, 0, 65554, 1, 0, 131072, 1, 0, 131074, 1, 0, 131076, 1, 0, 131077, 0, 0, 131078, 1, 0, 131079, 0, 0, 131080, 1, 0, 131081, 0, 0, 131082, 1, 0, 131083, 0, 0, 131084, 1, 0, 131085, 0, 0, 131086, 1, 0, 131088, 1, 0, 131090, 1, 0, 196608, 1, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0, 196618, 0, 0, 196619, 0, 0, 196620, 0, 0, 196621, 0, 0, 196622, 0, 0, 196626, 1, 0, 262144, 1, 0, 262145, 0, 0, 262146, 1, 0, 262147, 0, 0, 262148, 1, 0, 262149, 0, 0, 262150, 1, 0, 262151, 0, 0, 262152, 1, 0, 262153, 0, 0, 262154, 1, 0, 262155, 0, 0, 262156, 1, 0, 262157, 0, 0, 262158, 1, 0, 262159, 0, 0, 262160, 1, 0, 262161, 0, 0, 262162, 1, 0, 327680, 1, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 327690, 0, 0, 327691, 0, 0, 327692, 0, 0, 327693, 0, 0, 327694, 0, 0, 327695, 0, 0, 327696, 0, 0, 327697, 0, 0, 327698, 1, 0, 393216, 1, 0, 393217, 0, 0, 393218, 1, 0, 393219, 0, 0, 393220, 1, 0, 393221, 0, 0, 393222, 1, 0, 393223, 0, 0, 393224, 1, 0, 393225, 0, 0, 393226, 1, 0, 393227, 0, 0, 393228, 1, 0, 393229, 0, 0, 393230, 1, 0, 393231, 0, 0, 393232, 1, 0, 393233, 0, 0, 393234, 1, 0, 458752, 1, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0, 458765, 0, 0, 458766, 0, 0, 458767, 0, 0, 458768, 0, 0, 458769, 0, 0, 458770, 1, 0, 524288, 1, 0, 524289, 0, 0, 524290, 1, 0, 524291, 0, 0, 524292, 1, 0, 524293, 0, 0, 524294, 1, 0, 524295, 0, 0, 524296, 1, 0, 524297, 0, 0, 524298, 1, 0, 524299, 0, 0, 524300, 1, 0, 524301, 0, 0, 524302, 1, 0, 524303, 0, 0, 524304, 1, 0, 524305, 0, 0, 524306, 1, 0, 589824, 1, 0, 589828, 0, 0, 589829, 0, 0, 589830, 0, 0, 589831, 0, 0, 589832, 0, 0, 589833, 0, 0, 589834, 0, 0, 589835, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 589842, 1, 0, 655360, 1, 0, 655362, 1, 0, 655364, 1, 0, 655365, 0, 0, 655366, 1, 0, 655367, 0, 0, 655368, 1, 0, 655369, 0, 0, 655370, 1, 0, 655371, 0, 0, 655372, 1, 0, 655373, 0, 0, 655374, 1, 0, 655376, 1, 0, 655378, 1, 0, 720896, 1, 0, 720900, 0, 0, 720901, 0, 0, 720902, 0, 0, 720903, 0, 0, 720904, 0, 0, 720905, 0, 0, 720906, 0, 0, 720907, 0, 0, 720908, 0, 0, 720909, 0, 0, 720910, 0, 0, 720914, 1, 0, 786432, 1, 0, 786433, 1, 0, 786434, 1, 0, 786435, 1, 0, 786436, 1, 0, 786437, 1, 0, 786438, 1, 0, 786439, 1, 0, 786440, 1, 0, 786441, 1, 0, 786442, 1, 0, 786443, 1, 0, 786444, 1, 0, 786445, 1, 0, 786446, 1, 0, 786447, 1, 0, 786448, 1, 0, 786449, 1, 0, 786450, 1, 0 )
+script = ExtResource( 39 )
+[connection signal="pressed" from="Foreground/Menu/CenterContainer/VBoxContainer/BtnResume" to="." method="_on_BtnResume_pressed"]
+[connection signal="pressed" from="Foreground/Menu/CenterContainer/VBoxContainer/BtnRestart" to="." method="_on_BtnRestart_pressed"]
+[connection signal="pressed" from="Foreground/Menu/CenterContainer/VBoxContainer/BtnSettings" to="." method="_on_BtnSettings_pressed"]
+[connection signal="pressed" from="Foreground/Menu/CenterContainer/VBoxContainer/BtnMenu" to="." method="_on_BtnMenu_pressed"]
+[connection signal="pressed" from="Foreground/Menu/CenterContainer/VBoxContainer/BtnQuit" to="." method="_on_BtnQuit_pressed"]
+[connection signal="pressed" from="Foreground/GameSummary/CenterContainer/VBoxContainer/BtnPlay" to="." method="_on_BtnPlay_pressed"]
+[connection signal="pressed" from="Foreground/GameSummary/CenterContainer/VBoxContainer/BtnMenu" to="." method="_on_BtnMenu_pressed"]
+[connection signal="pressed" from="Foreground/GameSummary/CenterContainer/VBoxContainer/BtnQuit" to="." method="_on_BtnQuit_pressed"]
+[connection signal="animation_finished" from="Foreground/GameSummary/Elements/Rocket/AnimationPlayer" to="Foreground/GameSummary/Elements/Rocket" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="pressed" from="Foreground/SettingsMenu/Control/HBoxContainer/BtnCloseSettings" to="." method="_on_BtnCloseSettings_pressed"]
+[connection signal="timeout" from="Camera/TimerShake" to="Camera" method="_on_TimerShake_timeout"]

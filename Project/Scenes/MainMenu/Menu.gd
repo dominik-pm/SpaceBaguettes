@@ -13,12 +13,16 @@ onready var start_snd2 = $Start2
 
 var help_menu_open = false
 
+var online = false
+
 func _ready():
 	click_snd.stream.loop = false
 	init_main_menu()
 	
 	rocket = get_node(rocket)
 	rocket.fly_in()
+	
+	Network.connect("start_game", self, "_on_network_start")
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
@@ -26,8 +30,12 @@ func _input(event):
 			help_menu.hide()
 		elif conf_menu.visible:
 			conf_menu.hide()
-		else:
+		elif not play_menu.visible:
 			init_main_menu()
+
+func _on_network_start():
+	online = true
+	start_game()
 
 # -- MAIN MENU BUTTONS -->
 func _on_BtnSettings_pressed():
@@ -44,7 +52,6 @@ func _on_BtnPlay_pressed():
 	main_menu.hide()
 	help_menu.hide()
 	conf_menu.hide()
-	$Play/PlayMenu/VBox/Control/BtnStart.grab_focus()
 
 func _on_BtnExit_pressed():
 	Settings.save_settings()
@@ -88,6 +95,8 @@ func init_main_menu():
 	$Main/Buttons/CenterContainer2/BtnPlay.grab_focus()
 
 func start_game():
+	Settings.set_game_binds()
+	Settings.save_settings()
 	start_snd.play()
 	start_snd2.play()
 	$Fade.play("FadeOut")
@@ -96,4 +105,7 @@ func start_game():
 # should also be in main menu
 func _on_Fade_animation_finished(anim_name):
 	if anim_name == "FadeOut":
-		get_tree().change_scene("res://Scenes/Game/Game.tscn")
+		if not online:
+			get_tree().change_scene("res://Scenes/Game/Game.tscn")
+		else:
+			get_tree().change_scene("res://Scenes/NetworkedGame/NGame.tscn")
