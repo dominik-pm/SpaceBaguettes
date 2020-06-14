@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://Scenes/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Music/GameMusic.ogg" type="AudioStream" id=2]
@@ -395,6 +395,17 @@ script/source = "extends HBoxContainer
 
 func _ready():
 	rect_size = Vector2(rect_size.x, 48)
+"
+
+[sub_resource type="GDScript" id=27]
+script/source = "extends Button
+
+func _ready():
+	if not Global.is_mobile:
+		hide()
+
+func _on_Button_pressed():
+	get_parent().get_parent().toggle_pause_menu()
 "
 
 [node name="Game" type="Node2D"]
@@ -1013,6 +1024,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="EscBtn" type="Button" parent="Foreground"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+theme = ExtResource( 6 )
+text = "O"
+script = SubResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Camera" type="Camera2D" parent="."]
 pause_mode = 1
 position = Vector2( 756, 408 )
@@ -1071,4 +1095,5 @@ script = ExtResource( 39 )
 [connection signal="pressed" from="Foreground/GameSummary/CenterContainer/VBoxContainer/BtnQuit" to="." method="_on_BtnQuit_pressed"]
 [connection signal="animation_finished" from="Foreground/GameSummary/Elements/Rocket/AnimationPlayer" to="Foreground/GameSummary/Elements/Rocket" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Foreground/SettingsMenu/Control/HBoxContainer/BtnCloseSettings" to="." method="_on_BtnCloseSettings_pressed"]
+[connection signal="pressed" from="Foreground/EscBtn" to="Foreground/EscBtn" method="_on_Button_pressed"]
 [connection signal="timeout" from="Camera/TimerShake" to="Camera" method="_on_TimerShake_timeout"]

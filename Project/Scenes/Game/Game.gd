@@ -102,13 +102,15 @@ func _on_start_cntdwn_finished():
 
 func _input(event):
 	if event.is_action_pressed("toggle_pause_menu") and not game_summary.visible:
-		if not settings_menu.visible:
-			pause_menu.visible = !pause_menu.visible
-			get_tree().paused = pause_menu.visible
-			$Foreground/Menu/CenterContainer/VBoxContainer/BtnResume.grab_focus()
-		else:
-			settings_menu.hide()
-			$Foreground/Menu/CenterContainer/VBoxContainer/BtnSettings.grab_focus()
+		toggle_pause_menu()
+func toggle_pause_menu():
+	if not settings_menu.visible:
+		pause_menu.visible = !pause_menu.visible
+		get_tree().paused = pause_menu.visible
+		$Foreground/Menu/CenterContainer/VBoxContainer/BtnResume.grab_focus()
+	else:
+		settings_menu.hide()
+		$Foreground/Menu/CenterContainer/VBoxContainer/BtnSettings.grab_focus()
 
 func init_players():
 	var cnt = 0

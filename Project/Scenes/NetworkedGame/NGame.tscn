@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Scenes/NetworkedGame/NGame.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Music/GameMusic.ogg" type="AudioStream" id=2]
@@ -41,20 +41,20 @@
 [ext_resource path="res://Scenes/Game/pathfinding.gd" type="Script" id=39]
 [ext_resource path="res://Scenes/MainMenu/MenuObject.tscn" type="PackedScene" id=40]
 
-[sub_resource type="Environment" id=1]
+[sub_resource type="Environment" id=28]
 background_mode = 4
 glow_enabled = true
 glow_intensity = 1.0
 glow_strength = 1.05
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=29]
 size = 128
 outline_size = 2
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 26 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=30]
 resource_name = "countdown"
 tracks/0/type = "value"
 tracks/0/path = NodePath("CenterControl/Scaler/Label:modulate")
@@ -81,7 +81,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0.5, 0.5 ), Vector2( 1.5, 1.5 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=31]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Music:volume_db")
@@ -96,7 +96,7 @@ tracks/0/keys = {
 "values": [ -5.0, -80.0 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=32]
 resource_name = "StartSuddenDeath"
 length = 2.0
 tracks/0/type = "value"
@@ -124,7 +124,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0.4, 0.4 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=33]
 animations = [ {
 "frames": [ ExtResource( 25 ), ExtResource( 29 ), ExtResource( 34 ), ExtResource( 32 ) ],
 "loop": true,
@@ -132,27 +132,27 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[sub_resource type="GDScript" id=7]
+[sub_resource type="GDScript" id=34]
 script/source = "extends AnimatedSprite
 
 func _ready():
 	play(\"default\")
 "
 
-[sub_resource type="Gradient" id=8]
+[sub_resource type="Gradient" id=35]
 offsets = PoolRealArray( 0, 0.468085, 1 )
 colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
 
-[sub_resource type="GradientTexture" id=9]
-gradient = SubResource( 8 )
+[sub_resource type="GradientTexture" id=36]
+gradient = SubResource( 35 )
 
-[sub_resource type="Curve" id=10]
+[sub_resource type="Curve" id=37]
 _data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=11]
-curve = SubResource( 10 )
+[sub_resource type="CurveTexture" id=38]
+curve = SubResource( 37 )
 
-[sub_resource type="ParticlesMaterial" id=12]
+[sub_resource type="ParticlesMaterial" id=39]
 flag_disable_z = true
 direction = Vector3( 0, 1, 0 )
 spread = 10.0
@@ -163,17 +163,17 @@ orbit_velocity_random = 0.0
 angle = 180.0
 angle_random = 1.0
 scale = 0.08
-scale_curve = SubResource( 11 )
-color_ramp = SubResource( 9 )
+scale_curve = SubResource( 38 )
+color_ramp = SubResource( 36 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=40]
 size = 96
 outline_size = 1
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 26 )
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=41]
 script/source = "extends Control
 
 onready var btn_restart = $CenterContainer/VBoxContainer/BtnRestart
@@ -183,7 +183,7 @@ func _ready():
 		btn_restart.hide()
 "
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=42]
 script/source = "extends Control
 
 onready var lab_message = $LabWinnerMessage
@@ -210,7 +210,7 @@ func show_summary(winner_pid, stats):
 	statistics.show_player_stats(stats)
 "
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=43]
 length = 0.25
 step = 0.05
 tracks/0/type = "value"
@@ -226,23 +226,23 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="CanvasItemMaterial" id=17]
+[sub_resource type="CanvasItemMaterial" id=44]
 blend_mode = 1
 
-[sub_resource type="Gradient" id=18]
+[sub_resource type="Gradient" id=45]
 offsets = PoolRealArray( 0, 0.468085, 1 )
 colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
 
-[sub_resource type="GradientTexture" id=19]
-gradient = SubResource( 18 )
+[sub_resource type="GradientTexture" id=46]
+gradient = SubResource( 45 )
 
-[sub_resource type="Curve" id=20]
+[sub_resource type="Curve" id=47]
 _data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=21]
-curve = SubResource( 20 )
+[sub_resource type="CurveTexture" id=48]
+curve = SubResource( 47 )
 
-[sub_resource type="ParticlesMaterial" id=22]
+[sub_resource type="ParticlesMaterial" id=49]
 flag_disable_z = true
 direction = Vector3( 0, 1, 0 )
 spread = 10.0
@@ -253,10 +253,10 @@ orbit_velocity_random = 0.0
 angle = 180.0
 angle_random = 1.0
 scale = 0.18
-scale_curve = SubResource( 21 )
-color_ramp = SubResource( 19 )
+scale_curve = SubResource( 48 )
+color_ramp = SubResource( 46 )
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=50]
 length = 2.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -291,7 +291,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=51]
 length = 3.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -326,7 +326,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=52]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -366,7 +366,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=53]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
@@ -404,11 +404,22 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="GDScript" id=27]
+[sub_resource type="GDScript" id=54]
 script/source = "extends HBoxContainer
 
 func _ready():
 	rect_size = Vector2(rect_size.x, 48)
+"
+
+[sub_resource type="GDScript" id=27]
+script/source = "extends Button
+
+func _ready():
+	if not Global.is_mobile:
+		hide()
+
+func _on_Button_pressed():
+	get_parent().get_parent().toggle_pause_menu()
 "
 
 [node name="NGame" type="Node2D"]
@@ -419,7 +430,7 @@ game_summary_path = NodePath("Foreground/GameSummary")
 gui_path = NodePath("GUI")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 1 )
+environment = SubResource( 28 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
@@ -464,7 +475,7 @@ margin_top = -75.0
 margin_right = 200.0
 margin_bottom = 75.0
 size_flags_horizontal = 4
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 29 )
 text = "start"
 align = 1
 valign = 1
@@ -474,7 +485,7 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="StartCountdown"]
-anims/countdown = SubResource( 3 )
+anims/countdown = SubResource( 30 )
 
 [node name="Tick" type="AudioStreamPlayer" parent="StartCountdown"]
 stream = ExtResource( 24 )
@@ -482,8 +493,8 @@ volume_db = -5.0
 bus = "Sound"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/GameOver = SubResource( 4 )
-anims/StartSuddenDeath = SubResource( 5 )
+anims/GameOver = SubResource( 31 )
+anims/StartSuddenDeath = SubResource( 32 )
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -100
@@ -619,8 +630,8 @@ speed = 60
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="BGObjects/MidgroundStill/Comet"]
 scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 6 )
-script = SubResource( 7 )
+frames = SubResource( 33 )
+script = SubResource( 34 )
 
 [node name="Comet2" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
 position = Vector2( -246.26, 2005 )
@@ -634,8 +645,8 @@ speed = 65
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="BGObjects/MidgroundStill/Comet2"]
 scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 6 )
-script = SubResource( 7 )
+frames = SubResource( 33 )
+script = SubResource( 34 )
 
 [node name="Rocket" parent="BGObjects/MidgroundStill" instance=ExtResource( 40 )]
 position = Vector2( -728, 1224 )
@@ -649,7 +660,7 @@ speed = -60
 
 [node name="RocketFire" parent="BGObjects/MidgroundStill/Rocket" instance=ExtResource( 19 )]
 position = Vector2( 1.16051, 147.48 )
-process_material = SubResource( 12 )
+process_material = SubResource( 39 )
 
 [node name="Sprite" type="Sprite" parent="BGObjects/MidgroundStill/Rocket"]
 texture = ExtResource( 35 )
@@ -754,7 +765,7 @@ margin_left = -289.5
 margin_top = -48.0
 margin_right = 289.5
 margin_bottom = 48.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 40 )
 text = "Sudden Death!"
 align = 1
 valign = 1
@@ -770,7 +781,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 6 )
-script = SubResource( 14 )
+script = SubResource( 41 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -866,7 +877,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 6 )
-script = SubResource( 15 )
+script = SubResource( 42 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -981,7 +992,7 @@ __meta__ = {
 lang_tile = "quit"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/GameSummary"]
-anims/show = SubResource( 16 )
+anims/show = SubResource( 43 )
 
 [node name="Elements" type="Node2D" parent="Foreground/GameSummary"]
 position = Vector2( 1629, 540 )
@@ -991,8 +1002,8 @@ script = ExtResource( 18 )
 auto_fly_away = true
 
 [node name="RocketFire" parent="Foreground/GameSummary/Elements/Rocket" instance=ExtResource( 19 )]
-material = SubResource( 17 )
-process_material = SubResource( 22 )
+material = SubResource( 44 )
+process_material = SubResource( 49 )
 
 [node name="RocketBackground" type="Sprite" parent="Foreground/GameSummary/Elements/Rocket"]
 position = Vector2( 4.0708, 38.3857 )
@@ -1009,10 +1020,10 @@ texture = ExtResource( 20 )
 position = Vector2( 3.72058, 8.05499 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/GameSummary/Elements/Rocket"]
-anims/fly_away = SubResource( 23 )
-anims/fly_in = SubResource( 24 )
-anims/flying = SubResource( 25 )
-anims/stop = SubResource( 26 )
+anims/fly_away = SubResource( 50 )
+anims/fly_in = SubResource( 51 )
+anims/flying = SubResource( 52 )
+anims/stop = SubResource( 53 )
 
 [node name="SettingsMenu" parent="Foreground" instance=ExtResource( 11 )]
 visible = false
@@ -1031,7 +1042,7 @@ margin_right = 560.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 0, 48 )
 rect_clip_content = true
-script = SubResource( 27 )
+script = SubResource( 54 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1048,6 +1059,19 @@ margin_right = 560.0
 margin_bottom = 48.0
 mouse_default_cursor_shape = 2
 text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EscBtn" type="Button" parent="Foreground"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+theme = ExtResource( 6 )
+text = "O"
+script = SubResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1110,4 +1134,5 @@ script = ExtResource( 39 )
 [connection signal="pressed" from="Foreground/GameSummary/CenterContainer/VBoxContainer/BtnQuit" to="." method="_on_BtnQuit_pressed"]
 [connection signal="animation_finished" from="Foreground/GameSummary/Elements/Rocket/AnimationPlayer" to="Foreground/GameSummary/Elements/Rocket" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Foreground/SettingsMenu/Control/HBoxContainer/BtnCloseSettings" to="." method="_on_BtnCloseSettings_pressed"]
+[connection signal="pressed" from="Foreground/EscBtn" to="Foreground/EscBtn" method="_on_Button_pressed"]
 [connection signal="timeout" from="Camera/TimerShake" to="Camera" method="_on_TimerShake_timeout"]

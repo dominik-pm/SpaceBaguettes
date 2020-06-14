@@ -121,6 +121,7 @@ func _on_player_disconnected(id):
 	elif id == 1:
 		# server closed
 		print("server closed")
+		close_connection()
 		emit_signal("server_closed")
 
 
