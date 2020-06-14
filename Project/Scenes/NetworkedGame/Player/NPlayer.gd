@@ -153,13 +153,13 @@ func apply_movement(accel):
 func _input(event):
 	if is_network_master() and is_alive:
 		
-		if (event.is_action_pressed("1set_bomb") or Input.is_action_pressed("1set_bomb_gp") or touchscreen.is_bomb_pressed())):
+		if (event.is_action_pressed("1set_bomb") or Input.is_action_pressed("1set_bomb_gp") or touchscreen.is_bomb_pressed()):
 			if bombs_active < max_bombs:
 				if not on_bomb:
 					on_bomb = true
 					rpc("place_bomb")
 		
-		if (event.is_action_pressed("1shoot") or Input.is_action_pressed("1shoot_gp") or touchscreen.is_shoot_pressed())) and can_shoot and baguette_count > 0:
+		if (event.is_action_pressed("1shoot") or Input.is_action_pressed("1shoot_gp") or touchscreen.is_shoot_pressed()) and can_shoot and baguette_count > 0:
 			can_shoot = false
 			shooting_delay_timer.start()
 			var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
