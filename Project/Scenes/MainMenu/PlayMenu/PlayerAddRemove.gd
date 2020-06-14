@@ -17,7 +17,12 @@ export (NodePath) var menu
 
 func _ready():
 	menu = get_node(menu)
+	
+	if Global.is_mobile:
+		is_bot = true
+	
 	make_bot(is_bot)
+	
 	if int(pid) > 2:
 		btn_add = get_node("BtnAdd")
 		btn_bot = get_node("Container/Icons/HBoxContainer/BtnMakeBot")
@@ -43,13 +48,16 @@ func add_player():
 	name_input.show()
 	btn_add.hide()
 	btn_rem.grab_focus()
+	if Global.is_mobile:
+		make_bot(true)
 
 func _on_BtnRemove_pressed():
 	remove_player()
 
 func _on_BtnMakeBot_pressed():
-	is_bot = !is_bot
-	make_bot(is_bot)
+	if not Global.is_mobile:
+		is_bot = !is_bot
+		make_bot(is_bot)
 
 func _on_BtnAdd_pressed():
 	add_player()

@@ -14,6 +14,10 @@ func _ready():
 		get_node("VBox/PlayerSelect/Player3/PlayerNameInput"),
 		get_node("VBox/PlayerSelect/Player4/PlayerNameInput")
 	]
+	
+	if Global.is_mobile:
+		for c in $VBox/PlayerSelect.get_children():
+			c.get_node("Container/Keys").hide()
 
 func show():
 	visible = true

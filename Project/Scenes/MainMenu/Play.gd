@@ -44,9 +44,7 @@ func _input(event):
 		if menu.visible:
 			get_parent()._on_BtnBack_pressed()
 		elif online.visible:
-			online.hide()
-			init_menu()
-			Network.close_connection()
+			close_online_menu()
 		else:
 			init_menu()
 
@@ -88,6 +86,10 @@ func _on_join_pressed():
 	else:
 		name_input.modulate = Color(1, 0, 0)
 
+func close_online_menu():
+	online.hide()
+	init_menu()
+	Network.close_connection()
 
 func check_ip(ip):
 	if ip in ["localhost", "l", ""]:

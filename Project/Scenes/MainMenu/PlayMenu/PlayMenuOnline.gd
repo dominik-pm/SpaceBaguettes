@@ -93,3 +93,6 @@ func check_name(s : String):
 	
 	# return the string
 	return s
+
+func _on_BtnDisconnect_pressed():
+	get_parent().close_online_menu()

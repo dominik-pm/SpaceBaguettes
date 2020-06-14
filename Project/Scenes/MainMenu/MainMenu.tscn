@@ -877,6 +877,7 @@ __meta__ = {
 }
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -982,6 +983,8 @@ margin_bottom = 64.0
 focus_next = NodePath("../../OnlineContainer/BtnContainer/Host")
 focus_previous = NodePath("../../../../BackButton/CenterContainer/BtnBack")
 text = "Play Offline"
+script = ExtResource( 46 )
+lang_tile = "play_offline"
 
 [node name="Divider" type="ColorRect" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer"]
 margin_top = 114.0
@@ -1008,6 +1011,8 @@ margin_bottom = 64.0
 focus_next = NodePath("../Join")
 size_flags_horizontal = 3
 text = "Host Game"
+script = ExtResource( 46 )
+lang_tile = "host"
 
 [node name="Join" type="Button" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer/BtnContainer"]
 margin_left = 405.0
@@ -1016,6 +1021,8 @@ margin_bottom = 64.0
 focus_next = NodePath("../../NameInput")
 size_flags_horizontal = 3
 text = "Join Game"
+script = ExtResource( 46 )
+lang_tile = "join"
 
 [node name="NameInput" type="LineEdit" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer"]
 margin_top = 72.0
@@ -1140,7 +1147,6 @@ size_flags_vertical = 3
 focus_next = NodePath("../../../../../BackButton/CenterContainer/BtnBack")
 
 [node name="ConfigMenu" type="PanelContainer" parent="Foreground/Menu"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1160,7 +1166,7 @@ margin_right = 916.0
 margin_bottom = 532.0
 
 [node name="ConfigMenu" type="VBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer"]
-margin_right = 896.0
+margin_right = 884.0
 margin_bottom = 526.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

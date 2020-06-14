@@ -39,6 +39,10 @@ var lang_english = {
 	"play": "Play",
 	"menu": "Menu",
 	"quit": "Quit",
+	"disconnect": "Disconnect",
+	"play_offline": "Play Offline",
+	"host": "Host Game",
+	"join": "Join Game",
 	# Game
 	"winnermessage": "won!",
 	"suddendeath": "Sudden Death!",
@@ -84,19 +88,23 @@ var lang_german = {
 	"play": "Spielen",
 	"menu": "Menü",
 	"quit": "Verlassen",
+	"disconnect": "Verbindung trennen",
+	"play_offline": "Offline Spielen",
+	"host": "Spiel Hosten",
+	"join": "Spiel Beitreten",
 	# Game
 	"winnermessage": "hat gewonnen!",
 	"suddendeath": "Sudden Death!",
 	# Configuration
-	"last": 			"last",
-	"default": 			"default",
-	"itemdroprate": 	"Item Drop Probability (Per Box):",
-	"percentage": 		"Percentage",
-	"itemdropraterel": 	"Item Drop Probability (Relative):",
-	"playerconfig": 	"Player Configuration:",
-	"maxhealth": 		"Max Health",
-	"startbaguettes": 	"Baguettes to Start",
-	"startbombs":		"Bombs to Start"
+	"last": 			"Letztes",
+	"default": 			"Standard",
+	"itemdroprate": 	"Item-Dropchance (Pro Kiste):",
+	"percentage": 		"Prozent",
+	"itemdropraterel": 	"Item Dropchance (relativ zueinander):",
+	"playerconfig": 	"Spieler Konfiguration:",
+	"maxhealth": 		"Maximale Lebenspunkte",
+	"startbaguettes": 	"Baguettes am Start",
+	"startbombs":		"Bomben am Start"
 }
 
 var lang_french = {
@@ -130,6 +138,10 @@ var lang_french = {
 	"play": "jouer",
 	"menu": "menu",
 	"quit": "quittez",
+	"disconnect": "déconnecter",
+	"play_offline": "jouer hors ligne",
+	"host": "animer un jeu",
+	"join": "rejoindre le jeu",
 	# Game
 	"winnermessage": "a gagné!",
 	"suddendeath": "Sudden Death!",

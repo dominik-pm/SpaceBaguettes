@@ -13,7 +13,6 @@ onready var particles_damage = $Particles2D
 
 # item relevant variables
 var bombs_active = 0
-var can_place_bomb = false
 var can_shoot = false
 var on_bomb = false
 
@@ -63,7 +62,6 @@ func init(pos, p, f, g, nid):
 
 func start():
 	can_shoot = true
-	can_place_bomb = true
 	game_started = true
 
 func init_gui():
@@ -149,12 +147,11 @@ func apply_movement(accel):
 func _input(event):
 	if is_network_master() and is_alive:
 		
-		if (event.is_action_pressed("1set_bomb") or Input.is_action_pressed("1set_bomb_gp")) and can_place_bomb:
-			if not on_bomb:
-				on_bomb = true
-				if bombs_active >= max_bombs:
-					can_place_bomb = false
-				rpc("place_bomb")
+		if (event.is_action_pressed("1set_bomb") or Input.is_action_pressed("1set_bomb_gp")):
+			if bombs_active < max_bombs:
+				if not on_bomb:
+					on_bomb = true
+					rpc("place_bomb")
 		
 		if (event.is_action_pressed("1shoot") or Input.is_action_pressed("1shoot_gp")) and can_shoot and baguette_count > 0:
 			can_shoot = false
@@ -188,7 +185,6 @@ sync func shoot(pos):
 # when one of current bombs explode
 func bomb_exploded():
 	bombs_active -= 1
-	can_place_bomb = true
 	game.update_current_bombs(int(pid), max_bombs-bombs_active)
 
 #if item gets picked up

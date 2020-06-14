@@ -13,7 +13,6 @@ onready var particles_damage = $Particles2D
 
 # item relevant variables
 var bombs_active = 0
-var can_place_bomb = false
 var can_shoot = false
 var on_bomb = false
 
@@ -59,7 +58,6 @@ func init(pos, p, f, g):
 
 func start():
 	can_shoot = true
-	can_place_bomb = true
 	game_started = true
 
 func init_gui():
@@ -138,14 +136,13 @@ func apply_movement(accel):
 	motion = motion.clamped(speed)
 
 func _input(event):
-	if (event.is_action_pressed(pid+"set_bomb") or Input.is_action_pressed(pid + "set_bomb_gp") or touchscreen.is_bomb_pressed()) and can_place_bomb:
-		if not on_bomb:
-			on_bomb = true
-			bombs_active += 1
-			if bombs_active >= max_bombs:
-				can_place_bomb = false
-			game.update_current_bombs(int(pid), max_bombs-bombs_active)
-			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
+	if (event.is_action_pressed(pid+"set_bomb") or Input.is_action_pressed(pid + "set_bomb_gp") or touchscreen.is_bomb_pressed()):
+		if bombs_active < max_bombs:
+			if not on_bomb:
+				on_bomb = true
+				bombs_active += 1
+				game.update_current_bombs(int(pid), max_bombs-bombs_active)
+				get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
 	
 	if (event.is_action_pressed(pid+"shoot") or Input.is_action_pressed(pid + "shoot_gp") or touchscreen.is_shoot_pressed()) and can_shoot and baguette_count > 0:
 		can_shoot = false
@@ -174,7 +171,6 @@ func shoot(pos, player_pos):
 # when one of current bombs explode
 func bomb_exploded():
 	bombs_active -= 1
-	can_place_bomb = true
 	game.update_current_bombs(int(pid), max_bombs-bombs_active)
 
 #if item gets picked up

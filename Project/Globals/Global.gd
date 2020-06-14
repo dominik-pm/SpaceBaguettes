@@ -43,4 +43,3 @@ var is_mobile = false
 func _ready():
 	if OS.has_touchscreen_ui_hint():
 		is_mobile = true
-		#is_mobile = false

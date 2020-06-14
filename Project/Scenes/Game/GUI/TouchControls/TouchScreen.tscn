@@ -13,6 +13,7 @@
 radius = 256.0
 
 [node name="TouchScreen" type="HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.25 )
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
