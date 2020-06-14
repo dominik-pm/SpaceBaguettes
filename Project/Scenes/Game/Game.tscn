@@ -403,6 +403,8 @@ script/source = "extends Button
 func _ready():
 	if not Global.is_mobile:
 		hide()
+	else:
+		show()
 
 func _on_Button_pressed():
 	get_parent().get_parent().toggle_pause_menu()
@@ -1025,6 +1027,7 @@ __meta__ = {
 }
 
 [node name="EscBtn" type="Button" parent="Foreground"]
+visible = false
 margin_left = 50.0
 margin_top = 50.0
 margin_right = 64.0

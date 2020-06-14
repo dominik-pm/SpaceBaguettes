@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const NETWORK_ERROR_DISTANCE = 10
+const NETWORK_ERROR_DISTANCE = 5
 
 onready var touchscreen = $CanvasLayer/TouchScreen
 
