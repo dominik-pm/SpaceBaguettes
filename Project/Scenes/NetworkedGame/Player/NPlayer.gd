@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 const NETWORK_ERROR_DISTANCE = 10
 
+onready var touchscreen = $CanvasLayer/TouchScreen
+
 onready var anim_player = $AnimationPlayer
 onready var anim = $PlayerSprite
 onready var hitbox = $HitBox
@@ -101,6 +103,10 @@ func _process(delta):
 
 # returns which direction the player is going to go
 func get_input_axis():
+	# if on mobile, get the input from the touchscreen
+	if Global.is_mobile:
+		return touchscreen.get_dir()
+	
 	var axis = Vector2.ZERO
 	
 	if Input.is_action_just_pressed("1move_forward") or Input.is_action_just_pressed("1move_forward_gp"):
@@ -147,13 +153,13 @@ func apply_movement(accel):
 func _input(event):
 	if is_network_master() and is_alive:
 		
-		if (event.is_action_pressed("1set_bomb") or Input.is_action_pressed("1set_bomb_gp")):
+		if (event.is_action_pressed("1set_bomb") or Input.is_action_pressed("1set_bomb_gp") or touchscreen.is_bomb_pressed())):
 			if bombs_active < max_bombs:
 				if not on_bomb:
 					on_bomb = true
 					rpc("place_bomb")
 		
-		if (event.is_action_pressed("1shoot") or Input.is_action_pressed("1shoot_gp")) and can_shoot and baguette_count > 0:
+		if (event.is_action_pressed("1shoot") or Input.is_action_pressed("1shoot_gp") or touchscreen.is_shoot_pressed())) and can_shoot and baguette_count > 0:
 			can_shoot = false
 			shooting_delay_timer.start()
 			var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
