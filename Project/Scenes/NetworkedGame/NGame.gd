@@ -81,21 +81,36 @@ func _ready():
 	for p in players:
 		p.init_gui()
 	
-	$StartCountdown.start_countdown()
 	$StartCountdown.connect("countdown_finished", self, "_on_start_cntdwn_finished")
 	
-	Network.connect("start_game", self, "_on_network_restart")
+	Network.connect("start_countdown", self, "_on_game_start")
+	Network.connect("restart_game", self, "_on_network_restart")
+	Network.connect("server_closed", self, "_on_server_closed")
 	Network.connect("update_connections", self, "_on_network_update")
 	
 	init_stats()
+	
+	if Network.local_id != 1:
+		Network.rpc_id(1, "player_ready", Network.local_id)
+	else:
+		Network.player_ready(Network.local_id)
+
+func _on_game_start():
+	$StartCountdown.start_countdown()
 
 func _on_network_restart():
 	# restarting game
 	get_tree().change_scene("res://Scenes/NetworkedGame/NGame.tscn")
 
+func _on_server_closed():
+	Network.close_connection()
+	print("changing to menu...")
+	get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
+
 func _on_network_update(players):
 	if players.size() <= 1:
 		Network.close_connection()
+		print("changing to menu...")
 		get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
 
 func init_stats():

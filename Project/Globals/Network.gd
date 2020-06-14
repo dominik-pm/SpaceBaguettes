@@ -8,10 +8,16 @@ var nickname = ""
 
 var connected_players = {}
 
+# for the server
+var ready_players = []
+var ready_timeout = null
+
 signal update_connections
 signal server_closed
 signal failed_to_join
 signal start_game
+signal restart_game
+signal start_countdown
 
 func _ready():
 	get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
@@ -20,6 +26,13 @@ func _ready():
 	get_tree().connect('connection_failed', self, '_connection_failed')
 	
 	get_tree().set_auto_accept_quit(false)
+	
+	ready_timeout = Timer.new()
+	add_child(ready_timeout)
+	ready_timeout.autostart = true
+	ready_timeout.one_shot = true
+	ready_timeout.wait_time = 10.0
+	ready_timeout.connect("timeout", self, "_on_ready_timout")
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
@@ -38,7 +51,8 @@ func host_game(nn):
 		local_id = get_tree().get_network_unique_id()
 		
 		print("opened server!")
-		ip = "unknown" # maybe get it somehow (idk)
+		var addr = IP.get_local_addresses()
+		ip = addr[1]
 		
 		connected_players[local_id] = str(nn)
 		update_connections(connected_players)
@@ -61,19 +75,23 @@ func join_game(nn, address):
 		print("failed to join to server: " + str(err))
 
 func close_connection():
+	connected_players = {}
 	if peer != null:
-		rpc("server_closed")
+		if local_id == 1:
+			rpc("server_closed")
+		yield(get_tree().create_timer(0.5), "timeout")
 		peer.close_connection()
 		print("closed connection")
 
 func start_game():
-	if connected_players.size() > 1:
-		print("starting game!")
-		peer.refuse_new_connections = true
-		rpc("start", connected_players)
-	else:
-		rpc("start", connected_players)
-		print("not enough players")
+	if local_id == 1:
+		if connected_players.size() > 1:
+			print("loading game!")
+			ready_timeout.start()
+			peer.refuse_new_connections = true
+			rpc("start", connected_players)
+		else:
+			print("not enough players")
 
 func restart_game():
 	if local_id == 1:
@@ -91,18 +109,19 @@ func _connected_to_server():
 func _connection_failed():
 	print("Connection failed!")
 func _on_player_connected(id):
-	if id == 1:
-		# server closed
-		print("server closed")
-		emit_signal("server_closed")
+	pass
 func _on_player_disconnected(id):
+	print(str(id) + " disconnected!")
 	if local_id == 1:
+		print("client disconnected!")
 		connected_players.erase(id)
 		if connected_players.size() < 4:
 			peer.refuse_new_connections = false
 		rpc("update_connections", connected_players)
-	else:
-		pass
+	elif id == 1:
+		# server closed
+		print("server closed")
+		emit_signal("server_closed")
 
 
 # TO SERVER CALLED
@@ -113,16 +132,33 @@ remote func client_connected(id, nn):
 		peer.refuse_new_connections = true
 	rpc("update_connections", connected_players)
 
+remote func player_ready(id):
+	ready_players.push_back(id)
+	if ready_players.size() == connected_players.size():
+		ready_players = []
+		ready_timeout.stop()
+		print("telling all to start countdown")
+		rpc("start_countdown")
+func _on_ready_timout():
+	for id in connected_players:
+		if not ready_players.has(id):
+			print(connected_players[id] + " couldnt load game!")
+			close_connection()
+
 # TO CLIENTS
 remote func server_closed():
 	print("server closed")
-	peer.close_connection()
 	emit_signal("server_closed")
+	connected_players = {}
+	if peer != null:
+		peer.close_connection()
 
 # TO EVERYONE (INCLUDING HOST)
-sync func restart():
-	emit_signal("start_game")
-sync func start(players):
+remotesync func start_countdown():
+	emit_signal("start_countdown")
+remotesync func restart():
+	emit_signal("restart_game")
+remotesync func start(players):
 	connected_players = players
 	
 	# init playing
@@ -137,6 +173,6 @@ sync func start(players):
 		Global.player_names[j+i] = "-"
 	# change scene
 	emit_signal("start_game")
-sync func update_connections(players):
+remotesync func update_connections(players):
 	connected_players = players
 	emit_signal("update_connections", connected_players)

@@ -147,7 +147,7 @@ func apply_movement(accel):
 	motion = motion.clamped(speed)
 
 func _input(event):
-	if is_network_master():
+	if is_network_master() and is_alive:
 		
 		if (event.is_action_pressed("1set_bomb") or Input.is_action_pressed("1set_bomb_gp")) and can_place_bomb:
 			if not on_bomb:

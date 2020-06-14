@@ -1,6 +1,7 @@
 extends Control
 
 onready var status = $VBox/HBoxContainer/Status
+onready var btn_start = $VBox/Control/BtnStart
 
 var player_containers
 var all_entries = {}
@@ -14,19 +15,19 @@ func _ready():
 	]
 	
 	Network.connect("update_connections", self, "_on_network_update")
-	$VBox/Control/BtnStart.hide()
 
 func show():
 	status.text = "Connecting..."
 	visible = true
-	if Network.local_id == 1:
-		$VBox/Control/BtnStart.grab_focus()
+	btn_start.hide() # hide it as default
 
 func _on_network_update(players):
 	# show status
 	if Network.local_id == 1:
+		# show start when we are the server and there are enough players
+		if Network.connected_players.size() > 1: 	btn_start.show()
+		else: 										btn_start.hide()
 		status.text = "Hosting Game at: " + Network.get_ip()
-		$VBox/Control/BtnStart.show()
 	else:
 		status.text = "Connected at: " + Network.get_ip()
 	

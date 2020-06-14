@@ -32,6 +32,7 @@ func init_menu():
 		online.hide()
 
 func _on_server_closed():
+	online.hide()
 	init_menu()
 
 func _on_network_failed():

@@ -173,7 +173,7 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 26 )
 
-[sub_resource type="GDScript" id=27]
+[sub_resource type="GDScript" id=14]
 script/source = "extends Control
 
 onready var btn_restart = $CenterContainer/VBoxContainer/BtnRestart
@@ -183,7 +183,7 @@ func _ready():
 		btn_restart.hide()
 "
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=15]
 script/source = "extends Control
 
 onready var lab_message = $LabWinnerMessage
@@ -210,7 +210,7 @@ func show_summary(winner_pid, stats):
 	statistics.show_player_stats(stats)
 "
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=16]
 length = 0.25
 step = 0.05
 tracks/0/type = "value"
@@ -226,23 +226,23 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="CanvasItemMaterial" id=16]
+[sub_resource type="CanvasItemMaterial" id=17]
 blend_mode = 1
 
-[sub_resource type="Gradient" id=17]
+[sub_resource type="Gradient" id=18]
 offsets = PoolRealArray( 0, 0.468085, 1 )
 colors = PoolColorArray( 0.841309, 0.18075, 0.18075, 1, 1, 0.319336, 0, 1, 1, 0.928711, 0, 0 )
 
-[sub_resource type="GradientTexture" id=18]
-gradient = SubResource( 17 )
+[sub_resource type="GradientTexture" id=19]
+gradient = SubResource( 18 )
 
-[sub_resource type="Curve" id=19]
+[sub_resource type="Curve" id=20]
 _data = [ Vector2( 0.00609757, 1 ), 0.0, 0.181926, 0, 0, Vector2( 1, 0.265909 ), 0.0993939, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=20]
-curve = SubResource( 19 )
+[sub_resource type="CurveTexture" id=21]
+curve = SubResource( 20 )
 
-[sub_resource type="ParticlesMaterial" id=21]
+[sub_resource type="ParticlesMaterial" id=22]
 flag_disable_z = true
 direction = Vector3( 0, 1, 0 )
 spread = 10.0
@@ -253,10 +253,10 @@ orbit_velocity_random = 0.0
 angle = 180.0
 angle_random = 1.0
 scale = 0.18
-scale_curve = SubResource( 20 )
-color_ramp = SubResource( 18 )
+scale_curve = SubResource( 21 )
+color_ramp = SubResource( 19 )
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=23]
 length = 2.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -291,7 +291,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=24]
 length = 3.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -326,7 +326,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=25]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -366,7 +366,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=26]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
@@ -404,7 +404,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="GDScript" id=26]
+[sub_resource type="GDScript" id=27]
 script/source = "extends HBoxContainer
 
 func _ready():
@@ -770,7 +770,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 6 )
-script = SubResource( 27 )
+script = SubResource( 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -865,7 +865,7 @@ pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 6 )
-script = SubResource( 14 )
+script = SubResource( 15 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -980,7 +980,7 @@ __meta__ = {
 lang_tile = "quit"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/GameSummary"]
-anims/show = SubResource( 15 )
+anims/show = SubResource( 16 )
 
 [node name="Elements" type="Node2D" parent="Foreground/GameSummary"]
 position = Vector2( 1629, 540 )
@@ -990,8 +990,8 @@ script = ExtResource( 18 )
 auto_fly_away = true
 
 [node name="RocketFire" parent="Foreground/GameSummary/Elements/Rocket" instance=ExtResource( 19 )]
-material = SubResource( 16 )
-process_material = SubResource( 21 )
+material = SubResource( 17 )
+process_material = SubResource( 22 )
 
 [node name="RocketBackground" type="Sprite" parent="Foreground/GameSummary/Elements/Rocket"]
 position = Vector2( 4.0708, 38.3857 )
@@ -1008,10 +1008,10 @@ texture = ExtResource( 20 )
 position = Vector2( 3.72058, 8.05499 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/GameSummary/Elements/Rocket"]
-anims/fly_away = SubResource( 22 )
-anims/fly_in = SubResource( 23 )
-anims/flying = SubResource( 24 )
-anims/stop = SubResource( 25 )
+anims/fly_away = SubResource( 23 )
+anims/fly_in = SubResource( 24 )
+anims/flying = SubResource( 25 )
+anims/stop = SubResource( 26 )
 
 [node name="SettingsMenu" parent="Foreground" instance=ExtResource( 11 )]
 visible = false
@@ -1030,7 +1030,7 @@ margin_right = 560.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 0, 48 )
 rect_clip_content = true
-script = SubResource( 26 )
+script = SubResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
