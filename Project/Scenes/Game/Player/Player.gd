@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+onready var touchscreen = $CanvasLayer/TouchScreen
+
 onready var anim_player = $AnimationPlayer
 onready var anim = $PlayerSprite
 onready var hitbox = $HitBox
@@ -88,6 +90,10 @@ func _process(delta):
 
 # returns which direction the player is going to go
 func get_input_axis():
+	# if on mobile, get the input from the touchscreen
+	if Global.is_mobile:
+		return touchscreen.get_dir()
+	
 	var axis = Vector2.ZERO
 	
 	if Input.is_action_just_pressed(pid + "move_forward") or Input.is_action_just_pressed(pid + "move_forward_gp"):
@@ -132,7 +138,7 @@ func apply_movement(accel):
 	motion = motion.clamped(speed)
 
 func _input(event):
-	if (event.is_action_pressed(pid+"set_bomb") or Input.is_action_pressed(pid + "set_bomb_gp")) and can_place_bomb:
+	if (event.is_action_pressed(pid+"set_bomb") or Input.is_action_pressed(pid + "set_bomb_gp") or touchscreen.is_bomb_pressed()) and can_place_bomb:
 		if not on_bomb:
 			on_bomb = true
 			bombs_active += 1
@@ -141,7 +147,7 @@ func _input(event):
 			game.update_current_bombs(int(pid), max_bombs-bombs_active)
 			get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
 	
-	if (event.is_action_pressed(pid+"shoot") or Input.is_action_pressed(pid + "shoot_gp")) and can_shoot and baguette_count > 0:
+	if (event.is_action_pressed(pid+"shoot") or Input.is_action_pressed(pid + "shoot_gp") or touchscreen.is_shoot_pressed()) and can_shoot and baguette_count > 0:
 		can_shoot = false
 		baguette_count -= 1
 		game.update_info(int(pid), Items.BAGUETTES, baguette_count)

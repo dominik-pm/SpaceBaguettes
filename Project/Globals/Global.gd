@@ -37,3 +37,10 @@ var starting_baguettes = 3
 var bomb_explosion_time = 2.5
 var bomb_explosion_duration = 1
 # -- --
+
+var is_mobile = false
+
+func _ready():
+	if OS.has_touchscreen_ui_hint():
+		is_mobile = true
+		#is_mobile = false
