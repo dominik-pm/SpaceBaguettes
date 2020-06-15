@@ -45,11 +45,22 @@ func _request_public_ip():
 	http.request("https://api.ipify.org/?format=json")
 	
 func open_port():
-	var upnp = UPNP.new()
-	upnp.discover()
-	upnp.add_port_mapping(PORT, PORT, "SpaceBaguettes", "TCP")
-	upnp.add_port_mapping(PORT, PORT, "SpaceBaguettes", "UDP")
-	port_open = true
+	if not port_open:
+		
+		var upnp = UPNP.new()
+		upnp.discover()
+		
+		var gateway = upnp.get_gateway()
+		if gateway == null:
+			gateway = upnp.get_device(0)
+			if gateway == null:
+				print("no gateway found")
+				return
+		
+		upnp.add_port_mapping(PORT, PORT, "SpaceBaguettes", "TCP")
+		upnp.add_port_mapping(PORT, PORT, "SpaceBaguettes", "UDP")
+		
+		port_open = true
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
