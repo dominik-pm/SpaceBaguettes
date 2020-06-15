@@ -46,12 +46,9 @@ func _request_public_ip():
 	
 func open_port():
 	var upnp = UPNP.new()
-	upnp.discover_local_port = PORT
-	print(upnp.get_gateway())
-	print(upnp.get_device_count())
-	print(upnp.get_device(0))
-	upnp.discover(2000, 2, "InternalGatewayDevice")
-	upnp.add_port_mapping(PORT)
+	upnp.discover()
+	upnp.add_port_mapping(PORT, PORT, "SpaceBaguettes", "TCP")
+	upnp.add_port_mapping(PORT, PORT, "SpaceBaguettes", "UDP")
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
