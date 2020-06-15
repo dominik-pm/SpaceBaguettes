@@ -96,3 +96,8 @@ func check_name(s : String):
 
 func _on_BtnDisconnect_pressed():
 	get_parent().close_online_menu()
+
+
+func _on_Status_pressed():
+	$VBox/HBoxContainer/AnimationPlayer.play("copy")
+	OS.clipboard = Network.get_ip()

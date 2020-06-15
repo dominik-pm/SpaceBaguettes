@@ -2,6 +2,7 @@ extends Node
 
 const PORT = 31400
 var ip = ""
+var public_ip = null
 var peer = null
 var local_id = null
 var nickname = ""
@@ -33,6 +34,28 @@ func _ready():
 	ready_timeout.one_shot = true
 	ready_timeout.wait_time = 10.0
 	ready_timeout.connect("timeout", self, "_on_ready_timout")
+	
+	_request_public_ip()
+	open_port()
+
+func _request_public_ip():
+	var http = HTTPRequest.new()
+	add_child(http)
+	http.connect("request_completed", self, "_on_request_completed")
+	http.request("https://api.ipify.org/?format=json")
+	
+func open_port():
+	var upnp = UPNP.new()
+	upnp.discover_local_port = PORT
+	print(upnp.get_gateway())
+	print(upnp.get_device_count())
+	print(upnp.get_device(0))
+	upnp.discover(2000, 2, "InternalGatewayDevice")
+	upnp.add_port_mapping(PORT)
+
+func _on_request_completed(result, response_code, headers, body):
+	var json = JSON.parse(body.get_string_from_utf8())
+	public_ip = json.result["ip"]
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
@@ -99,7 +122,10 @@ func restart_game():
 
 
 func get_ip():
-	return str(ip) + ":" + str(PORT)
+	if local_id == 1:
+		return str(public_ip)
+	else:
+		return ip
 
 
 # NETWORK SIGNALS

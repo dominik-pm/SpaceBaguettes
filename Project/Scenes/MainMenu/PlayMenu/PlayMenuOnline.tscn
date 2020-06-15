@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/PlayMenuOnline.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Game/Player/Player1/Front_idle.png" type="Texture" id=2]
@@ -17,6 +17,21 @@
 [ext_resource path="res://Ressources/Theme.tres" type="Theme" id=15]
 [ext_resource path="res://Scenes/MainMenu/TextureButtons.gd" type="Script" id=16]
 [ext_resource path="res://Assets/Menu/Icons/robot.png" type="Texture" id=17]
+
+[sub_resource type="Animation" id=1]
+resource_name = "copy"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Status:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 0.105112, 0.87055, 4.43828 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.180392, 0.8, 0.443137, 1 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="PlayOnlineMenu" type="PanelContainer"]
 anchor_left = 0.5
@@ -46,7 +61,6 @@ __meta__ = {
 margin_right = 802.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
-alignment = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -54,21 +68,27 @@ __meta__ = {
 [node name="BtnDisconnect" type="Button" parent="VBox/HBoxContainer"]
 margin_right = 171.0
 margin_bottom = 42.0
+mouse_default_cursor_shape = 2
 text = "Disconnect"
 script = ExtResource( 11 )
 lang_tile = "disconnect"
 
-[node name="Status" type="Label" parent="VBox/HBoxContainer"]
+[node name="Control" type="Control" parent="VBox/HBoxContainer"]
 margin_left = 179.0
-margin_top = 5.0
-margin_right = 802.0
-margin_bottom = 37.0
+margin_right = 462.0
+margin_bottom = 42.0
 size_flags_horizontal = 3
-text = "Connected at 192.168.1.1:31400!"
+
+[node name="Status" type="Button" parent="VBox/HBoxContainer"]
+margin_left = 470.0
+margin_right = 802.0
+margin_bottom = 42.0
+mouse_default_cursor_shape = 2
+text = "Connected at 192.168.1.1!"
 align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VBox/HBoxContainer"]
+anims/copy = SubResource( 1 )
 
 [node name="PlayerSelect" type="GridContainer" parent="VBox"]
 margin_top = 50.0
@@ -583,6 +603,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="VBox/HBoxContainer/BtnDisconnect" to="." method="_on_BtnDisconnect_pressed"]
+[connection signal="pressed" from="VBox/HBoxContainer/Status" to="." method="_on_Status_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player2/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player2" method="_on_BtnMakeBot_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player3" method="_on_BtnMakeBot_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player3/BtnAdd" to="VBox/PlayerSelect/Player3" method="_on_BtnAdd_pressed"]

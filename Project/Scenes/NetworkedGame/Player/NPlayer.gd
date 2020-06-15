@@ -80,9 +80,9 @@ func _process(delta):
 	if game_started:
 		# network
 		if is_network_master():
-			axis = get_input_axis()
 			rset_unreliable("axis", axis)
 			rset_unreliable("other_pos", global_transform.origin)
+			axis = get_input_axis()
 		else:
 			# check if position is not far off, else correct it
 			if (other_pos-global_transform.origin).length() > NETWORK_ERROR_DISTANCE:
@@ -228,28 +228,31 @@ func get_item(item):
 	game.update_info(int(pid), item, value)
 
 func get_hit():
-	if not invincible:
-		$Damage.play() # plays Damage-Sound
-		
-		# activate the particles
-		particles_damage.emitting = true
-		
-		# tell the game
-		game.player_hit(int(pid))
-		
-		# disable the hitbox
-		hitbox_col.set_deferred("disabled", true)
-		
-		# invincible stuff
-		invincible = true
-		invincible_timer.start()
-		anim_player.play("invincible", -1, 0.9/Global.player_invincible_time)
-		
-		# health logic
-		health -= 1
-		game.update_info(int(pid), Items.HEALTH, health)
-		if health <= 0 and is_network_master():
-			rpc("_die")
+	if is_network_master() and not invincible:
+		rpc("_get_hit")
+
+remotesync func _get_hit():
+	$Damage.play() # plays Damage-Sound
+	
+	# activate the particles
+	particles_damage.emitting = true
+	
+	# tell the game
+	game.player_hit(int(pid))
+	
+	# disable the hitbox
+	hitbox_col.set_deferred("disabled", true)
+	
+	# invincible stuff
+	invincible = true
+	invincible_timer.start()
+	anim_player.play("invincible", -1, 0.9/Global.player_invincible_time)
+	
+	# health logic
+	health -= 1
+	game.update_info(int(pid), Items.HEALTH, health)
+	if health <= 0:
+		_die()
 
 func disable_player():
 	# death animation
@@ -259,7 +262,7 @@ func disable_player():
 	hitbox_col.set_deferred("disabled", true)
 	$EnvironmentCollider.set_deferred("disabled", true)
 
-sync func _die():
+func _die():
 	is_alive = false
 	
 	disable_player()
