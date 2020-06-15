@@ -1,5 +1,6 @@
 extends Node
 
+var port_open = false
 const PORT = 31400
 var ip = ""
 var public_ip = null
@@ -36,7 +37,6 @@ func _ready():
 	ready_timeout.connect("timeout", self, "_on_ready_timout")
 	
 	_request_public_ip()
-	open_port()
 
 func _request_public_ip():
 	var http = HTTPRequest.new()
@@ -49,6 +49,7 @@ func open_port():
 	upnp.discover()
 	upnp.add_port_mapping(PORT, PORT, "SpaceBaguettes", "TCP")
 	upnp.add_port_mapping(PORT, PORT, "SpaceBaguettes", "UDP")
+	port_open = true
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
@@ -61,6 +62,9 @@ func _notification(what):
 
 # MENU CALLED
 func host_game(nn):
+	if not port_open:
+		open_port()
+	
 	nickname = nn
 	
 	peer = NetworkedMultiplayerENet.new()
