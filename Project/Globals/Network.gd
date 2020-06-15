@@ -1,7 +1,7 @@
 extends Node
 
-var port_open = false
 const PORT = 31400
+var upnp = null
 var ip = ""
 var public_ip = null
 var peer = null
@@ -45,22 +45,25 @@ func _request_public_ip():
 	http.request("https://api.ipify.org/?format=json")
 	
 func open_port():
-	if not port_open:
+	if upnp == null:
 		
-		var upnp = UPNP.new()
+		upnp = UPNP.new()
 		upnp.discover()
 		
 		var gateway = upnp.get_gateway()
+		
 		if gateway == null:
-			gateway = upnp.get_device(0)
-			if gateway == null:
-				print("no gateway found")
+			if upnp.get_device_count() > 0:
+				gateway = upnp.get_device(0)
+				if gateway == null or not gateway.is_valid_gateway():
+					print("no gateway found")
+					return
+			else:
+				print("couldnt find any network device")
 				return
 		
-		upnp.add_port_mapping(PORT, PORT, "SpaceBaguettes", "TCP")
-		upnp.add_port_mapping(PORT, PORT, "SpaceBaguettes", "UDP")
-		
-		port_open = true
+		gateway.add_port_mapping(PORT, PORT, "SpaceBaguettes", "TCP")
+		gateway.add_port_mapping(PORT, PORT, "SpaceBaguettes", "UDP")
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
@@ -73,8 +76,7 @@ func _notification(what):
 
 # MENU CALLED
 func host_game(nn):
-	if not port_open:
-		open_port()
+	open_port()
 	
 	nickname = nn
 	
@@ -135,7 +137,12 @@ func restart_game():
 
 func get_ip():
 	if local_id == 1:
-		return str(public_ip)
+		if public_ip != "":
+			return str(public_ip)
+		elif upnp != null:
+			return upnp.query_external_address()
+		else:
+			return IP.get_local_addresses()[1]
 	else:
 		return ip
 
