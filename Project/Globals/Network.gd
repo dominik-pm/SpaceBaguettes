@@ -46,9 +46,12 @@ func _request_public_ip():
 	
 func open_port():
 	if upnp == null:
-		
 		upnp = UPNP.new()
-		upnp.discover()
+		var result = upnp.discover()
+		
+		if result != 0:
+			print("couldnt find network devices")
+			return false
 		
 		var gateway = upnp.get_gateway()
 		
@@ -57,13 +60,14 @@ func open_port():
 				gateway = upnp.get_device(0)
 				if gateway == null or not gateway.is_valid_gateway():
 					print("no gateway found")
-					return
+					return false
 			else:
 				print("couldnt find any network device")
-				return
+				return false
 		
 		gateway.add_port_mapping(PORT, PORT, "SpaceBaguettes", "TCP")
 		gateway.add_port_mapping(PORT, PORT, "SpaceBaguettes", "UDP")
+		return true
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
@@ -76,7 +80,7 @@ func _notification(what):
 
 # MENU CALLED
 func host_game(nn):
-	open_port()
+	var opened_port = open_port()
 	
 	nickname = nn
 	
@@ -95,6 +99,8 @@ func host_game(nn):
 		update_connections(connected_players)
 	else:
 		print("failed to create server: " + str(err))
+	
+	return opened_port
 
 func join_game(nn, address):
 	nickname = nn

@@ -6,6 +6,8 @@ onready var btn_start = $VBox/Control/BtnStart
 var player_containers
 var all_entries = {}
 
+var valid_port = true
+
 func _ready():
 	player_containers = [
 		get_node("VBox/PlayerSelect/Player1"),
@@ -27,7 +29,9 @@ func _on_network_update(players):
 		# show start when we are the server and there are enough players
 		if Network.connected_players.size() > 1: 	btn_start.show()
 		else: 										btn_start.hide()
-		status.text = "Hosting Game at: " + Network.get_ip()
+		status.text = "Hosting at: " + Network.get_ip()
+		if not valid_port:
+			status.text += " (Port not forwarded!)"
 	else:
 		status.text = "Connected at: " + Network.get_ip()
 	

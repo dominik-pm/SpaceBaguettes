@@ -75,16 +75,16 @@ lang_tile = "disconnect"
 
 [node name="Control" type="Control" parent="VBox/HBoxContainer"]
 margin_left = 179.0
-margin_right = 462.0
+margin_right = 203.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
 
 [node name="Status" type="Button" parent="VBox/HBoxContainer"]
-margin_left = 470.0
+margin_left = 211.0
 margin_right = 802.0
 margin_bottom = 42.0
 mouse_default_cursor_shape = 2
-text = "Connected at 192.168.1.1!"
+text = "Hosting at 192.168.1.1! (Port not forwarded!)"
 align = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="VBox/HBoxContainer"]
