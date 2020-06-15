@@ -36,6 +36,8 @@ func _ready():
 	ready_timeout.wait_time = 10.0
 	ready_timeout.connect("timeout", self, "_on_ready_timout")
 	
+	print(IP.get_local_addresses())
+	
 	_request_public_ip()
 
 func _request_public_ip():
@@ -151,6 +153,9 @@ func get_ip():
 			return IP.get_local_addresses()[1]
 	else:
 		return ip
+
+func get_local_ip():
+	return IP.resolve_hostname("127.0.0.1")
 
 
 # NETWORK SIGNALS

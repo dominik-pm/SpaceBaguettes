@@ -29,7 +29,12 @@ func _on_network_update(players):
 		# show start when we are the server and there are enough players
 		if Network.connected_players.size() > 1: 	btn_start.show()
 		else: 										btn_start.hide()
-		status.text = "Hosting at: " + Network.get_ip()
+		var ip = Network.get_ip()
+		if not valid_port:
+			ip = Network.get_local_ip()
+		
+		status.text = "Hosting at: " + ip
+		
 		if not valid_port:
 			status.text += " (Port not forwarded!)"
 	else:
