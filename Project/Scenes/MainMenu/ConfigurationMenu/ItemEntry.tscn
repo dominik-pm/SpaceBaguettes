@@ -26,6 +26,7 @@ stretch_mode = 6
 margin_left = 238.0
 margin_right = 472.0
 margin_bottom = 64.0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 max_value = 6.0

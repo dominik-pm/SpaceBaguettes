@@ -877,7 +877,6 @@ __meta__ = {
 }
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -982,6 +981,7 @@ margin_right = 487.0
 margin_bottom = 64.0
 focus_next = NodePath("../../OnlineContainer/BtnContainer/Host")
 focus_previous = NodePath("../../../../BackButton/CenterContainer/BtnBack")
+mouse_default_cursor_shape = 2
 text = "Play Offline"
 script = ExtResource( 46 )
 lang_tile = "play_offline"
@@ -1009,6 +1009,7 @@ alignment = 1
 margin_right = 397.0
 margin_bottom = 64.0
 focus_next = NodePath("../Join")
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 text = "Host Game"
 script = ExtResource( 46 )
@@ -1019,6 +1020,7 @@ margin_left = 405.0
 margin_right = 802.0
 margin_bottom = 64.0
 focus_next = NodePath("../../NameInput")
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 text = "Join Game"
 script = ExtResource( 46 )
@@ -1147,6 +1149,7 @@ size_flags_vertical = 3
 focus_next = NodePath("../../../../../BackButton/CenterContainer/BtnBack")
 
 [node name="ConfigMenu" type="PanelContainer" parent="Foreground/Menu"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1166,7 +1169,7 @@ margin_right = 916.0
 margin_bottom = 532.0
 
 [node name="ConfigMenu" type="VBoxContainer" parent="Foreground/Menu/ConfigMenu/ScrollContainer"]
-margin_right = 884.0
+margin_right = 896.0
 margin_bottom = 526.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -1183,6 +1186,7 @@ alignment = 2
 margin_left = 680.0
 margin_right = 760.0
 margin_bottom = 42.0
+mouse_default_cursor_shape = 2
 text = "last "
 script = ExtResource( 46 )
 lang_tile = "last"
@@ -1191,6 +1195,7 @@ lang_tile = "last"
 margin_left = 768.0
 margin_right = 884.0
 margin_bottom = 42.0
+mouse_default_cursor_shape = 2
 text = "default"
 script = ExtResource( 46 )
 lang_tile = "default"
@@ -1235,6 +1240,7 @@ align = 1
 margin_left = 594.0
 margin_right = 884.0
 margin_bottom = 32.0
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
