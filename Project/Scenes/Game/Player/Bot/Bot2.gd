@@ -134,7 +134,7 @@ func try_place_bomb():
 	if can_place_bomb:
 		if not on_bomb:
 			# placing bomb
-			print("Bot: placing bomb")
+			#print(Global.player_names[int(pid)-1] + ": placing bomb")
 			
 			on_bomb = true
 			bombs_active += 1
@@ -163,13 +163,13 @@ func set_target(new_value):
 		
 		# we got a valid new target
 		if target != null:
-			print("Bot: set new target: " + str(target))
+			#print("Bot: set new target: " + str(target))
 			target_timer.stop()
 			target_timer.start()
 func set_curr_state(state):
 	if curr_state != state:
-		print("Bot: changed from " + str(curr_state) + " to " + str(state))
-	curr_state = state
+		#print("Bot: changed from " + str(curr_state) + " to " + str(state))
+		curr_state = state
 func change_state(next_state):
 	# only do change if it is a new state
 	if curr_state != next_state:
@@ -180,11 +180,11 @@ func change_state(next_state):
 		last_state = curr_state
 		self.curr_state = next_state
 
-		print("Bot: changed state from: " + str(last_state) + " to:" + str(curr_state) + "!")
+		#print("Bot: changed state from: " + str(last_state) + " to:" + str(curr_state) + "!")
 	elif next_state != null:
 		# change from state to state (shouldnt happen)
 		pass
-		#print("Bot: tried to change to the same state again!")
+		##print("Bot: tried to change to the same state again!")
 	else:
 		# change from null to null (can happen?)
 		pass
@@ -203,14 +203,6 @@ func _process(delta):
 				if new_target != null:
 					self.curr_state = all_states[idx]
 					break
-			
-			#new_target = all_states[state.ATTACKING].get_target()
-			#if new_target != null:
-			#	curr_state = all_states[state.ATTACKING]
-			#else:
-			#	new_target = all_states[state.FARMING].get_target()
-			#	if new_target != null:
-			#		curr_state = all_states[state.FARMING]
 		
 		## set the new target
 		#if new_target != null:
@@ -222,25 +214,30 @@ func _process(delta):
 				new_target = curr_state.update(new_target)
 				
 				if new_target == null:
-					print("Bot: current state returned null on update")
+					#print("Bot: current state returned null on update")
 					curr_state.abort()
 					self.curr_state = null
-					path = []
+					#path = []
 		
 		
 		# -- DEFENDING --
 		# -> check if the new target is safe
-		var def_target = all_states[state.DEFENDING].update(new_target)
 		
-		if def_target != null:# and def_target != new_target:
+		var def_target
+		if new_target != null:
+			def_target = all_states[state.DEFENDING].update(new_target)
+		else:
+			def_target = all_states[state.DEFENDING].update(target)
+		
+		if def_target != null and def_target != new_target:
 			#print("Bot: found def target to abort to: " + str(def_target))
 			if curr_state != null:
 				curr_state.abort()
 			self.curr_state = all_states[state.DEFENDING]
 			self.target = def_target
 			new_target = null
-		#else:
-		#	print(str(new_target) + " is safe")
+		##else:
+		##	print(str(new_target) + " is safe")
 		
 		
 		# set the new target
@@ -251,7 +248,6 @@ func _process(delta):
 		# -- PATHFINDING TO TARGET --
 		var axis = Vector2.ZERO
 		axis = get_dir(target)
-		#print(axis)
 		
 		# -- move -->
 		apply_friction(speed)
@@ -271,6 +267,7 @@ func get_dir(state_target):
 	var dir = Vector2.ZERO
 	
 	if state_target == null:
+		##print("Bot: curr state no target")
 		# the current state doesnt have a target
 		if curr_state != null:
 			curr_state.abort()
@@ -288,8 +285,9 @@ func get_dir(state_target):
 				target_hit()
 			else:
 				self.target = null
-				print("no path found for target: " + str(state_target))
+				#print("no path found for target: " + str(state_target))
 		else:
+			# we have a pth to go to
 			var arrived_to_next_point = is_at(target_point_world)
 			if arrived_to_next_point:
 				# at the next loc
@@ -311,7 +309,7 @@ func get_dir(state_target):
 
 func target_hit():
 	# final target hit
-	print("target hit!")
+	#print("target hit!")
 	if curr_state != null:
 		curr_state.target_reached()
 		self.curr_state = null
@@ -336,7 +334,7 @@ func lane_free(pos, axis, r):
 
 func _on_TargetTimeout_timeout():
 	#return # disabled
-	print("Bot: ran out of time for the target, setting it to null")
+	#print("Bot: ran out of time for the target, setting it to null")
 	self.target = null
 	target_timer.stop()
 

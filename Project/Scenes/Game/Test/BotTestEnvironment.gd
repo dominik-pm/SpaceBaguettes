@@ -72,7 +72,7 @@ func _on_start_cntdwn_finished():
 	#$StartGame.play()
 	# tell the players that the game started
 	for c in container.get_children():
-		if c is Player or c is Bot:
+		if c.is_in_group("Player"):
 			c.start()
 
 func _input(event):
@@ -202,12 +202,11 @@ func get_coord(pos):
 func get_pos(coord):
 	return crates.map_to_world(coord)
 func check_block(block):
-	var cell_index = crates.get_cellv(block)
-
 	# it is out of bounds
-	if block.x < 0 or block.y < 0:
-		if block.x > map_size_x-1 or block.y > map_size_y-1:
-			return -1
+	if block.x < 0 or block.y < 0 or block.x > map_size_x-1 or block.y > map_size_y-1:
+		return -1
+	
+	var cell_index = crates.get_cellv(block)
 
 	# it is free
 	if cell_index == -1:
@@ -226,7 +225,7 @@ func check_block(block):
 func _get_winner():
 	var winner = null
 	for c in container.get_children():
-		if c is Player or c is Bot:
+		if c.is_in_group("Player"):
 			var player = c
 			if player.is_alive:
 				winner = int(player.pid)

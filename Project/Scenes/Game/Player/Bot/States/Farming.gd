@@ -88,7 +88,7 @@ func get_best_crate_pos(crates):
 		return best_one
 	
 	else:
-		print("Bot farming: didnt find best loc for crate, even tough there are crates availiable")
+		#print("Bot farming: didnt find best loc for crate, even tough there are crates availiable")
 		return null
 
 func get_nearest_crates(crates):

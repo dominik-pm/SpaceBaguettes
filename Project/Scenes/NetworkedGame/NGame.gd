@@ -261,9 +261,8 @@ func check_block(block):
 	var cell_index = crates.get_cellv(block)
 	
 	# it is out of bounds
-	if block.x < 0 or block.y < 0:
-		if block.x > map_size_x-1 or block.y > map_size_y-1:
-			return -1
+	if block.x < 0 or block.y < 0 or block.x > map_size_x-1 or block.y > map_size_y-1:
+		return -1
 	
 	# it is free
 	if cell_index == -1:

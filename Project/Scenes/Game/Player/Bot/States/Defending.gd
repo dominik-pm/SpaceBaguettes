@@ -1,5 +1,7 @@
 extends BotState
 
+const SEARCH_RADIUS = 2
+
 # returns true/false if this state wants to be active
 func get_target():
 	return null
@@ -26,14 +28,14 @@ func update(target):
 		return null
 	else:
 		# get a safe location
-		var bomb = is_bomb_explosion_in_range(bot.coord)
+		var bombs = bombs_in_range(bot.coord)
 		var bagu = is_baguette_danger(bot.coord)
 		var safe_loc = null
-		if bomb != null:
-			safe_loc = get_save_loc(bot.coord, bomb)
+		if bombs != null:
+			safe_loc = get_save_loc_from_bombs(bot.coord, bombs)
 		elif bagu != null:
 			safe_loc = get_save_loc(bot.coord, bagu)
-		print("Bot defending: getting safe loc: " + str(safe_loc))
+		#print("Bot defending: getting safe loc: " + str(safe_loc))
 		return safe_loc
 
 # called when the target is reached
@@ -51,6 +53,31 @@ func is_loc_save(pos):
 	var bomb = is_bomb_explosion_in_range(pos)
 	var bagu = is_baguette_danger(pos)
 	return bomb == null and bagu == null
+
+
+func get_save_loc_from_bombs(pos, bombs):
+	# for every location in a given radius,
+	# check if the position is save from all bombs
+	
+	# get all save positions
+	var save_pos = []
+	for i in range(-SEARCH_RADIUS, SEARCH_RADIUS+1):
+		for j in range(-SEARCH_RADIUS, SEARCH_RADIUS+1):
+			var coord = Vector2(i, j)
+			if coord.length() != 0:
+				if game.check_block(pos+coord) == 0:
+					if is_loc_save(pos+coord):
+						save_pos.push_back(coord)
+	if save_pos.size() == 0:
+		return null
+	
+	# get the nearest safe location
+	var nearest = null
+	for loc in save_pos:
+		if nearest == null or loc.length() < nearest.length():
+			nearest = loc
+	
+	return nearest + pos
 
 func get_save_loc(pos, danger):
 	var target = null

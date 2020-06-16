@@ -168,7 +168,6 @@ func get_ip():
 
 func get_local_ip():
 	var s = IP.get_local_addresses()
-	print(IP.get_local_addresses())
 	var second_choice = ""
 	for c in s:
 		if c.length() <= 15 and c.length() > 7:

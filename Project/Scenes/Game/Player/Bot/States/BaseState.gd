@@ -33,6 +33,22 @@ func _to_string():
 # <-- OVERRITE THESE IN THE STATE --
 
 # -- METHODS THAT STATES CAN USE -->
+func bombs_in_range(pos):
+	var dangers = []
+	for bomb in bot.all_bombs:
+		if bomb.coord.x == pos.x or bomb.coord.y == pos.y:
+			# a bomb is in line
+			# check if its explosion strength could be dangerous
+			if bomb.explosion_size != null:
+				if bomb.explosion_size >= (bomb.coord-pos).length():
+					# check if there are blocks between
+					if bot.lane_free(bomb.coord, (pos-bomb.coord).normalized(), bomb.explosion_size-1):
+						dangers.push_back(bomb)
+	if dangers.size() == 0:
+		return null
+	else:
+		return dangers
+
 func is_bomb_explosion_in_range(pos):
 	var dangers = []
 	for bomb in bot.all_bombs:
@@ -66,6 +82,7 @@ func is_bomb_explosion_in_range(pos):
 		return nearest_dang
 
 func is_baguette_danger(pos):
+	var dangers = []
 	for baguette in bot.all_baguettes:
 		if baguette.coord.x == pos.x:
 			# baguette has same x
@@ -74,7 +91,7 @@ func is_baguette_danger(pos):
 				# baguette is flying towards us
 				if bot.lane_free(baguette.coord, Vector2(0, baguette.dir.y), dist):
 					# no blocks between baguette an pos
-					return baguette
+					dangers.push_back(baguette)
 		elif baguette.coord.y == pos.y:
 			# baguette has same y
 			var dist = (pos.x-baguette.coord.x)
@@ -82,5 +99,16 @@ func is_baguette_danger(pos):
 				# baguette is flying towards us
 				if bot.lane_free(baguette.coord, Vector2(baguette.dir.x, 0), dist):
 					# no blocks between baguette an pos
-					return baguette
-	return null
+					dangers.push_back(baguette)
+	if dangers.size() == 0:
+		return null
+	else:
+		# return closest baguette
+		var closest = null
+		for baguette in dangers:
+			var dist = (baguette.coord-pos).length()
+			if closest == null or dist < (closest.coord-pos).length():
+				closest = baguette
+		if closest == null:
+			print("Bot BaseState: error in finding closest baguette alg")
+		return closest
