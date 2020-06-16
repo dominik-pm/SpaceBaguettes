@@ -168,10 +168,15 @@ func get_ip():
 
 func get_local_ip():
 	var s = IP.get_local_addresses()
+	print(IP.get_local_addresses())
+	var second_choice = ""
 	for c in s:
 		if c.length() <= 15 and c.length() > 7:
-			return c
-	return ""
+			if c.substr(0, 3) == "192" or c.substr(0, 2) == "10": 
+				return c
+			else:
+				second_choice = c
+	return second_choice
 
 
 # NETWORK SIGNALS
