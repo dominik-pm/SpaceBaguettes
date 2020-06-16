@@ -3,6 +3,7 @@
 
 * 1. [General](#General)
 * 2. [Play](#Play)
+	* 2.1 [How to play](#how_to_play)
 * 3. [Gameplay](#Gameplay)
 	* 3.1. [Player](#Player)
 	* 3.2. [Bombs](#Bombs)
@@ -28,6 +29,22 @@ Team Members:
 ##  2. <a name='Play'></a>Play
 The game can be played and downloaded on <a href="https://nitrogen64.itch.io/spacebaguettes">itch.io</a> or on <a href="http://spacebaguettes.tk">spacebaguettes.tk</a>
 For older versions, see <a href="https://github.com/dominik-pm/SpaceBaguettes/releases">Releases</a>. We suggest downloading the game for your platform (Windows, Linux , Mac) instead of playing it in the browser, because it runs more smoothly.
+
+### 2.1 <a name='how_to_play'></a> How to play?
+This game can be played as multiplayer, local multiplayer, couch multiplayer or all alone (against bots)
+#### Offline
+When playing as Singleplayer, the button "Play Offline" has to be clicked. Now it is possible to add/remove players, sign them as bots, customize the key-inputs and to start the game
+#### Multiplayer
+When playing as multiplayer, it is possible to choose between beeing host or client. 
+##### Host
+As host only the player name must be specified. If "Host game" is clicked, the game will try to open the port 31400 on your rooter (expect some laag!) so players outside the local network can join the game. If that fails, the game will only be reachable in the local network. Now the clients can join and the game can be started. 
+
+##### Client
+As client the player name and the ip of the host must be specified. Ask the host for their ip, if they haven't told you already!
+The host should tell you the ip, which is in the following place. <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Artwork/host_ip.png" alt="picture of the host's ip">
+
+If the following message also appears at the host, make sure you are in the same local network.
+<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Artwork/open_port_failed.png" alt="Message failed open port">
 
 ##  3. <a name='Gameplay'></a> Gameplay
 ###  3.1. <a name='Player'></a>Player:
