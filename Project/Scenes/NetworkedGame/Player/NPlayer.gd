@@ -157,7 +157,7 @@ func _input(event):
 			if bombs_active < max_bombs:
 				if not on_bomb:
 					on_bomb = true
-					rpc("place_bomb")
+					rpc("place_bomb", muzzle.get_global_transform().origin)
 		
 		if (event.is_action_pressed("1shoot") or Input.is_action_pressed("1shoot_gp") or touchscreen.is_shoot_pressed()) and can_shoot and baguette_count > 0:
 			can_shoot = false
@@ -165,10 +165,10 @@ func _input(event):
 			var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
 			rpc("shoot", pos)
 
-sync func place_bomb():
+sync func place_bomb(pos):
 	bombs_active += 1
 	game.update_current_bombs(int(pid), max_bombs-bombs_active)
-	game.place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength) 
+	game.place_bomb(self, pos, explosion_range, explosion_strength) 
 
 sync func shoot(pos):
 	baguette_count -= 1
@@ -228,6 +228,9 @@ func get_item(item):
 	game.update_info(int(pid), item, value)
 
 func get_hit():
+	#if Network.local_id == 1:
+	#	if not invincible:
+	#		rpc("_get_hit")
 	if is_network_master() and not invincible:
 		rpc("_get_hit")
 

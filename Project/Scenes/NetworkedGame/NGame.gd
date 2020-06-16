@@ -95,49 +95,12 @@ func _ready():
 	else:
 		Network.player_ready(Network.local_id)
 
-func _on_game_start():
-	$StartCountdown.start_countdown()
-
-func _on_network_restart():
-	# restarting game
-	get_tree().change_scene("res://Scenes/NetworkedGame/NGame.tscn")
-
-func _on_server_closed():
-	Network.close_connection()
-	print("changing to menu...")
-	get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
-
-func _on_network_update(players):
-	if players.size() <= 1:
-		Network.close_connection()
-		print("changing to menu...")
-		get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
-
 func init_stats():
 	for p in players:
 		stats[Global.player_names[int(p.pid)-1]] = {}
 		for i in range(all_stats.size()):
 			var stat = all_stats[i]
 			stats[Global.player_names[int(p.pid)-1]][stat] = 0
-
-func _on_start_cntdwn_finished():
-	$StartGame.play()
-	# tell the players that the game started
-	for c in container.get_children():
-		if c.is_in_group("Player"):
-			c.start()
-
-func _input(event):
-	if event.is_action_pressed("toggle_pause_menu") and not game_summary.visible:
-		toggle_pause_menu()
-
-func toggle_pause_menu():
-	if not settings_menu.visible:
-		pause_menu.visible = !pause_menu.visible
-		$Foreground/Menu/CenterContainer/VBoxContainer/BtnResume.grab_focus()
-	else:
-		settings_menu.hide()
-		$Foreground/Menu/CenterContainer/VBoxContainer/BtnSettings.grab_focus()
 
 func init_players():
 	var cnt = 0
@@ -174,6 +137,45 @@ func init_players():
 		i += 1
 	return cnt
 
+func _on_game_start():
+	$StartCountdown.start_countdown()
+
+func _on_network_restart():
+	# restarting game
+	get_tree().change_scene("res://Scenes/NetworkedGame/NGame.tscn")
+
+func _on_server_closed():
+	Network.close_connection()
+	print("changing to menu...")
+	get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
+
+func _on_network_update(players):
+	if players.size() <= 1:
+		Network.close_connection()
+		print("changing to menu...")
+		get_tree().change_scene("res://Scenes/MainMenu/MainMenu.tscn")
+
+func _on_start_cntdwn_finished():
+	$StartGame.play()
+	# tell the players that the game started
+	for c in container.get_children():
+		if c.is_in_group("Player"):
+			c.start()
+
+func _on_sudden_death_timeout():
+	if Network.local_id == 1:
+		var pos = Vector2()
+		pos.x = int(rand_range(sudden_death_start_x, map_size_x-sudden_death_start_x))
+		pos.y = int(rand_range(sudden_death_start_y, map_size_y-sudden_death_start_y))
+		var cell_index = crates.get_cellv(pos)
+		_spawn_item(crates.map_to_world(pos)+(cellsize/2))
+	
+	sudden_death_timer.start()
+
+func _input(event):
+	if event.is_action_pressed("toggle_pause_menu") and not game_summary.visible:
+		toggle_pause_menu()
+
 # -- player called -->
 # to update the players items, health,..
 func update_info(player : int, item, value):
@@ -209,7 +211,7 @@ func get_tile_pos_center(p):
 	var pos = crates.world_to_map(p)
 	pos = crates.map_to_world(pos) + (cellsize/2)
 	return pos
-sync func place_bomb(player, pos, e_range, e_strenth):
+remotesync func place_bomb(player, pos, e_range, e_strenth):
 	# stats
 	stats[Global.player_names[int(player.pid)-1]]["bombs placed"] += 1
 	
@@ -302,18 +304,52 @@ func bullet_hit(pos, dir, pid):
 			# statistics
 			stats[Global.player_names[int(pid)-1]]["crates destroyed"] += 1
 
+# -- server side functions -->
 func _destroy_crate(tile):
-	var pos = crates.map_to_world(tile) + (cellsize/2)
+	if Network.local_id == 1:
+		var pos = crates.map_to_world(tile) + (cellsize/2)
+		
+		# check how many crates are left 
+		var crates_count = crates.get_used_cells_by_id(crates.get_cellv(tile)).size()
+		if crates_count == 1: # 114: 2 are gone; 1, not 0 because the crate is destroyed afterwards
+			# when there are no crates left:
+			# start the sudden death
+			rpc("start_sudden_death")
+			# destroy the metall crates in the middle and spawn items there
+			rpc("_destroy_center_metall", sudden_death_start_x, sudden_death_start_y)
+		
+		rpc("remove_crate", tile, pos)
+		
+		if Network.local_id == 1: # only the server
+			# with a certain probability, drop an item
+			randomize()
+			if rand_range(0, 100) < Global.crate_item_drop_chance:
+				_spawn_item(pos)
+func _spawn_item(pos):
+	var item = _get_random_item()
+	rpc("place_item", item, pos)
+func _get_random_item():
+	randomize()
 	
-	# check how many crates are left 
-	var crates_count = crates.get_used_cells_by_id(crates.get_cellv(tile)).size()
-	if crates_count == 1: # 114: 2 are gone; 1, not 0 because the crate is destroyed afterwards
-		# when there are no crates left:
-		# start the sudden death
-		start_sudden_death()
-		# destroy the metall crates in the middle and spawn items there
-		_destroy_center_metall(sudden_death_start_x, sudden_death_start_y)
+	# get the item pool
+	var items = []
+	for item in Items.drop_probabilities:
+		for i in range(Items.drop_probabilities[item]):
+			items.push_back(item)
 	
+	# return a random item from the pool
+	var rand_idx = floor(rand_range(0, items.size()))
+	return items[rand_idx]
+# -- server side functions -->
+
+# -- called to all -->
+remotesync func place_item(item, pos):
+	var i = Preloader.item.instance()
+	container.add_child(i)
+	i.global_transform.origin = pos
+	i.init(item)
+
+remotesync func remove_crate(tile, pos):
 	# remove the tile in the tilemap
 	crates.set_cellv(tile, -1)
 	
@@ -321,14 +357,8 @@ func _destroy_crate(tile):
 	var e = Preloader.effect_pop.instance()
 	container.add_child(e)
 	e.global_transform.origin = pos
-	
-	if Network.local_id == 1: # only the server
-		# with a certain probability, drop an item
-		randomize()
-		if rand_range(0, 100) < Global.crate_item_drop_chance:
-			_spawn_item(pos)
 
-func start_sudden_death():
+remotesync func start_sudden_death():
 	if sudden_death_timer == null:
 		# animation
 		$AnimationPlayer.play("StartSuddenDeath")
@@ -337,23 +367,14 @@ func start_sudden_death():
 		$StartGame.pitch_scale = 2.0
 		$StartGame.play()
 		
-		sudden_death_timer = Timer.new()
-		add_child(sudden_death_timer)
-		sudden_death_timer.connect("timeout", self, "_on_sudden_death_timeout")
-		sudden_death_timer.wait_time = Global.sudden_death_spawn_rate
-		sudden_death_timer.start()
+		if Network.local_id == 1:
+			sudden_death_timer = Timer.new()
+			add_child(sudden_death_timer)
+			sudden_death_timer.connect("timeout", self, "_on_sudden_death_timeout")
+			sudden_death_timer.wait_time = Global.sudden_death_spawn_rate
+			sudden_death_timer.start()
 
-func _on_sudden_death_timeout():
-	if Network.local_id == 1:
-		var pos = Vector2()
-		pos.x = int(rand_range(sudden_death_start_x, map_size_x-sudden_death_start_x))
-		pos.y = int(rand_range(sudden_death_start_y, map_size_y-sudden_death_start_y))
-		var cell_index = crates.get_cellv(pos)
-		_spawn_item(crates.map_to_world(pos)+(cellsize/2))
-	
-	sudden_death_timer.start()
-
-func _destroy_center_metall(startx, starty):
+remotesync func _destroy_center_metall(startx, starty):
 	var tileset = crates.get_tileset()
 	var cnt = 0
 	var w = map_size_x
@@ -373,28 +394,8 @@ func _destroy_center_metall(startx, starty):
 							# always spawn an item
 							if Network.local_id == 1:
 								_spawn_item(crates.map_to_world(Vector2(x, y)) + (cellsize/2))
+# <-- called to all --
 
-
-func _spawn_item(pos):
-	var item = _get_random_item()
-	rpc("place_item", item, pos)
-sync func place_item(item, pos):
-	var i = Preloader.item.instance()
-	container.add_child(i)
-	i.global_transform.origin = pos
-	i.init(item)
-func _get_random_item():
-	randomize()
-	
-	# get the item pool
-	var items = []
-	for item in Items.drop_probabilities:
-		for i in range(Items.drop_probabilities[item]):
-			items.push_back(item)
-	
-	# return a random item from the pool
-	var rand_idx = floor(rand_range(0, items.size()))
-	return items[rand_idx]
 
 # bomb called
 func explode(p, r, s, pid):
@@ -450,7 +451,15 @@ func _create_explosion(p, dirs, pid):
 	e.init(p, dirs, pid)
 
 
-# Menu Stuff
+# -- menu stuff -->
+
+func toggle_pause_menu():
+	if not settings_menu.visible:
+		pause_menu.visible = !pause_menu.visible
+		$Foreground/Menu/CenterContainer/VBoxContainer/BtnResume.grab_focus()
+	else:
+		settings_menu.hide()
+		$Foreground/Menu/CenterContainer/VBoxContainer/BtnSettings.grab_focus()
 
 func _on_BtnResume_pressed():
 	$Click.play()
@@ -480,3 +489,5 @@ func _on_BtnQuit_pressed():
 
 func _on_BtnPlay_pressed():
 	Network.restart_game()
+
+# <-- menu stuff --

@@ -36,8 +36,6 @@ func _ready():
 	ready_timeout.wait_time = 10.0
 	ready_timeout.connect("timeout", self, "_on_ready_timout")
 	
-	print(IP.get_local_addresses())
-	
 	_request_public_ip()
 
 func _request_public_ip():
@@ -82,7 +80,7 @@ func _notification(what):
 
 # MENU CALLED
 func host_game(nn):
-	var opened_port = open_port()
+	var opened_port = false#open_port()
 	
 	nickname = nn
 	
