@@ -2,7 +2,8 @@ extends Node
 
 const PORT = 31400
 var upnp = null
-var ip = ""
+var is_port_open = false
+var connecting_ip = ""
 var public_ip = null
 var peer = null
 var local_id = null
@@ -22,6 +23,9 @@ signal restart_game
 signal start_countdown
 
 func _ready():
+	#close_port()
+	#return
+	
 	get_tree().connect('network_peer_disconnected', self, '_on_player_disconnected')
 	get_tree().connect('network_peer_connected', self, '_on_player_connected')
 	get_tree().connect('connected_to_server', self, '_connected_to_server')
@@ -43,14 +47,21 @@ func _request_public_ip():
 	add_child(http)
 	http.connect("request_completed", self, "_on_request_completed")
 	http.request("https://api.ipify.org/?format=json")
-	
+
+func close_port():
+	var u = UPNP.new()
+	u.discover()
+	var gateway = u.get_gateway()
+	gateway.delete_port_mapping(PORT, "TCP")
+	gateway.delete_port_mapping(PORT, "UDP")
+
 func open_port():
 	if upnp == null:
 		upnp = UPNP.new()
 		var result = upnp.discover()
 		
 		if result != 0:
-			print("couldnt find network devices")
+			print("couldnt find network devices, err code: " + str(result))
 			return false
 		
 		var gateway = upnp.get_gateway()
@@ -80,7 +91,7 @@ func _notification(what):
 
 # MENU CALLED
 func host_game(nn):
-	var opened_port = false#open_port()
+	is_port_open = open_port()
 	
 	nickname = nn
 	
@@ -92,30 +103,26 @@ func host_game(nn):
 		local_id = get_tree().get_network_unique_id()
 		
 		print("opened server!")
-		var addr = IP.get_local_addresses()
-		ip = addr[1]
 		
 		connected_players[local_id] = str(nn)
 		update_connections(connected_players)
 	else:
 		print("failed to create server: " + str(err))
-	
-	return opened_port
 
 func join_game(nn, address):
 	nickname = nn
-	ip = address
+	connecting_ip = address
 	
-	print("trying to connect to: " + ip + ":" + str(PORT))
+	print("trying to connect to: " + connecting_ip + ":" + str(PORT))
 	
 	peer = NetworkedMultiplayerENet.new()
-	var err = peer.create_client(ip, PORT)
+	var err = peer.create_client(connecting_ip, PORT)
 	if err == OK:
 		get_tree().set_network_peer(peer)
 		local_id = get_tree().get_network_unique_id()
 	else:
+		print("failed to create client")
 		emit_signal("failed_to_join")
-		print("failed to join to server: " + str(err))
 
 func close_connection():
 	connected_players = {}
@@ -143,17 +150,28 @@ func restart_game():
 
 func get_ip():
 	if local_id == 1:
-		if public_ip != "":
-			return str(public_ip)
+		var s = ""
+		if public_ip != null:
+			s = str(public_ip)
 		elif upnp != null:
-			return upnp.query_external_address()
+			s = upnp.query_external_address()
+		
+		if not is_port_open:
+			return [get_local_ip(), false]
+		elif s != "":
+			return [s, true]
 		else:
-			return IP.get_local_addresses()[1]
+			return ["unknown", true]
+	# he's a client, return the ip that he connected to
 	else:
-		return ip
+		return [connecting_ip, true]
 
 func get_local_ip():
-	return IP.resolve_hostname("127.0.0.1")
+	var s = IP.get_local_addresses()
+	for c in s:
+		if c.length() <= 15 and c.length() > 7:
+			return c
+	return ""
 
 
 # NETWORK SIGNALS
@@ -162,6 +180,7 @@ func _connected_to_server():
 	rpc_id(1, "client_connected", local_id, nickname)
 func _connection_failed():
 	print("Connection failed!")
+	emit_signal("failed_to_join")
 func _on_player_connected(id):
 	pass
 func _on_player_disconnected(id):

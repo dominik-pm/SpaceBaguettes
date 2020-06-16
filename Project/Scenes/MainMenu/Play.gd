@@ -62,8 +62,7 @@ func _on_host_pressed():
 		
 		menu.hide()
 		online.show()
-		var valid_port = Network.host_game(nn)
-		online.valid_port = valid_port
+		Network.host_game(nn)
 	else:
 		name_input.modulate = Color(1, 0, 0)
 

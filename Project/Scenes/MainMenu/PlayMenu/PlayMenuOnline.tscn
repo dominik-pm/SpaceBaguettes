@@ -52,20 +52,36 @@ __meta__ = {
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 822.0
-margin_bottom = 702.0
+margin_bottom = 742.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBox"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBox"]
 margin_right = 802.0
-margin_bottom = 42.0
+margin_bottom = 82.0
+
+[node name="StatusContainer" type="HBoxContainer" parent="VBox/VBoxContainer"]
+margin_right = 802.0
+margin_bottom = 32.0
+alignment = 2
+
+[node name="Message" type="Label" parent="VBox/VBoxContainer/StatusContainer"]
+margin_left = 802.0
+margin_right = 802.0
+margin_bottom = 32.0
+align = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBox/VBoxContainer"]
+margin_top = 40.0
+margin_right = 802.0
+margin_bottom = 82.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BtnDisconnect" type="Button" parent="VBox/HBoxContainer"]
+[node name="BtnDisconnect" type="Button" parent="VBox/VBoxContainer/HBoxContainer"]
 margin_right = 171.0
 margin_bottom = 42.0
 mouse_default_cursor_shape = 2
@@ -73,13 +89,13 @@ text = "Disconnect"
 script = ExtResource( 11 )
 lang_tile = "disconnect"
 
-[node name="Control" type="Control" parent="VBox/HBoxContainer"]
+[node name="Control" type="Control" parent="VBox/VBoxContainer/HBoxContainer"]
 margin_left = 179.0
 margin_right = 203.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
 
-[node name="Status" type="Button" parent="VBox/HBoxContainer"]
+[node name="Status" type="Button" parent="VBox/VBoxContainer/HBoxContainer"]
 margin_left = 211.0
 margin_right = 802.0
 margin_bottom = 42.0
@@ -87,13 +103,13 @@ mouse_default_cursor_shape = 2
 text = "Hosting at 192.168.1.1! (Port not forwarded!)"
 align = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="VBox/HBoxContainer"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VBox/VBoxContainer/HBoxContainer"]
 anims/copy = SubResource( 1 )
 
 [node name="PlayerSelect" type="GridContainer" parent="VBox"]
-margin_top = 50.0
+margin_top = 90.0
 margin_right = 802.0
-margin_bottom = 574.0
+margin_bottom = 614.0
 custom_constants/vseparation = 50
 custom_constants/hseparation = 50
 columns = 2
@@ -567,9 +583,9 @@ text = "Player 4"
 align = 1
 
 [node name="Control" type="CenterContainer" parent="VBox"]
-margin_top = 582.0
+margin_top = 622.0
 margin_right = 802.0
-margin_bottom = 682.0
+margin_bottom = 722.0
 
 [node name="BtnStart" type="TextureButton" parent="VBox/Control"]
 margin_left = 351.0
@@ -602,8 +618,8 @@ script = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="VBox/HBoxContainer/BtnDisconnect" to="." method="_on_BtnDisconnect_pressed"]
-[connection signal="pressed" from="VBox/HBoxContainer/Status" to="." method="_on_Status_pressed"]
+[connection signal="pressed" from="VBox/VBoxContainer/HBoxContainer/BtnDisconnect" to="." method="_on_BtnDisconnect_pressed"]
+[connection signal="pressed" from="VBox/VBoxContainer/HBoxContainer/Status" to="." method="_on_Status_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player2/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player2" method="_on_BtnMakeBot_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player3" method="_on_BtnMakeBot_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player3/BtnAdd" to="VBox/PlayerSelect/Player3" method="_on_BtnAdd_pressed"]

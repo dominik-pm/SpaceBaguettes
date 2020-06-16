@@ -1,12 +1,14 @@
 extends Control
 
-onready var status = $VBox/HBoxContainer/Status
+onready var status = $VBox/VBoxContainer/HBoxContainer/Status
 onready var btn_start = $VBox/Control/BtnStart
+onready var msg_lab = $VBox/VBoxContainer/StatusContainer/Message
+onready var anim = $VBox/VBoxContainer/HBoxContainer/AnimationPlayer
+
+var ip = ""
 
 var player_containers
 var all_entries = {}
-
-var valid_port = true
 
 func _ready():
 	player_containers = [
@@ -24,21 +26,26 @@ func show():
 	btn_start.hide() # hide it as default
 
 func _on_network_update(players):
+	yield(get_tree().create_timer(0.25), "timeout")
 	# show status
+	var temp = Network.get_ip()
+	ip = temp[0]
+	var port_opened = temp[1]
+	
 	if Network.local_id == 1:
 		# show start when we are the server and there are enough players
 		if Network.connected_players.size() > 1: 	btn_start.show()
 		else: 										btn_start.hide()
-		var ip = Network.get_ip()
-		if not valid_port:
-			ip = Network.get_local_ip()
 		
 		status.text = "Hosting at: " + ip
 		
-		if not valid_port:
-			status.text += " (Port not forwarded!)"
+		if not port_opened:
+			msg_lab.text = "Port not opened automatically at: " + Network.public_ip
+		else:
+			msg_lab.text = "Local address: " + Network.get_local_ip()
 	else:
-		status.text = "Connected at: " + Network.get_ip()
+		msg_lab.text = ""
+		status.text = "Connected at: " + ip
 	
 	# show players
 	var i = 0
@@ -108,5 +115,6 @@ func _on_BtnDisconnect_pressed():
 
 
 func _on_Status_pressed():
-	$VBox/HBoxContainer/AnimationPlayer.play("copy")
-	OS.clipboard = Network.get_ip()
+	if ip != "":
+		anim.play("copy")
+		OS.clipboard = ip
