@@ -38,7 +38,6 @@ Press "Play Offline" to play on your machine. In the next menu, it is possible t
 When playing multiplayer, it is possible to choose between host or client. 
 ##### Host
 Put in your name and press "Host Game". The game will open a server on your IP address and it will try to open the port 31400 (so other players that are not in your network can also join the game). After that, tell the other players your IP address so they can join the game.
-
 If the automatic port opening fails, it will look like this:
 <img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Artwork/open_port_failed.png" alt="Message failed open port">
 
