@@ -3,6 +3,7 @@
 
 * 1. [General](#General)
 * 2. [Play](#Play)
+	* 2.1 [How to play](#how_to_play)
 * 3. [Gameplay](#Gameplay)
 	* 3.1. [Player](#Player)
 	* 3.2. [Bombs](#Bombs)
@@ -28,6 +29,24 @@ Team Members:
 ##  2. <a name='Play'></a>Play
 The game can be played and downloaded on <a href="https://nitrogen64.itch.io/spacebaguettes">itch.io</a> or on <a href="http://spacebaguettes.tk">spacebaguettes.tk</a>
 For older versions, see <a href="https://github.com/dominik-pm/SpaceBaguettes/releases">Releases</a>. We suggest downloading the game for your platform (Windows, Linux , Mac) instead of playing it in the browser, because it runs more smoothly.
+
+### 2.1 <a name='how_to_play'></a> How to play?
+This game can be played as an online multiplayer, couch multiplayer or all alone (against bots)
+#### Offline
+Press "Play Offline" to play on your machine. In the next menu, it is possible to add or remove players, assign players as bots, customize the key-inputs and to start the game
+#### Multiplayer
+When playing multiplayer, it is possible to choose between host or client. 
+##### Host
+Put in your name and press "Host Game". The game will open a server on your IP address and it will try to open the port 31400 (so other players that are not in your network can also join the game). After that, tell the other players your IP address so they can join the game.
+If the automatic port opening fails, it will look like this:
+<img src="https://github.com/dominik-pm/SpaceBaguettes/blob/master/Project/Assets/Artwork/open_port_failed.png" alt="Message failed open port">
+
+-> the server will only be reachable in the local network, except you open up the port yourself. 
+
+
+
+##### Client
+Put in your name and the ip address of the host and press "Join Game".
 
 ##  3. <a name='Gameplay'></a> Gameplay
 ###  3.1. <a name='Player'></a>Player:
