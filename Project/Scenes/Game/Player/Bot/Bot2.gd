@@ -66,6 +66,7 @@ var target_timeout = 3.5
 var target_timer = null
 var start_coord
 var coord = Vector2(0,0)
+var other_players = []
 var all_bombs = []
 var all_items = []
 var all_baguettes = []
@@ -106,6 +107,9 @@ func init(pos, p, f, g):
 	all_bombs = game.bombs
 	all_items = game.items
 	all_baguettes = game.baguettes
+	for p in game.players:
+		if p != self:
+			other_players.push_back(p.global_transform.origin)
 	start_coord = game.get_coord(muzzle.global_transform.origin)
 	
 	init_states()
@@ -191,7 +195,16 @@ func change_state(next_state):
 func _process(delta):
 	if game_started:
 		
+		# get coordinate
 		coord = game.get_coord(muzzle.global_transform.origin)
+		
+		# get players
+		other_players = []
+		for p in game.players:
+			var wr = weakref(p)
+			if wr.get_ref():
+				if p != self:
+					other_players.push_back(p)
 		
 		# -- GET STATE --
 		
@@ -229,6 +242,10 @@ func _process(delta):
 		else:
 			def_target = all_states[state.DEFENDING].update(target)
 		
+		# check if next pos in path is save
+		if target_point_world != null:
+			var next_point = game.get_coord(target_point_world)
+		
 		if def_target != null and def_target != new_target:
 			#print("Bot: found def target to abort to: " + str(def_target))
 			if curr_state != null:
@@ -236,7 +253,7 @@ func _process(delta):
 			self.curr_state = all_states[state.DEFENDING]
 			self.target = def_target
 			new_target = null
-		##else:
+		#else:
 		##	print(str(new_target) + " is safe")
 		
 		
@@ -279,6 +296,7 @@ func get_dir(state_target):
 		if path.size() == 0:
 			# find path with astar
 			path = game.find_path(coord, target)
+			
 			if path.size() > 1:
 				target_point_world = path[0] # 0 would be the one where we standing
 			elif path.size() == 1:
@@ -325,11 +343,24 @@ func is_at(world_position):
 
 # checks if there is a clear path in a certain direction
 func lane_free(pos, axis, r):
+	# check if a bomb is in the way
+	for bomb in all_bombs:
+		if bomb.coord.x == pos.x or bomb.coord.y == pos.y:
+			var dist = (bomb.coord-pos).length()
+			print("dist: " + str(dist))
+			print("r: " + str(r))
+			if dist < r:
+				print("Bot: Bomb is in the way!")
+				return true
+	
+	
+	# check if a block is in the way
 	for i in range(1, r+1):
 		var block = Vector2(pos.x + i*axis.x, pos.y + i*axis.y)
 		if game.check_block(block) != 0:
 			# block is not free
 			return false
+	
 	return true
 
 func _on_TargetTimeout_timeout():

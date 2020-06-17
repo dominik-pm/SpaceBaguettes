@@ -151,16 +151,18 @@ func find_path_local(coord_start, coord_end):
 	self.path_end_position = coord_end
 	_recalculate_path()
 	var path_world = []
+	
 	for point in _point_path:
 		var point_world = map_to_world(Vector2(point.x, point.y)) + _half_cell_size
 		path_world.append(point_world)
-	return path_world
+	return path_world.duplicate()
 
 func find_path(world_start, world_end):
 	self.path_start_position = world_to_map(world_start)
 	self.path_end_position = world_to_map(world_end)
 	_recalculate_path()
 	var path_world = []
+	
 	for point in _point_path:
 		var point_world = map_to_world(Vector2(point.x, point.y)) + _half_cell_size
 		path_world.append(point_world)
@@ -168,12 +170,14 @@ func find_path(world_start, world_end):
 
 
 func _recalculate_path():
-	clear_previous_path_drawing()
+	#clear_previous_path_drawing()
 	var start_point_index = calculate_point_index(path_start_position)
 	var end_point_index = calculate_point_index(path_end_position)
 	# This method gives us an array of points. Note you need the start and end
 	# points' indices as input
+	
 	_point_path = astar_node.get_point_path(start_point_index, end_point_index)
+	
 	# Redraw the lines and circles from the start to the end point
 	#update()
 

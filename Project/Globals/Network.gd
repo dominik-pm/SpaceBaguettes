@@ -1,6 +1,6 @@
 extends Node
 
-const PORT = 31400
+const PORT = 31400#25565
 var upnp = null
 var is_port_open = false
 var connecting_ip = ""

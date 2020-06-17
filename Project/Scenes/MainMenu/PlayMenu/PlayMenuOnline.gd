@@ -40,7 +40,7 @@ func _on_network_update(players):
 		status.text = "Hosting at: " + ip
 		
 		if not port_opened:
-			msg_lab.text = "Port (31400) not opened automatically at: " + Network.public_ip
+			msg_lab.text = "Port ("+str(Network.PORT)+") not opened automatically at: " + Network.public_ip
 		else:
 			msg_lab.text = "Local address: " + Network.get_local_ip()
 	else:

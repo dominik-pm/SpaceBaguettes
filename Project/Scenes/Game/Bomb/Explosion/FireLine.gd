@@ -44,7 +44,9 @@ func init(d, distance):
 	
 	# remove our self after the timespan of the bomb explosion
 	yield(get_tree().create_timer(Global.bomb_explosion_duration+0.1), "timeout")
-	_remove_self()
+	var wr = weakref(self)
+	if wr.get_ref(): # check if we are not freed
+		_remove_self()
 
 # fade alpha and queue free once animation is finished
 func _remove_self():

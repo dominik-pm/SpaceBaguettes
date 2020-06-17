@@ -160,6 +160,7 @@ func player_hit(player : int):
 	gui.player_hit(player)
 	cam.request_camera_shake(0.5)
 func player_died(player : int):
+	players.remove(player-1)
 	if not game_over:
 		players_alive -= 1
 		cam.request_camera_shake(1.0)
@@ -202,7 +203,7 @@ func add_node(node):
 
 # -- for bots -->
 func find_path(pos, tar):
-	return crates.find_path_local(pos, tar)
+	return crates.find_path_local(pos, tar).duplicate()
 func _process(delta):
 	# get bombs
 	bombs.clear()
@@ -225,7 +226,7 @@ func _process(delta):
 func get_coord(pos):
 	return crates.world_to_map(pos)
 func get_pos(coord):
-	return crates.map_to_world(coord)
+	return crates.map_to_world(coord) + (cellsize/2)
 func check_block(block):
 	var cell_index = crates.get_cellv(block)
 	

@@ -15,14 +15,19 @@ var vel = Vector2(0,0)
 var push_force = 64
 # --
 
+onready var exploding_timer = $ExplodingTimer
+
 var game
 var player
 var coord = Vector2(0,0)
 
 func _ready():
-	$ExplodingTimer.wait_time = Global.bomb_explosion_time
-	$ExplodingTimer.start()
+	exploding_timer.wait_time = Global.bomb_explosion_time
+	exploding_timer.start()
 	$Place.play()
+	
+	var t = Timer.new()
+	
 	# start anim for bomb ---
 
 func init(g, p, c, e_range, e_strenth):
@@ -32,6 +37,8 @@ func init(g, p, c, e_range, e_strenth):
 	explosion_size = e_range
 	explosion_strength = e_strenth
 	add_collision_exception_with(player)
+	#if player.pid == "1":
+	#	exploding_timer.stop() # _----------------------------- REMOVE!!!!
 	anim.play("init", -1, 1.0/Global.bomb_explosion_time)
 
 func _physics_process(delta):
@@ -56,7 +63,7 @@ func _on_ExplodingTimer_timeout():
 func explode():
 	exploding = true
 	
-	$ExplodingTimer.stop()
+	exploding_timer.stop()
 	$ExplosionSound.play()
 	$ExplosionSound2.play()
 	
@@ -94,7 +101,7 @@ func _on_PushArea_body_entered(body):
 			#var strength = body.player.bomb_moving_strength
 			var strength = body.bomb_moving_strength
 			if strength > 0:
-				print("player entered, pushing")
+				#print("player entered, pushing")
 				$Kick.play() # play kick sound when hitted
 				vel = player.facing*push_force*strength
 

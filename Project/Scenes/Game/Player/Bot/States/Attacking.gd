@@ -2,6 +2,26 @@ extends BotState
 
 # returns true/false if this state wants to be active
 func get_target():
+	# check if he can even shoot
+	if bot.can_shoot and bot.baguette_count > 0:
+	
+		for other in bot.other_players:
+			# only if the other is hittable
+			if not other.invincible:
+			
+				var p = game.get_coord(other.global_transform.origin)
+				if p.x == bot.coord.x or p.y == bot.coord.y:
+					var dir = p-bot.coord
+					var dist = dir.length()
+					dir = dir.normalized()
+					if bot.lane_free(bot.coord, dir, dist-1):
+						# player is in sight
+						if bot.facing == dir:
+							# bot already facing at the other player
+							return bot.coord
+						elif dist > 1:
+							# bot facing the wrong direction
+							return bot.coord + dir
 	return null
 
 # to figure out where to go
@@ -10,7 +30,7 @@ func update(target):
 
 # called when the target is reached
 func target_reached():
-	pass
+	bot.try_shoot()
 
 # called when this state is aborted (defending is more important)
 func abort():
