@@ -345,14 +345,14 @@ func is_at(world_position):
 func lane_free(pos, axis, r):
 	# check if a bomb is in the way
 	for bomb in all_bombs:
-		if bomb.coord.x == pos.x or bomb.coord.y == pos.y:
-			var dist = (bomb.coord-pos).length()
-			print("dist: " + str(dist))
-			print("r: " + str(r))
-			if dist < r:
-				print("Bot: Bomb is in the way!")
-				return true
-	
+		if not bomb.exploding and curr_state == state.ATTACKING:
+			if bomb.coord.x == pos.x or bomb.coord.y == pos.y:
+				var dist = (bomb.coord-pos).length()
+				print("dist: " + str(dist))
+				print("r: " + str(r))
+				if dist < r:
+					print("Bot: Bomb is in the way!")
+					return true
 	
 	# check if a block is in the way
 	for i in range(1, r+1):

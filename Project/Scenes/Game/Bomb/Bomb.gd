@@ -37,8 +37,8 @@ func init(g, p, c, e_range, e_strenth):
 	explosion_size = e_range
 	explosion_strength = e_strenth
 	add_collision_exception_with(player)
-	#if player.pid == "1":
-	#	exploding_timer.stop() # _----------------------------- REMOVE!!!!
+	if player.pid == "1":
+		exploding_timer.stop() # _----------------------------- REMOVE!!!!
 	anim.play("init", -1, 1.0/Global.bomb_explosion_time)
 
 func _physics_process(delta):

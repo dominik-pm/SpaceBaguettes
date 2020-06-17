@@ -14,7 +14,7 @@ func get_target():
 					var dir = p-bot.coord
 					var dist = dir.length()
 					dir = dir.normalized()
-					if bot.lane_free(bot.coord, dir, dist-1):
+					if bot.lane_free(bot.coord, dir, dist):
 						# player is in sight
 						if bot.facing == dir:
 							# bot already facing at the other player
