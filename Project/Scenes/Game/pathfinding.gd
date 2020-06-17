@@ -42,8 +42,8 @@ func get_obstacles():
 		o.push_back(c)
 	for c in get_wooden():
 		o.push_back(c)
-	for b in get_bombs():
-		o.push_back(b.coord)
+	for pos in get_bombs():
+		o.push_back(pos)
 	
 	return o
 
@@ -57,7 +57,27 @@ func get_wooden():
 	return get_used_cells_by_id(0)
 
 func get_bombs():
-	return game.bombs
+	var dangers = game.bombs
+	var d = []
+	for bomb in dangers:
+		d.push_back(bomb.coord)
+		
+		if bomb.exploding and bomb.directions != null and bomb.directions.size() > 0:
+			var k
+			var dir
+			#print("Pathfinding coords:")
+			for i in range(4):
+				k = 1
+				if i > 1:
+					k = -1
+				dir = Vector2(k*(i%2), -k*((i+1)%2))
+				
+				# for every explosion tile in that lane
+				for j in range(bomb.directions[i]):
+					var p = Vector2(dir.x*(j+1), dir.y*(j+1))
+					d.push_back(p+bomb.coord)
+					#print(p+bomb.coord)
+	return d
 
 # Click and Shift force the start and end position of the path to update
 # and the node to redraw everything

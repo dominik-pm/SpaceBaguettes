@@ -353,6 +353,8 @@ func explode(p, r, s, pid):
 	var pos = crates.map_to_world(coord) + (cellsize/2)
 	
 	_create_explosion(pos, directions, pid)
+	
+	return directions
 # destroy the first wooden crate found in a line 
 # from the coord_start into the dir with a depth of r
 func _destroy_line(coord_start, dir, r, s):

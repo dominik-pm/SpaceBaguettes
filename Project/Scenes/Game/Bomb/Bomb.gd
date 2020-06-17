@@ -4,6 +4,7 @@ class_name Bomb
 
 onready var anim = $AnimationPlayer
 
+var directions = null
 var exploding = false
 var explosion_size
 var explosion_strength
@@ -37,8 +38,6 @@ func init(g, p, c, e_range, e_strenth):
 	explosion_size = e_range
 	explosion_strength = e_strenth
 	add_collision_exception_with(player)
-	if player.pid == "1":
-		exploding_timer.stop() # _----------------------------- REMOVE!!!!
 	anim.play("init", -1, 1.0/Global.bomb_explosion_time)
 
 func _physics_process(delta):
@@ -75,7 +74,7 @@ func explode():
 		player.bomb_exploded()
 	
 		# tell the game
-		game.explode($Center.global_transform.origin, explosion_size, explosion_strength, player.pid)
+		directions = game.explode($Center.global_transform.origin, explosion_size, explosion_strength, player.pid)
 	
 	
 	# Animation

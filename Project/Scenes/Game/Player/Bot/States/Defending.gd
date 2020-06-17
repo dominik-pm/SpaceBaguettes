@@ -15,8 +15,7 @@ func update(target):
 	# otherwise, returns a new safe location
 	if target != null:
 		if is_loc_save(target):
-			# target is safe, go towards it
-			#print("target safe")
+			#print("target safe: " + str(target))
 			return null
 	if is_loc_save(bot.coord) and target != null:
 		# target is not safe and position is safe -> stay
@@ -53,7 +52,6 @@ func is_loc_save(pos):
 	var bomb = is_bomb_explosion_in_range(pos)
 	var bagu = is_baguette_danger(pos)
 	return bomb == null and bagu == null
-
 
 func get_save_loc_from_bombs(pos, bombs):
 	# for every location in a given radius,
