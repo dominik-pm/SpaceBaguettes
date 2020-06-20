@@ -79,6 +79,8 @@ func open_port():
 		gateway.add_port_mapping(PORT, PORT, "SpaceBaguettes", "TCP")
 		gateway.add_port_mapping(PORT, PORT, "SpaceBaguettes", "UDP")
 		return true
+	else:
+		return is_port_open
 
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
