@@ -55,7 +55,7 @@ func _on_BtnRemove_pressed():
 	remove_player()
 
 func _on_BtnMakeBot_pressed():
-	if not Global.is_mobile:
+	if is_bot or not menu.one_bot: # ONLY ONE BOT POSSIBLE
 		is_bot = !is_bot
 		make_bot(is_bot)
 

@@ -56,6 +56,10 @@ func is_bomb_explosion_in_range(pos):
 			# a bomb is in line
 			# check if its explosion strength could be dangerous
 			if bomb.explosion_size != null:
+				#if bomb.coord-pos == Vector2(0,0):
+					#print("on bomb")
+					#print(bomb.explosion_size >= (bomb.coord-pos).length())
+					#print(bot.lane_free(bomb.coord, (pos-bomb.coord).normalized(), bomb.explosion_size-1))
 				if bomb.explosion_size >= (bomb.coord-pos).length():
 					# check if there are blocks between
 					if bot.lane_free(bomb.coord, (pos-bomb.coord).normalized(), bomb.explosion_size-1):

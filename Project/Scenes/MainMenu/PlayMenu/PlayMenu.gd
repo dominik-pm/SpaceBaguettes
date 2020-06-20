@@ -5,6 +5,8 @@ export (NodePath) var menu
 var names
 var all_entries = {}
 
+var one_bot = false
+
 func _ready():
 	menu = get_node(menu)
 	
@@ -30,7 +32,15 @@ func add_player(adding, pid):
 		Global.players[int(pid)-1] = "-"
 
 func make_bot(is_bot, pid):
-	Global.players[int(pid)-1] = "@" if is_bot else ""
+	#Global.players[int(pid)-1] = "" if is_bot else ""
+	
+	# ONLY ONE BOT POSSIBLE ->
+	if is_bot and not one_bot:
+		Global.players[int(pid)-1] = "@"
+		one_bot = true
+	elif not is_bot:
+		one_bot = false
+		Global.players[int(pid)-1] = ""
 
 func get_player_entries(entries):
 	for key in entries:

@@ -877,7 +877,6 @@ __meta__ = {
 }
 
 [node name="Play" type="Control" parent="Foreground/Menu"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -951,6 +950,7 @@ margin_bottom = 680.0
 size_flags_vertical = 3
 
 [node name="PlayMenu" type="PanelContainer" parent="Foreground/Menu/Play"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1063,6 +1063,7 @@ visible = false
 menu = NodePath("../..")
 
 [node name="PlayOnlineMenu" parent="Foreground/Menu/Play" instance=ExtResource( 51 )]
+visible = false
 
 [node name="Settings" type="Control" parent="Foreground/Menu"]
 visible = false

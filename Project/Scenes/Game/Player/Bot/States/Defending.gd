@@ -1,6 +1,6 @@
 extends BotState
 
-const SEARCH_RADIUS = 2
+const SEARCH_RADIUS = 3
 
 # returns true/false if this state wants to be active
 func get_target():
@@ -17,11 +17,12 @@ func update(target):
 		if is_loc_save(target):
 			#print("target safe: " + str(target))
 			return null
-	if is_loc_save(bot.coord) and target != null:
+	var pos_safe = is_loc_save(bot.coord)
+	if pos_safe and target != null:
 		# target is not safe and position is safe -> stay
 		#print("pos safe")
 		return bot.coord
-	if is_loc_save(bot.coord) and target == null:
+	if pos_safe and target == null:
 		# location is safe and theres no target
 		#print("safe no target")
 		return null

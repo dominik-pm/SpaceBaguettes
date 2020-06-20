@@ -108,8 +108,6 @@ func init_players():
 			player.init(pos, i+1, dir, self)
 			players.push_back(player)
 		elif Global.players[i] == "@":
-			# init bot (for now), maybe with slider or something
-			
 			cnt += 1
 			
 			var p = spawns[2].global_transform.origin # was index i

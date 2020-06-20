@@ -245,9 +245,12 @@ func _process(delta):
 		else:
 			def_target = all_states[state.DEFENDING].update(target)
 		
-		# check if next pos in path is save
+		# -> check if the immidiate next tile in the path is safe
 		if target_point_world != null:
-			var next_point = game.get_coord(target_point_world)
+			var new_def_target = all_states[state.DEFENDING].update(game.get_coord(target_point_world))
+			if new_def_target != null and new_def_target != def_target:
+				def_target = new_def_target
+		
 		
 		if def_target != null and def_target != new_target:
 			#print("Bot: found def target to abort to: " + str(def_target))
