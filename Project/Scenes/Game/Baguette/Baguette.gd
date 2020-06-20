@@ -79,7 +79,11 @@ func destroy():
 				ttl = child.lifetime
 			child.emitting = false
 	
-	yield(get_tree().create_timer(ttl), "timeout")
-	var wr = weakref(self)
-	if wr.get_ref():
-		queue_free()
+	var timer = Timer.new()
+	add_child(timer)
+	timer.wait_time = ttl
+	timer.connect("timeout", self, "_on_destroy_timeout")
+	timer.start()
+
+func _on_destroy_timeout():
+	queue_free()
