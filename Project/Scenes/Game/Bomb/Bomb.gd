@@ -69,7 +69,7 @@ func explode():
 	can_collide = false
 	
 	# tell the player
-	var wr  = weakref(player)
+	var wr = weakref(player)
 	if wr.get_ref(): # check if the player is not freed (died)
 		player.bomb_exploded()
 	

@@ -12,6 +12,7 @@ var nickname = ""
 var connected_players = {}
 
 # for the server
+var restarting = false
 var ready_players = []
 var ready_timeout = null
 
@@ -147,7 +148,8 @@ func start_game():
 
 func restart_game():
 	if local_id == 1:
-		rpc("restart")
+		restarting = true
+		rpc("restart") # to all clients
 
 
 func get_ip():
@@ -219,6 +221,9 @@ remote func player_ready(id):
 		ready_timeout.stop()
 		print("telling all to start countdown")
 		rpc("start_countdown")
+	elif restarting and ready_players.size() == connected_players.size() - 1:
+		# everyone is ready, but the server
+		emit_signal("restart_game")
 func _on_ready_timout():
 	for id in connected_players:
 		if not ready_players.has(id):
@@ -232,12 +237,13 @@ remote func server_closed():
 	connected_players = {}
 	if peer != null:
 		peer.close_connection()
+remote func restart():
+	emit_signal("restart_game")
+
 
 # TO EVERYONE (INCLUDING HOST)
 remotesync func start_countdown():
 	emit_signal("start_countdown")
-remotesync func restart():
-	emit_signal("restart_game")
 remotesync func start(players):
 	connected_players = players
 	

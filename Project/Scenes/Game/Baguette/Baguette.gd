@@ -80,4 +80,6 @@ func destroy():
 			child.emitting = false
 	
 	yield(get_tree().create_timer(ttl), "timeout")
-	queue_free()
+	var wr = weakref(self)
+	if wr.get_ref():
+		queue_free()
