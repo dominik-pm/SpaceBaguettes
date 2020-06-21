@@ -167,8 +167,23 @@ func _on_game_start():
 	$StartCountdown.start_countdown()
 
 func _on_network_restart():
-	# restarting game
-	get_tree().change_scene("res://Scenes/NetworkedGame/NGame.tscn")
+	reload_ngame_scene()
+
+func reload_ngame_scene():
+	var root = get_tree().root
+	# Remove the current level
+	var level = root.get_node("NGame")
+	root.remove_child(level)
+	level.call_deferred("free")
+	
+	# Add the next level
+	var next_level_resource = Preloader.ngame
+	var next_level = next_level_resource.instance()
+	root.add_child(next_level)
+	
+	# old version
+	## restarting game
+	#get_tree().change_scene("res://Scenes/NetworkedGame/NGame.tscn")
 
 func _on_server_closed():
 	Network.close_connection()

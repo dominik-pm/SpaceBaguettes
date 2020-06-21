@@ -10,11 +10,10 @@ var cnt = 3
 
 func _ready():
 	timer = Timer.new()
+	get_tree().root.add_child(timer)
+	timer.connect("timeout", self, "_on_timer_timeout")
 	timer.wait_time = 1
 	timer.one_shot = true
-	timer.autostart = false
-	add_child(timer)
-	timer.connect("timeout", self, "_on_timer_timeout")
 
 func start_countdown():
 	update_label()
