@@ -1063,6 +1063,7 @@ visible = false
 menu = NodePath("../..")
 
 [node name="PlayOnlineMenu" parent="Foreground/Menu/Play" instance=ExtResource( 51 )]
+visible = false
 
 [node name="Settings" type="Control" parent="Foreground/Menu"]
 visible = false
