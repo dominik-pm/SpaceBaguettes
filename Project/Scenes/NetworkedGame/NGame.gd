@@ -465,6 +465,7 @@ func _on_BtnResume_pressed():
 	pause_menu.hide()
 
 func _on_BtnRestart_pressed():
+	clear_players()
 	Network.restart_game()
 
 func _on_BtnSettings_pressed():
@@ -487,6 +488,11 @@ func _on_BtnQuit_pressed():
 	get_tree().quit()
 
 func _on_BtnPlay_pressed():
+	clear_players()
 	Network.restart_game()
 
 # <-- menu stuff --
+
+func clear_players():
+	for p in players:
+		p.queue_free()

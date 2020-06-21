@@ -83,7 +83,7 @@ func _process(delta):
 			rset_unreliable("axis", axis)
 			rset_unreliable("other_pos", global_transform.origin)
 			axis = get_input_axis()
-		else:
+		elif other_pos != Vector2.ZERO:
 			# check if position is not far off, else correct it
 			if (other_pos-global_transform.origin).length() > NETWORK_ERROR_DISTANCE:
 				global_transform.origin = other_pos

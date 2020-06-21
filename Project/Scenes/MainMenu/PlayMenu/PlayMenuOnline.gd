@@ -111,6 +111,8 @@ func check_name(s : String):
 	return s
 
 func _on_BtnDisconnect_pressed():
+	for c in player_containers:
+		c.remove_player()
 	get_parent().close_online_menu()
 
 
