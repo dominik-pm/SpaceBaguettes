@@ -181,7 +181,7 @@ func reload_ngame_scene():
 	var next_level = next_level_resource.instance()
 	root.add_child(next_level)
 	
-	# old version
+	# old version (de neiche bringt a ned mehr)
 	## restarting game
 	#get_tree().change_scene("res://Scenes/NetworkedGame/NGame.tscn")
 
