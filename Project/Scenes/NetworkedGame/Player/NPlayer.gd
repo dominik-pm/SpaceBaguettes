@@ -154,16 +154,18 @@ func _input(event):
 	if is_network_master() and is_alive:
 		
 		if (event.is_action_pressed("1set_bomb") or Input.is_action_pressed("1set_bomb_gp") or touchscreen.is_bomb_pressed()):
-			if bombs_active < max_bombs:
-				if not on_bomb:
-					on_bomb = true
-					rpc("place_bomb", muzzle.get_global_transform().origin)
+			if not game.pause_menu.visible:
+				if bombs_active < max_bombs:
+					if not on_bomb:
+						on_bomb = true
+						rpc("place_bomb", muzzle.get_global_transform().origin)
 		
 		if (event.is_action_pressed("1shoot") or Input.is_action_pressed("1shoot_gp") or touchscreen.is_shoot_pressed()) and can_shoot and baguette_count > 0:
-			can_shoot = false
-			shooting_delay_timer.start()
-			var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
-			rpc("shoot", pos)
+			if not game.pause_menu.visible:
+				can_shoot = false
+				shooting_delay_timer.start()
+				var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
+				rpc("shoot", pos)
 
 sync func place_bomb(pos):
 	bombs_active += 1

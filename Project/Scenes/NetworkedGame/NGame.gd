@@ -95,6 +95,32 @@ func _ready():
 	else:
 		Network.player_ready(Network.local_id)
 
+func reset():
+	game_over = false
+	clear_players()
+	
+	players = []
+	
+	$Music.play()
+	
+	pause_menu.hide()
+	settings_menu.hide()
+	game_summary.hide() 
+	
+	players_alive = init_players()
+	
+	gui.init_player_gui()
+	
+	for p in players:
+		p.init_gui()
+	
+	init_stats()
+	
+	if Network.local_id != 1:
+		Network.rpc_id(1, "player_ready", Network.local_id)
+	else:
+		Network.player_ready(Network.local_id)
+
 func init_stats():
 	for p in players:
 		stats[Global.player_names[int(p.pid)-1]] = {}
@@ -191,6 +217,8 @@ func player_hit(player : int):
 	gui.player_hit(player)
 	cam.request_camera_shake(0.5)
 func player_died(player : int):
+	players.remove(player-1)
+	
 	if not game_over:
 		players_alive -= 1
 		cam.request_camera_shake(1.0)
@@ -494,5 +522,9 @@ func _on_BtnPlay_pressed():
 # <-- menu stuff --
 
 func clear_players():
+	return
+	
 	for p in players:
-		p.queue_free()
+		var wr = weakref(p)
+		if wr.get_ref():
+			p.queue_free()

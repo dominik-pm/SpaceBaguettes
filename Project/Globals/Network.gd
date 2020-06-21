@@ -132,7 +132,7 @@ func close_connection():
 	if peer != null:
 		if local_id == 1:
 			rpc("server_closed")
-		yield(get_tree().create_timer(0.5), "timeout")
+		yield(get_tree().create_timer(0.25), "timeout")
 		peer.close_connection()
 		print("closed connection")
 
