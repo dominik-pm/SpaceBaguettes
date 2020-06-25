@@ -17,7 +17,7 @@
 [ext_resource path="res://Ressources/Theme.tres" type="Theme" id=15]
 [ext_resource path="res://Scenes/MainMenu/TextureButtons.gd" type="Script" id=16]
 [ext_resource path="res://Assets/Menu/Icons/robot.png" type="Texture" id=17]
-[ext_resource path="res://Assets/Menu/Icons/exit.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Menu/Icons/controller.png" type="Texture" id=18]
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/BtnMakeController.gd" type="Script" id=19]
 
 [sub_resource type="GDScript" id=1]
@@ -27,18 +27,25 @@ var menu = null
 var pid = \"\"
 
 func _ready():
+	hide()
 	menu = get_parent()
 
 func _input(event):
 	if visible and (event is InputEventJoypadButton or event is InputEventJoypadMotion):
 		var gp_id = event.get_device()
+		
+		# check if device id already used
+		for id in Global.player_gp_ids:
+			if id == str(gp_id+1):
+				return
+		
 		menu.set_gp_id_for(pid, gp_id)
 		hide()
 
 func get_gp_id_for(p):
 	pid = p
-	popup()
-"
+	show()
+	grab_focus()"
 
 [node name="PlayOfflineMenu" type="PanelContainer"]
 anchor_left = 0.5
@@ -139,15 +146,15 @@ __meta__ = {
 }
 
 [node name="Keys" parent="VBox/PlayerSelect/Player1/Container" instance=ExtResource( 4 )]
-visible = false
 margin_left = 176.0
 margin_right = 376.0
 margin_bottom = 192.0
 menu = NodePath("../../../../../../PlayOfflineMenu")
 
 [node name="GamePadControls" type="TextureRect" parent="VBox/PlayerSelect/Player1/Container"]
-margin_left = 176.0
-margin_right = 376.0
+visible = false
+margin_left = 384.0
+margin_right = 584.0
 margin_bottom = 192.0
 rect_min_size = Vector2( 200, 192 )
 texture = ExtResource( 18 )
@@ -749,7 +756,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PopupDialog" type="Popup" parent="."]
+[node name="PopupDialog" type="Control" parent="."]
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 822.0
