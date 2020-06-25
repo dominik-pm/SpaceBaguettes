@@ -34,7 +34,7 @@ For older versions, see <a href="https://github.com/dominik-pm/SpaceBaguettes/re
 This game can be played as an online multiplayer, couch multiplayer or all alone (against bots)
 #### Offline
 Press "Play Offline" to play on your machine. In the next menu, it is possible to add or remove players, assign players as bots, customize the key-inputs and to start the game
-#### Multiplayer
+#### Multiplayer (Not stable yet)
 When playing multiplayer, it is possible to choose between host or client. 
 ##### Host
 Put in your name and press "Host Game". The game will open a server on your IP address and it will try to open the port 31400 (so other players that are not in your network can also join the game). After that, tell the other players your IP address so they can join the game.
