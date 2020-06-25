@@ -4,6 +4,7 @@ export (NodePath) var menu
 
 onready var popup = $PopupDialog
 
+var player_containers
 var names
 var all_entries = {}
 
@@ -17,6 +18,12 @@ func _ready():
 		get_node("VBox/PlayerSelect/Player2/PlayerNameInput"),
 		get_node("VBox/PlayerSelect/Player3/PlayerNameInput"),
 		get_node("VBox/PlayerSelect/Player4/PlayerNameInput")
+	]
+	player_containers = [
+		get_node("VBox/PlayerSelect/Player1"),
+		get_node("VBox/PlayerSelect/Player2"),
+		get_node("VBox/PlayerSelect/Player3"),
+		get_node("VBox/PlayerSelect/Player4")
 	]
 	
 	if Global.is_mobile:
@@ -63,9 +70,11 @@ func get_gp_id_for(pid):
 		popup.get_gp_id_for(pid)
 	else:
 		Global.player_gp_ids[int(pid)-1] = ""
+		player_containers[int(pid)-1].make_gp(false)
 
 func set_gp_id_for(pid, gp_id):
 	Global.player_gp_ids[int(pid)-1] = str(gp_id+1)
+	player_containers[int(pid)-1].make_gp(true)
 
 func _on_CancelBtn_pressed():
 	popup.hide()

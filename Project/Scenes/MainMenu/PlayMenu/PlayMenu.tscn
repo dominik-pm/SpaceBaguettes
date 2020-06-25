@@ -30,7 +30,7 @@ func _ready():
 	menu = get_parent()
 
 func _input(event):
-	if visible and event is InputEventJoypadButton:
+	if visible and (event is InputEventJoypadButton or event is InputEventJoypadMotion):
 		var gp_id = event.get_device()
 		menu.set_gp_id_for(pid, gp_id)
 		hide()
@@ -135,7 +135,7 @@ script = ExtResource( 19 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-menu = NodePath("../../../..")
+menu = NodePath("../../../../../../..")
 
 [node name="TextureRect4" type="TextureRect" parent="VBox/PlayerSelect/Player1/Container/Icons/HBoxContainer/BtnMakeController"]
 self_modulate = Color( 0.203922, 0.592157, 0.72549, 1 )
@@ -712,8 +712,8 @@ __meta__ = {
 [node name="Label" type="Label" parent="PopupDialog/CenterContainer/VBoxContainer"]
 margin_right = 360.0
 margin_bottom = 67.0
-text = "press a button 
-on the gamepad..."
+text = "interact with the
+desired the gamepad..."
 align = 1
 autowrap = true
 
