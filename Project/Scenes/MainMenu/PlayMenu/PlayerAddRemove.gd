@@ -20,6 +20,14 @@ onready var gp_controls = $Container/GamePadControls
 func _ready():
 	menu = get_node(menu)
 	
+	if pid != "1":
+		bot_icon = get_node("Container/BotIcon")
+		
+		if Global.is_mobile:
+			is_bot = true
+		
+		make_bot(is_bot)
+	
 	if int(pid) > 1:
 		btn_bot = get_node("Container/Icons/HBoxContainer/BtnMakeBot")
 	if int(pid) > 2:
@@ -29,17 +37,6 @@ func _ready():
 	
 	gp_controls.hide()
 	
-	if pid != "1":
-		bot_icon = get_node("Container/BotIcon")
-		
-		if Global.is_mobile:
-			is_bot = true
-		
-		make_bot(is_bot)
-	
-	if int(pid) == 3:
-		yield(get_tree().create_timer(1), "timeout")
-		print(Global.players)
 
 func remove_player():
 	menu.add_player(false, pid)
