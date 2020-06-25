@@ -4,7 +4,7 @@ onready var container = $Container
 onready var name_input = $PlayerNameInput
 
 onready var keys = $Container/Keys
-var bot_icon
+var bot_icon = null
 
 var btn_add = null
 var btn_bot = null
@@ -15,17 +15,22 @@ var is_bot = false
 export (String) var pid
 export (NodePath) var menu
 
+onready var gp_controls = $Container/GamePadControls
+
 func _ready():
 	menu = get_node(menu)
 	
 	if int(pid) > 2:
-		bot_icon = get_node("Container/BotIcon")
 		btn_add = get_node("BtnAdd")
 		btn_bot = get_node("Container/Icons/HBoxContainer/BtnMakeBot")
 		btn_rem = get_node("Container/Icons/HBoxContainer/BtnRemove")
 		remove_player()
 	
+	gp_controls.hide()
+	
 	if pid != "1":
+		bot_icon = get_node("Container/BotIcon")
+		
 		if Global.is_mobile:
 			is_bot = true
 		
@@ -40,12 +45,14 @@ func remove_player():
 
 func make_gamepad(is_gp):
 	keys.visible = !is_gp
+	gp_controls.visible = is_gp
 
 func make_bot(is_bot):
 	menu.make_bot(is_bot, pid)
 	name_input.visible = !is_bot
 	keys.visible = !is_bot
-	bot_icon.visible = is_bot
+	if bot_icon != null:
+		bot_icon.visible = is_bot
 
 func add_player():
 	menu.add_player(true, pid)
@@ -55,6 +62,10 @@ func add_player():
 	btn_rem.grab_focus()
 	if Global.is_mobile:
 		make_bot(true)
+
+func _on_gp_pressed():
+	if not is_bot:
+		menu.get_gp_id_for(pid)
 
 func _on_BtnRemove_pressed():
 	remove_player()

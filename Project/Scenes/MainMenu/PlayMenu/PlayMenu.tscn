@@ -17,7 +17,7 @@
 [ext_resource path="res://Ressources/Theme.tres" type="Theme" id=15]
 [ext_resource path="res://Scenes/MainMenu/TextureButtons.gd" type="Script" id=16]
 [ext_resource path="res://Assets/Menu/Icons/robot.png" type="Texture" id=17]
-[ext_resource path="res://Assets/Menu/Icons/gamepad.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Menu/Icons/exit.png" type="Texture" id=18]
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/BtnMakeController.gd" type="Script" id=19]
 
 [sub_resource type="GDScript" id=1]
@@ -37,7 +37,7 @@ func _input(event):
 
 func get_gp_id_for(p):
 	pid = p
-	show_modal()
+	popup()
 "
 
 [node name="PlayOfflineMenu" type="PanelContainer"]
@@ -45,9 +45,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -413.0
+margin_left = -421.0
 margin_top = -341.0
-margin_right = 413.0
+margin_right = 421.0
 margin_bottom = 341.0
 theme = ExtResource( 15 )
 script = ExtResource( 1 )
@@ -108,36 +108,20 @@ margin_top = 144.0
 margin_right = 168.0
 margin_bottom = 192.0
 
-[node name="ControllerIcon" type="TextureRect" parent="VBox/PlayerSelect/Player1/Container/Icons/HBoxContainer"]
+[node name="ControllerIcon" type="TextureButton" parent="VBox/PlayerSelect/Player1/Container/Icons/HBoxContainer"]
 margin_right = 48.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 48, 48 )
-texture = ExtResource( 3 )
-expand = true
-stretch_mode = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BtnMakeController" type="TextureButton" parent="VBox/PlayerSelect/Player1/Container/Icons/HBoxContainer"]
-margin_left = 56.0
-margin_right = 104.0
-margin_bottom = 48.0
-rect_min_size = Vector2( 48, 48 )
-focus_next = NodePath("../../../../PlayerNameInput")
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 18 )
-texture_pressed = ExtResource( 18 )
-texture_hover = ExtResource( 18 )
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 3 )
 expand = true
 stretch_mode = 5
 script = ExtResource( 19 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-menu = NodePath("../../../../../../..")
+menu = NodePath("../../../..")
 
-[node name="TextureRect4" type="TextureRect" parent="VBox/PlayerSelect/Player1/Container/Icons/HBoxContainer/BtnMakeController"]
+[node name="TextureRect4" type="TextureRect" parent="VBox/PlayerSelect/Player1/Container/Icons/HBoxContainer/ControllerIcon"]
 self_modulate = Color( 0.203922, 0.592157, 0.72549, 1 )
 show_behind_parent = true
 anchor_right = 1.0
@@ -146,7 +130,7 @@ margin_left = 2.0
 margin_top = 2.0
 margin_right = 2.0
 margin_bottom = 2.0
-texture = ExtResource( 18 )
+texture = ExtResource( 3 )
 expand = true
 stretch_mode = 6
 script = ExtResource( 16 )
@@ -155,10 +139,20 @@ __meta__ = {
 }
 
 [node name="Keys" parent="VBox/PlayerSelect/Player1/Container" instance=ExtResource( 4 )]
+visible = false
 margin_left = 176.0
 margin_right = 376.0
 margin_bottom = 192.0
 menu = NodePath("../../../../../../PlayOfflineMenu")
+
+[node name="GamePadControls" type="TextureRect" parent="VBox/PlayerSelect/Player1/Container"]
+margin_left = 176.0
+margin_right = 376.0
+margin_bottom = 192.0
+rect_min_size = Vector2( 200, 192 )
+texture = ExtResource( 18 )
+expand = true
+stretch_mode = 6
 
 [node name="PlayerNameInput" type="LineEdit" parent="VBox/PlayerSelect/Player1"]
 margin_top = 200.0
@@ -206,13 +200,32 @@ margin_top = 144.0
 margin_right = 168.0
 margin_bottom = 192.0
 
-[node name="ControllerIcon" type="TextureRect" parent="VBox/PlayerSelect/Player2/Container/Icons/HBoxContainer"]
+[node name="ControllerIcon" type="TextureButton" parent="VBox/PlayerSelect/Player2/Container/Icons/HBoxContainer"]
 margin_right = 48.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 48, 48 )
-texture = ExtResource( 8 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 8 )
+texture_hover = ExtResource( 8 )
 expand = true
 stretch_mode = 5
+script = ExtResource( 19 )
+menu = NodePath("../../../..")
+
+[node name="TextureRect4" type="TextureRect" parent="VBox/PlayerSelect/Player2/Container/Icons/HBoxContainer/ControllerIcon"]
+self_modulate = Color( 0.203922, 0.592157, 0.72549, 1 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 2.0
+margin_bottom = 2.0
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -256,6 +269,16 @@ margin_right = 376.0
 margin_bottom = 192.0
 player_id = "2"
 menu = NodePath("../../../../../../PlayOfflineMenu")
+
+[node name="GamePadControls" type="TextureRect" parent="VBox/PlayerSelect/Player2/Container"]
+visible = false
+margin_left = 384.0
+margin_right = 584.0
+margin_bottom = 192.0
+rect_min_size = Vector2( 200, 192 )
+texture = ExtResource( 18 )
+expand = true
+stretch_mode = 6
 
 [node name="BotIcon" type="TextureRect" parent="VBox/PlayerSelect/Player2/Container"]
 visible = false
@@ -317,20 +340,38 @@ margin_top = 144.0
 margin_right = 168.0
 margin_bottom = 192.0
 
-[node name="ControllerIcon" type="TextureRect" parent="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer"]
-margin_right = 50.0
+[node name="ControllerIcon" type="TextureButton" parent="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer"]
+margin_right = 48.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 48, 48 )
-size_flags_horizontal = 3
-texture = ExtResource( 9 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 9 )
 expand = true
 stretch_mode = 5
+script = ExtResource( 19 )
+menu = NodePath("../../../..")
+
+[node name="TextureRect4" type="TextureRect" parent="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer/ControllerIcon"]
+self_modulate = Color( 0.203922, 0.592157, 0.72549, 1 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 2.0
+margin_bottom = 2.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="BtnMakeBot" type="TextureButton" parent="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer"]
-margin_left = 58.0
+margin_left = 56.0
 margin_right = 108.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 48, 48 )
@@ -404,6 +445,17 @@ margin_right = 376.0
 margin_bottom = 192.0
 player_id = "3"
 menu = NodePath("../../../../../../PlayOfflineMenu")
+
+[node name="GamePadControls" type="TextureRect" parent="VBox/PlayerSelect/Player3/Container"]
+visible = false
+margin_left = 810.0
+margin_top = -292.0
+margin_right = 1010.0
+margin_bottom = -100.0
+rect_min_size = Vector2( 200, 192 )
+texture = ExtResource( 18 )
+expand = true
+stretch_mode = 6
 
 [node name="BotIcon" type="TextureRect" parent="VBox/PlayerSelect/Player3/Container"]
 margin_left = 176.0
@@ -495,20 +547,38 @@ margin_top = 144.0
 margin_right = 168.0
 margin_bottom = 192.0
 
-[node name="ControllerIcon" type="TextureRect" parent="VBox/PlayerSelect/Player4/Container/Icons/HBoxContainer"]
-margin_right = 50.0
+[node name="ControllerIcon" type="TextureButton" parent="VBox/PlayerSelect/Player4/Container/Icons/HBoxContainer"]
+margin_right = 48.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 48, 48 )
-size_flags_horizontal = 3
-texture = ExtResource( 13 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 13 )
 expand = true
 stretch_mode = 5
+script = ExtResource( 19 )
+menu = NodePath("../../../..")
+
+[node name="TextureRect4" type="TextureRect" parent="VBox/PlayerSelect/Player4/Container/Icons/HBoxContainer/ControllerIcon"]
+self_modulate = Color( 0.203922, 0.592157, 0.72549, 1 )
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 2.0
+margin_bottom = 2.0
+texture = ExtResource( 13 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="BtnMakeBot" type="TextureButton" parent="VBox/PlayerSelect/Player4/Container/Icons/HBoxContainer"]
-margin_left = 58.0
+margin_left = 56.0
 margin_right = 108.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 48, 48 )
@@ -581,6 +651,17 @@ margin_right = 376.0
 margin_bottom = 192.0
 player_id = "4"
 menu = NodePath("../../../../../../PlayOfflineMenu")
+
+[node name="GamePadControls" type="TextureRect" parent="VBox/PlayerSelect/Player4/Container"]
+visible = false
+margin_left = 384.0
+margin_top = -292.0
+margin_right = 584.0
+margin_bottom = -100.0
+rect_min_size = Vector2( 200, 192 )
+texture = ExtResource( 18 )
+expand = true
+stretch_mode = 6
 
 [node name="BotIcon" type="TextureRect" parent="VBox/PlayerSelect/Player4/Container"]
 visible = false
@@ -669,7 +750,6 @@ __meta__ = {
 }
 
 [node name="PopupDialog" type="Popup" parent="."]
-visible = true
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 822.0
@@ -721,8 +801,6 @@ autowrap = true
 margin_top = 167.0
 margin_right = 360.0
 margin_bottom = 209.0
-focus_mode = 0
-enabled_focus_mode = 0
 text = "Cancel"
 [connection signal="pressed" from="VBox/PlayerSelect/Player2/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player2" method="_on_BtnMakeBot_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player3" method="_on_BtnMakeBot_pressed"]

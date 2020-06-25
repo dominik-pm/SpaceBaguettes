@@ -26,6 +26,10 @@ func _ready():
 		get_node("VBox/PlayerSelect/Player4")
 	]
 	
+	for i in range(player_containers.size()):
+		if Global.player_gp_ids[i] != "":
+			player_containers[i].make_gamepad(true)
+	
 	if Global.is_mobile:
 		for c in $VBox/PlayerSelect.get_children():
 			c.get_node("Container/Keys").hide()
