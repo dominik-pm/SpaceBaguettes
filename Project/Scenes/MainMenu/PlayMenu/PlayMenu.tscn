@@ -21,7 +21,7 @@
 [ext_resource path="res://Scenes/MainMenu/PlayMenu/BtnMakeController.gd" type="Script" id=19]
 
 [sub_resource type="GDScript" id=1]
-script/source = "extends Popup
+script/source = "extends Control
 
 var menu = null
 var pid = \"\"
@@ -45,7 +45,8 @@ func _input(event):
 func get_gp_id_for(p):
 	pid = p
 	show()
-	grab_focus()"
+	grab_focus()
+"
 
 [node name="PlayOfflineMenu" type="PanelContainer"]
 anchor_left = 0.5
