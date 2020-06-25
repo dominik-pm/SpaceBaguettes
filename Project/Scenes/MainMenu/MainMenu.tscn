@@ -169,7 +169,7 @@ tracks/0/keys = {
 "values": [ 0.0, 1.0 ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=13]
 resource_name = "hide"
 length = 0.1
 tracks/0/type = "value"
@@ -197,7 +197,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=14]
 resource_name = "show"
 length = 0.2
 tracks/0/type = "value"
@@ -225,7 +225,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="GDScript" id=13]
+[sub_resource type="GDScript" id=15]
 script/source = "extends VBoxContainer
 
 onready var entry = $DropEntry
@@ -252,7 +252,7 @@ func _set_value(value):
 	entry.set_value(value)
 "
 
-[sub_resource type="GDScript" id=14]
+[sub_resource type="GDScript" id=16]
 script/source = "extends HBoxContainer
 
 onready var lab = $Label
@@ -280,28 +280,28 @@ func _on_HSlider_value_changed(v):
 		change_rate = true
 "
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=17]
 script/source = "extends ConfigBaseEntry
 
 func change_variable(value = Global.player_maxhealth):
 	Global.player_maxhealth = value
 "
 
-[sub_resource type="GDScript" id=16]
+[sub_resource type="GDScript" id=18]
 script/source = "extends ConfigBaseEntry
 
 func change_variable(value = Global.starting_baguettes):
 	Global.starting_baguettes = value
 "
 
-[sub_resource type="GDScript" id=17]
+[sub_resource type="GDScript" id=19]
 script/source = "extends ConfigBaseEntry
 
 func change_variable(value = Global.starting_bombs):
 	Global.starting_bombs = value
 "
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=20]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Fade/Black:modulate")
@@ -364,7 +364,7 @@ tracks/4/keys = {
 "values": [ -10.0, -20.0 ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=21]
 length = 2.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -399,7 +399,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=22]
 length = 3.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:position:x")
@@ -434,7 +434,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=23]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -1135,8 +1135,8 @@ max_length = 15
 placeholder_text = "IP"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer"]
-anims/hide = SubResource( 24 )
-anims/show = SubResource( 23 )
+anims/hide = SubResource( 13 )
+anims/show = SubResource( 14 )
 
 [node name="PlayOfflineMenu" parent="Foreground/Menu/Play" instance=ExtResource( 21 )]
 visible = false
@@ -1284,7 +1284,7 @@ lang_tile = "default"
 margin_top = 92.0
 margin_right = 884.0
 margin_bottom = 180.0
-script = SubResource( 13 )
+script = SubResource( 15 )
 
 [node name="Header" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall"]
 margin_right = 884.0
@@ -1298,7 +1298,7 @@ lang_tile = "itemdroprate"
 margin_top = 56.0
 margin_right = 884.0
 margin_bottom = 88.0
-script = SubResource( 14 )
+script = SubResource( 16 )
 
 [node name="Text" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/ItemDropOverall/DropEntry"]
 margin_right = 289.0
@@ -1355,7 +1355,7 @@ lang_tile = "playerconfig"
 margin_top = 56.0
 margin_right = 884.0
 margin_bottom = 98.0
-script = SubResource( 15 )
+script = SubResource( 17 )
 
 [node name="Text" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration/Health"]
 margin_top = 5.0
@@ -1378,7 +1378,7 @@ value = 1.0
 margin_top = 106.0
 margin_right = 884.0
 margin_bottom = 148.0
-script = SubResource( 16 )
+script = SubResource( 18 )
 setting = "Baguettes"
 
 [node name="Text" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration/Baguettes"]
@@ -1401,7 +1401,7 @@ value = 1.0
 margin_top = 156.0
 margin_right = 884.0
 margin_bottom = 198.0
-script = SubResource( 17 )
+script = SubResource( 19 )
 setting = "Bombs"
 
 [node name="Text" type="Label" parent="Foreground/Menu/ConfigMenu/ScrollContainer/ConfigMenu/PlayerConfiguration/Bombs"]
@@ -1693,7 +1693,7 @@ script = ExtResource( 41 )
 lang_tile = "bombmoving"
 
 [node name="Fade" type="AnimationPlayer" parent="Foreground/Menu"]
-anims/FadeOut = SubResource( 18 )
+anims/FadeOut = SubResource( 20 )
 
 [node name="Black" type="ColorRect" parent="Foreground/Menu/Fade"]
 visible = false
@@ -1741,9 +1741,9 @@ texture = ExtResource( 38 )
 position = Vector2( 3.72058, 8.05499 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Elements/Rocket"]
-anims/fly_away = SubResource( 19 )
-anims/fly_in = SubResource( 20 )
-anims/flying = SubResource( 21 )
+anims/fly_away = SubResource( 21 )
+anims/fly_in = SubResource( 22 )
+anims/flying = SubResource( 23 )
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer/BtnSettings" to="Foreground/Menu" method="_on_BtnSettings_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer2/BtnPlay" to="Foreground/Menu" method="_on_BtnPlay_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Main/Buttons/CenterContainer3/BtnExit" to="Foreground/Menu" method="_on_BtnExit_pressed"]

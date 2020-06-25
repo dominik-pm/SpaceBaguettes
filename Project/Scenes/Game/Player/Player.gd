@@ -100,7 +100,7 @@ func get_input_axis():
 	
 	if (Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(pid + "move_forward_gp")):
 		curr_key += 1
-	elif (Input.is_action_just_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp")):
+	elif (Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp")):
 		curr_key += 1
 	if (Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(pid + "move_right_gp")):
 		curr_key += 1
