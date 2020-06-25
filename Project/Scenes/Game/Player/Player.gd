@@ -35,7 +35,8 @@ var bomb_moving_strength = 0 # 0: can not move bombs
 
 # game relevant variables
 var pid = "1"
-var gp_index
+var gp_index = ""
+var kb_index = ""
 var game_started = false
 var is_alive = true
 var game
@@ -59,6 +60,8 @@ func init(pos, p, f, g):
 	$Nametag/Label.text = str(Global.player_names[int(pid)-1])
 	
 	gp_index = Global.player_gp_ids[int(pid)-1]
+	if gp_index == "":
+		kb_index = pid
 
 func start():
 	can_shoot = true
@@ -101,61 +104,61 @@ func get_input_axis():
 	var block = game.get_coord(muzzle.global_transform.origin)
 	var curr_key = 0
 	
-	if (Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(gp_index + "move_forward_gp")):
+	if (Input.is_action_pressed(kb_index + "move_forward") or Input.is_action_pressed(gp_index + "move_forward_gp")):
 		curr_key += 1
-	elif (Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(gp_index + "move_backward_gp")):
+	elif (Input.is_action_pressed(kb_index + "move_backward") or Input.is_action_pressed(gp_index + "move_backward_gp")):
 		curr_key += 1
-	if (Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(gp_index + "move_right_gp")):
+	if (Input.is_action_pressed(kb_index + "move_right") or Input.is_action_pressed(gp_index + "move_right_gp")):
 		curr_key += 1
-	elif (Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(gp_index + "move_left_gp")):
+	elif (Input.is_action_pressed(kb_index + "move_left") or Input.is_action_pressed(gp_index + "move_left_gp")):
 		curr_key += 1
 	
-	if (Input.is_action_just_pressed(pid + "move_forward") or Input.is_action_just_pressed(gp_index + "move_forward_gp")):
-		last_move_y = pid+"move_forward"
-	elif (Input.is_action_just_pressed(pid + "move_backward") or Input.is_action_just_pressed(gp_index + "move_backward_gp")):
-		last_move_y = pid+"move_backward"
-	if (Input.is_action_just_pressed(pid + "move_right") or Input.is_action_just_pressed(gp_index + "move_right_gp")):
-		last_move_x = pid+"move_right"
-	elif (Input.is_action_just_pressed(pid + "move_left") or Input.is_action_just_pressed(gp_index + "move_left_gp")):
-		last_move_x = pid+"move_left"
+	if (Input.is_action_just_pressed(kb_index + "move_forward") or Input.is_action_just_pressed(gp_index + "move_forward_gp")):
+		last_move_y = kb_index+"move_forward"
+	elif (Input.is_action_just_pressed(kb_index + "move_backward") or Input.is_action_just_pressed(gp_index + "move_backward_gp")):
+		last_move_y = kb_index+"move_backward"
+	if (Input.is_action_just_pressed(kb_index + "move_right") or Input.is_action_just_pressed(gp_index + "move_right_gp")):
+		last_move_x = kb_index+"move_right"
+	elif (Input.is_action_just_pressed(kb_index + "move_left") or Input.is_action_just_pressed(gp_index + "move_left_gp")):
+		last_move_x = kb_index+"move_left"
 	
-	if (Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(gp_index + "move_forward_gp")) and last_move_y == pid + "move_forward":
+	if (Input.is_action_pressed(kb_index + "move_forward") or Input.is_action_pressed(gp_index + "move_forward_gp")) and last_move_y == kb_index + "move_forward":
 		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y-1)) != 0:
 			axis.y = -0.15
 		else:
 			axis.y = -1
-	elif (Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(gp_index + "move_backward_gp")) and last_move_y == pid + "move_backward":
+	elif (Input.is_action_pressed(kb_index + "move_backward") or Input.is_action_pressed(gp_index + "move_backward_gp")) and last_move_y == kb_index + "move_backward":
 		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y+1)) != 0:
 			axis.y = 0.15
 		else:
 			axis.y = 1
-	if (Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(gp_index + "move_right_gp")) and last_move_x == pid + "move_right":
+	if (Input.is_action_pressed(kb_index + "move_right") or Input.is_action_pressed(gp_index + "move_right_gp")) and last_move_x == pid + "move_right":
 		if curr_key >= 2 and game.check_block(Vector2(block.x+1, block.y)) != 0:
 			axis.x = 0.15
 		else:
 			axis.x = 1
-	elif (Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(gp_index + "move_left_gp")) and last_move_x == pid + "move_left":
+	elif (Input.is_action_pressed(kb_index + "move_left") or Input.is_action_pressed(gp_index + "move_left_gp")) and last_move_x == kb_index + "move_left":
 		if curr_key >= 2 and game.check_block(Vector2(block.x-1, block.y)) != 0:
 			axis.x = -0.15
 		else:
 			axis.x = -1
 		
-	if (Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(gp_index + "move_forward_gp")) and axis.y == 0:
+	if (Input.is_action_pressed(kb_index + "move_forward") or Input.is_action_pressed(gp_index + "move_forward_gp")) and axis.y == 0:
 		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y-1)) != 0:
 			axis.y = -0.15
 		else:
 			axis.y = -1
-	elif (Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(gp_index + "move_backward_gp")) and axis.y == 0:
+	elif (Input.is_action_pressed(kb_index + "move_backward") or Input.is_action_pressed(gp_index + "move_backward_gp")) and axis.y == 0:
 		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y+1)) != 0:
 			axis.y = 0.15
 		else:
 			axis.y = 1
-	if (Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(gp_index + "move_right_gp")) and axis.x == 0:
+	if (Input.is_action_pressed(kb_index + "move_right") or Input.is_action_pressed(gp_index + "move_right_gp")) and axis.x == 0:
 		if curr_key >= 2 and game.check_block(Vector2(block.x+1, block.y)) != 0:
 			axis.x = 0.15
 		else:
 			axis.x = 1
-	elif (Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(gp_index + "move_left_gp")) and axis.x == 0:
+	elif (Input.is_action_pressed(kb_index + "move_left") or Input.is_action_pressed(gp_index + "move_left_gp")) and axis.x == 0:
 		if curr_key >= 2 and game.check_block(Vector2(block.x-1, block.y)) != 0:
 			axis.x = -0.15
 		else:
@@ -177,7 +180,7 @@ func apply_movement(accel):
 
 func _input(event):
 	if game_started:
-		if (event.is_action_pressed(pid+"set_bomb") or Input.is_action_pressed(pid + "set_bomb_gp") or touchscreen.is_bomb_pressed()):
+		if (event.is_action_pressed(kb_index+"set_bomb") or Input.is_action_pressed(gp_index + "set_bomb_gp") or touchscreen.is_bomb_pressed()):
 			if bombs_active < max_bombs:
 				if not on_bomb:
 					on_bomb = true
@@ -185,7 +188,7 @@ func _input(event):
 					game.update_current_bombs(int(pid), max_bombs-bombs_active)
 					get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
 		
-		if (event.is_action_pressed(pid+"shoot") or Input.is_action_pressed(pid + "shoot_gp") or touchscreen.is_shoot_pressed()) and can_shoot and baguette_count > 0:
+		if (event.is_action_pressed(kb_index+"shoot") or Input.is_action_pressed(gp_index + "shoot_gp") or touchscreen.is_shoot_pressed()) and can_shoot and baguette_count > 0:
 			can_shoot = false
 			baguette_count -= 1
 			game.update_info(int(pid), Items.BAGUETTES, baguette_count)
