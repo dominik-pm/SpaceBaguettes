@@ -18,19 +18,18 @@ export (NodePath) var menu
 func _ready():
 	menu = get_node(menu)
 	
-	if pid != "1":
-		
-		if Global.is_mobile:
-			is_bot = true
-		
-		make_bot(is_bot)
-	
 	if int(pid) > 2:
 		bot_icon = get_node("Container/BotIcon")
 		btn_add = get_node("BtnAdd")
 		btn_bot = get_node("Container/Icons/HBoxContainer/BtnMakeBot")
 		btn_rem = get_node("Container/Icons/HBoxContainer/BtnRemove")
 		remove_player()
+	
+	if pid != "1":
+		if Global.is_mobile:
+			is_bot = true
+		
+		make_bot(is_bot)
 
 func remove_player():
 	menu.add_player(false, pid)
