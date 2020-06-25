@@ -149,7 +149,6 @@ process_material = SubResource( 7 )
 texture = ExtResource( 2 )
 
 [node name="Nametag" type="Node2D" parent="."]
-visible = false
 modulate = Color( 1, 1, 1, 0.5 )
 position = Vector2( 0, -64 )
 

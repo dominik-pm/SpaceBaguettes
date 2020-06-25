@@ -58,7 +58,7 @@ func init(pos, p, f, g):
 	
 	$Nametag/Label.text = str(Global.player_names[int(pid)-1])
 	
-	gp_index = pid
+	gp_index = Global.player_gp_ids[int(pid)-1]
 
 func start():
 	can_shoot = true
