@@ -216,6 +216,7 @@ remote func client_connected(id, nn):
 
 remote func player_ready(id):
 	ready_players.push_back(id)
+	
 	if ready_players.size() == connected_players.size():
 		ready_players = []
 		ready_timeout.stop()

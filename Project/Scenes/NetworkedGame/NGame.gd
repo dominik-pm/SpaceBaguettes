@@ -74,6 +74,7 @@ func _ready():
 	#cam.limit_right = pos2.transform.origin.x
 	#cam.limit_bottom = pos2.transform.origin.y
 	
+	"""
 	players_alive = init_players()
 	
 	gui.init_player_gui()
@@ -81,14 +82,15 @@ func _ready():
 	for p in players:
 		p.init_gui()
 	
+	init_stats()
+	"""
+	
 	$StartCountdown.connect("countdown_finished", self, "_on_start_cntdwn_finished")
 	
 	Network.connect("start_countdown", self, "_on_game_start")
 	Network.connect("restart_game", self, "_on_network_restart")
 	Network.connect("server_closed", self, "_on_server_closed")
 	Network.connect("update_connections", self, "_on_network_update")
-	
-	init_stats()
 	
 	if Network.local_id != 1:
 		Network.rpc_id(1, "player_ready", Network.local_id)
@@ -105,8 +107,9 @@ func reset():
 	
 	pause_menu.hide()
 	settings_menu.hide()
-	game_summary.hide() 
+	game_summary.hide()
 	
+	"""
 	players_alive = init_players()
 	
 	gui.init_player_gui()
@@ -115,6 +118,7 @@ func reset():
 		p.init_gui()
 	
 	init_stats()
+	"""
 	
 	if Network.local_id != 1:
 		Network.rpc_id(1, "player_ready", Network.local_id)
@@ -127,6 +131,38 @@ func init_stats():
 		for i in range(all_stats.size()):
 			var stat = all_stats[i]
 			stats[Global.player_names[int(p.pid)-1]][stat] = 0
+
+func init_self():
+	var i = 0
+	for network_id in Network.connected_players:
+		if network_id == Network.local_id:
+			var p = spawns[i].global_transform.origin
+			var t = crates.world_to_map(p)
+			var pos = crates.map_to_world(t) + Vector2(32, 32)
+			var player = Preloader.nplayer.instance()
+			player_container.add_child(player)
+			var dir = Vector2(1, 0)
+			if i%2 != 0:
+				dir = Vector2(-1, 0)
+			player.init(pos, i+1, dir, self, network_id)
+			
+			players[i] = player
+			
+			rpc("init_other", i, network_id)
+			
+		i += 1
+
+remote func init_other(i, network_id):
+	var p = spawns[i].global_transform.origin
+	var t = crates.world_to_map(p)
+	var pos = crates.map_to_world(t) + Vector2(32, 32)
+	var player = Preloader.nplayer.instance()
+	player_container.add_child(player)
+	var dir = Vector2(1, 0)
+	if i%2 != 0:
+		dir = Vector2(-1, 0)
+	player.init(pos, i+1, dir, self, network_id)
+	players[i] = player
 
 func init_players():
 	var cnt = 0
@@ -164,6 +200,19 @@ func init_players():
 	return cnt
 
 func _on_game_start():
+	#init_self()
+	
+	players_alive = init_players()# Network.connected_players
+	
+	gui.init_player_gui()
+	
+	#yield(get_tree().create_timer(1.0), "timeout")
+	#
+	for p in players:
+		p.init_gui()
+	
+	init_stats()
+	
 	$StartCountdown.start_countdown()
 
 func _on_network_restart():

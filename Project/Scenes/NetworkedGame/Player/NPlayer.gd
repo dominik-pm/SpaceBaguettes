@@ -37,7 +37,7 @@ var explosion_strength = Global.starting_explosion_strength
 var bomb_moving_strength = 0 # 0: can not move bombs
 
 # game relevant variables
-var pid = "1"
+var pid = null # "1"
 var game_started = false
 var is_alive = true
 var game
@@ -49,16 +49,25 @@ func _ready():
 	shooting_delay_timer.wait_time = Global.player_shoot_delay
 	invincible_timer.wait_time = Global.player_invincible_time
 	anim_player.play("default")
+	if pid != null:
+		anim.init(int(pid))
 
 func init(pos, p, f, g, nid):
 	set_network_master(nid)
 	
+	name = str(nid)
+	
+	print(str(p))
+	print(get_network_master())
+	
 	game = g
 	global_transform.origin = pos
 	pid = str(p)
-	anim.init(int(pid))
 	facing = f
 	_set_anim(vel)
+	
+	if anim != null:
+		anim.init(int(pid))
 	
 	$Nametag/Label.text = str(Global.player_names[int(pid)-1])
 
@@ -80,13 +89,17 @@ func _process(delta):
 	if game_started:
 		# network
 		if is_network_master():
-			rset_unreliable("axis", axis)
-			rset_unreliable("other_pos", global_transform.origin)
+			# is playing
+			rpc("update_puppet", axis, global_transform.origin)
+			#rset_unreliable("axis", axis)
+			#rset_unreliable("other_pos", global_transform.origin)
 			axis = get_input_axis()
-		elif other_pos != Vector2.ZERO:
-			# check if position is not far off, else correct it
-			if (other_pos-global_transform.origin).length() > NETWORK_ERROR_DISTANCE:
-				global_transform.origin = other_pos
+		else:
+			# is a puppet
+			if other_pos != Vector2.ZERO:
+				# check if position is not far off, else correct it
+				if (other_pos-global_transform.origin).length() > NETWORK_ERROR_DISTANCE:
+					global_transform.origin = other_pos
 		
 		apply_friction(speed)
 		apply_movement(axis*speed)
@@ -100,6 +113,10 @@ func _process(delta):
 		var target = motion*speed
 		
 		vel = target
+
+remote func update_puppet(dir, pos):
+	axis = dir
+	other_pos = pos
 
 # returns which direction the player is going to go
 func get_input_axis():
@@ -306,22 +323,23 @@ func _on_Death_finished():
 	can_remove = true
 
 func _set_anim(d):
-	 # d is the moving direction
-	if d == Vector2(-1, 0):
-		anim.play("runningLeft")
-	elif d == Vector2(1, 0):
-		anim.play("runningRight")
-	elif d == Vector2(0, -1):
-		anim.play("runningUp")
-	elif d == Vector2(0, 1):
-		anim.play("runningDown")
-	else:
-		# not moving, so check the facing direction
-		if facing == Vector2(-1, 0): 
-			anim.play("idleLeft")
-		if facing == Vector2(1, 0):
-			anim.play("idleRight")
-		if facing == Vector2(0, -1):
-			anim.play("idleUp")
-		if facing == Vector2(0, 1):
-			anim.play("idleDown")
+	if anim != null:
+		 # d is the moving direction
+		if d == Vector2(-1, 0):
+			anim.play("runningLeft")
+		elif d == Vector2(1, 0):
+			anim.play("runningRight")
+		elif d == Vector2(0, -1):
+			anim.play("runningUp")
+		elif d == Vector2(0, 1):
+			anim.play("runningDown")
+		else:
+			# not moving, so check the facing direction
+			if facing == Vector2(-1, 0): 
+				anim.play("idleLeft")
+			if facing == Vector2(1, 0):
+				anim.play("idleRight")
+			if facing == Vector2(0, -1):
+				anim.play("idleUp")
+			if facing == Vector2(0, 1):
+				anim.play("idleDown")

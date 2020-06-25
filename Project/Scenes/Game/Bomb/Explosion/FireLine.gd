@@ -43,7 +43,14 @@ func init(d, distance):
 				child.process_material.angle = rad2deg(a)
 	
 	# remove our self after the timespan of the bomb explosion
-	yield(get_tree().create_timer(Global.bomb_explosion_duration+0.1), "timeout")
+	var timer = Timer.new()
+	add_child(timer)
+	timer.connect("timeout", self, "_on_destroy_timeout")
+	timer.wait_time = Global.bomb_explosion_duration+0.1
+	timer.autostart = true
+	timer.start()
+
+func _on_destroy_timeout():
 	var wr = weakref(self)
 	if wr.get_ref(): # check if we are not freed
 		_remove_self()

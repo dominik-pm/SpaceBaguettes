@@ -15,8 +15,8 @@ func init(i):
 func _on_PickupArea_body_entered(body):
 	if not taken:
 		if body.is_in_group("Player"):
-			$PickUp.play() # play pick up sound
 			body.get_item(item)
+			$PickUp.play() # play pick up sound
 			taken = true
 			fade_out()
 
