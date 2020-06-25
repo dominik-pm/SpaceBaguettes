@@ -2,6 +2,8 @@ extends Control
 
 export (NodePath) var menu
 
+onready var popup = $PopupDialog
+
 var names
 var all_entries = {}
 
@@ -20,6 +22,7 @@ func _ready():
 	if Global.is_mobile:
 		for c in $VBox/PlayerSelect.get_children():
 			c.get_node("Container/Keys").hide()
+	
 
 func show():
 	visible = true
@@ -53,6 +56,19 @@ func remove_duplicate(k):
 func _on_BtnStart_pressed():
 	init_player_names()
 	menu.start_game()
+
+func get_gp_id_for(pid):
+	if Global.player_gp_ids[int(pid)-1] == "":
+		print("Player"+pid+": getting controller id...")
+		popup.get_gp_id_for(pid)
+	else:
+		Global.player_gp_ids[int(pid)-1] = ""
+
+func set_gp_id_for(pid, gp_id):
+	Global.player_gp_ids[int(pid)-1] = str(gp_id+1)
+
+func _on_CancelBtn_pressed():
+	popup.hide()
 
 func init_player_names():
 	for i in range(4):

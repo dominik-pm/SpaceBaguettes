@@ -1006,6 +1006,7 @@ margin_bottom = 680.0
 size_flags_vertical = 3
 
 [node name="PlayMenu" type="PanelContainer" parent="Foreground/Menu/Play"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1139,7 +1140,6 @@ anims/hide = SubResource( 24 )
 anims/show = SubResource( 23 )
 
 [node name="PlayOfflineMenu" parent="Foreground/Menu/Play" instance=ExtResource( 21 )]
-visible = false
 margin_left = -421.0
 margin_right = 421.0
 menu = NodePath("../..")

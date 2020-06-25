@@ -13,6 +13,7 @@ var player_icon_paths = {
 # '-' means not playing; '@' means is bot
 var players = ["", "", "", ""]
 var player_names = ["", "", "", ""]
+var player_gp_ids = ["", "", "", ""]
 
 # -- GAME SETTINGS --
 # game
