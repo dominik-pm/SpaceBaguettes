@@ -30,6 +30,9 @@ func init_menu():
 		menu.show()
 		offline.hide()
 		online.hide()
+		
+		$PlayMenu/VBoxContainer/OnlineContainer.hide()
+		$PlayMenu/VBoxContainer/AnimationPlayer.play("hide")
 
 func _on_server_closed():
 	online.hide()
@@ -52,6 +55,9 @@ func _on_offline_pressed():
 	menu.hide()
 	offline.show()
 	$PlayOfflineMenu/VBox/Control/BtnStart.grab_focus()
+
+func _on_Online_pressed():
+	$PlayMenu/VBoxContainer/AnimationPlayer.play("show")
 
 func _on_host_pressed():
 	var nn = name_input.text

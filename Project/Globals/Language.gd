@@ -41,6 +41,7 @@ var lang_english = {
 	"quit": "Quit",
 	"disconnect": "Disconnect",
 	"play_offline": "Play Offline",
+	"play_online": "Play Online (Beta)",
 	"host": "Host Game",
 	"join": "Join Game",
 	# Game
@@ -90,6 +91,7 @@ var lang_german = {
 	"quit": "Verlassen",
 	"disconnect": "Verbindung trennen",
 	"play_offline": "Offline Spielen",
+	"play_online": "Online Spielen (Beta)",
 	"host": "Spiel Hosten",
 	"join": "Spiel Beitreten",
 	# Game
@@ -140,6 +142,7 @@ var lang_french = {
 	"quit": "quittez",
 	"disconnect": "déconnecter",
 	"play_offline": "jouer hors ligne",
+	"play_online": "jouer en ligne (Beta)",
 	"host": "animer un jeu",
 	"join": "rejoindre le jeu",
 	# Game

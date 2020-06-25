@@ -92,6 +92,7 @@ func _ready():
 	Network.connect("server_closed", self, "_on_server_closed")
 	Network.connect("update_connections", self, "_on_network_update")
 	
+	yield(get_tree().create_timer(1.0), "timeout")
 	if Network.local_id != 1:
 		Network.rpc_id(1, "player_ready", Network.local_id)
 	else:
