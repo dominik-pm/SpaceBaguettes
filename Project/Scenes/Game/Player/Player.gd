@@ -19,7 +19,8 @@ var on_bomb = false
 # movement variables
 export var speed = 200
 var motion = Vector2.ZERO # the direction in which the player goes
-var last_move # last used direction
+var last_move_y # last used y-direction
+var last_move_x # last used x-direction
 var vel = Vector2(0,0)
 var facing = Vector2(0,0)
 
@@ -77,8 +78,8 @@ func _process(delta):
 		apply_movement(axis*speed)
 		motion = move_and_slide(motion)
 		
-		if axis != Vector2.ZERO:
-			facing = axis
+		#if axis != Vector2.ZERO:
+			#facing = axis
 		
 		_set_anim(axis)
 		
@@ -94,32 +95,68 @@ func get_input_axis():
 	
 	var axis = Vector2.ZERO
 	
-	if Input.is_action_just_pressed(pid + "move_forward") or Input.is_action_just_pressed(pid + "move_forward_gp"):
-		last_move = pid+"move_forward"
-	elif Input.is_action_just_pressed(pid + "move_backward") or Input.is_action_just_pressed(pid + "move_backward_gp"):
-		last_move = pid+"move_backward"
-	elif Input.is_action_just_pressed(pid + "move_right") or Input.is_action_just_pressed(pid + "move_right_gp"):
-		last_move = pid+"move_right"
-	elif Input.is_action_just_pressed(pid + "move_left") or Input.is_action_just_pressed(pid + "move_left_gp"):
-		last_move = pid+"move_left"
+	var block = game.get_coord(muzzle.global_transform.origin)
+	var curr_key = 0
 	
-	if (Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(pid + "move_forward_gp")) and last_move == pid + "move_forward":
-		axis.y = -1
-	elif (Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp")) and last_move == pid + "move_backward":
-		axis.y = 1
-	elif (Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(pid + "move_right_gp")) and last_move == pid + "move_right":
-		axis.x = 1
-	elif (Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(pid + "move_left_gp")) and last_move == pid + "move_left":
-		axis.x = -1
+	if (Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(pid + "move_forward_gp")):
+		curr_key += 1
+	elif (Input.is_action_just_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp")):
+		curr_key += 1
+	if (Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(pid + "move_right_gp")):
+		curr_key += 1
+	elif (Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(pid + "move_left_gp")):
+		curr_key += 1
 	
-	elif Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(pid + "move_forward_gp"):
-		axis.y = -1
-	elif Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp"):
-		axis.y = 1
-	elif Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(pid + "move_right_gp"):
-		axis.x = 1
-	elif Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(pid + "move_left_gp"):
-		axis.x = -1
+	if (Input.is_action_just_pressed(pid + "move_forward") or Input.is_action_just_pressed(pid + "move_forward_gp")):
+		last_move_y = pid+"move_forward"
+	elif (Input.is_action_just_pressed(pid + "move_backward") or Input.is_action_just_pressed(pid + "move_backward_gp")):
+		last_move_y = pid+"move_backward"
+	if (Input.is_action_just_pressed(pid + "move_right") or Input.is_action_just_pressed(pid + "move_right_gp")):
+		last_move_x = pid+"move_right"
+	elif (Input.is_action_just_pressed(pid + "move_left") or Input.is_action_just_pressed(pid + "move_left_gp")):
+		last_move_x = pid+"move_left"
+	
+	if (Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(pid + "move_forward_gp")) and last_move_y == pid + "move_forward":
+		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y-1)) != 0:
+			axis.y = -0.15
+		else:
+			axis.y = -1
+	elif (Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp")) and last_move_y == pid + "move_backward":
+		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y+1)) != 0:
+			axis.y = 0.15
+		else:
+			axis.y = 1
+	if (Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(pid + "move_right_gp")) and last_move_x == pid + "move_right":
+		if curr_key >= 2 and game.check_block(Vector2(block.x+1, block.y)) != 0:
+			axis.x = 0.15
+		else:
+			axis.x = 1
+	elif (Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(pid + "move_left_gp")) and last_move_x == pid + "move_left":
+		if curr_key >= 2 and game.check_block(Vector2(block.x-1, block.y)) != 0:
+			axis.x = -0.15
+		else:
+			axis.x = -1
+		
+	if (Input.is_action_pressed(pid + "move_forward") or Input.is_action_pressed(pid + "move_forward_gp")) and axis.y == 0:
+		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y-1)) != 0:
+			axis.y = -0.15
+		else:
+			axis.y = -1
+	elif (Input.is_action_pressed(pid + "move_backward") or Input.is_action_pressed(pid + "move_backward_gp")) and axis.y == 0:
+		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y+1)) != 0:
+			axis.y = 0.15
+		else:
+			axis.y = 1
+	if (Input.is_action_pressed(pid + "move_right") or Input.is_action_pressed(pid + "move_right_gp")) and axis.x == 0:
+		if curr_key >= 2 and game.check_block(Vector2(block.x+1, block.y)) != 0:
+			axis.x = 0.15
+		else:
+			axis.x = 1
+	elif (Input.is_action_pressed(pid + "move_left") or Input.is_action_pressed(pid + "move_left_gp")) and axis.x == 0:
+		if curr_key >= 2 and game.check_block(Vector2(block.x-1, block.y)) != 0:
+			axis.x = -0.15
+		else:
+			axis.x = -1
 
 	return axis.normalized()
 
@@ -278,15 +315,30 @@ func _on_Death_finished():
 	can_remove = true
 
 func _set_anim(d):
+	var sum = Vector2.ZERO
+	
+	if d.y < 0: sum.y = -d.y
+	else: sum.y = d.y
+	if d.x < 0: sum.x = -d.x
+	else: sum.x = d.x
+	
 	 # d is the moving direction
-	if d == Vector2(-1, 0):
-		anim.play("runningLeft")
-	elif d == Vector2(1, 0):
-		anim.play("runningRight")
-	elif d == Vector2(0, -1):
-		anim.play("runningUp")
-	elif d == Vector2(0, 1):
-		anim.play("runningDown")
+	if d.y != 0 and sum.y > sum.x:
+		if d.y < 0:
+			anim.play("runningUp")
+			facing = Vector2(0, -1)
+		elif d.y > 0:
+			anim.play("runningDown")
+			facing = Vector2(0, 1)
+			
+	elif d.x != 0 and sum.x > sum.y:
+		if d.x < 0:
+			anim.play("runningLeft")
+			facing = Vector2(-1, 0)
+		elif d.x > 0:
+			anim.play("runningRight")
+			facing = Vector2(1, 0)
+
 	else:
 		# not moving, so check the facing direction
 		if facing == Vector2(-1, 0): 
