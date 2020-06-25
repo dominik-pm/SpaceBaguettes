@@ -33,7 +33,6 @@ func _ready():
 	if Global.is_mobile:
 		for c in $VBox/PlayerSelect.get_children():
 			c.get_node("Container/Keys").hide()
-	
 
 func show():
 	visible = true
