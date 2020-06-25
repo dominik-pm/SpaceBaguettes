@@ -18,10 +18,12 @@ export (NodePath) var menu
 func _ready():
 	menu = get_node(menu)
 	
-	if Global.is_mobile:
-		is_bot = true
-	
-	make_bot(is_bot)
+	if pid != "1":
+		
+		if Global.is_mobile:
+			is_bot = true
+		
+		make_bot(is_bot)
 	
 	if int(pid) > 2:
 		btn_add = get_node("BtnAdd")
@@ -35,6 +37,9 @@ func remove_player():
 	name_input.hide()
 	btn_add.show()
 	btn_add.grab_focus()
+
+func make_gamepad(is_gp):
+	keys.visible = !is_gp
 
 func make_bot(is_bot):
 	menu.make_bot(is_bot, pid)
@@ -53,6 +58,10 @@ func add_player():
 
 func _on_BtnRemove_pressed():
 	remove_player()
+
+func _on_MakeGPPressed(pid):
+	menu.get_gp_id_for(pid)
+	make_gamepad(Global.player_gp_ids[int(pid)-1] != "")
 
 func _on_BtnMakeBot_pressed():
 	if not Global.is_mobile:

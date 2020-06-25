@@ -74,6 +74,9 @@ columns = 2
 [node name="Player1" type="VBoxContainer" parent="VBox/PlayerSelect"]
 margin_right = 376.0
 margin_bottom = 242.0
+script = ExtResource( 11 )
+pid = "1"
+menu = NodePath("../../..")
 
 [node name="Container" type="HBoxContainer" parent="VBox/PlayerSelect/Player1"]
 margin_right = 376.0
@@ -132,7 +135,7 @@ script = ExtResource( 19 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-menu = NodePath("../../../../../../..")
+menu = NodePath("../../../..")
 
 [node name="TextureRect4" type="TextureRect" parent="VBox/PlayerSelect/Player1/Container/Icons/HBoxContainer/BtnMakeController"]
 self_modulate = Color( 0.203922, 0.592157, 0.72549, 1 )
@@ -666,6 +669,7 @@ __meta__ = {
 }
 
 [node name="PopupDialog" type="Popup" parent="."]
+visible = true
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 822.0
@@ -717,6 +721,8 @@ autowrap = true
 margin_top = 167.0
 margin_right = 360.0
 margin_bottom = 209.0
+focus_mode = 0
+enabled_focus_mode = 0
 text = "Cancel"
 [connection signal="pressed" from="VBox/PlayerSelect/Player2/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player2" method="_on_BtnMakeBot_pressed"]
 [connection signal="pressed" from="VBox/PlayerSelect/Player3/Container/Icons/HBoxContainer/BtnMakeBot" to="VBox/PlayerSelect/Player3" method="_on_BtnMakeBot_pressed"]

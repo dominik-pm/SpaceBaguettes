@@ -58,7 +58,7 @@ func _on_BtnStart_pressed():
 	menu.start_game()
 
 func get_gp_id_for(pid):
-	if Global.player_gp_ids[int(pid)-1] == "":
+	if Global.player_gp_ids[int(pid)-1] == "" and not popup.visible:
 		print("Player"+pid+": getting controller id...")
 		popup.get_gp_id_for(pid)
 	else:
