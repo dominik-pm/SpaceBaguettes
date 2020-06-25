@@ -226,6 +226,9 @@ func get_item(item):
 		Items.MOREBOMBS:
 			max_bombs += 1
 			value = max_bombs
+			
+			game.update_current_bombs(int(pid), max_bombs-bombs_active)
+			return
 		Items.BAGUETTES:
 			baguette_count += 1
 			value = baguette_count

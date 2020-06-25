@@ -222,6 +222,7 @@ remote func player_ready(id):
 		ready_timeout.stop()
 		print("telling all to start countdown")
 		rpc("start_countdown")
+		restarting = false
 	elif restarting and ready_players.size() == connected_players.size() - 1:
 		# everyone is ready, but the server
 		emit_signal("restart_game")
