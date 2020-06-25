@@ -168,7 +168,7 @@ func apply_movement(accel):
 	motion = motion.clamped(speed)
 
 func _input(event):
-	if is_network_master() and is_alive:
+	if is_network_master() and is_alive and game_started:
 		
 		if (event.is_action_pressed("1set_bomb") or Input.is_action_pressed("1set_bomb_gp") or touchscreen.is_bomb_pressed()):
 			if not game.pause_menu.visible:

@@ -1,5 +1,7 @@
 extends Node2D
 
+export var DAMAGE_DELAY = 0.25
+
 var d
 
 var pid_fired = null
@@ -36,10 +38,12 @@ func create_hit_tiles():
 		dir = Vector2(k*(i%2), -k*((i+1)%2))
 		
 		if d[i] > 0:
+			# create fire lane
 			var f = Preloader.fireline.instance()
 			add_child(f)
 			f.global_transform.origin = global_transform.origin
 			f.init(dir, d[i])
+		
 		
 		# for every explosion tile in that lane
 		for j in range(d[i]):

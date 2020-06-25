@@ -1,8 +1,16 @@
 extends Area2D
 
+#onready var col = $CollisionShape2D
+
 func _ready():
 	$Timer.wait_time = Global.bomb_explosion_duration
 	$Timer.start()
+	$DamageDelay.wait_time = 0.25
+	$DamageDelay.start()
+	monitoring = false
+
+func _on_DamageDelay_timeout():
+	monitoring = true
 
 func _on_Node2D_body_entered(body):
 	if body is PlayerHitbox:

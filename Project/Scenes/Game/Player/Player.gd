@@ -173,22 +173,23 @@ func apply_movement(accel):
 	motion = motion.clamped(speed)
 
 func _input(event):
-	if (event.is_action_pressed(pid+"set_bomb") or Input.is_action_pressed(pid + "set_bomb_gp") or touchscreen.is_bomb_pressed()):
-		if bombs_active < max_bombs:
-			if not on_bomb:
-				on_bomb = true
-				bombs_active += 1
-				game.update_current_bombs(int(pid), max_bombs-bombs_active)
-				get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
-	
-	if (event.is_action_pressed(pid+"shoot") or Input.is_action_pressed(pid + "shoot_gp") or touchscreen.is_shoot_pressed()) and can_shoot and baguette_count > 0:
-		can_shoot = false
-		baguette_count -= 1
-		game.update_info(int(pid), Items.BAGUETTES, baguette_count)
-		game.shot_baguette(pid)
-		shooting_delay_timer.start()
-		var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
-		shoot(pos, muzzle.global_transform.origin)
+	if game_started:
+		if (event.is_action_pressed(pid+"set_bomb") or Input.is_action_pressed(pid + "set_bomb_gp") or touchscreen.is_bomb_pressed()):
+			if bombs_active < max_bombs:
+				if not on_bomb:
+					on_bomb = true
+					bombs_active += 1
+					game.update_current_bombs(int(pid), max_bombs-bombs_active)
+					get_parent().get_parent().place_bomb(self, get_global_transform().origin, explosion_range, explosion_strength)
+		
+		if (event.is_action_pressed(pid+"shoot") or Input.is_action_pressed(pid + "shoot_gp") or touchscreen.is_shoot_pressed()) and can_shoot and baguette_count > 0:
+			can_shoot = false
+			baguette_count -= 1
+			game.update_info(int(pid), Items.BAGUETTES, baguette_count)
+			game.shot_baguette(pid)
+			shooting_delay_timer.start()
+			var pos = game.get_tile_pos_center(muzzle.global_transform.origin)
+			shoot(pos, muzzle.global_transform.origin)
 
 func shoot(pos, player_pos):
 	var b = Preloader.baguette.instance()
@@ -224,7 +225,6 @@ func get_item(item):
 			value = max_bombs
 			
 			game.update_current_bombs(int(pid), max_bombs-bombs_active)
-			return
 		Items.BAGUETTES:
 			baguette_count += 1
 			value = baguette_count
