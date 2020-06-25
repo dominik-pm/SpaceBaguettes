@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://Scenes/MainMenu/Camera.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Background/Stars.tscn" type="PackedScene" id=2]
@@ -167,6 +167,62 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=24]
+resource_name = "hide"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("OnlineContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("OnlineContainer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "show"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("OnlineContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("OnlineContainer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="GDScript" id=13]
@@ -950,15 +1006,14 @@ margin_bottom = 680.0
 size_flags_vertical = 3
 
 [node name="PlayMenu" type="PanelContainer" parent="Foreground/Menu/Play"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -421.0
-margin_top = -256.0
+margin_top = -264.0
 margin_right = 421.0
-margin_bottom = 158.0
+margin_bottom = 6.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -967,7 +1022,7 @@ __meta__ = {
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 822.0
-margin_bottom = 394.0
+margin_bottom = 250.0
 custom_constants/separation = 50
 
 [node name="OfflineContainer" type="HBoxContainer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer"]
@@ -982,6 +1037,7 @@ margin_right = 487.0
 margin_bottom = 64.0
 focus_next = NodePath("../../OnlineContainer/BtnContainer/Host")
 focus_previous = NodePath("../../../../BackButton/CenterContainer/BtnBack")
+mouse_default_cursor_shape = 2
 text = "Play Offline"
 script = ExtResource( 46 )
 lang_tile = "play_offline"
@@ -993,10 +1049,30 @@ margin_bottom = 116.0
 rect_min_size = Vector2( 0, 2 )
 color = Color( 0.854902, 0.854902, 0.854902, 1 )
 
-[node name="OnlineContainer" type="VBoxContainer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer"]
 margin_top = 166.0
 margin_right = 802.0
-margin_bottom = 374.0
+margin_bottom = 230.0
+rect_min_size = Vector2( 0, 64 )
+alignment = 1
+
+[node name="Online" type="Button" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/HBoxContainer"]
+margin_left = 272.0
+margin_right = 529.0
+margin_bottom = 64.0
+focus_next = NodePath("../../OnlineContainer/BtnContainer/Host")
+focus_previous = NodePath("../../../../BackButton/CenterContainer/BtnBack")
+mouse_default_cursor_shape = 2
+text = "Play Online (Beta)"
+script = ExtResource( 46 )
+lang_tile = "play_online"
+
+[node name="OnlineContainer" type="VBoxContainer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 280.0
+margin_right = 802.0
+margin_bottom = 488.0
 
 [node name="BtnContainer" type="HBoxContainer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer"]
 margin_right = 802.0
@@ -1058,12 +1134,20 @@ size_flags_vertical = 3
 max_length = 15
 placeholder_text = "IP"
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Foreground/Menu/Play/PlayMenu/VBoxContainer"]
+anims/hide = SubResource( 24 )
+anims/show = SubResource( 23 )
+
 [node name="PlayOfflineMenu" parent="Foreground/Menu/Play" instance=ExtResource( 21 )]
 visible = false
+margin_left = -421.0
+margin_right = 421.0
 menu = NodePath("../..")
 
 [node name="PlayOnlineMenu" parent="Foreground/Menu/Play" instance=ExtResource( 51 )]
 visible = false
+margin_top = -381.0
+margin_bottom = 381.0
 
 [node name="Settings" type="Control" parent="Foreground/Menu"]
 visible = false
@@ -1669,6 +1753,7 @@ anims/flying = SubResource( 21 )
 [connection signal="animation_finished" from="Foreground/Menu/Main/BtnInfo/AnimationPlayer" to="Foreground/Menu/Main/BtnInfo" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="pressed" from="Foreground/Menu/Play/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Play/PlayMenu/VBoxContainer/OfflineContainer/Offline" to="Foreground/Menu/Play" method="_on_offline_pressed"]
+[connection signal="pressed" from="Foreground/Menu/Play/PlayMenu/VBoxContainer/HBoxContainer/Online" to="Foreground/Menu/Play" method="_on_Online_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer/BtnContainer/Host" to="Foreground/Menu/Play" method="_on_host_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Play/PlayMenu/VBoxContainer/OnlineContainer/BtnContainer/Join" to="Foreground/Menu/Play" method="_on_join_pressed"]
 [connection signal="pressed" from="Foreground/Menu/Settings/BackButton/CenterContainer/BtnBack" to="Foreground/Menu" method="_on_BtnBack_pressed"]
