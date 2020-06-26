@@ -158,15 +158,15 @@ var lang_french = {
 	"winnermessage": "a gagné!",
 	"suddendeath": "Sudden Death!",
 	# Configuration
-	"last": 			"last",
-	"default": 			"default",
-	"itemdroprate": 	"Item Drop Probability (Per Box):",
-	"percentage": 		"Percentage",
-	"itemdropraterel": 	"Item Drop Probability (Relative):",
-	"playerconfig": 	"Player Configuration:",
-	"maxhealth": 		"Max Health",
-	"startbaguettes": 	"Baguettes to Start",
-	"startbombs":		"Bombs to Start"
+	"last": 			"dernier",
+	"default": 			"par défaut",
+	"itemdroprate": 	"Probabilité de chute d'un article (par boîte):",
+	"percentage": 		"Pourcentage",
+	"itemdropraterel": 	"Probabilité de chute d'un article (relative):",
+	"playerconfig": 	"Configuration du lecteur:",
+	"maxhealth": 		"Santé maximale",
+	"startbaguettes": 	"des baguettes pour commencer",
+	"startbombs":		"Des bombes pour commencer"
 }
 
 var current
