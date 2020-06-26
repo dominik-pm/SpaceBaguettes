@@ -69,7 +69,7 @@ boot_splash/image="res://Assets/Artwork/SplashArt.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://Assets/Artwork/Icon2.png"
 config/macos_native_icon="res://Assets/Artwork/GameIconMacOS.icns"
-config/windows_native_icon="res://Assets/Artwork/GameIcon.ico"
+config/windows_native_icon="res://Assets/Artwork/icon.ico"
 
 [audio]
 

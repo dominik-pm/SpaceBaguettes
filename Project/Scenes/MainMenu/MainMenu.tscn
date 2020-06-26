@@ -907,7 +907,7 @@ margin_left = 112.0
 margin_top = 40.0
 margin_right = 959.0
 margin_bottom = 72.0
-text = "Made by: Lugmayr Gabriel, Pömmer Dominik, Leutgeb Sebastian"
+text = "(v2.2.0) Made by: Lugmayr Gabriel, Pömmer Dominik, Leutgeb Sebastian"
 __meta__ = {
 "_edit_use_anchors_": false
 }
