@@ -16,7 +16,7 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="DamageDelay" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.05
 one_shot = true
 
 [node name="Timer" type="Timer" parent="."]

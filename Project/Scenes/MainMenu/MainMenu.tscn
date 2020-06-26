@@ -1140,6 +1140,7 @@ anims/hide = SubResource( 13 )
 anims/show = SubResource( 14 )
 
 [node name="PlayOfflineMenu" parent="Foreground/Menu/Play" instance=ExtResource( 21 )]
+visible = false
 menu = NodePath("../..")
 
 [node name="PlayOnlineMenu" parent="Foreground/Menu/Play" instance=ExtResource( 51 )]

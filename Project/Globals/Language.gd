@@ -44,6 +44,9 @@ var lang_english = {
 	"play_online": "Play Online (Beta)",
 	"host": "Host Game",
 	"join": "Join Game",
+	# Play Menu
+	"gp_interact": "interact with the \ndesired the gamepad...",
+	"cancel": "Cancel",
 	# Game
 	"winnermessage": "won!",
 	"suddendeath": "Sudden Death!",
@@ -94,6 +97,9 @@ var lang_german = {
 	"play_online": "Online Spielen (Beta)",
 	"host": "Spiel Hosten",
 	"join": "Spiel Beitreten",
+	# Play Menu
+	"gp_interact": "drücke einen Knopf auf dem gewünschten Controller...",
+	"cancel": "Abbrechen",
 	# Game
 	"winnermessage": "hat gewonnen!",
 	"suddendeath": "Sudden Death!",
@@ -102,7 +108,7 @@ var lang_german = {
 	"default": 			"Standard",
 	"itemdroprate": 	"Item-Dropchance (Pro Kiste):",
 	"percentage": 		"Prozent",
-	"itemdropraterel": 	"Item Dropchance (relativ zueinander):",
+	"itemdropraterel": 	"Item-Dropchance (relativ zueinander):",
 	"playerconfig": 	"Spieler Konfiguration:",
 	"maxhealth": 		"Maximale Lebenspunkte",
 	"startbaguettes": 	"Baguettes am Start",
@@ -145,6 +151,9 @@ var lang_french = {
 	"play_online": "jouer en ligne (Beta)",
 	"host": "animer un jeu",
 	"join": "rejoindre le jeu",
+	# Play Menu
+	"gp_interact": "interagir avec la manette de jeu...",
+	"cancel": "Annuler",
 	# Game
 	"winnermessage": "a gagné!",
 	"suddendeath": "Sudden Death!",

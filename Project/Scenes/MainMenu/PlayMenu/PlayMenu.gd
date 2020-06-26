@@ -2,6 +2,7 @@ extends Control
 
 export (NodePath) var menu
 
+onready var btn_start = $VBox/Control/BtnStart
 onready var popup = $PopupDialog
 
 var player_containers
@@ -36,7 +37,7 @@ func _ready():
 
 func show():
 	visible = true
-	$VBox/Control/BtnStart.grab_focus()
+	btn_start.grab_focus()
 
 func add_player(adding, pid):
 	if adding:
@@ -81,6 +82,7 @@ func set_gp_id_for(pid, gp_id):
 
 func _on_CancelBtn_pressed():
 	popup.hide()
+	btn_start.grab_focus()
 
 func init_player_names():
 	for i in range(4):
