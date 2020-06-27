@@ -4,9 +4,11 @@ onready var stick = $Control3/JoyStickBG/JoyStickBtn
 onready var btn_bomb = $HBoxContainer/Control2/BtnPlaceBomb
 onready var btn_shoot = $HBoxContainer/Control/BtnShoot
 
-export var sens = 0.1
+export var alpha_threshhold = 22.5
 
 func _ready():
+	alpha_threshhold = sin(alpha_threshhold)
+	
 	if not Global.is_mobile:
 		hide()
 
@@ -21,9 +23,9 @@ func get_value():
 func get_dir():
 	var dir = stick.get_value()
 	
-	if abs(dir.x) < sens:
+	if abs(dir.x) < alpha_threshhold:
 		dir.x = 0
-	if abs(dir.y) < sens:
-		dir.y = 0	
+	if abs(dir.y) < alpha_threshhold:
+		dir.y = 0
 	
 	return dir.normalized()

@@ -336,7 +336,7 @@ func _on_Death_finished():
 		queue_free()
 	can_remove = true
 
-func _set_anim(d):	
+func _set_anim(d):
 	 # d is the moving direction
 	if d.y != 0 and abs(d.y) > abs(d.x):
 		if d.y < 0:
