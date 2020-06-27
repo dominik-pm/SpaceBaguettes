@@ -95,74 +95,87 @@ func _process(delta):
 
 # returns which direction the player is going to go
 func get_input_axis():
-	# if on mobile, get the input from the touchscreen
-	if Global.is_mobile:
-		return touchscreen.get_dir()
-	
+	var input = Vector2.ZERO
 	var axis = Vector2.ZERO
-	
 	var block = game.get_coord(muzzle.global_transform.origin)
 	var curr_key = 0
 	
-	if (Input.is_action_pressed(kb_index + "move_forward") or Input.is_action_pressed(gp_index + "move_forward_gp")):
+	# if on mobile, get the input from the touchscreen
+	if Global.is_mobile:
+		input = touchscreen.get_dir()
+	else:
+		if (Input.is_action_just_pressed(kb_index + "move_forward") or Input.is_action_just_pressed(gp_index + "move_forward_gp")):
+			last_move_y = kb_index+"move_forward"
+		elif (Input.is_action_just_pressed(kb_index + "move_backward") or Input.is_action_just_pressed(gp_index + "move_backward_gp")):
+			last_move_y = kb_index+"move_backward"
+		if (Input.is_action_just_pressed(kb_index + "move_right") or Input.is_action_just_pressed(gp_index + "move_right_gp")):
+			last_move_x = kb_index+"move_right"
+		elif (Input.is_action_just_pressed(kb_index + "move_left") or Input.is_action_just_pressed(gp_index + "move_left_gp")):
+			last_move_x = kb_index+"move_left"
+			
+		if (Input.is_action_pressed(kb_index + "move_forward") or Input.is_action_pressed(gp_index + "move_forward_gp")):
+			input.y = -1
+		elif (Input.is_action_pressed(kb_index + "move_backward") or Input.is_action_pressed(gp_index + "move_backward_gp")):
+			input.y = 1
+		if (Input.is_action_pressed(kb_index + "move_right") or Input.is_action_pressed(gp_index + "move_right_gp")):
+			input.x = 1
+		elif (Input.is_action_pressed(kb_index + "move_left") or Input.is_action_pressed(gp_index + "move_left_gp")):
+			input.x = -1
+	
+	if input.y < 0:
 		curr_key += 1
-	elif (Input.is_action_pressed(kb_index + "move_backward") or Input.is_action_pressed(gp_index + "move_backward_gp")):
+	elif input.y > 0:
 		curr_key += 1
-	if (Input.is_action_pressed(kb_index + "move_right") or Input.is_action_pressed(gp_index + "move_right_gp")):
+	if input.x > 0:
 		curr_key += 1
-	elif (Input.is_action_pressed(kb_index + "move_left") or Input.is_action_pressed(gp_index + "move_left_gp")):
+	elif input.x < 0:
 		curr_key += 1
 	
-	if (Input.is_action_just_pressed(kb_index + "move_forward") or Input.is_action_just_pressed(gp_index + "move_forward_gp")):
-		last_move_y = kb_index+"move_forward"
-	elif (Input.is_action_just_pressed(kb_index + "move_backward") or Input.is_action_just_pressed(gp_index + "move_backward_gp")):
-		last_move_y = kb_index+"move_backward"
-	if (Input.is_action_just_pressed(kb_index + "move_right") or Input.is_action_just_pressed(gp_index + "move_right_gp")):
-		last_move_x = kb_index+"move_right"
-	elif (Input.is_action_just_pressed(kb_index + "move_left") or Input.is_action_just_pressed(gp_index + "move_left_gp")):
-		last_move_x = kb_index+"move_left"
-	
-	if (Input.is_action_pressed(kb_index + "move_forward") or Input.is_action_pressed(gp_index + "move_forward_gp")) and last_move_y == kb_index + "move_forward":
-		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y-1)) != 0:
-			axis.y = -0.15
-		else:
-			axis.y = -1
-	elif (Input.is_action_pressed(kb_index + "move_backward") or Input.is_action_pressed(gp_index + "move_backward_gp")) and last_move_y == kb_index + "move_backward":
-		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y+1)) != 0:
-			axis.y = 0.15
-		else:
-			axis.y = 1
-	if (Input.is_action_pressed(kb_index + "move_right") or Input.is_action_pressed(gp_index + "move_right_gp")) and last_move_x == pid + "move_right":
-		if curr_key >= 2 and game.check_block(Vector2(block.x+1, block.y)) != 0:
-			axis.x = 0.15
-		else:
-			axis.x = 1
-	elif (Input.is_action_pressed(kb_index + "move_left") or Input.is_action_pressed(gp_index + "move_left_gp")) and last_move_x == kb_index + "move_left":
-		if curr_key >= 2 and game.check_block(Vector2(block.x-1, block.y)) != 0:
-			axis.x = -0.15
-		else:
-			axis.x = -1
+	if !Global.is_mobile:
+		if input.y < 0 and last_move_y == kb_index + "move_forward":
+			if curr_key >= 2 and game.check_block(Vector2(block.x, block.y-1)) != 0:
+				axis.y = -0.15
+			else:
+				axis.y = -1
+		elif input.y > 0 and last_move_y == kb_index + "move_backward":
+			if curr_key >= 2 and game.check_block(Vector2(block.x, block.y+1)) != 0:
+				axis.y = 0.15
+			else:
+				axis.y = 1
+		if input.x > 0 and last_move_x == pid + "move_right":
+			if curr_key >= 2 and game.check_block(Vector2(block.x+1, block.y)) != 0:
+				axis.x = 0.15
+			else:
+				axis.x = 1
+		elif input.x < 0 and last_move_x == kb_index + "move_left":
+			if curr_key >= 2 and game.check_block(Vector2(block.x-1, block.y)) != 0:
+				axis.x = -0.15
+			else:
+				axis.x = -1
 		
-	if (Input.is_action_pressed(kb_index + "move_forward") or Input.is_action_pressed(gp_index + "move_forward_gp")) and axis.y == 0:
-		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y-1)) != 0:
-			axis.y = -0.15
-		else:
-			axis.y = -1
-	elif (Input.is_action_pressed(kb_index + "move_backward") or Input.is_action_pressed(gp_index + "move_backward_gp")) and axis.y == 0:
-		if curr_key >= 2 and game.check_block(Vector2(block.x, block.y+1)) != 0:
-			axis.y = 0.15
-		else:
-			axis.y = 1
-	if (Input.is_action_pressed(kb_index + "move_right") or Input.is_action_pressed(gp_index + "move_right_gp")) and axis.x == 0:
-		if curr_key >= 2 and game.check_block(Vector2(block.x+1, block.y)) != 0:
-			axis.x = 0.15
-		else:
-			axis.x = 1
-	elif (Input.is_action_pressed(kb_index + "move_left") or Input.is_action_pressed(gp_index + "move_left_gp")) and axis.x == 0:
-		if curr_key >= 2 and game.check_block(Vector2(block.x-1, block.y)) != 0:
-			axis.x = -0.15
-		else:
-			axis.x = -1
+	if axis.y == 0:
+		if input.y < 0:
+			if curr_key >= 2 and game.check_block(Vector2(block.x, block.y-1)) != 0:
+				axis.y = -0.15
+			else:
+				axis.y = -1
+		elif input.y > 0:
+			if curr_key >= 2 and game.check_block(Vector2(block.x, block.y+1)) != 0:
+				axis.y = 0.15
+			else:
+				axis.y = 1
+	
+	if axis.x == 0:
+		if input.x > 0:
+			if curr_key >= 2 and game.check_block(Vector2(block.x+1, block.y)) != 0:
+				axis.x = 0.15
+			else:
+				axis.x = 1
+		elif input.x < 0:
+			if curr_key >= 2 and game.check_block(Vector2(block.x-1, block.y)) != 0:
+				axis.x = -0.15
+			else:
+				axis.x = -1
 
 	return axis.normalized()
 
@@ -323,16 +336,9 @@ func _on_Death_finished():
 		queue_free()
 	can_remove = true
 
-func _set_anim(d):
-	var sum = Vector2.ZERO
-	
-	if d.y < 0: sum.y = -d.y
-	else: sum.y = d.y
-	if d.x < 0: sum.x = -d.x
-	else: sum.x = d.x
-	
+func _set_anim(d):	
 	 # d is the moving direction
-	if d.y != 0 and sum.y > sum.x:
+	if d.y != 0 and abs(d.y) > abs(d.x):
 		if d.y < 0:
 			anim.play("runningUp")
 			facing = Vector2(0, -1)
@@ -340,7 +346,7 @@ func _set_anim(d):
 			anim.play("runningDown")
 			facing = Vector2(0, 1)
 			
-	elif d.x != 0 and sum.x > sum.y:
+	elif d.x != 0 and abs(d.x) >= abs(d.y):
 		if d.x < 0:
 			anim.play("runningLeft")
 			facing = Vector2(-1, 0)
