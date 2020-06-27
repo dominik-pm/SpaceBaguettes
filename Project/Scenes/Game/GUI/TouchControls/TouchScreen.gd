@@ -19,6 +19,7 @@ func get_value():
 func get_dir():
 	var dir = stick.get_value()
 	
+	# basti moch do
 	if abs(dir.x) > abs(dir.y):
 		dir.y = 0
 	else:
