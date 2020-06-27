@@ -73,7 +73,7 @@ func init(pos, p, f, g, nid):
 	
 	$Nametag/Label.text = str(Global.player_names[int(pid)-1])
 	
-	gp_index == "1":
+	gp_index = "1"
 	kb_index = pid
 
 func start():
