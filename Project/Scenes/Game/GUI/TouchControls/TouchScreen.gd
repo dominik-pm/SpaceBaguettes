@@ -22,6 +22,7 @@ func get_value():
 
 func get_dir():
 	var dir = stick.get_value()
+	dir = dir.normalized()
 	
 	if abs(dir.x) < alpha_threshhold:
 		dir.x = 0
