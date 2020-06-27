@@ -5,9 +5,10 @@ onready var btn_bomb = $HBoxContainer/Control2/BtnPlaceBomb
 onready var btn_shoot = $HBoxContainer/Control/BtnShoot
 
 export var alpha_threshhold = 22.5
+var threshhold
 
 func _ready():
-	alpha_threshhold = sin(alpha_threshhold)
+	threshhold = sin(deg2rad(alpha_threshhold))
 	
 	if not Global.is_mobile:
 		hide()
@@ -22,11 +23,12 @@ func get_value():
 
 func get_dir():
 	var dir = stick.get_value()
-	dir = dir.normalized()
 	
-	if abs(dir.x) < alpha_threshhold:
+	if abs(dir.x) < threshhold:
 		dir.x = 0
-	if abs(dir.y) < alpha_threshhold:
+	if abs(dir.y) < threshhold:
 		dir.y = 0
+	
+	print(dir.normalized())
 	
 	return dir.normalized()
