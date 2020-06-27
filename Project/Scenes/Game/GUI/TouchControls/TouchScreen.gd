@@ -4,6 +4,8 @@ onready var stick = $Control3/JoyStickBG/JoyStickBtn
 onready var btn_bomb = $HBoxContainer/Control2/BtnPlaceBomb
 onready var btn_shoot = $HBoxContainer/Control/BtnShoot
 
+export var sens = 0.1
+
 func _ready():
 	if not Global.is_mobile:
 		hide()
@@ -19,10 +21,9 @@ func get_value():
 func get_dir():
 	var dir = stick.get_value()
 	
-	# basti moch do
-	if abs(dir.x) > abs(dir.y):
-		dir.y = 0
-	else:
+	if abs(dir.x) < sens:
 		dir.x = 0
+	if abs(dir.y) < sens:
+		dir.y = 0	
 	
 	return dir.normalized()
